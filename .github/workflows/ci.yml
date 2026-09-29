@@ -20,6 +20,11 @@ jobs:
         run: npm ci
       - name: Protocol and MJ tests
         run: npm test
+      - name: Checkout Companion repos
+        run: |
+          for repo in Kentaro Samoth Brackmard Rufus Nans Zephyr; do
+            git clone --depth 1 "https://github.com/bryantoualy-del/${repo}.git" "../${repo}"
+          done
       - name: Companion bridge tests
         run: npm run test:companions
       - name: Creature icon tests
