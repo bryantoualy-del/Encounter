@@ -10,7 +10,7 @@ for(const name of ['Kentaro','Nans','Samoth','Brackmard','Zephyr','Rufus'])test(
  const errors=[];const virtualConsole=new VirtualConsole();virtualConsole.on('jsdomError',error=>errors.push(error));
  const dir=join(root,name),dom=new JSDOM(readFileSync(join(dir,'index.html'),'utf8'),{url:`https://example.test/${name}/`,runScripts:'outside-only',virtualConsole});
  const w=dom.window;
- w.structuredClone=structuredClone;w.scrollTo=()=>{};w.URL.createObjectURL=()=>'';w.URL.revokeObjectURL=()=>{};w.requestAnimationFrame=fn=>setTimeout(fn,0);
+ w.structuredClone=structuredClone;w.scrollTo=()=>{};w.URL.createObjectURL=()=>'';w.URL.revokeObjectURL=()=>{};w.requestAnimationFrame=fn=>setTimeout(fn,0);w.fetch=async()=>({ok:true,status:200,json:async()=>({}),text:async()=>'',blob:async()=>new w.Blob([]),arrayBuffer:async()=>new ArrayBuffer(0)});
  w.matchMedia=()=>({matches:false,addListener(){},removeListener(){},addEventListener(){},removeEventListener(){}});
  w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(){this.open=false};
  const scripts=[...w.document.scripts].filter(s=>s.type!=='module').map(s=>{const src=s.getAttribute('src');return src?readFileSync(join(dir,src.split('?')[0]),'utf8'):s.textContent}).join('\n;\n');
