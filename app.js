@@ -414,7 +414,7 @@ addEventListener('change',e=>{
 $('#monsterSearch').addEventListener('input',renderLibrary);
 $('#encounterName').addEventListener('change',e=>{state.encounter.name=e.target.value.trim()||'Rencontre sans titre';saveState();render();});
 $('#btnNextTurn').addEventListener('click',requestNextTurn);
-$('#btnModePrep').addEventListener('click',()=>setMode('prep'));$('#btnModeCombat').addEventListener('click',()=>setMode('combat'));$('#btnStartCombat').addEventListener('click',()=>setMode('combat'));
+$('#btnModePrep').addEventListener('click',()=>setMode('prep'));$('#btnModeCombat').addEventListener('click',()=>setMode('combat'));$('#btnStartCombat').addEventListener('click',()=>{if(window.RPGConnectMJ?.requestFightStart?.())return;setMode('combat')});
 $('#btnCombatLock').addEventListener('click',()=>{if(state.ui.mode!=='combat')return;state.ui.locked=!state.ui.locked;saveState();render();toast(state.ui.locked?'Combat verrouillé.':'Combat déverrouillé.');});
 $('#btnLibraryDrawer').addEventListener('click',()=>openDrawer('library'));$('#btnPrepOpenLibrary').addEventListener('click',()=>openDrawer('library'));$('#btnJournalDrawer').addEventListener('click',()=>openDrawer('journal'));$('#drawerScrim').addEventListener('click',closeDrawers);
 $('#btnMore').addEventListener('click',()=>$('#moreMenu').classList.toggle('hidden'));$('#btnCreateMonster').addEventListener('click',()=>openMonsterEditor());
