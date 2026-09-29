@@ -1,0 +1,23 @@
+ENCOUNTER — VERSION 100 % PLATE
+
+Tous les fichiers de cette archive vont directement à la racine du dépôt GitHub.
+Il n’y a aucun sous-dossier à créer.
+
+1. Dans GitHub, ouvre le dépôt Table-de-jeu.
+2. Add file > Upload files.
+3. Sélectionne tous les fichiers extraits de cette archive.
+4. Les fichiers portant le même nom remplacent les versions existantes.
+5. Supprime les anciens fichiers/dossiers qui ne figurent plus dans cette version, notamment Table-de-jeu-rpg-connect.patch et l’ancien dossier rpg-connect/ s’il existe.
+
+RPG Connect :
+- Frontend MJ : rpg-connect-mj.js + rpg-connect-mj.css
+- Relais Node : rpg-connect-server.js
+- Dépendances Render : package.json + package-lock.json
+- Docker : Dockerfile
+
+Render, structure plate :
+- Root Directory : vide
+- Build Command : npm ci --omit=dev
+- Start Command : npm start
+
+Le fichier index.html est déjà corrigé. Aucune ligne n’est à ajouter manuellement.

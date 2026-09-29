@@ -1,0 +1,27 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {JSDOM} from 'jsdom';
+import WebSocket from 'ws';
+process.env.RPG_CONNECT_GM_KEY='test-key-abcdefghijklmnopqrstuvwxyz';process.env.PORT='0';
+const {server,wss}=await import('./rpg-connect-server.js');await new Promise(r=>server.listening?r():server.once('listening',r));
+const url=`ws://127.0.0.1:${server.address().port}`;
+const until=fn=>new Promise((resolve,reject)=>{let start=Date.now();const check=()=>fn()?resolve():Date.now()-start>2000?reject(Error('timeout')):setTimeout(check,10);check()});
+const wait=(ws,type)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>reject(Error('timeout '+type)),2000);let fn=data=>{let m=JSON.parse(String(data));if(m.type!==type)return;clearTimeout(timer);ws.off('message',fn);resolve(m)};ws.on('message',fn)});
+const send=(ws,m)=>ws.send(JSON.stringify({v:1,...m}));
+test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double mutation',async()=>{
+ const dom=new JSDOM('<!doctype html><body><header class="topbar"></header></body>',{url:'https://biggie-mj.github.io/Table-de-jeu/',runScripts:'outside-only'});
+ dom.window.WebSocket=WebSocket;Object.defineProperty(dom.window.crypto,'randomUUID',{value:()=>Math.random().toString(36).slice(2)});
+ dom.window.eval(`window.state={encounter:{participants:[{id:'p1',name:'Samoth',kind:'player',hp:72,maxHp:72,tempHp:0,ac:14}],log:[],round:1}};window.localDamage=0;window.saveState=()=>{};window.render=()=>{};window.log=()=>{};window.activeParticipant=()=>state.encounter.participants[0];window.applyDamageMany=(ids,amount)=>{localDamage+=amount};window.applyHealMany=()=>{};window.applyDamageDirect=(target,amount)=>{localDamage+=amount;return{amount}};window.applyHealDirect=()=>{};window.actualAdvanceTurn=()=>{}`);
+ dom.window.eval(readFileSync(new URL('./rpg-connect-mj.js',import.meta.url),'utf8'));
+ dom.window.document.querySelector('#rpgMjEndpoint').value=url;dom.window.document.querySelector('#rpgMjKey').value=process.env.RPG_CONNECT_GM_KEY;dom.window.document.querySelector('#rpgMjConnect').click();await until(()=>dom.window.RPGConnectMJ.getStatus().connected);const room=dom.window.RPGConnectMJ.getStatus().room;
+ dom.window.document.querySelector('[data-invite="samoth"]').click();await until(()=>!!dom.window.document.querySelector('.rpg-mj-token'));
+ const token=dom.window.document.querySelector('.rpg-mj-token code').textContent;
+ const player=new WebSocket(url);await new Promise(r=>player.once('open',r));let joined=wait(player,'welcome');send(player,{type:'hello',role:'player',room,characterId:'samoth',token});await joined;
+ dom.window.RPGConnectMJ.bind('samoth','p1');send(player,{type:'state',state:{characterId:'samoth',hp:{current:60,max:72,temp:4},ac:15}});
+ await until(()=>dom.window.eval('state.encounter.participants[0].hp')===60);
+ let command=wait(player,'command');dom.window.eval("applyDamageMany(['p1'],8,'froid')");assert.equal((await command).event.payload.amount,8);
+ assert.equal(dom.window.eval('localDamage'),0);assert.equal(dom.window.eval('state.encounter.participants[0].hp'),60);
+ player.close();dom.window.RPGConnectMJ.getStatus();dom.window.close();
+});
+test.after(async()=>{for(const ws of wss.clients)ws.terminate();await new Promise(r=>server.close(r))});
