@@ -38,3 +38,16 @@ Ces tests ne remplacent pas un test tactile réel sous Safari/iPadOS. Voir **REV
 ## Attribution
 
 Le contenu SRD 5.1 reste sous CC-BY-4.0. Voir **LICENSE-SRD.txt**. Les illustrations et profils propres à la console d’origine restent inchangés.
+
+
+## RPG Connect — Prépa Fight
+
+Quand RPG Connect est connecté et qu'au moins un Companion est lié à un participant ENCOUNTER, le bouton **Lancer la rencontre** ouvre désormais le flux réseau de préparation :
+
+1. **Prépa Fight** envoie une demande d'initiative à chaque Companion lié.
+2. Le joueur lance son initiative depuis son Companion ; le résultat remonte au cockpit MJ.
+3. Le MJ peut conserver le résultat reçu ou saisir une initiative manuellement, puis doit la **valider**.
+4. **FIGHT** reste verrouillé tant que toutes les initiatives des Companions liés ne sont pas validées.
+5. Au lancement, les initiatives sont appliquées à ENCOUNTER, l'ordre est recalculé et le premier Companion reçoit la main.
+
+Le fonctionnement local historique reste inchangé lorsque RPG Connect est déconnecté ou qu'aucun Companion n'est lié.
