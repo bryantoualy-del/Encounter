@@ -33,3 +33,26 @@ Le bouton Dégâts/Soins du cockpit route la commande au compagnon associé pend
 - Les joueurs doivent connaître leur invitation personnelle. Les jetons sont conservés dans la session du navigateur pour permettre une recharge ; protéger l'appareil et ne pas partager le jeton.
 - Le MJ et le joueur ne doivent pas ajuster en parallèle les mêmes PV ou le même tour pendant une interruption. À la reconnexion, le compagnon est la source de vérité pour ses PV. Le MJ peut attribuer la main ou commander un nouveau tour ; le bouton Tour suivant du compagnon reste autonome. Aucun changement de mécanique du Dragon n'est introduit.
 - Un hébergement WebSocket et sa clé d'environnement sont nécessaires pour jouer entre appareils ; ce dépôt ne fournit pas d'URL de serveur ni de secret de production.
+
+
+## Prépa Fight & initiative
+
+Le lancement connecté suit désormais un sas explicite avant le combat :
+
+1. Le MJ lie chaque Companion à son participant ENCOUNTER.
+2. **Prépa Fight** envoie une commande `initiative:request` à chaque Companion lié. Une commande destinée à un joueur hors ligne reste en file d'attente.
+3. Le Companion affiche une carte dédiée et lance l'initiative avec son profil local. Le joueur peut aussi saisir un d20 manuel.
+4. Le Companion émet `initiative:rolled` avec `requestId`, dés, bonus, mode et total.
+5. ENCOUNTER affiche le résultat comme **proposé**. Le MJ peut le corriger puis le **valider**.
+6. **FIGHT** n'est activé que lorsque toutes les initiatives des Companions liés sont validées.
+7. Au démarrage, ENCOUNTER trie l'initiative, passe en mode Combat et envoie `turn:grant` au premier Companion lié si le premier combattant est un PJ connecté.
+
+Profils actuellement configurés : Samoth +1, Kentaro +2, Brack Mard +1, Rufus +3, Nans +2 avec avantage, Zéphyr -1.
+
+### Événements
+
+- MJ → Companion : `initiative:request`
+- Companion → MJ : `initiative:rolled`
+- MJ → Companion au premier tour : `turn:grant`
+
+Le résultat d'initiative n'est jamais appliqué silencieusement : il reste soumis à validation MJ.
