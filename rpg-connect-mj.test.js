@@ -13,19 +13,26 @@ const waitSession=(ws,phase)=>new Promise((resolve,reject)=>{let timer=setTimeou
 const send=(ws,m)=>ws.send(JSON.stringify({v:1,...m}));
 test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double mutation',async()=>{
  const dom=new JSDOM('<!doctype html><body><header class="topbar"></header></body>',{url:'https://biggie-mj.github.io/Table-de-jeu/',runScripts:'outside-only'});
+ let player=null;
+ try{
  dom.window.WebSocket=WebSocket;Object.defineProperty(dom.window.crypto,'randomUUID',{value:()=>Math.random().toString(36).slice(2)});
  dom.window.eval(`window.state={ui:{mode:'prep'},encounter:{participants:[{id:'p1',name:'Samoth',kind:'player',hp:72,maxHp:72,tempHp:0,ac:14,initiative:0},{id:'p2',name:'Nans',kind:'player',hp:95,maxHp:95,tempHp:0,ac:16,initiative:7}],log:[],round:1,currentTurn:0,selectedId:null}};window.localDamage=0;window.saveState=()=>{};window.render=()=>{};window.log=()=>{};window.checkpoint=()=>{};window.sortedParticipants=()=>[...state.encounter.participants].sort((a,b)=>b.initiative-a.initiative);window.activeParticipant=()=>sortedParticipants()[state.encounter.currentTurn]||null;window.processStartTurn=()=>{};window.setMode=mode=>{state.ui.mode=mode};window.applyDamageMany=(ids,amount)=>{localDamage+=amount};window.applyHealMany=()=>{};window.applyDamageDirect=(target,amount)=>{localDamage+=amount;return{amount}};window.applyHealDirect=()=>{};window.actualAdvanceTurn=()=>{}`);
  dom.window.eval(readFileSync(new URL('./rpg-connect-mj.js',import.meta.url),'utf8'));
  dom.window.document.querySelector('#rpgMjEndpoint').value=url;dom.window.document.querySelector('#rpgMjKey').value=process.env.RPG_CONNECT_GM_KEY;dom.window.document.querySelector('#rpgMjConnect').click();await until(()=>dom.window.RPGConnectMJ.getStatus().connected);const room=dom.window.RPGConnectMJ.getStatus().room;
  dom.window.document.querySelector('[data-invite="samoth"]').click();await until(()=>!!dom.window.document.querySelector('.rpg-mj-token'));
  const token=dom.window.document.querySelector('.rpg-mj-token code').textContent;
- const player=new WebSocket(url);await new Promise(r=>player.once('open',r));let joined=wait(player,'welcome');send(player,{type:'hello',role:'player',room,characterId:'samoth',token});await joined;
+ player=new WebSocket(url);await new Promise(r=>player.once('open',r));let joined=wait(player,'welcome');send(player,{type:'hello',role:'player',room,characterId:'samoth',token});await joined;
  dom.window.RPGConnectMJ.bind('samoth','p1');dom.window.RPGConnectMJ.bind('nans','p2');send(player,{type:'state',state:{characterId:'samoth',hp:{current:60,max:72,temp:4},ac:15}});
  await until(()=>dom.window.eval('state.encounter.participants[0].hp')===60);
  let prepState=waitSession(player,'preparation'),initiativeCommand=waitCommand(player,'initiative:request');assert.equal(dom.window.RPGConnectMJ.prepareFight(),true);const prep=await prepState;assert.equal(prep.resetCombat,true);const request=await initiativeCommand;assert.equal(request.type,'initiative:request');send(player,{type:'event',event:{id:'samoth-init-1',type:'initiative:rolled',characterId:'samoth',timestamp:new Date().toISOString(),payload:{requestId:request.payload.requestId,dice:[14],chosen:14,bonus:1,total:15,mode:'normal'}}});await until(()=>dom.window.document.querySelector('[data-fight-init="samoth"]')?.value==='15');let validatedState=waitSession(player,'initiative-validated');assert.equal(dom.window.RPGConnectMJ.validateInitiative('samoth',15),true);const validated=await validatedState;assert.equal(validated.phase,'initiative-validated');assert.equal(validated.ready,true);assert.equal(dom.window.eval('state.encounter.participants[0].initiative'),15);assert.equal(dom.window.RPGConnectMJ.getStatus().fight.validated.samoth,true);assert.deepEqual(dom.window.RPGConnectMJ.getStatus().fight.roster,['samoth']);send(player,{type:'command-ack',id:request.id,result:'applied'});
  let fightState=waitSession(player,'fight'),turnGrant=waitCommand(player,'turn:grant');assert.equal(dom.window.RPGConnectMJ.startFight(),true);const fightMsg=await fightState;assert.equal(fightMsg.phase,'fight');assert.equal(fightMsg.activeCharacterId,'samoth');assert.equal((await turnGrant).type,'turn:grant');assert.equal(dom.window.eval('state.ui.mode'),'combat');
  let command=waitCommand(player,'hp:damage');dom.window.eval("applyDamageMany(['p1'],8,'froid')");assert.equal((await command).payload.amount,8);
  assert.equal(dom.window.eval('localDamage'),0);assert.equal(dom.window.eval('state.encounter.participants[0].hp'),60);
- player.close();dom.window.RPGConnectMJ.getStatus();dom.window.close();
+ dom.window.RPGConnectMJ.getStatus();
+ }finally{
+  try{dom.window.document.querySelector('#rpgMjDisconnect')?.click()}catch{}
+  try{if(player&&player.readyState!==WebSocket.CLOSED)player.terminate()}catch{}
+  dom.window.close();
+ }
 });
 test.after(async()=>{for(const ws of wss.clients)ws.terminate();await new Promise(r=>server.close(r))});
