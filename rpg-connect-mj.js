@@ -27,7 +27,7 @@
   list.innerHTML=roster.length?roster.map(id=>{
     const p=participant(id),roll=fight.rolls[id],valid=!!fight.validated[id],isRequired=required.has(id),value=roll?.final??roll?.total??'';
     const rollText=roll?((Array.isArray(roll.dice)?roll.dice.join(' / '):(roll.chosen??'—'))+' '+(Number(roll.bonus)>=0?'+':'')+(Number(roll.bonus)||0)+' = '+roll.total):(fight.phase==='preparation'&&!isRequired?'Hors ligne · ignoré pour ce Fight':'En attente du jet');
-    return `<article class="rpg-mj-init ${valid?'validated':''} ${fight.phase==='preparation'&&!isRequired?'optional':''}"><div><b>${names[id]}</b><small>${escape(p?.name||'Non lié')} · ${valid?'✓ validée':escape(rollText)}</small></div><input data-fight-init="${id}" type="number" inputmode="numeric" value="${escape(value)}" placeholder="INI" aria-label="Initiative ${names[id]}"><button type="button" data-validate-init="${id}" ${fight.phase!=='preparation'?'disabled':''}>${valid?'Validée':'Valider'}</button></article>`;
+    return `<article class="rpg-mj-init ${valid?'validated':''} ${fight.phase==='preparation'&&!isRequired?'optional':''}"><div><b>${names[id]}</b><small>${escape(p?.name||'Non lié')} · ${valid?'✓ validée':escape(rollText)}</small></div><input data-fight-init="${id}" type="number" inputmode="numeric" value="${escape(value)}" placeholder="INI" aria-label="Initiative ${names[id]}"><button type="button" data-validate-init="${id}" ${fight.phase!=='preparation'||!isRequired?'disabled':''}>${valid?'Validée':'Valider'}</button></article>`;
   }).join(''):'<p class="muted tiny">Lie d’abord les Companions aux participants ENCOUNTER.</p>';
  }
  function prepareFight(){
