@@ -102,7 +102,7 @@ function normalizeParticipant(p={}){
   return {
     id:p.id||uid('p'),modelId:p.modelId||null,groupId:p.groupId||null,name:p.name||'Participant',baseName:p.baseName||p.name||'Participant',kind:p.kind||'enemy',
     ac:Number(p.ac)||10,acOverride:p.acOverride==null?null:Number(p.acOverride),maxHp:Math.max(1,Number(p.maxHp)||1),hp:Math.max(0,Number.isFinite(Number(p.hp))?Number(p.hp):1),tempHp:Math.max(0,Number(p.tempHp)||0),initiative:Number(p.initiative)||0,
-    conditions:(p.conditions||[]).map(normalizeCondition),actionUsed:!!p.actionUsed,bonusActionUsed:!!p.bonusActionUsed,reactionUsed:!!p.reactionUsed,
+    conditions:(p.conditions||[]).map(normalizeCondition),dynamicDefenses:{resistances:splitList(p.dynamicDefenses?.resistances),immunities:splitList(p.dynamicDefenses?.immunities),vulnerabilities:splitList(p.dynamicDefenses?.vulnerabilities),conditionImmunities:splitList(p.dynamicDefenses?.conditionImmunities),sources:Array.isArray(p.dynamicDefenses?.sources)?p.dynamicDefenses.sources:[]},actionUsed:!!p.actionUsed,bonusActionUsed:!!p.bonusActionUsed,reactionUsed:!!p.reactionUsed,
     legendaryRemaining:Number(p.legendaryRemaining)||0,currentPhaseId:p.currentPhaseId||null,abilityState:p.abilityState||{},resourceState:p.resourceState||{},companionOf:p.companionOf||null,lairOwnerId:p.lairOwnerId||null,bossOverride:!!p.bossOverride,attackProgress:Math.max(0,Number(p.attackProgress)||0),speedOverride:p.speedOverride||''
   };
 }
@@ -199,9 +199,10 @@ function checkPhaseTransition(p){
 function effectiveAc(p){const ph=currentPhase(p);return p?.acOverride!=null?p.acOverride:(ph?.ac??p.ac);}
 function effectiveSpeed(p,m=modelFor(p)){return p?.speedOverride||currentPhase(p,m)?.speed||m?.speed||'—';}
 function effectiveLegendaryMax(p,m=modelFor(p)){const ph=currentPhase(p,m);return ph?.legendaryMax??m?.legendaryMax??0;}
-function effectiveDamageResistances(p,m=modelFor(p)){return [...new Set([...(m?.damageResistances||[]),...(currentPhase(p,m)?.addResistances||[])])];}
-function effectiveDamageImmunities(p,m=modelFor(p)){return [...new Set([...(m?.damageImmunities||[]),...(currentPhase(p,m)?.addImmunities||[])])];}
-function effectiveConditionImmunities(p,m=modelFor(p)){return m?.conditionImmunities||[];}
+function effectiveDamageResistances(p,m=modelFor(p)){return [...new Set([...(m?.damageResistances||[]),...(currentPhase(p,m)?.addResistances||[]),...(p?.dynamicDefenses?.resistances||[])])];}
+function effectiveDamageImmunities(p,m=modelFor(p)){return [...new Set([...(m?.damageImmunities||[]),...(currentPhase(p,m)?.addImmunities||[]),...(p?.dynamicDefenses?.immunities||[])])];}
+function effectiveDamageVulnerabilities(p,m=modelFor(p)){return [...new Set([...(m?.damageVulnerabilities||[]),...(p?.dynamicDefenses?.vulnerabilities||[])])];}
+function effectiveConditionImmunities(p,m=modelFor(p)){return [...new Set([...(m?.conditionImmunities||[]),...(p?.dynamicDefenses?.conditionImmunities||[])])];}
 function hpPct(p){return Math.max(0,Math.min(100,p.hp/p.maxHp*100));}
 function hpClass(p){const pct=hpPct(p);return pct>60?'healthy':pct>30?'mid':'low';}
 function hpBandClass(p){const pct=hpPct(p);return p.hp<=0?'hp-down':pct>75?'hp-high':pct>50?'hp-good':pct>25?'hp-warn':'hp-critical';}
@@ -309,7 +310,7 @@ function renderQuickbar(){
   if(!targets.length){$('#quickTargetName').textContent='—';$('#quickTargetMeta').textContent='Aucune cible';return;}$('#quickTargetName').textContent=targets.length===1?targets[0].name:`${targets.length} cibles`;$('#quickTargetMeta').textContent=targets.length===1?`${targets[0].hp}/${targets[0].maxHp} PV · CA ${effectiveAc(targets[0])}`:targets.map(p=>p.name).slice(0,3).join(', ')+(targets.length>3?'…':'');
 }
 function resolveDamageAmount(p,amount,type){
-  amount=Math.max(0,Number(amount)||0);if(!amount||!type)return{amount,reason:''};const k=normKey(type),imm=effectiveDamageImmunities(p).some(x=>normKey(x)===k),res=effectiveDamageResistances(p).some(x=>normKey(x)===k),vul=(modelFor(p)?.damageVulnerabilities||[]).some(x=>normKey(x)===k);if(imm)return{amount:0,reason:'immunité'};if(res&&vul)return{amount,reason:'résistance + vulnérabilité : annulation'};if(res)return{amount:Math.floor(amount/2),reason:'résistance'};if(vul)return{amount:amount*2,reason:'vulnérabilité'};return{amount,reason:''};
+  amount=Math.max(0,Number(amount)||0);if(!amount||!type)return{amount,reason:''};const k=normKey(type),imm=effectiveDamageImmunities(p).some(x=>normKey(x)===k),res=effectiveDamageResistances(p).some(x=>normKey(x)===k),vul=effectiveDamageVulnerabilities(p).some(x=>normKey(x)===k);if(imm)return{amount:0,reason:'immunité'};if(res&&vul)return{amount,reason:'résistance + vulnérabilité : annulation'};if(res)return{amount:Math.floor(amount/2),reason:'résistance'};if(vul)return{amount:amount*2,reason:'vulnérabilité'};return{amount,reason:''};
 }
 function applyDamageMany(ids,amount,type=''){
   amount=Math.max(0,Number(amount)||0);if(!amount||!ids.length)return;const details=[];checkpoint();ids.forEach(id=>{const p=state.encounter.participants.find(x=>x.id===id);if(!p||isLair(p))return;const r=resolveDamageAmount(p,amount,type);let left=r.amount;if(p.tempHp>0){const used=Math.min(p.tempHp,left);p.tempHp-=used;left-=used;}p.hp=Math.max(0,p.hp-left);checkPhaseTransition(p);details.push(`${p.name}: ${r.amount}${r.reason?` (${r.reason})`:''}`);});if(ids.length===1)state.encounter.selectedId=ids[0];const msg=`${amount} dégâts${type?` ${type}`:''} → ${details.join(' · ')}`;log(msg);saveState();render();if(typeof showActionPopup==='function')showActionPopup(msg,'Dégâts');
