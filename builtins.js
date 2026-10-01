@@ -314,6 +314,59 @@ window.ENCOUNTER_BUILTINS = [
     legendaryActions:[{name:'Déplacement',detail:'Se déplace sans provoquer d’attaque d’opportunité.',kind:'text',cost:1},{name:'Morsure',detail:'Effectue une Morsure.',kind:'attack',bonus:9,damage:'2d10+5',damageType:'perforants',cost:1},{name:'Chant discordant',detail:'Une cible effectue un JS de SAG.',kind:'save',dc:17,save:'SAG',damage:'3d8',damageType:'psychiques',cost:2}],legendaryMax:3,
     phases:[{name:'Phase II — Le chant se brise',threshold:150,ac:18,note:'La fausse hydre se cabre et devient plus agressive.'},{name:'Phase III — Faim absolue',threshold:70,ac:19,note:'Les cous s’entrelacent et la créature abandonne toute prudence.'}],resources:[],notes:'Boss maison de démonstration en trois phases.'
   }
+  ,
+  {
+    id:'cc-kentaro-model', category:'character', source:'Companion Kentaro',
+    name:'Kentaro', subtitle:'Compagnie Créole · Hexblade', type:'Dhampir · Occultiste Hexblade', size:'M', cr:'',
+    ac:18,hp:103,initiative:2,speed:'9 m',
+    damageResistances:['nécrotiques'], damageVulnerabilities:['radiants'], damageImmunities:[], conditionImmunities:[],
+    traits:[{name:'Défenses',detail:'Résistance permanente aux dégâts nécrotiques. Vulnérabilité permanente aux dégâts radiants.',kind:'text'}],
+    actions:[],reactions:[],legendaryActions:[],lairActions:[],resources:[],phases:[],notes:'Profil défensif synchronisé avec le Companion.'
+  },
+  {
+    id:'cc-samoth-model', category:'character', source:'Companion Samoth',
+    name:'Samoth', subtitle:'Compagnie Créole · Ensorceleur', type:'Ensorceleur draconique', size:'M', cr:'',
+    ac:15,hp:72,initiative:1,speed:'9 m',
+    damageResistances:[], damageVulnerabilities:[], damageImmunities:[], conditionImmunities:[],
+    traits:[{name:'Défenses conditionnelles',detail:'Peut obtenir une résistance au froid pendant 1 heure contre 1 point de sorcellerie. L’Esprit draconique peut aussi partager une résistance pendant l’invocation ; ne pas traiter ces résistances comme permanentes.',kind:'text'}],
+    actions:[],reactions:[],legendaryActions:[],lairActions:[],resources:[],phases:[],notes:'Aucune résistance permanente enregistrée : les résistances de Samoth sont contextuelles.'
+  },
+  {
+    id:'cc-brackmard-model', category:'character', source:'Companion Brack Mard',
+    name:'Brack Mard', subtitle:'Compagnie Créole · Maître de Guerre', type:'Nain · Guerrier Maître de Guerre', size:'M', cr:'',
+    ac:19,hp:104,initiative:1,speed:'7,5 m',
+    damageResistances:['feu'], damageVulnerabilities:[], damageImmunities:[], conditionImmunities:[],
+    traits:[{name:'Défenses',detail:'Résistance permanente aux dégâts de feu.',kind:'text'}],
+    actions:[],reactions:[],legendaryActions:[],lairActions:[],resources:[],phases:[],notes:'Profil défensif synchronisé avec le Companion.'
+  },
+  {
+    id:'cc-rufus-model', category:'character', source:'Companion Rufus',
+    name:'Rufus', subtitle:'Compagnie Créole · Roublard psionique', type:'Roublard · Âme acérée', size:'M', cr:'',
+    ac:16,hp:53,initiative:3,speed:'9 m',
+    damageResistances:['nécrotiques'], damageVulnerabilities:[], damageImmunities:[], conditionImmunities:[],
+    traits:[{name:'Collier nécrotique',detail:'Résistance permanente aux dégâts nécrotiques tant que le collier est porté.',kind:'text'}],
+    actions:[],reactions:[],legendaryActions:[],lairActions:[],resources:[],phases:[],notes:'La résistance dépend du port du collier, actuellement considéré équipé sur le Companion.'
+  },
+  {
+    id:'cc-nans-model', category:'character', source:'Companion Nans',
+    name:'Nans', subtitle:'Compagnie Créole · Berserker', type:'Humain · Barbare Berserker', size:'M', cr:'',
+    ac:18,hp:125,initiative:2,speed:'12 m',
+    damageResistances:[], damageVulnerabilities:[], damageImmunities:[], conditionImmunities:[],
+    traits:[{name:'Rage — défenses conditionnelles',detail:'En Rage : résistance aux dégâts contondants, perforants et tranchants. Rage aveugle : immunité à Charmé et Effrayé pendant la Rage. Écorce : résistance C/P/T des attaques non magiques tant que ses PV temporaires subsistent. Ces défenses ne sont pas permanentes.',kind:'text'}],
+    actions:[],reactions:[],legendaryActions:[],lairActions:[],resources:[],phases:[],notes:'Les résistances de Nans doivent suivre son état de Rage / Écorce via RPG Connect.'
+  },
+  {
+    id:'cc-zephyr-model', category:'character', source:'Companion Zéphyr',
+    name:'Zéphyr', subtitle:'Compagnie Créole · Paladin de la Conquête', type:'Tieffelin · Paladin', size:'M', cr:'',
+    ac:20,hp:84,initiative:-1,speed:'9 m',
+    damageResistances:['feu'], damageVulnerabilities:[], damageImmunities:[], conditionImmunities:[],
+    traits:[
+      {name:'Défenses passives',detail:'Résistance permanente aux dégâts de feu. Immunité aux maladies.',kind:'text'},
+      {name:'Binah — résistance accordée',detail:'Après un repos long, Binah accorde une résistance élémentaire choisie. Mue prismatique peut aussi donner une immunité temporaire ; ces défenses sont dynamiques et ne sont pas enregistrées comme permanentes.',kind:'text'}
+    ],
+    actions:[],reactions:[],legendaryActions:[],lairActions:[],resources:[],phases:[],notes:'La résistance choisie de Binah doit suivre l’état du Companion via RPG Connect.'
+  }
+
 ];
 
 // ——— ENCOUNTER V2.5 : métadonnées structurées et automatisations ———
