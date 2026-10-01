@@ -60,3 +60,8 @@
 .rpg-hit-actions button{min-height:48px;border-radius:10px;border:1px solid #536d82;background:#172636;color:#f5f8fb;font-weight:900}
 .rpg-hit-actions button.suggested{border-color:#e6b15e;background:linear-gradient(180deg,#5a421a,#2a2519);box-shadow:0 0 0 2px rgba(230,177,94,.16),0 0 22px rgba(230,177,94,.13)}
 @media(max-width:650px){.rpg-mj-netline{align-items:flex-start;flex-wrap:wrap}.rpg-mj-netline #rpgCockpitLog{order:3;flex-basis:100%}.rpg-cockpit-summary{margin-left:auto}.rpg-hit-popup{inset:auto 8px 8px 8px;width:auto}}
+
+.rpg-participant-inline{border-color:#3d617d!important;background:linear-gradient(180deg,rgba(18,33,48,.86),rgba(10,20,30,.72))}
+.rpg-inline-actions{display:flex;flex-wrap:wrap;gap:7px}
+.rpg-inline-actions button{min-height:38px;padding:7px 10px;border:1px solid #55758e;border-radius:8px;background:#172c3d;color:#f3f7fb}
+.rpg-inline-actions button:hover{border-color:#7ea5c1}
