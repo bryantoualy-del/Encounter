@@ -15,11 +15,26 @@
  function endpoint(){let url=new URL(endpointField.value.trim());if(url.protocol!=='wss:'&&!(url.protocol==='ws:'&&['localhost','127.0.0.1','[::1]'].includes(url.hostname)))throw Error('Adresse wss:// requise (ws:// autorisé en local).');return url.href}
  function send(m){if(socket?.readyState!==WebSocket.OPEN)return false;socket.send(JSON.stringify({v:1,...m}));return true}
  const stableIds={kentaro:'cc-kentaro',samoth:'cc-samoth',brackmard:'cc-brackmard',rufus:'cc-rufus',nans:'cc-nans',zephyr:'cc-zephyr'};
+ const stableModels={kentaro:'cc-kentaro-model',samoth:'cc-samoth-model',brackmard:'cc-brackmard-model',rufus:'cc-rufus-model',nans:'cc-nans-model',zephyr:'cc-zephyr-model'};
+ function ensureOnlineParticipant(id){
+  let p=state.encounter.participants.find(x=>x.id===bindings[id]||x.id===stableIds[id]);if(p)return p;
+  const model=state.monsters.find(m=>m.id===stableModels[id]);if(!model||typeof makeParticipant!=='function')return null;
+  p=makeParticipant(model,1,0,null);p.id=stableIds[id];p.name=names[id];p.baseName=names[id];p.kind='player';p.modelId=stableModels[id];
+  state.encounter.participants.push(p);bindings[id]=p.id;localStorage.setItem(bindingsKey,JSON.stringify(bindings));saveState();render();netlog(names[id]+' ajouté aux participants','ok');return p;
+ }
+ function pruneOfflineCC(){
+  const allStable=new Set(Object.values(stableIds)),onlineStable=new Set(ids.filter(online).map(id=>stableIds[id]));
+  const before=state.encounter.participants.length;
+  state.encounter.participants=state.encounter.participants.filter(p=>!allStable.has(p.id)||onlineStable.has(p.id));
+  if(state.encounter.participants.length===before)return;
+  for(const [id,pid] of Object.entries(bindings))if(!state.encounter.participants.some(p=>p.id===pid))delete bindings[id];
+  localStorage.setItem(bindingsKey,JSON.stringify(bindings));saveState();render();
+ }
  const participant=id=>state.encounter.participants.find(p=>p.id===bindings[id]||p.id===stableIds[id]);
  const online=id=>players.some(p=>p.characterId===id&&p.online);
  function command(id,type,payload){if(!connected){note('Connecte la console au serveur.');return false}const event={id:uid(),type,characterId:id,timestamp:new Date().toISOString(),payload};send({type:'command',room,characterId:id,event});note(`${names[id]} · commande ${online(id)?'envoyée':'en attente de connexion'}.`);return event.id}
  const normalizeName=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
- const autoBindOnline=()=>{let changed=false;for(const id of ids){if(bindings[id]||!online(id))continue;const stable=state.encounter.participants.find(p=>p.id===stableIds[id]);if(stable){bindings[id]=stable.id;changed=true;netlog(names[id]+' lié automatiquement à '+stable.name,'ok');continue}const wanted=new Set([normalizeName(id),normalizeName(names[id])]);const matches=state.encounter.participants.filter(p=>(p.kind==='player'||p.kind==='ally')&&wanted.has(normalizeName(p.name)));if(matches.length===1){bindings[id]=matches[0].id;changed=true;netlog(names[id]+' lié automatiquement à '+matches[0].name,'ok')}}if(changed)localStorage.setItem(bindingsKey,JSON.stringify(bindings));return changed};
+ const autoBindOnline=()=>{let changed=false;for(const id of ids){if(!online(id))continue;if(bindings[id]&&participant(id))continue;if(bindings[id]&&!participant(id)){delete bindings[id];changed=true}let stable=state.encounter.participants.find(p=>p.id===stableIds[id]);if(!stable)stable=ensureOnlineParticipant(id);if(stable){bindings[id]=stable.id;changed=true;continue}const wanted=new Set([normalizeName(id),normalizeName(names[id])]);const matches=state.encounter.participants.filter(p=>(p.kind==='player'||p.kind==='ally')&&wanted.has(normalizeName(p.name)));if(matches.length===1){bindings[id]=matches[0].id;changed=true;netlog(names[id]+' lié automatiquement à '+matches[0].name,'ok')}}if(changed)localStorage.setItem(bindingsKey,JSON.stringify(bindings));return changed};
  const boundIds=()=>ids.filter(id=>!!participant(id));
  const fightRoster=()=>Array.isArray(fight.roster)?fight.roster:[];
  const fightReady=()=>{const roster=fightRoster();return fight.phase==='preparation'&&roster.length>0&&roster.every(id=>fight.validated[id])};
@@ -44,7 +59,7 @@
  }
  function prepareFight(){
   if(!connected){note('Connecte RPG Connect avant de lancer Prépa Fight.');return false}
-  autoBindOnline();
+  pruneOfflineCC();autoBindOnline();
   const bound=boundIds(),roster=bound.filter(online),onlineIds=ids.filter(online);
   if(!bound.length){note(onlineIds.length?(names[onlineIds[0]]+' est connecté mais pas lié à un participant ENCOUNTER. Sélectionne son participant dans RPG Connect.'):'Aucun Companion lié à un participant ENCOUNTER.');renderPanel();return false}
   if(!roster.length){note(onlineIds.length?(onlineIds.map(id=>names[id]).join(', ')+' connecté'+(onlineIds.length>1?'s':'')+', mais aucun n’est lié au bon participant ENCOUNTER.'):'Aucun Companion lié n’est connecté. Connecte seulement celui que tu veux tester.');renderPanel();return false}
