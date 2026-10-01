@@ -65,3 +65,6 @@
 .rpg-inline-actions{display:flex;flex-wrap:wrap;gap:7px}
 .rpg-inline-actions button{min-height:38px;padding:7px 10px;border:1px solid #55758e;border-radius:8px;background:#172c3d;color:#f3f7fb}
 .rpg-inline-actions button:hover{border-color:#7ea5c1}
+
+.rpg-health-share{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid #3c566a;border-radius:9px;background:#101d28;color:#dbe6ee;font-size:12px}
+.rpg-health-share input{accent-color:#7fb36a}
