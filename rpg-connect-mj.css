@@ -24,3 +24,13 @@
 .rpg-net-event time{color:#73879a}.rpg-net-event.ok{border-color:#315e45}.rpg-net-event.action{border-color:#8f5834;color:#ffd3ae}.rpg-net-event.turn{border-color:#806b3c;color:#f1d58d}.rpg-net-event.wait{border-color:#625b44;color:#d9cba7}
 @media(max-width:900px){.rpg-mj-cockpit-players{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.rpg-mj-cockpit{margin:6px 7px 8px;padding:8px}.rpg-mj-cockpit-players{grid-template-columns:1fr}.rpg-cockpit-person{min-height:42px}.rpg-mj-netlog{display:none}}
+
+.rpg-companion-vignette{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border-radius:10px;border:1px solid #526273;background:#17212b;color:#fff;font:800 14px/1 system-ui;box-shadow:inset 0 0 0 1px #ffffff0a}
+.rpg-companion-vignette.kentaro{background:radial-gradient(circle at 35% 35%,#6a667f,#17141f 68%)}
+.rpg-companion-vignette.samoth{background:radial-gradient(circle at 35% 35%,#d8f4ff,#24445a 60%,#101820)}
+.rpg-companion-vignette.brackmard{background:radial-gradient(circle at 35% 35%,#ffb15a,#6d2d13 62%,#25120d)}
+.rpg-companion-vignette.rufus{background:radial-gradient(circle at 35% 35%,#9b72ff,#2a1749 62%,#100b19)}
+.rpg-companion-vignette.nans{background:radial-gradient(circle at 35% 35%,#8bb8d8,#20303a 60%,#10171b)}
+.rpg-companion-vignette.zephyr{background:radial-gradient(circle at 35% 35%,#f5d57e,#5d4220 62%,#21190f)}
+.rpg-mj-person header{display:flex;align-items:center;gap:9px}
+.rpg-mj-dialog[open]{position:fixed;inset:auto 18px 18px auto;max-width:min(760px,calc(100vw - 36px));max-height:calc(100vh - 36px);overflow:auto;margin:0;z-index:10020}
