@@ -124,21 +124,25 @@ function mergeBuiltinEnhancements(stored,builtin){
   return s;
 }
 const CC_PLAYERS=[
-  {id:'cc-kentaro',name:'Kentaro',hp:103,ac:18},
-  {id:'cc-samoth',name:'Samoth',hp:72,ac:15},
-  {id:'cc-brackmard',name:'Brack Mard',hp:104,ac:19},
-  {id:'cc-rufus',name:'Rufus',hp:53,ac:16},
-  {id:'cc-nans',name:'Nans',hp:125,ac:18},
-  {id:'cc-zephyr',name:'Zéphyr',hp:84,ac:20}
+  {id:'cc-kentaro',modelId:'cc-kentaro-model',name:'Kentaro',hp:103,ac:18},
+  {id:'cc-samoth',modelId:'cc-samoth-model',name:'Samoth',hp:72,ac:15},
+  {id:'cc-brackmard',modelId:'cc-brackmard-model',name:'Brack Mard',hp:104,ac:19},
+  {id:'cc-rufus',modelId:'cc-rufus-model',name:'Rufus',hp:53,ac:16},
+  {id:'cc-nans',modelId:'cc-nans-model',name:'Nans',hp:125,ac:18},
+  {id:'cc-zephyr',modelId:'cc-zephyr-model',name:'Zéphyr',hp:84,ac:20}
 ];
-function ccParticipant(x){return{id:x.id,modelId:null,groupId:null,name:x.name,baseName:x.name,kind:'player',ac:x.ac,maxHp:x.hp,hp:x.hp,tempHp:0,initiative:0,conditions:[],actionUsed:false,bonusActionUsed:false,reactionUsed:false,legendaryRemaining:0,currentPhaseId:null,abilityState:{},resourceState:{},companionOf:null,lairOwnerId:null,bossOverride:false,attackProgress:0,speedOverride:''}}
+function ccParticipant(x){return{id:x.id,modelId:x.modelId||null,groupId:null,name:x.name,baseName:x.name,kind:'player',ac:x.ac,maxHp:x.hp,hp:x.hp,tempHp:0,initiative:0,conditions:[],actionUsed:false,bonusActionUsed:false,reactionUsed:false,legendaryRemaining:0,currentPhaseId:null,abilityState:{},resourceState:{},companionOf:null,lairOwnerId:null,bossOverride:false,attackProgress:0,speedOverride:''}}
 function ensureCCPlayers(encounter){
   encounter=encounter||{};
   encounter.participants=Array.isArray(encounter.participants)?encounter.participants:[];
   const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
   const ids=new Set(encounter.participants.map(p=>p.id));
   const names=new Set(encounter.participants.map(p=>norm(p.name)));
-  for(const x of CC_PLAYERS)if(!ids.has(x.id)&&!names.has(norm(x.name)))encounter.participants.push(ccParticipant(x));
+  for(const x of CC_PLAYERS){
+    const existing=encounter.participants.find(p=>p.id===x.id||norm(p.name)===norm(x.name));
+    if(existing){if(!existing.modelId)existing.modelId=x.modelId||null;continue;}
+    encounter.participants.push(ccParticipant(x));
+  }
   return encounter;
 }
 function blankState(){
