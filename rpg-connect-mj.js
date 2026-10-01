@@ -16,6 +16,8 @@
  const participant=id=>state.encounter.participants.find(p=>p.id===bindings[id]);
  const online=id=>players.some(p=>p.characterId===id&&p.online);
  function command(id,type,payload){if(!connected){note('Connecte la console au serveur.');return false}const event={id:uid(),type,characterId:id,timestamp:new Date().toISOString(),payload};send({type:'command',room,characterId:id,event});note(`${names[id]} · commande ${online(id)?'envoyée':'en attente de connexion'}.`);return event.id}
+ const normalizeName=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+ const autoBindOnline=()=>{let changed=false;for(const id of ids){if(bindings[id]||!online(id))continue;const wanted=new Set([normalizeName(id),normalizeName(names[id])]);const matches=state.encounter.participants.filter(p=>(p.kind==='player'||p.kind==='ally')&&wanted.has(normalizeName(p.name)));if(matches.length===1){bindings[id]=matches[0].id;changed=true;netlog(names[id]+' lié automatiquement à '+matches[0].name,'ok')}}if(changed)localStorage.setItem(bindingsKey,JSON.stringify(bindings));return changed};
  const boundIds=()=>ids.filter(id=>!!participant(id));
  const fightRoster=()=>Array.isArray(fight.roster)?fight.roster:[];
  const fightReady=()=>{const roster=fightRoster();return fight.phase==='preparation'&&roster.length>0&&roster.every(id=>fight.validated[id])};
@@ -40,9 +42,10 @@
  }
  function prepareFight(){
   if(!connected){note('Connecte RPG Connect avant de lancer Prépa Fight.');return false}
-  const bound=boundIds(),roster=bound.filter(online);
-  if(!bound.length){note('Aucun Companion lié à un participant ENCOUNTER.');return false}
-  if(!roster.length){note('Aucun Companion lié n’est connecté. Connecte seulement celui que tu veux tester.');return false}
+  autoBindOnline();
+  const bound=boundIds(),roster=bound.filter(online),onlineIds=ids.filter(online);
+  if(!bound.length){note(onlineIds.length?(names[onlineIds[0]]+' est connecté mais pas lié à un participant ENCOUNTER. Sélectionne son participant dans RPG Connect.'):'Aucun Companion lié à un participant ENCOUNTER.');renderPanel();return false}
+  if(!roster.length){note(onlineIds.length?(onlineIds.map(id=>names[id]).join(', ')+' connecté'+(onlineIds.length>1?'s':'')+', mais aucun n’est lié au bon participant ENCOUNTER.'):'Aucun Companion lié n’est connecté. Connecte seulement celui que tu veux tester.');renderPanel();return false}
   fight={phase:'preparation',requestId:uid(),roster:[...roster],rolls:{},validated:{}};
   for(const id of roster){sessionCommand(id,{phase:'preparation',resetCombat:true,text:'Tour 1 réinitialisé · '+roster.length+' Companion'+(roster.length>1?'s':'')+' actif'+(roster.length>1?'s':'')});command(id,'initiative:request',{requestId:fight.requestId,participantId:bindings[id],text:'Le MJ demande ton initiative.'})}
   const ignored=bound.length-roster.length;
@@ -65,8 +68,8 @@
   active=true;clearTimeout(retryTimer);const old=socket;if(old&&old.readyState<2)old.close();const current=new WebSocket(url);socket=current;status.textContent='Connexion…';
   current.onopen=()=>{if(socket===current)send({type:'hello',role:'gm',room:roomField.value.trim(),key:keyField.value.trim()})};
   current.onmessage=e=>{if(socket!==current)return;let m;try{m=JSON.parse(e.data)}catch{return}
-   if(m.type==='welcome'){room=m.room;roomField.value=room;connected=true;retry=0;status.textContent='Connecté · salle '+room;netlog('Connexion MJ établie · salle '+room,'ok');localStorage.setItem(savedKey,JSON.stringify({endpoint:endpointField.value.trim(),room}));players=m.payload?.players||[];for(const p of players)if(p.state)bindState(p.characterId,p.state);invites={};for(const id of boundIds())send({type:'invite',characterId:id});renderPanel();note(boundIds().length?'Connexion rétablie · invitations renouvelées automatiquement.':'Connexion rétablie.');return}
-   if(m.type==='roster'){const before=new Set(players.filter(p=>p.online).map(p=>p.characterId));players=m.payload?.players||[];for(const p of players){if(p.online&&!before.has(p.characterId)&&names[p.characterId])netlog(names[p.characterId]+' connecté','ok')} for(const p of players)if(p.state)bindState(p.characterId,p.state);if(fight.phase==='fight'){broadcastTurn();broadcastTargets()}else if(fight.phase==='idle')broadcastLobby();renderPanel();return}
+   if(m.type==='welcome'){room=m.room;roomField.value=room;connected=true;retry=0;status.textContent='Connecté · salle '+room;netlog('Connexion MJ établie · salle '+room,'ok');localStorage.setItem(savedKey,JSON.stringify({endpoint:endpointField.value.trim(),room}));players=m.payload?.players||[];autoBindOnline();for(const p of players)if(p.state)bindState(p.characterId,p.state);invites={};for(const id of boundIds())send({type:'invite',characterId:id});renderPanel();note(boundIds().length?'Connexion rétablie · invitations renouvelées automatiquement.':'Connexion rétablie.');return}
+   if(m.type==='roster'){const before=new Set(players.filter(p=>p.online).map(p=>p.characterId));players=m.payload?.players||[];for(const p of players){if(p.online&&!before.has(p.characterId)&&names[p.characterId])netlog(names[p.characterId]+' connecté','ok')}autoBindOnline(); for(const p of players)if(p.state)bindState(p.characterId,p.state);if(fight.phase==='fight'){broadcastTurn();broadcastTargets()}else if(fight.phase==='idle')broadcastLobby();renderPanel();return}
    if(m.type==='invite'){invites[m.characterId]=m.payload?.token;renderPanel();return}
    if(m.type==='state'){bindState(m.characterId,m.state);return}
    if(m.type==='event'){onEvent(m.event);return}
