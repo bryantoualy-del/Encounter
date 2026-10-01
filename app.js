@@ -123,8 +123,26 @@ function mergeBuiltinEnhancements(stored,builtin){
   if(!s.phases.length&&b.phases.length)s.phases=b.phases; else s.phases=s.phases.map(p=>{const bp=b.phases.find(x=>x.name===p.name);return bp?Object.assign({},bp,p,{addResistances:p.addResistances?.length?p.addResistances:bp.addResistances,addImmunities:p.addImmunities?.length?p.addImmunities:bp.addImmunities}):p;});
   return s;
 }
+const CC_PLAYERS=[
+  {id:'cc-kentaro',name:'Kentaro',hp:103,ac:18},
+  {id:'cc-samoth',name:'Samoth',hp:72,ac:15},
+  {id:'cc-brackmard',name:'Brack Mard',hp:104,ac:19},
+  {id:'cc-rufus',name:'Rufus',hp:53,ac:16},
+  {id:'cc-nans',name:'Nans',hp:125,ac:18},
+  {id:'cc-zephyr',name:'Zéphyr',hp:84,ac:20}
+];
+function ccParticipant(x){return{id:x.id,modelId:null,groupId:null,name:x.name,baseName:x.name,kind:'player',ac:x.ac,maxHp:x.hp,hp:x.hp,tempHp:0,initiative:0,conditions:[],actionUsed:false,bonusActionUsed:false,reactionUsed:false,legendaryRemaining:0,currentPhaseId:null,abilityState:{},resourceState:{},companionOf:null,lairOwnerId:null,bossOverride:false,attackProgress:0,speedOverride:''}}
+function ensureCCPlayers(encounter){
+  encounter=encounter||{};
+  encounter.participants=Array.isArray(encounter.participants)?encounter.participants:[];
+  const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const ids=new Set(encounter.participants.map(p=>p.id));
+  const names=new Set(encounter.participants.map(p=>norm(p.name)));
+  for(const x of CC_PLAYERS)if(!ids.has(x.id)&&!names.has(norm(x.name)))encounter.participants.push(ccParticipant(x));
+  return encounter;
+}
 function blankState(){
-  return {version:APP_VERSION,ui:{mode:'prep',locked:false,density:'comfortable'},encounter:{name:'Rencontre sans titre',savedId:null,round:1,currentTurn:0,selectedId:null,participants:[],log:[],turnNotices:[],pendingPhase:null},monsters:clone(SAMPLE_MONSTERS).map(normalizeMonster),savedEncounters:[],trash:[]};
+  return {version:APP_VERSION,ui:{mode:'prep',locked:false,density:'comfortable'},encounter:ensureCCPlayers({name:'Rencontre sans titre',savedId:null,round:1,currentTurn:0,selectedId:null,participants:[],log:[],turnNotices:[],pendingPhase:null}),monsters:clone(SAMPLE_MONSTERS).map(normalizeMonster),savedEncounters:[],trash:[]};
 }
 function loadState(){
   try{
@@ -135,7 +153,7 @@ function loadState(){
     s.monsters=s.monsters.map(m=>mergeBuiltinEnhancements(m,builtinMap.get(m.id)));
     const known=new Set(s.monsters.map(m=>m.id));
     SAMPLE_MONSTERS.map(normalizeMonster).forEach(m=>{if(!known.has(m.id))s.monsters.push(m);});
-    s.encounter=Object.assign(blankState().encounter,s.encounter||{});s.encounter.participants=(s.encounter.participants||[]).map(normalizeParticipant);s.encounter.log=s.encounter.log||[];s.encounter.turnNotices=s.encounter.turnNotices||[];
+    s.encounter=Object.assign(blankState().encounter,s.encounter||{});s.encounter.participants=(s.encounter.participants||[]).map(normalizeParticipant);ensureCCPlayers(s.encounter);s.encounter.log=s.encounter.log||[];s.encounter.turnNotices=s.encounter.turnNotices||[];
     return s;
   }catch(err){console.warn(err);return blankState();}
 }
@@ -368,7 +386,7 @@ function saveMonsterFromForm(){
 }
 function deleteMonster(id){if(structuralGuard())return;const m=state.monsters.find(x=>x.id===id);if(!m)return;if(!confirm(`Supprimer « ${m.name} » de la bibliothèque ?`))return;mutate(()=>{state.monsters=state.monsters.filter(x=>x.id!==id);state.encounter.participants.filter(p=>p.modelId===id).forEach(p=>p.modelId=null);},`${m.name} supprimé de la bibliothèque.`);$('#monsterEditor').close();}
 function exportData(){const data={app:'ENCOUNTER',version:APP_VERSION,exportedAt:new Date().toISOString(),monsters:state.monsters,encounter:state.encounter};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`encounter-${state.encounter.name.toLowerCase().replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'')||'combat'}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('Export JSON créé.');}
-function importData(raw){if(!String(raw).trim())throw new Error('Aucune donnée JSON fournie.');const data=JSON.parse(raw);checkpoint();if(data.app==='ENCOUNTER'&&data.monsters){state.monsters=data.monsters.map(normalizeMonster);if(data.encounter)state.encounter=Object.assign(blankState().encounter,data.encounter,{participants:(data.encounter.participants||[]).map(normalizeParticipant)});}else if(Array.isArray(data))data.forEach(m=>state.monsters.push(normalizeMonster(m)));else if(data.name)state.monsters.push(normalizeMonster(data));else throw new Error('Format non reconnu');const known=new Set(state.monsters.map(m=>m.id));SAMPLE_MONSTERS.map(normalizeMonster).forEach(m=>{if(!known.has(m.id))state.monsters.push(m);});saveState();render();log('Import JSON effectué.');}
+function importData(raw){if(!String(raw).trim())throw new Error('Aucune donnée JSON fournie.');const data=JSON.parse(raw);checkpoint();if(data.app==='ENCOUNTER'&&data.monsters){state.monsters=data.monsters.map(normalizeMonster);if(data.encounter)state.encounter=ensureCCPlayers(Object.assign(blankState().encounter,data.encounter,{participants:(data.encounter.participants||[]).map(normalizeParticipant)}));}else if(Array.isArray(data))data.forEach(m=>state.monsters.push(normalizeMonster(m)));else if(data.name)state.monsters.push(normalizeMonster(data));else throw new Error('Format non reconnu');const known=new Set(state.monsters.map(m=>m.id));SAMPLE_MONSTERS.map(normalizeMonster).forEach(m=>{if(!known.has(m.id))state.monsters.push(m);});saveState();render();log('Import JSON effectué.');}
 function newEncounter(){if(state.encounter.participants.length&&!confirm('Créer une nouvelle rencontre ? La bibliothèque sera conservée.'))return;mutate(()=>{state.encounter={name:'Rencontre sans titre',round:1,currentTurn:0,selectedId:null,participants:[],log:[],turnNotices:[],pendingPhase:null};ui.multiSelection.clear();ui.multiMode=false;},'Nouvelle rencontre créée.');}
 function resetAll(){if(!confirm('Réinitialiser toute l’application, bibliothèque comprise ?'))return;checkpoint();state=blankState();ui.multiSelection.clear();saveState();render();toast('Application réinitialisée.');}
 function renderPendingPhase(){const pending=state.encounter.pendingPhase,dlg=$('#phaseDialog');if(!pending||dlg.open)return;const p=state.encounter.participants.find(x=>x.id===pending.participantId),m=modelFor(p),ph=m?.phases.find(x=>x.id===pending.phaseId);if(!p||!ph){state.encounter.pendingPhase=null;saveState();return;}$('#phaseDialogTitle').textContent=`${p.name} — ${ph.name}`;$('#phaseDialogText').textContent=ph.note||'Le boss change de phase.';const stats=[];if(ph.ac!=null)stats.push(`CA ${ph.ac}`);if(ph.speed)stats.push(`Vitesse ${ph.speed}`);if(ph.legendaryMax!=null)stats.push(`${ph.legendaryMax} actions légendaires`);if(ph.addResistances.length)stats.push(`Résistances : ${formatList(ph.addResistances)}`);if(ph.addImmunities.length)stats.push(`Immunités : ${formatList(ph.addImmunities)}`);$('#phaseDialogStats').innerHTML=stats.map(x=>`<span>${esc(x)}</span>`).join('');dlg.showModal();state.encounter.pendingPhase=null;saveState();}
@@ -609,7 +627,7 @@ function importData(raw){
   else if(Array.isArray(data))data.forEach(m=>state.monsters.push(normalizeMonster(m)));else if(data.name)state.monsters.push(normalizeMonster(data));else throw new Error('Format non reconnu');
   const known=new Set(state.monsters.map(m=>m.id));SAMPLE_MONSTERS.map(normalizeMonster).forEach(m=>{if(!known.has(m.id))state.monsters.push(m);});saveState();render();log('Import JSON effectué.');
 }
-function newEncounter(){if(state.encounter.participants.length&&!confirm('Créer une nouvelle rencontre ? La bibliothèque sera conservée.'))return;forceBackup('Avant nouvelle rencontre');mutate(()=>{state.encounter={name:'Rencontre sans titre',savedId:null,round:1,currentTurn:0,selectedId:null,participants:[],log:[],turnNotices:[],pendingPhase:null};ui.multiSelection.clear();ui.multiMode=false;ui.targeting=null;},'Nouvelle rencontre créée.');}
+function newEncounter(){if(state.encounter.participants.length&&!confirm('Créer une nouvelle rencontre ? La bibliothèque sera conservée.'))return;forceBackup('Avant nouvelle rencontre');mutate(()=>{state.encounter=ensureCCPlayers({name:'Rencontre sans titre',savedId:null,round:1,currentTurn:0,selectedId:null,participants:[],log:[],turnNotices:[],pendingPhase:null});ui.multiSelection.clear();ui.multiMode=false;ui.targeting=null;},'Nouvelle rencontre créée.');}
 function resetAll(){if(!confirm('Réinitialiser toute l’application, bibliothèque comprise ?'))return;forceBackup('Avant réinitialisation complète');checkpoint();state=blankState();ui.multiSelection.clear();ui.targeting=null;localStorage.setItem(STORAGE_KEY,JSON.stringify(state));render();toast('Application réinitialisée. Un backup a été conservé.');}
 
 // V3 : événements supplémentaires en délégation globale.
