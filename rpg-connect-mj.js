@@ -135,7 +135,19 @@
  dlg.addEventListener('change',e=>{const id=e.target.dataset.bind;if(!id)return;bindings[id]=e.target.value;localStorage.setItem(bindingsKey,JSON.stringify(bindings));const existing=lastStates[id];if(existing)bindState(id,existing);if(connected&&bindings[id]){delete invites[id];send({type:'invite',characterId:id})}renderPanel()});
  dlg.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;if(b.id==='rpgMjPrepareFight'){prepareFight();return}if(b.id==='rpgMjStartFight'){startFight();return}if(b.id==='rpgMjSyncTargets'){broadcastTargets(onlineBoundIds());return}if(b.id==='rpgMjResetFight'){resetRpgFight();return}let id=b.dataset.validateInit;if(id){validateInitiative(id,$r(`[data-fight-init="${id}"]`)?.value);return}id=b.dataset.invite;if(id){send({type:'invite',characterId:id});return}id=b.dataset.copy;if(id){await navigator.clipboard.writeText(inviteString(id));note('Invitation '+names[id]+' copiée · le joueur peut la coller dans son Companion.');return}id=b.dataset.share;if(id){const text=inviteString(id);try{if(navigator.share)await navigator.share({title:'RPG Connect · '+names[id],text});else{await navigator.clipboard.writeText(text);note('Partage non disponible · invitation copiée.')}}catch(error){if(error?.name!=='AbortError')note('Partage impossible · utilise Copier.')}return}id=b.dataset.grant;if(id){command(id,'turn:grant',{text:'Le MJ vous donne la main.'});return}id=b.dataset.next;if(id){command(id,'turn:next',{});return}id=b.dataset.reaction;if(id){if(combatMachine.state==='TURN')transitionCombat('REACTION','réaction demandée');command(id,'reaction:requested',{text:'Le MJ demande votre réaction.',machine:{...combatMachine}});return}id=b.dataset.sendMessage;if(id){let input=$r(`[data-message="${id}"]`);if(input.value.trim())command(id,'message:gm',{text:input.value.trim()});input.value='';return}id=b.dataset.resource;if(id){let key=$r(`[data-resource-key="${id}"]`).value.trim(),value=Number($r(`[data-resource-value="${id}"]`).value);if(key&&Number.isFinite(value))command(id,'resource:set',{key,value});return}id=b.dataset.setHp||b.dataset.setTemp;if(id){let raw=$r(`[data-hp-value="${id}"]`).value,value=Number(raw);if(raw!==''&&Number.isSafeInteger(value)&&value>=0)command(id,b.dataset.setHp?'hp:set':'tempHp:set',{value});return}id=b.dataset.addItem;if(id){let name=$r(`[data-item-name="${id}"]`).value.trim(),qty=Number($r(`[data-item-qty="${id}"]`).value);if(name&&Number.isSafeInteger(qty)&&qty>0)command(id,'inventory:add',{item:{name,qty}});return}let attackId=b.dataset.hit||b.dataset.miss;if(attackId){let item=pending.get(attackId);if(item)sendAttackDecision(item,!!b.dataset.hit)}});
  if(shareHealth)shareHealth.addEventListener('change',()=>{shareHealthGauge=!!shareHealth.checked;localStorage.setItem('encounter-rpg-share-health-gauge',shareHealthGauge?'1':'0');broadcastTargets(onlineBoundIds());netlog('Jauge santé joueurs '+(shareHealthGauge?'activée':'masquée'),'info')});
- hitPopup.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const attackId=b.dataset.popupHit||b.dataset.popupMiss;if(!attackId)return;const item=pending.get(attackId);if(!item)return;sendAttackDecision(item,!!b.dataset.popupHit)});
+ let hitTapLock={attackId:'',at:0};
+ function handleHitPopupDecision(e){
+  const b=e.target.closest?.('[data-popup-hit],[data-popup-miss]');if(!b||!hitPopup.contains(b)||b.disabled)return;
+  const attackId=b.dataset.popupHit||b.dataset.popupMiss;if(!attackId)return;
+  const now=Date.now();if(hitTapLock.attackId===attackId&&now-hitTapLock.at<700)return;
+  const item=pending.get(attackId);if(!item)return;
+  hitTapLock={attackId,at:now};
+  e.preventDefault();e.stopPropagation();
+  if(e.type==='pointerup'&&e.pointerType==='mouse')return;
+  sendAttackDecision(item,!!b.dataset.popupHit);
+ }
+ hitPopup.addEventListener('pointerup',handleHitPopupDecision,{passive:false});
+ hitPopup.addEventListener('click',handleHitPopupDecision);
 
  function boundCharacterForParticipant(p){return p?Object.keys(bindings).find(id=>bindings[id]===p.id)||null:null}
  function injectParticipantRpgControls(){
