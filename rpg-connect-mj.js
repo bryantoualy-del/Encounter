@@ -61,14 +61,14 @@
  function conditionPayload(p){return(p?.conditions||[]).map(x=>({name:String(x.name||''),durationType:x.durationType||'indefinite',remaining:x.remaining??null,saveAbility:x.saveAbility||'',dc:x.dc??null,source:x.source||''})).filter(x=>x.name)}
  function conditionMechanics(list){const keys=new Set(list.map(x=>normalizeName(x.name)));return{attackDisadvantage:['aveugle','empoisonne','effraye'].some(x=>keys.has(x)),incapacitated:['incapacite','inconscient','paralyse','etourdi','petrifie'].some(x=>keys.has(x)),restrained:keys.has('entrave'),prone:keys.has('aterre'),invisible:keys.has('invisible')}}
  function syncConditionsFor(id){const p=participant(id);if(!p||!online(id))return;const conditions=conditionPayload(p);command(id,'conditions:set',{conditions,mechanics:conditionMechanics(conditions)});}
- function syncAllConditions(){for(const id of fightRoster().filter(online))syncConditionsFor(id);broadcastTargets(fightRoster().filter(online))}
+ function syncAllConditions(){for(const id of onlineBoundIds())syncConditionsFor(id);broadcastTargets(onlineBoundIds())}
  function clearTargets(roster=onlineBoundIds()){selectedTargets={};for(const id of roster)command(id,'target:clear',{});netlog('Cibles effacées','info');renderPanel()}
  function resetRpgFight(){
   const roster=onlineBoundIds();state.encounter.round=1;state.encounter.currentTurn=0;state.encounter.selectedId=null;clearTargets(roster);pending.clear();recentAttackRolls.clear();attackTargets.clear();decisionCommands.clear();fight={phase:'idle',requestId:null,roster:[],rolls:{},validated:{}};if(['FIGHT','TURN','REACTION'].includes(combatMachine.state))transitionCombat('END','combat terminé');if(combatMachine.state!=='LOBBY')transitionCombat('LOBBY','reset combat');
   for(const id of roster){sessionCommand(id,{phase:'lobby',resetCombat:true,text:'Combat réinitialisé · Tour 1 · cibles effacées.'});syncConditionsFor(id)}syncOnlineState('reset');saveState();render();
   note('RPG Fight réinitialisé · les PV Encounter ne sont pas modifiés.');netlog('Reset combat RPG · cibles et états de tour effacés','action');renderPanel();renderHitPopup();
  }
- function broadcastTargets(roster=fightRoster().filter(online)){const targets=buildTargets();for(const id of roster)command(id,'targets:set',{targets,selectedTargetId:selectedTargets[id]||null});netlog('Cibles synchronisées · '+targets.length+' adversaire'+(targets.length>1?'s':''),'info');renderPanel();return targets}
+ function broadcastTargets(roster=onlineBoundIds()){const targets=buildTargets();for(const id of roster)command(id,'targets:set',{targets,selectedTargetId:selectedTargets[id]||null});netlog('Cibles synchronisées · '+targets.length+' adversaire'+(targets.length>1?'s':''),'info');renderPanel();return targets}
  function renderFight(){
   const roster=boundIds(),required=new Set(fightRoster()),phase=$r('#rpgMjFightPhase'),list=$r('#rpgMjFightRoster'),start=$r('#rpgMjStartFight'),prepare=$r('#rpgMjPrepareFight');
   if(!phase||!list)return;
