@@ -44,7 +44,7 @@
   if(!attackId||!lock)return;
   attackTargets.set(attackId,lock);
   clearTimeout(attackTargetTimers.get(attackId));
-  attackTargetTimers.set(attackId,setTimeout(()=>{attackTargetTimers.delete(attackId);attackTargets.delete(attackId)},5000));
+  attackTargetTimers.set(attackId,setTimeout(()=>{attackTargetTimers.delete(attackId);attackTargets.delete(attackId)},15000));
  }
  function dropAttackTarget(attackId){if(!attackId)return;clearTimeout(attackTargetTimers.get(attackId));attackTargetTimers.delete(attackId);attackTargets.delete(attackId)}
  function sendAttackDecision(item,hit){if(!item||!connected)return false;if(!item.decisionEvent)item.decisionEvent={id:uid(),type:'attack:decision',characterId:item.characterId,timestamp:new Date().toISOString(),payload:{attackId:item.attackId,hit:!!hit}};item.deciding=true;item.decisionStatus='Validation envoyée…';item.decisionAttempts=(item.decisionAttempts||0)+1;const event=item.decisionEvent;decisionCommands.set(event.id,item.attackId);send({type:'command',room,characterId:item.characterId,event});clearTimeout(decisionTimers.get(event.id));decisionTimers.set(event.id,setTimeout(()=>{if(!pending.has(item.attackId))return;if((item.decisionAttempts||0)<3){item.decisionStatus='Pas de réponse · nouvel essai…';renderHitPopup();sendAttackDecision(item,hit)}else{item.deciding=false;item.decisionStatus='Aucune réponse du Companion · réessaie.';decisionCommands.delete(event.id);decisionTimers.delete(event.id);renderPanel();renderHitPopup();note(names[item.characterId]+' · validation non confirmée après 3 essais.')}},1200));renderHitPopup();return event.id}
