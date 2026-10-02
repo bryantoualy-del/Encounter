@@ -74,7 +74,7 @@
   if(!bound.length){note(onlineIds.length?(names[onlineIds[0]]+' est connecté mais pas lié à un participant ENCOUNTER. Sélectionne son participant dans RPG Connect.'):'Aucun Companion lié à un participant ENCOUNTER.');renderPanel();return false}
   if(!roster.length){note(onlineIds.length?(onlineIds.map(id=>names[id]).join(', ')+' connecté'+(onlineIds.length>1?'s':'')+', mais aucun n’est lié au bon participant ENCOUNTER.'):'Aucun Companion lié n’est connecté. Connecte seulement celui que tu veux tester.');renderPanel();return false}
   clearTargets(roster);pending.clear();recentAttackRolls.clear();decisionCommands.clear();
-  fight={phase:'preparation',requestId:uid(),roster:[...roster],rolls:{},validated:{}};
+  fight={phase:'preparation',requestId:uid(),roster:[...roster],rolls:{},validated:{}};saveState();render();
   for(const id of roster){sessionCommand(id,{phase:'preparation',resetCombat:true,text:'Tour 1 réinitialisé · '+roster.length+' Companion'+(roster.length>1?'s':'')+' actif'+(roster.length>1?'s':'')});syncConditionsFor(id);command(id,'initiative:request',{requestId:fight.requestId,participantId:bindings[id],round:1,text:'Le MJ demande ton initiative.'})}
   const ignored=bound.length-roster.length;
   note('Prépa Fight · initiative demandée à '+roster.length+' Companion'+(roster.length>1?'s':'')+' connecté'+(roster.length>1?'s':'')+(ignored?' · '+ignored+' hors ligne ne bloque'+(ignored>1?'nt':'')+' pas FIGHT.':'.'));netlog('Prépa Fight envoyée à '+roster.length+' Companion'+(roster.length>1?'s':''),'action');
