@@ -146,15 +146,15 @@
 @media (min-width:900px) and (max-width:1366px) and (orientation:landscape){
   .rpg-mj-cockpit{
     box-sizing:border-box;
-    height:44px;
-    min-height:44px;
+    height:40px;
+    min-height:40px;
     margin:0 8px;
-    padding:4px 7px;
+    padding:3px 7px;
     transition:height .16s ease,min-height .16s ease;
   }
-  .rpg-mj-cockpit.has-events{height:52px;min-height:52px;padding-block:5px}
-  .rpg-mj-netline{height:34px;min-height:34px;gap:7px}
-  .rpg-mj-cockpit.has-events .rpg-mj-netline{height:40px;min-height:40px}
+  .rpg-mj-cockpit.has-events{height:46px;min-height:46px;padding-block:4px}
+  .rpg-mj-netline{height:32px;min-height:32px;gap:7px}
+  .rpg-mj-cockpit.has-events .rpg-mj-netline{height:36px;min-height:36px}
   .rpg-mj-netline>.eyebrow{font-size:9px}
   .rpg-mj-netline #rpgCockpitLog{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
   .rpg-net-event{height:30px;padding:4px 7px;font-size:10px}
@@ -162,5 +162,5 @@
   .rpg-net-event time{font-size:9px}
   .rpg-cockpit-summary{max-width:120px;font-size:9px}
   #rpgCockpitOpen{height:30px;min-height:30px}
-  body.combat-mode:has(#rpgMjCockpit.has-events){--rpg-live-height:52px}
+  body.combat-mode:has(#rpgMjCockpit.has-events){--rpg-live-height:46px}
 }
