@@ -120,7 +120,7 @@
   if(!pendingTurnEnd)return false;
   const req=pendingTurnEnd,current=activeParticipant();
   if(!current||current.id!==req.participantId||state.encounter.round!==req.round||fight.phase!=='fight'){rejectTurnEnd('La demande de fin de tour n’est plus valide.');return false}
-  pendingTurnEnd=null;renderTurnEndPopup();netlog((names[req.characterId]||req.characterId)+' · fin de tour validée par le MJ','ok');actualAdvanceTurn();return true
+  pendingTurnEnd=null;renderTurnEndPopup();netlog((names[req.characterId]||req.characterId)+' · fin de tour validée par le MJ','ok');if(typeof requestNextTurn==='function')requestNextTurn();else actualAdvanceTurn();return true
  }
  function renderPanel(){
   const list=state.encounter.participants.filter(p=>p.kind==='player'||p.kind==='ally');
