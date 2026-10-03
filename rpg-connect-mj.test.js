@@ -16,7 +16,7 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  let player=null;
  try{
  dom.window.WebSocket=WebSocket;let copied='';Object.defineProperty(dom.window.navigator,'clipboard',{value:{writeText:async value=>{copied=String(value)}}});Object.defineProperty(dom.window.crypto,'randomUUID',{value:()=>Math.random().toString(36).slice(2)});
- dom.window.eval(`window.state={ui:{mode:'prep'},encounter:{participants:[{id:'p1',name:'Samoth',kind:'player',hp:72,maxHp:72,tempHp:0,ac:14,initiative:0},{id:'p2',name:'Nans',kind:'player',hp:95,maxHp:95,tempHp:0,ac:16,initiative:7}],log:[],round:1,currentTurn:0,selectedId:null}};window.localDamage=0;window.saveState=()=>{};window.render=()=>{};window.log=()=>{};window.checkpoint=()=>{};window.sortedParticipants=()=>[...state.encounter.participants].sort((a,b)=>b.initiative-a.initiative);window.activeParticipant=()=>sortedParticipants()[state.encounter.currentTurn]||null;window.processStartTurn=()=>{};window.setMode=mode=>{state.ui.mode=mode};window.applyDamageMany=(ids,amount)=>{localDamage+=amount};window.applyHealMany=()=>{};window.applyDamageDirect=(target,amount)=>{localDamage+=amount;return{amount}};window.applyHealDirect=()=>{};window.actualAdvanceTurn=()=>{}`);
+ dom.window.eval(`window.state={ui:{mode:'prep'},encounter:{participants:[{id:'p1',name:'Samoth',kind:'player',hp:72,maxHp:72,tempHp:0,ac:14,initiative:0},{id:'p2',name:'Nans',kind:'player',hp:95,maxHp:95,tempHp:0,ac:16,initiative:7},{id:'e1',name:'Gobelin',kind:'enemy',hp:30,maxHp:30,tempHp:0,ac:13,initiative:5,conditions:[{id:'restrained-1',name:'Entravé'}]}],log:[],round:1,currentTurn:0,selectedId:null}};window.localDamage=0;window.__rolls=[];window.saveState=()=>{};window.render=()=>{};window.log=()=>{};window.actionLog=()=>{};window.checkpoint=()=>{};window.sortedParticipants=()=>[...state.encounter.participants].sort((a,b)=>b.initiative-a.initiative);window.activeParticipant=()=>sortedParticipants()[state.encounter.currentTurn]||null;window.processStartTurn=()=>{};window.setMode=mode=>{state.ui.mode=mode};window.modelFor=p=>p?.kind==='enemy'?{type:'humanoïde',saveMods:{DEX:2,FOR:1},abilities:{DEX:14,FOR:12}}:null;window.effectiveAc=p=>p.ac;window.isLair=()=>false;window.conditionImmune=()=>false;window.addConditionMany=(ids,data)=>{for(const id of ids){const p=state.encounter.participants.find(x=>x.id===id);if(p){p.conditions=p.conditions||[];p.conditions.push({id:'test-'+p.conditions.length,...data})}}};window.rollD20=()=>({roll:(window.__rolls.shift()??10)});window.applyDamageMany=(ids,amount)=>{localDamage+=amount};window.applyHealMany=()=>{};window.applyDamageDirect=(target,amount)=>{if(target?.kind==='enemy'){target.hp=Math.max(0,target.hp-amount);return{amount}}localDamage+=amount;return{amount}};window.applyHealDirect=()=>{};window.actualAdvanceTurn=()=>{}`);
  dom.window.eval(readFileSync(new URL('./rpg-connect-mj.js',import.meta.url),'utf8'));
  dom.window.document.querySelector('#rpgMjEndpoint').value=url;dom.window.document.querySelector('#rpgMjKey').value=process.env.RPG_CONNECT_GM_KEY;dom.window.document.querySelector('#rpgMjConnect').click();await until(()=>dom.window.RPGConnectMJ.getStatus().connected);const room=dom.window.RPGConnectMJ.getStatus().room;
  dom.window.document.querySelector('[data-invite="samoth"]').click();await until(()=>!!dom.window.document.querySelector('[data-copy="samoth"]'));dom.window.document.querySelector('[data-copy="samoth"]').click();await until(()=>copied.startsWith('RPGCONNECT|'));
@@ -28,6 +28,21 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  let fightState=waitSession(player,'fight'),turnGrant=waitCommand(player,'turn:grant');assert.equal(dom.window.RPGConnectMJ.startFight(),true);const fightMsg=await fightState;assert.equal(fightMsg.phase,'fight');assert.equal(fightMsg.activeCharacterId,'samoth');assert.equal((await turnGrant).type,'turn:grant');assert.equal(dom.window.eval('state.ui.mode'),'combat');
  let command=waitCommand(player,'hp:damage');dom.window.eval("applyDamageMany(['p1'],8,'froid')");assert.equal((await command).payload.amount,8);
  assert.equal(dom.window.eval('localDamage'),0);assert.equal(dom.window.eval('state.encounter.participants[0].hp'),60);
+
+ dom.window.eval("window.__rolls=[18,3]");
+ let saveResultWait=waitCommand(player,'save:result');
+ send(player,{type:'event',event:{id:'samoth-save-dis-1',type:'save:request',characterId:'samoth',timestamp:new Date().toISOString(),payload:{targetId:'e1',ability:'DEX',dc:12,source:'Vortex de test',damage:8,damageType:'froid',condition:'Aveuglé'}}});
+ const saveDis=await saveResultWait;
+ assert.equal(saveDis.payload.mode,'dis');assert.equal(saveDis.payload.automaticFailure,false);assert.deepEqual(saveDis.payload.dice,[18,3]);assert.equal(saveDis.payload.total,5);assert.equal(saveDis.payload.success,false);assert.equal(saveDis.payload.effectiveDamage,8);assert.equal(saveDis.payload.conditionApplied,'Aveuglé');assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp"),22);
+ send(player,{type:'command-ack',id:saveDis.id,result:'applied'});
+
+ dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').conditions=[{id:'par-1',name:'Paralysé'}];window.__rolls=[20,20]");
+ saveResultWait=waitCommand(player,'save:result');
+ send(player,{type:'event',event:{id:'samoth-save-auto-1',type:'save:request',characterId:'samoth',timestamp:new Date().toISOString(),payload:{targetId:'e1',ability:'DEX',dc:1,source:'Test paralysie',damage:0}}});
+ const saveAuto=await saveResultWait;
+ assert.equal(saveAuto.payload.mode,'auto-fail');assert.equal(saveAuto.payload.automaticFailure,true);assert.deepEqual(saveAuto.payload.dice,[]);assert.equal(saveAuto.payload.total,0);assert.equal(saveAuto.payload.success,false);
+ send(player,{type:'command-ack',id:saveAuto.id,result:'applied'});
+
  dom.window.RPGConnectMJ.getStatus();
  }finally{
   try{dom.window.document.querySelector('#rpgMjDisconnect')?.click()}catch{}
