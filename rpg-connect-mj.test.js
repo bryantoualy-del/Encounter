@@ -55,6 +55,15 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  await until(()=>dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp")===24);
  assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp"),17);
 
+ // Encounter remains authoritative even if an outdated client emits an attack while incapacitated.
+ dom.window.eval("state.encounter.participants.find(p=>p.id==='p1').conditions=[{id:'pc-par-1',name:'Paralysé'}]");
+ const blockedMessage=waitCommand(player,'message:gm');
+ send(player,{type:'event',event:{id:'samoth-blocked-roll',type:'attack:rolled',characterId:'samoth',timestamp:new Date().toISOString(),payload:{attackId:'attack-blocked',targetId:'e2',target:{id:'e2',name:'Gobelin B'},roll:25,total:25}}});
+ assert.match((await blockedMessage).payload.text,/état incapacitant/i);
+ send(player,{type:'event',event:{id:'samoth-blocked-dmg',type:'attack:damage',characterId:'samoth',timestamp:new Date().toISOString(),payload:{attackId:'attack-blocked',targetId:'e2',amount:20,components:[{amount:20,type:'force'}]}}});
+ await new Promise(resolve=>setTimeout(resolve,40));
+ assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp"),24);
+
  dom.window.RPGConnectMJ.getStatus();
  }finally{
   try{dom.window.document.querySelector('#rpgMjDisconnect')?.click()}catch{}
