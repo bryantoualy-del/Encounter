@@ -5,7 +5,7 @@ const ASSETS=[
   './styles.css',
   './table.css?v=3',
   './table.js',
-  './rpg-connect-mj.css?v=22',
+  './rpg-connect-mj.css?v=23',
   './rpg-connect-mj.js',
   './creature-icons.js',
   './app.js',
