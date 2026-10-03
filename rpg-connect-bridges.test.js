@@ -16,11 +16,8 @@ for(const name of ['Kentaro','Nans','Samoth','Brackmard','Zephyr','Rufus'])test(
  const scripts=[...w.document.scripts].filter(s=>s.type!=='module').map(node=>{const src=node.getAttribute('src'),code=src?readFileSync(join(dir,src.split('?')[0]),'utf8'):node.textContent;return{src:src||'inline',code}});
  try{
   for(const script of scripts){assert.doesNotThrow(()=>new Function(script.code),name+' · syntaxe invalide : '+script.src)}
-  for(const script of scripts){
-    if(/rpg-connect-client|rpg-connect-icon-registry|social-dice|companion-turnbar/i.test(script.src))continue;
-    w.eval(script.code);
-    if(w.CompanionAPI&&w.__CompanionBridge)break;
-  }
+  const apiIndex=scripts.findIndex(script=>/companion-api\.js/i.test(script.src));assert.ok(apiIndex>=0,'companion-api.js absent');
+  w.eval(scripts.slice(0,apiIndex+1).map(script=>script.code).join('\n;\n'));
   const api=w.CompanionAPI,events=[];assert.ok(w.__CompanionBridge,'bridge local absent');assert.ok(api,'CompanionAPI absent');assert.equal(api.getState().characterId,name.toLowerCase());api.subscribe(event=>events.push(event));
   const before=api.getState().hp.current;api.damage(1);await new Promise(resolve=>setTimeout(resolve,0));assert.equal(api.getState().hp.current,before-1);assert.ok(events.some(e=>e.type==='hp:changed'));
   api.heal(1);await new Promise(resolve=>setTimeout(resolve,0));assert.equal(api.getState().hp.current,before);
