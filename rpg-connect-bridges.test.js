@@ -30,13 +30,39 @@ for(const name of ['Kentaro','Nans','Samoth','Brackmard','Zephyr','Rufus'])test(
   assert.match(client,/attackTargetLocks/,'attack target lock absent');
   assert.match(client,/mechanics:t\?\.mechanics/,'target mechanics absent');
   assert.match(client,/durationType==='nextAttack'/,'next-attack state support absent');
+  const mechanicSource=name==='Rufus'?readFileSync(join(dir,'companion-v3.js'),'utf8'):name==='Samoth'?readFileSync(join(dir,'companion.js'),'utf8'):readFileSync(join(dir,'index.html'),'utf8');
   if(name==='Kentaro'){
+    assert.match(mechanicSource,/Perturbations synaptiques[\s\S]{0,2200}requestSave/,'Kentaro Synaptic save is not routed through Encounter');
+    assert.match(mechanicSource,/Bannissement[\s\S]{0,2200}requestSave/,'Kentaro Banishment save is not routed through Encounter');
     const html=readFileSync(join(dir,'index.html'),'utf8');
     assert.match(html,/blade\('sun','bonus'(?:,'third')?\)/,'Kentaro bonus Solinar attack path absent');
     assert.match(html,/blade\('moon','bonus'(?:,'third')?\)/,'Kentaro bonus Selhane attack path absent');
     assert.match(html,/pending:\(\)=>S\.pendingHit/,'Kentaro bonus attack is not exposed through the shared pending pipeline');
     assert.match(html,/emitsAttackDamage:true/,'Kentaro explicit damage transport disabled');
     assert.match(html,/attack:damage[^\n]+p\.attackId/,'Kentaro damage is not correlated to the pending attackId');
+  }
+  if(name==='Brackmard'){
+    assert.match(mechanicSource,/brackManeuverSave/,'Brack maneuver saves are not structured');
+    assert.match(mechanicSource,/Souffle de la forge[\s\S]{0,1200}requestSave/,'Brack forge breath save is not routed through Encounter');
+  }
+  if(name==='Rufus'){
+    assert.match(mechanicSource,/Dague spectrale \+1[\s\S]{0,900}requestSave|requestSave[\s\S]{0,900}Dague spectrale \+1/,'Rufus spectral dagger save is not routed through Encounter');
+    assert.match(mechanicSource,/Motif hypnotique[\s\S]{0,1800}requestSave|requestSave[\s\S]{0,1800}Motif hypnotique/,'Rufus Hypnotic Pattern save is not routed through Encounter');
+  }
+  if(name==='Nans'){
+    assert.match(mechanicSource,/Présence intimidante[\s\S]{0,1200}requestSave|requestSave[\s\S]{0,1200}Présence intimidante/,'Nans intimidating presence save is not routed through Encounter');
+    assert.match(mechanicSource,/Fracas de guerre[\s\S]{0,1400}requestSave|requestSave[\s\S]{0,1400}Fracas de guerre/,'Nans horn crash save is not routed through Encounter');
+    assert.match(mechanicSource,/Hurlement du Grand Saccageur[\s\S]{0,1400}requestSave|requestSave[\s\S]{0,1400}Hurlement du Grand Saccageur/,'Nans horn howl save is not routed through Encounter');
+  }
+  if(name==='Zephyr'){
+    assert.match(mechanicSource,/Représailles infernales[\s\S]{0,1400}requestSave|requestSave[\s\S]{0,1400}Représailles infernales/,'Zephyr Hellish Rebuke save is not routed through Encounter');
+    assert.match(mechanicSource,/triggerSpellSmite[\s\S]{0,2600}requestSave/,'Zephyr smite saves are not structured');
+    assert.match(mechanicSource,/Présence conquérante[\s\S]{0,1200}requestSave|requestSave[\s\S]{0,1200}Présence conquérante/,'Zephyr conquest presence save is not routed through Encounter');
+    assert.match(mechanicSource,/Décret de la Corne Brisée[\s\S]{0,1200}requestSave|requestSave[\s\S]{0,1200}Décret de la Corne Brisée/,'Zephyr decree save is not routed through Encounter');
+  }
+  if(name==='Samoth'){
+    assert.match(mechanicSource,/Rayonnement écœurant[\s\S]{0,2200}sendEncounterSave/,'Samoth radiance exposure save is not routed through Encounter');
+    assert.match(mechanicSource,/Esprit draconique · Souffle[\s\S]{0,1000}sendEncounterSave|sendEncounterSave[\s\S]{0,1000}Esprit draconique · Souffle/,'Samoth dragon breath save is not routed through Encounter');
   }
   assert.equal(errors.length,0,errors.map(e=>e.message).join('\n'));
  }finally{dom.window.close()}
