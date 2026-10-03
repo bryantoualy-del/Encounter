@@ -53,6 +53,7 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  const structuredSave=await saveResultWait;
  assert.equal(structuredSave.payload.mode,'dis');assert.deepEqual(structuredSave.payload.dice,[17,4]);assert.equal(structuredSave.payload.total,6);assert.equal(structuredSave.payload.success,false);assert.equal(structuredSave.payload.rawDamage,14);assert.equal(structuredSave.payload.requestedDamage,14);assert.equal(structuredSave.payload.effectiveDamage,14);assert.equal(structuredSave.payload.components.length,2);assert.equal(structuredSave.payload.conditionApplied,'Vitesse 0 (glace)');assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp"),8);
  send(player,{type:'command-ack',id:structuredSave.id,result:'applied'});
+ dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp=22;state.encounter.participants.find(p=>p.id==='e1').conditions=[]");
 
  // Attack IDs keep their original target even if a later payload names another target.
  send(player,{type:'event',event:{id:'samoth-roll-a',type:'attack:rolled',characterId:'samoth',timestamp:new Date().toISOString(),payload:{attackId:'attack-a',targetId:'e1',target:{id:'e1',name:'Gobelin A'},roll:19,total:19}}});
