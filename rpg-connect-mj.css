@@ -107,7 +107,7 @@
 }
 
 /* Compact RPG live transmissions */
-.rpg-mj-cockpit{margin:3px 12px 4px;padding:3px 6px;border-radius:8px;min-height:30px}
+.rpg-mj-cockpit{margin:1px 12px 2px;padding:1px 6px;border-radius:7px;min-height:24px}
 .rpg-mj-netline{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:6px;min-width:0;min-height:24px}
 .rpg-mj-netline>.eyebrow{font-size:8px;letter-spacing:.09em;white-space:nowrap;color:#9fb7c9}
 .rpg-mj-netline #rpgCockpitLog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;min-width:0;overflow:hidden;padding:0}
@@ -124,7 +124,7 @@
  .rpg-cockpit-summary{max-width:105px}
 }
 @media(max-width:760px){
- .rpg-mj-cockpit{margin:2px 6px 3px;padding:3px 5px}
+ .rpg-mj-cockpit{margin:1px 6px 2px;padding:1px 5px}
  .rpg-mj-netline{grid-template-columns:auto minmax(0,1fr) auto;gap:5px}
  .rpg-mj-netline>.eyebrow{font-size:7px}
  .rpg-mj-netline #rpgCockpitLog{grid-template-columns:1fr}
