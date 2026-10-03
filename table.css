@@ -168,8 +168,8 @@ html,body{background:#0b121c;color:var(--text);font:14px/1.45 -apple-system,Blin
   :root{
     --top-height:58px;
     --round-height:70px;
-    --rpg-live-height:44px;
-    --dock-height:94px;
+    --rpg-live-height:42px;
+    --dock-height:82px;
   }
 
   .topbar{height:58px;padding:5px 12px;gap:10px}
@@ -246,13 +246,11 @@ html,body{background:#0b121c;color:var(--text);font:14px/1.45 -apple-system,Blin
     box-sizing:border-box;
     height:var(--dock-height);
     min-height:var(--dock-height);
-    grid-template-columns:minmax(220px,1fr) auto auto;
-    grid-template-areas:
-      "target mode presets"
-      "amount amount amount";
-    grid-template-rows:28px 38px;
-    gap:4px 7px;
-    padding:5px 8px;
+    grid-template-columns:minmax(150px,.85fr) auto auto minmax(390px,1.9fr);
+    grid-template-areas:"target mode presets amount";
+    grid-template-rows:44px;
+    gap:6px;
+    padding:7px 8px calc(7px + env(safe-area-inset-bottom));
     align-items:center;
     overflow:hidden;
   }
@@ -266,21 +264,21 @@ html,body{background:#0b121c;color:var(--text);font:14px/1.45 -apple-system,Blin
   }
   .quick-target .eyebrow{font-size:8px;flex:none}
   .quick-target strong{font-size:12px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .quick-target small{margin:0;font-size:9px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .quick-mode{grid-area:mode;gap:4px}
-  .quick-mode button{min-width:62px;min-height:28px;height:28px;padding:2px 6px;font-size:9px}
-  .quick-presets{grid-area:presets;gap:4px}
-  .quick-presets button{width:30px;min-height:28px;height:28px;font-size:11px}
+  .quick-target small{display:none}
+  .quick-mode{grid-area:mode;display:flex;gap:4px}
+  .quick-mode button{min-width:60px;min-height:40px;height:40px;padding:3px 6px;font-size:9px}
+  .quick-presets{grid-area:presets;display:flex;gap:3px}
+  .quick-presets button{width:30px;min-height:40px;height:40px;font-size:11px}
   .quick-amount{
     grid-area:amount;
     width:100%;
     display:grid;
-    grid-template-columns:82px minmax(180px,1fr) 108px 62px;
-    gap:5px;
+    grid-template-columns:72px minmax(130px,1fr) 98px 56px;
+    gap:4px;
   }
-  .quick-amount input,.quick-amount select{height:38px;min-width:0;width:100%}
+  .quick-amount input,.quick-amount select{height:40px;min-width:0;width:100%}
   .quick-amount input{font-size:15px!important}
-  .quick-amount select{font-size:10px!important}
-  .quick-amount button{height:38px;min-height:38px;padding:3px 6px;font-size:10px}
-  .quickbar.healing .quick-amount{grid-template-columns:82px minmax(180px,1fr) 62px}
+  .quick-amount select{font-size:10px!important;padding-inline:6px}
+  .quick-amount button{height:40px;min-height:40px;padding:3px 5px;font-size:9px}
+  .quickbar.healing .quick-amount{grid-template-columns:72px minmax(130px,1fr) 56px}
 }
