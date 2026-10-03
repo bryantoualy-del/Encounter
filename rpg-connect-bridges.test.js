@@ -27,6 +27,14 @@ for(const name of ['Kentaro','Nans','Samoth','Brackmard','Zephyr','Rufus'])test(
   assert.match(client,/attackTargetLocks/,'attack target lock absent');
   assert.match(client,/mechanics:t\?\.mechanics/,'target mechanics absent');
   assert.match(client,/durationType==='nextAttack'/,'next-attack state support absent');
+  if(name==='Kentaro'){
+    const html=readFileSync(join(dir,'index.html'),'utf8');
+    assert.match(html,/blade\('sun','bonus'\)/,'Kentaro bonus Solinar attack path absent');
+    assert.match(html,/blade\('moon','bonus'\)/,'Kentaro bonus Selhane attack path absent');
+    assert.match(html,/pending:\(\)=>S\.pendingHit/,'Kentaro bonus attack is not exposed through the shared pending pipeline');
+    assert.match(html,/emitsAttackDamage:true/,'Kentaro explicit damage transport disabled');
+    assert.match(html,/attack:damage[^\n]+p\.attackId/,'Kentaro damage is not correlated to the pending attackId');
+  }
   assert.equal(errors.length,0,errors.map(e=>e.message).join('\n'));
  }finally{dom.window.close()}
 });
