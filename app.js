@@ -286,30 +286,55 @@ function renderStateTab(p,m){
   const conditions=p.conditions.length?p.conditions.map(c=>`<div class="condition-active"><div><b>${esc(c.name)}</b><small>${esc(conditionDurationLabel(c))}${c.source?` · ${esc(c.source)}`:''}</small></div><button class="danger ghost small" data-remove-condition="${p.id}|${c.id}">Retirer</button></div>`).join(''):'<p class="muted">Aucun état actif.</p>';
   const cap=effectiveLegendaryMax(p,m),bossResources=cap?`<section class="detail-section"><h3>Boss</h3><div class="resource-row"><span>Actions légendaires</span><strong>${p.legendaryRemaining}/${cap}</strong></div><div class="resource-row"><span>Réaction</span><strong>${p.reactionUsed?'Utilisée':'Disponible'}</strong></div></section>`:'';
   const damageOptions=DAMAGE_TYPES.map(type=>`<option value="${esc(type)}">${esc(type)}</option>`).join('');
-  return `<section class="state-summary hp-manager">
-    <div class="hp-manager-head">
-      <div class="state-hp">
-        <span class="eyebrow">POINTS DE VIE</span>
-        <strong>${p.hp}${p.tempHp?` + ${p.tempHp} temporaires`:''} / ${p.maxHp}</strong>
+  return `<section class="hp-manager">
+    <div class="hp-manager-title">POINTS DE VIE</div>
+    <div class="hp-manager-top">
+      <article class="hp-card hp-card-main">
+        <div class="hp-card-head">
+          <div>
+            <span>PV ACTUELS</span>
+            <strong>${p.hp} / ${p.maxHp}</strong>
+          </div>
+          <button class="ghost small" data-sethp="${p.id}">Fixer les PV</button>
+        </div>
         <div class="hpbar large"><div class="hpfill ${hpClass(p)}" style="width:${hpPct(p)}%"></div></div>
-      </div>
-      <div class="state-controls">
-        <button data-temp="${p.id}">PV temporaires</button>
-        <button data-sethp="${p.id}">Fixer les PV</button>
-      </div>
+        <small>${Math.max(0,p.maxHp-p.hp)} PV manquants</small>
+      </article>
+
+      <article class="hp-card temp-hp-card ${p.tempHp>0?'active':''}">
+        <div class="temp-hp-head">
+          <div>
+            <span>PV TEMPORAIRES</span>
+            <strong>+${p.tempHp||0}</strong>
+          </div>
+          <span class="temp-hp-shield">◇</span>
+        </div>
+        <div class="temp-hp-controls">
+          <input id="stateTempHpAmount" type="number" min="0" step="1" inputmode="numeric" value="${p.tempHp||0}" aria-label="PV temporaires">
+          <button class="primary" data-temp-set="${p.id}">Définir</button>
+          <button class="ghost" data-temp-clear="${p.id}" ${p.tempHp?'':'disabled'}>Effacer</button>
+        </div>
+        <small>Absorbés avant les PV.</small>
+      </article>
     </div>
-    <div class="hp-manager-tools">
-      <div class="hp-mode" role="group" aria-label="Dégâts ou soins">
-        <button class="danger ${ui.quickMode==='damage'?'active':''}" data-hp-mode="damage">DÉGÂTS</button>
-        <button class="heal ${ui.quickMode==='heal'?'active':''}" data-hp-mode="heal">SOINS</button>
+
+    <article class="hp-card hp-adjust-card">
+      <div class="hp-adjust-head">
+        <span>AJUSTEMENTS</span>
+        <div class="hp-mode" role="group" aria-label="Dégâts ou soins">
+          <button class="danger ${ui.quickMode==='damage'?'active':''}" data-hp-mode="damage">DÉGÂTS</button>
+          <button class="heal ${ui.quickMode==='heal'?'active':''}" data-hp-mode="heal">SOINS</button>
+        </div>
       </div>
-      <div class="hp-presets" aria-label="Valeurs rapides">
-        <button data-hp-preset="1">1</button><button data-hp-preset="5">5</button><button data-hp-preset="10">10</button>
+      <div class="hp-manager-tools">
+        <div class="hp-presets" aria-label="Valeurs rapides">
+          <button data-hp-preset="1">1</button><button data-hp-preset="5">5</button><button data-hp-preset="10">10</button>
+        </div>
+        <input id="stateHpAmount" type="number" min="1" step="1" inputmode="numeric" placeholder="Valeur" aria-label="Valeur dégâts ou soins">
+        <select id="stateHpDamageType" class="${ui.quickMode==='heal'?'hidden':''}" aria-label="Type de dégâts"><option value="">Type de dégâts…</option>${damageOptions}</select>
+        <button class="primary hp-apply ${ui.quickMode==='heal'?'heal':'damage-apply'}" data-hp-apply="${p.id}">Appliquer</button>
       </div>
-      <input id="stateHpAmount" type="number" min="1" step="1" inputmode="numeric" placeholder="Valeur" aria-label="Valeur dégâts ou soins">
-      <select id="stateHpDamageType" class="${ui.quickMode==='heal'?'hidden':''}" aria-label="Type de dégâts"><option value="">Type de dégâts…</option>${damageOptions}</select>
-      <button class="primary hp-apply ${ui.quickMode==='heal'?'heal':'damage-apply'}" data-hp-apply="${p.id}">Appliquer</button>
-    </div>
+    </article>
   </section>${resources}<section class="detail-section"><div class="section-title-row"><h3>États & durées</h3><button class="ghost small" data-open-condition="${p.id}">+ Ajouter</button></div><div class="condition-active-list">${conditions}</div></section>${bossResources}`;
 }
 function characterChecks(p,m){
@@ -446,6 +471,8 @@ addEventListener('click',e=>{
   else if(t.dataset.hpMode){ui.quickMode=t.dataset.hpMode;renderDetail();}
   else if(t.dataset.hpPreset){const input=$('#stateHpAmount');if(input){input.value=t.dataset.hpPreset;input.focus();}}
   else if(t.dataset.hpApply){applyStateHp(t.dataset.hpApply);}
+  else if(t.dataset.tempSet){const p=state.encounter.participants.find(x=>x.id===t.dataset.tempSet),input=$('#stateTempHpAmount'),n=Math.max(0,Number(input?.value)||0);if(p&&!isLair(p))mutate(()=>p.tempHp=n,`${p.name} possède ${n} PV temporaires.`);}
+  else if(t.dataset.tempClear){const p=state.encounter.participants.find(x=>x.id===t.dataset.tempClear);if(p&&!isLair(p))mutate(()=>p.tempHp=0,`${p.name} n’a plus de PV temporaires.`);}
   else if(t.dataset.temp){const p=state.encounter.participants.find(x=>x.id===t.dataset.temp),n=Number(prompt('PV temporaires :',p?.tempHp||0));if(p&&!Number.isNaN(n))mutate(()=>p.tempHp=Math.max(0,n),`${p.name} possède ${Math.max(0,n)} PV temporaires.`);}
   else if(t.dataset.sethp){const p=state.encounter.participants.find(x=>x.id===t.dataset.sethp),n=Number(prompt('Fixer les PV actuels :',p?.hp||0));if(p&&!Number.isNaN(n))mutate(()=>{p.hp=Math.max(0,Math.min(p.maxHp,n));checkPhaseTransition(p);},`${p.name} est fixé à ${Math.max(0,Math.min(p.maxHp,n))} PV.`);}
   else if(t.dataset.openCondition){state.encounter.selectedId=t.dataset.openCondition;openConditionDialog();}
