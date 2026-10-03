@@ -46,8 +46,8 @@ for(const name of ['Kentaro','Nans','Samoth','Brackmard','Zephyr','Rufus'])test(
     assert.match(mechanicSource,/Souffle de la forge[\s\S]{0,1200}requestSave/,'Brack forge breath save is not routed through Encounter');
   }
   if(name==='Rufus'){
-    assert.match(mechanicSource,/Dague spectrale \+1[\s\S]{0,900}requestSave|requestSave[\s\S]{0,900}Dague spectrale \+1/,'Rufus spectral dagger save is not routed through Encounter');
-    assert.match(mechanicSource,/Motif hypnotique[\s\S]{0,1800}requestSave|requestSave[\s\S]{0,1800}Motif hypnotique/,'Rufus Hypnotic Pattern save is not routed through Encounter');
+    assert.match(mechanicSource,/Dague spectrale \+1[\s\S]{0,900}rufusRequestSave|rufusRequestSave[\s\S]{0,900}Dague spectrale \+1/,'Rufus spectral dagger save is not routed through Encounter');
+    assert.match(mechanicSource,/Motif hypnotique[\s\S]{0,1800}rufusRequestSave|rufusRequestSave[\s\S]{0,1800}Motif hypnotique/,'Rufus Hypnotic Pattern save is not routed through Encounter');
   }
   if(name==='Nans'){
     assert.match(mechanicSource,/Présence intimidante[\s\S]{0,1200}requestSave|requestSave[\s\S]{0,1200}Présence intimidante/,'Nans intimidating presence save is not routed through Encounter');
