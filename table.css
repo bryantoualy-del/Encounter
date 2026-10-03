@@ -100,7 +100,7 @@ html,body{background:#0b121c;color:var(--text);font:14px/1.45 -apple-system,Blin
 .quickbar>*{min-width:0}
 .quick-mode,.quick-amount,.quick-target,.quick-presets{min-width:0}
 @media (min-width:761px) and (max-width:1100px){
-  :root{--dock-height:96px;--rpg-live-height:34px}
+  :root{--dock-height:110px;--rpg-live-height:32px}
   .quickbar{
     grid-template-columns:minmax(150px,1fr) auto auto;
     grid-template-areas:
@@ -142,5 +142,5 @@ html,body{background:#0b121c;color:var(--text);font:14px/1.45 -apple-system,Blin
 }
 
 @media(max-width:760px){
-  :root{--rpg-live-height:31px;--dock-height:116px}
+  :root{--rpg-live-height:30px;--dock-height:128px}
 }
