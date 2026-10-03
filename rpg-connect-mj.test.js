@@ -43,6 +43,14 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  assert.equal(saveAuto.payload.mode,'auto-fail');assert.equal(saveAuto.payload.automaticFailure,true);assert.deepEqual(saveAuto.payload.dice,[]);assert.equal(saveAuto.payload.total,0);assert.equal(saveAuto.payload.success,false);
  send(player,{type:'command-ack',id:saveAuto.id,result:'applied'});
 
+ // Save requests may impose disadvantage and carry multiple typed damage components + a structured condition.
+ dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').conditions=[];window.__rolls=[17,4]");
+ saveResultWait=waitCommand(player,'save:result');
+ send(player,{type:'event',event:{id:'samoth-save-structured-1',type:'save:request',characterId:'samoth',timestamp:new Date().toISOString(),payload:{targetId:'e1',ability:'DEX',dc:12,source:'Tempête de test',saveMode:'dis',halfOnSuccess:true,components:[{amount:5,type:'contondants'},{amount:9,type:'froid'}],condition:{name:'Vitesse 0 (glace)',durationType:'indefinite'}}}});
+ const structuredSave=await saveResultWait;
+ assert.equal(structuredSave.payload.mode,'dis');assert.deepEqual(structuredSave.payload.dice,[17,4]);assert.equal(structuredSave.payload.total,6);assert.equal(structuredSave.payload.success,false);assert.equal(structuredSave.payload.rawDamage,14);assert.equal(structuredSave.payload.requestedDamage,14);assert.equal(structuredSave.payload.effectiveDamage,14);assert.equal(structuredSave.payload.components.length,2);assert.equal(structuredSave.payload.conditionApplied,'Vitesse 0 (glace)');assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp"),8);
+ send(player,{type:'command-ack',id:structuredSave.id,result:'applied'});
+
  // Attack IDs keep their original target even if a later payload names another target.
  send(player,{type:'event',event:{id:'samoth-roll-a',type:'attack:rolled',characterId:'samoth',timestamp:new Date().toISOString(),payload:{attackId:'attack-a',targetId:'e1',target:{id:'e1',name:'Gobelin A'},roll:19,total:19}}});
  await until(()=>dom.window.RPGConnectMJ.getStatus().connected);
