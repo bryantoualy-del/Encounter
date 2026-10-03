@@ -42,7 +42,7 @@ wss.on('connection',ws=>{
     if(m.type==='state'&&role==='player'){const value=m.state;if(!value||value.characterId!==characterId||!value.hp)throw Error('État invalide');room.states.set(characterId,value);send(room.gm,{type:'state',room:room.id,characterId,state:value});return}
     if(m.type==='command'&&role==='gm'){
       const e=m.event,id=String(m.characterId||'').toLowerCase();if(!characters.has(id)||!e||typeof e.id!=='string'||e.id.length>120||!/^[A-Za-z][A-Za-z-]*:[A-Za-z][A-Za-z-]*$/.test(e.type)||e.characterId!==id)throw Error('Commande invalide');
-      const allowed=new Set(['hp:damage','hp:heal','hp:set','tempHp:set','resource:set','inventory:add','inventory:update','inventory:remove','turn:next','attack:decision','message:gm','reaction:requested','turn:grant','initiative:request','targets:set','target:clear']);if(!allowed.has(e.type))throw Error('Commande non autorisée');
+      const allowed=new Set(['hp:damage','hp:heal','hp:set','tempHp:set','resource:set','inventory:add','inventory:update','inventory:remove','turn:next','turn:close','turn:end-rejected','turn:grant','attack:decision','message:gm','reaction:requested','initiative:request','targets:set','target:clear','state:sync','conditions:set','defense:turn-ended','enemy:attack-result']);if(!allowed.has(e.type))throw Error('Commande non autorisée');
       if(!room.pending.has(e.id)){room.pending.set(e.id,{type:'command',room:room.id,characterId:id,event:e});if(room.pending.size>200)room.pending.delete(room.pending.keys().next().value)}
       send(room.players.get(id),room.pending.get(e.id));send(ws,{type:'queued',id:e.id,characterId:id,online:room.players.get(id)?.readyState===WebSocket.OPEN});return;
     }
