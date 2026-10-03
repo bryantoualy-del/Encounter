@@ -283,69 +283,223 @@ html,body{background:#0b121c;color:var(--text);font:14px/1.45 -apple-system,Blin
   .quickbar.healing .quick-amount{grid-template-columns:72px minmax(130px,1fr) 56px}
 }
 
-
-/* POINTS DE VIE — controls live inside the State tab; bottom quick dock removed */
+/* POINTS DE VIE — integrated State-tab cockpit */
 body.combat-mode{--dock-height:0px!important}
 #quickBar{display:none!important}
+
 .hp-manager{
   display:grid;
-  grid-template-columns:1fr;
-  gap:10px;
-  align-items:stretch;
-  padding:10px;
+  gap:8px;
+  margin-bottom:12px;
 }
-.hp-manager-head{
+.hp-manager-title{
+  color:#cdb987;
+  border-bottom:1px solid #33475b;
+  padding:0 1px 5px;
+  font:900 11px ui-sans-serif,system-ui;
+  letter-spacing:.1em;
+}
+.hp-manager-top{
   display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-columns:minmax(0,1.35fr) minmax(230px,.85fr);
+  gap:8px;
+  min-width:0;
+}
+.hp-card{
+  min-width:0;
+  border:1px solid #34495e;
+  border-radius:10px;
+  background:#182636;
+  padding:9px 10px;
+}
+.hp-card-main{
+  display:grid;
+  align-content:center;
+  gap:7px;
+}
+.hp-card-head,.temp-hp-head,.hp-adjust-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   gap:10px;
-  align-items:end;
+  min-width:0;
 }
-.hp-manager .state-hp .eyebrow{
-  color:#9fc2de;
+.hp-card-head>div,.temp-hp-head>div{min-width:0}
+.hp-card-head span,.temp-hp-head span,.hp-adjust-head>span{
+  display:block;
+  color:#9eb1c3;
+  font:800 9px ui-sans-serif,system-ui;
+  letter-spacing:.08em;
+}
+.hp-card-head strong{
+  display:block;
+  margin-top:2px;
+  color:#f3f7fb;
+  font-size:25px;
+  line-height:1;
+}
+.hp-card-main .hpbar.large{
+  height:12px;
+  margin:0;
+}
+.hp-card-main>small,.temp-hp-card>small{
+  color:#91a4b6;
   font-size:9px;
-  letter-spacing:.12em;
 }
-.hp-manager .state-hp strong{
-  font-size:23px;
-  color:#f2f6fa;
+.hp-card-head button{
+  flex:none;
+  min-height:34px;
+  padding:4px 8px;
+  font-size:9px;
+}
+
+.temp-hp-card{
+  display:grid;
+  align-content:center;
+  gap:8px;
+  border-color:#405a73;
+  background:linear-gradient(180deg,#192b3e,#132231);
+}
+.temp-hp-card.active{
+  border-color:#6ea8d1;
+  box-shadow:inset 0 0 0 1px rgba(110,168,209,.12);
+}
+.temp-hp-head strong{
+  display:block;
+  margin-top:2px;
+  color:#9fd5ff;
+  font-size:25px;
+  line-height:1;
+}
+.temp-hp-shield{
+  display:grid!important;
+  place-items:center;
+  width:34px;
+  height:34px;
+  flex:none;
+  border:1px solid #557995;
+  border-radius:9px;
+  background:#102235;
+  color:#9fd5ff!important;
+  font-size:20px!important;
+}
+.temp-hp-controls{
+  display:grid;
+  grid-template-columns:64px minmax(68px,1fr) minmax(64px,1fr);
+  gap:5px;
+  min-width:0;
+}
+.temp-hp-controls input{
+  width:100%;
+  min-width:0;
+  height:38px;
+  padding:5px;
+  text-align:center;
+  font-size:16px!important;
+}
+.temp-hp-controls button{
+  min-width:0;
+  min-height:38px;
+  height:38px;
+  padding:4px 6px;
+  font-size:9px;
+}
+
+.hp-adjust-card{
+  display:grid;
+  gap:8px;
+}
+.hp-adjust-head{
+  min-height:34px;
+}
+.hp-mode{
+  display:flex;
+  gap:4px;
+  min-width:0;
+}
+.hp-mode button{
+  min-width:68px;
+  min-height:34px;
+  height:34px;
+  padding:3px 7px;
+  font-size:9px;
+}
+.hp-mode button.active{
+  outline:2px solid #aebfce;
+  outline-offset:1px;
 }
 .hp-manager-tools{
   display:grid;
-  grid-template-columns:auto auto 84px minmax(150px,1fr) 94px;
-  gap:6px;
+  grid-template-columns:auto 78px minmax(140px,1fr) 92px;
+  gap:5px;
   align-items:center;
+  min-width:0;
 }
-.hp-mode,.hp-presets{display:flex;gap:4px;min-width:0}
-.hp-mode button{min-width:68px}
-.hp-mode button.active{outline:2px solid #aebfce;outline-offset:1px}
-.hp-presets button{width:36px;padding-inline:0}
+.hp-presets{
+  display:flex;
+  gap:4px;
+  min-width:0;
+}
+.hp-presets button{
+  width:34px;
+  min-width:34px;
+  min-height:40px;
+  height:40px;
+  padding:0;
+  font-size:11px;
+}
 .hp-manager-tools input,.hp-manager-tools select{
   width:100%;
   min-width:0;
-  height:42px;
+  height:40px;
   border-radius:8px;
 }
-.hp-manager-tools input{font-size:16px!important;text-align:center}
-.hp-manager-tools select{font-size:11px!important}
-.hp-manager-tools .hp-apply{min-height:42px;height:42px;padding-inline:8px;font-size:10px}
-.hp-manager-tools .damage-apply{background:#943f43;border-color:#c77b7e;color:#fff}
-.hp-manager-tools .heal{background:#286647;border-color:#69ad84;color:#fff}
+.hp-manager-tools input{
+  text-align:center;
+  font-size:16px!important;
+}
+.hp-manager-tools select{
+  padding:4px 7px;
+  font-size:10px!important;
+}
+.hp-manager-tools .hp-apply{
+  min-width:0;
+  min-height:40px;
+  height:40px;
+  padding:4px 7px;
+  font-size:10px;
+}
+.hp-manager-tools .damage-apply{
+  background:#943f43;
+  border-color:#c77b7e;
+  color:#fff;
+}
+.hp-manager-tools .heal{
+  background:#286647;
+  border-color:#69ad84;
+  color:#fff;
+}
+
 @media(max-width:1100px){
-  .hp-manager-tools{
-    grid-template-columns:auto auto 72px minmax(120px,1fr) 88px;
-    gap:5px;
+  .hp-manager-top{
+    grid-template-columns:minmax(0,1.2fr) minmax(210px,.8fr);
   }
-  .hp-mode button{min-width:62px;padding-inline:6px}
-  .hp-presets button{width:32px}
+  .hp-card{padding:8px}
+  .hp-card-head strong,.temp-hp-head strong{font-size:22px}
+  .temp-hp-controls{grid-template-columns:56px minmax(60px,1fr) minmax(58px,1fr)}
+  .hp-manager-tools{grid-template-columns:auto 70px minmax(115px,1fr) 84px}
+  .hp-mode button{min-width:62px;padding-inline:5px}
+  .hp-presets button{width:31px;min-width:31px}
 }
+
 @media(max-width:760px){
-  .hp-manager-head{grid-template-columns:1fr}
-  .hp-manager .state-controls{justify-content:flex-start}
+  .hp-manager-top{grid-template-columns:1fr}
+  .hp-adjust-head{align-items:flex-start;flex-direction:column}
   .hp-manager-tools{
-    grid-template-columns:1fr 1fr 72px 1fr;
+    grid-template-columns:auto 72px minmax(0,1fr);
   }
-  .hp-mode{grid-column:1/3}
-  .hp-presets{grid-column:3/5}
-  .hp-manager-tools select{grid-column:1/4}
-  .hp-manager-tools .hp-apply{grid-column:4}
+  .hp-manager-tools select{grid-column:1/3}
+  .hp-manager-tools .hp-apply{grid-column:3}
+  .temp-hp-controls{grid-template-columns:72px 1fr 1fr}
 }
+
