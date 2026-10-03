@@ -225,9 +225,9 @@ function renderDrawers(){const lib=$('#libraryDrawer'),jr=$('#journalDrawer'),sc
 
 function render(){
   $('#encounterName').value=state.encounter.name;$('#roundNumber').textContent=state.encounter.round;document.body.classList.toggle('combat-mode',state.ui.mode==='combat');
-  $('#prepView').classList.toggle('hidden',state.ui.mode!=='prep');$('#combatView').classList.toggle('hidden',state.ui.mode!=='combat');$('#quickBar').classList.toggle('hidden',state.ui.mode!=='combat');
+  $('#prepView').classList.toggle('hidden',state.ui.mode!=='prep');$('#combatView').classList.toggle('hidden',state.ui.mode!=='combat');$('#quickBar').classList.add('hidden');
   $('#btnModePrep').classList.toggle('active',state.ui.mode==='prep');$('#btnModeCombat').classList.toggle('active',state.ui.mode==='combat');$('#btnCombatLock').textContent=state.ui.locked?'🔒':'🔓';$('#btnCombatLock').classList.toggle('locked',state.ui.locked);$('#btnCombatLock').disabled=state.ui.mode!=='combat';
-  renderInitiative();if(ui.drawer==='library')renderLibrary();if(state.ui.mode==='prep')renderPrep();else{renderCombat();renderDetail();}renderLog();renderQuickbar();renderDrawers();renderMultiState();renderPendingPhase();
+  renderInitiative();if(ui.drawer==='library')renderLibrary();if(state.ui.mode==='prep')renderPrep();else{renderCombat();renderDetail();}renderLog();renderDrawers();renderMultiState();renderPendingPhase();
   requestAnimationFrame(()=>document.querySelector('.init-chip.active')?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}));
 }
 function renderInitiative(){
@@ -285,7 +285,32 @@ function renderStateTab(p,m){
   const resources=m?.resources?.length?`<section class="detail-section"><h3>Ressources</h3><div class="resource-list">${m.resources.map(r=>{const cur=Number.isFinite(Number(p.resourceState?.[r.id]))?Number(p.resourceState[r.id]):r.start;return `<div class="resource-counter"><div><b>${esc(r.name)}</b><small>${esc(r.reset||'')}</small></div><div class="resource-stepper"><button data-resource="${p.id}|${r.id}|-1">−</button><strong>${cur}/${r.max}</strong><button data-resource="${p.id}|${r.id}|1">+</button></div></div>`;}).join('')}</div></section>`:'';
   const conditions=p.conditions.length?p.conditions.map(c=>`<div class="condition-active"><div><b>${esc(c.name)}</b><small>${esc(conditionDurationLabel(c))}${c.source?` · ${esc(c.source)}`:''}</small></div><button class="danger ghost small" data-remove-condition="${p.id}|${c.id}">Retirer</button></div>`).join(''):'<p class="muted">Aucun état actif.</p>';
   const cap=effectiveLegendaryMax(p,m),bossResources=cap?`<section class="detail-section"><h3>Boss</h3><div class="resource-row"><span>Actions légendaires</span><strong>${p.legendaryRemaining}/${cap}</strong></div><div class="resource-row"><span>Réaction</span><strong>${p.reactionUsed?'Utilisée':'Disponible'}</strong></div></section>`:'';
-  return `<section class="state-summary"><div class="state-hp"><span>Points de vie</span><strong>${p.hp}${p.tempHp?` + ${p.tempHp} temporaires`:''} / ${p.maxHp}</strong><div class="hpbar large"><div class="hpfill ${hpClass(p)}" style="width:${hpPct(p)}%"></div></div></div><div class="state-controls"><button data-temp="${p.id}">PV temporaires</button><button data-sethp="${p.id}">Fixer les PV</button></div></section>${resources}<section class="detail-section"><div class="section-title-row"><h3>États & durées</h3><button class="ghost small" data-open-condition="${p.id}">+ Ajouter</button></div><div class="condition-active-list">${conditions}</div></section>${bossResources}`;
+  const damageOptions=DAMAGE_TYPES.map(type=>`<option value="${esc(type)}">${esc(type)}</option>`).join('');
+  return `<section class="state-summary hp-manager">
+    <div class="hp-manager-head">
+      <div class="state-hp">
+        <span class="eyebrow">POINTS DE VIE</span>
+        <strong>${p.hp}${p.tempHp?` + ${p.tempHp} temporaires`:''} / ${p.maxHp}</strong>
+        <div class="hpbar large"><div class="hpfill ${hpClass(p)}" style="width:${hpPct(p)}%"></div></div>
+      </div>
+      <div class="state-controls">
+        <button data-temp="${p.id}">PV temporaires</button>
+        <button data-sethp="${p.id}">Fixer les PV</button>
+      </div>
+    </div>
+    <div class="hp-manager-tools">
+      <div class="hp-mode" role="group" aria-label="Dégâts ou soins">
+        <button class="danger ${ui.quickMode==='damage'?'active':''}" data-hp-mode="damage">DÉGÂTS</button>
+        <button class="heal ${ui.quickMode==='heal'?'active':''}" data-hp-mode="heal">SOINS</button>
+      </div>
+      <div class="hp-presets" aria-label="Valeurs rapides">
+        <button data-hp-preset="1">1</button><button data-hp-preset="5">5</button><button data-hp-preset="10">10</button>
+      </div>
+      <input id="stateHpAmount" type="number" min="1" step="1" inputmode="numeric" placeholder="Valeur" aria-label="Valeur dégâts ou soins">
+      <select id="stateHpDamageType" class="${ui.quickMode==='heal'?'hidden':''}" aria-label="Type de dégâts"><option value="">Type de dégâts…</option>${damageOptions}</select>
+      <button class="primary hp-apply ${ui.quickMode==='heal'?'heal':'damage-apply'}" data-hp-apply="${p.id}">Appliquer</button>
+    </div>
+  </section>${resources}<section class="detail-section"><div class="section-title-row"><h3>États & durées</h3><button class="ghost small" data-open-condition="${p.id}">+ Ajouter</button></div><div class="condition-active-list">${conditions}</div></section>${bossResources}`;
 }
 function characterChecks(p,m){
   if(!m||!Object.keys(m.abilities||{}).length)return'';const rows=ABILITIES.map(a=>{const score=m.abilities[a];if(score==null)return'';const mod=abilityMod(score),save=m.saveMods?.[a]??mod;return `<div class="check-row"><div><b>${a}</b><span>${score} (${signed(mod)})</span></div><button data-ability-check="${p.id}|${a}">Test ${signed(mod)}</button><button data-save-check="${p.id}|${a}">JS ${signed(save)}</button></div>`;}).join('');
@@ -319,6 +344,7 @@ function applyDamageMany(ids,amount,type=''){
 }
 function applyHealMany(ids,amount){amount=Math.max(0,Number(amount)||0);if(!amount||!ids.length)return;const details=[];checkpoint();ids.forEach(id=>{const p=state.encounter.participants.find(x=>x.id===id);if(!p||isLair(p))return;const before=p.hp;p.hp=Math.min(p.maxHp,p.hp+amount);details.push(`${p.name}: +${p.hp-before} PV`);});if(ids.length===1)state.encounter.selectedId=ids[0];const msg=details.join(' · ');log(msg);saveState();render();if(typeof showActionPopup==='function')showActionPopup(msg,'Soins');}
 function applyQuickAmount(amount){const ids=currentTargetIds();if(!ids.length)return toast('Sélectionne une cible.');if(ui.quickMode==='heal')applyHealMany(ids,amount);else applyDamageMany(ids,amount,$('#quickDamageType').value);}
+function applyStateHp(pid){const p=state.encounter.participants.find(x=>x.id===pid);if(!p||isLair(p))return;const amount=Math.max(0,Number($('#stateHpAmount')?.value)||0);if(!amount)return toast('Renseigne une valeur.');if(ui.quickMode==='heal')applyHealMany([pid],amount);else applyDamageMany([pid],amount,$('#stateHpDamageType')?.value||'');}
 function removeParticipant(id){if(structuralGuard())return;const p=state.encounter.participants.find(x=>x.id===id);if(!p)return;mutate(()=>{const ids=new Set([id]);if(!isLair(p))state.encounter.participants.filter(x=>x.lairOwnerId===id).forEach(x=>ids.add(x.id));state.encounter.participants=state.encounter.participants.filter(x=>!ids.has(x.id));ids.forEach(x=>ui.multiSelection.delete(x));if(ids.has(state.encounter.selectedId))state.encounter.selectedId=null;state.encounter.currentTurn=Math.min(state.encounter.currentTurn,Math.max(0,sortedParticipants().length-1));},`${p.name} est retiré du combat.`);}
 
 function rechargeThreshold(a){const nums=((a.recharge||'5-6').match(/\d/g)||[]).map(Number);return nums.length?Math.min(...nums):5;}
@@ -417,6 +443,9 @@ addEventListener('click',e=>{
   else if(t.dataset.libraryFilter){ui.libraryFilter=t.dataset.libraryFilter;renderLibrary();}
   else if(t.dataset.quickMode){ui.quickMode=t.dataset.quickMode;renderQuickbar();}
   else if(t.dataset.quickAmount){$('#quickAmount').value=t.dataset.quickAmount;renderQuickbar();}
+  else if(t.dataset.hpMode){ui.quickMode=t.dataset.hpMode;renderDetail();}
+  else if(t.dataset.hpPreset){const input=$('#stateHpAmount');if(input){input.value=t.dataset.hpPreset;input.focus();}}
+  else if(t.dataset.hpApply){applyStateHp(t.dataset.hpApply);}
   else if(t.dataset.temp){const p=state.encounter.participants.find(x=>x.id===t.dataset.temp),n=Number(prompt('PV temporaires :',p?.tempHp||0));if(p&&!Number.isNaN(n))mutate(()=>p.tempHp=Math.max(0,n),`${p.name} possède ${Math.max(0,n)} PV temporaires.`);}
   else if(t.dataset.sethp){const p=state.encounter.participants.find(x=>x.id===t.dataset.sethp),n=Number(prompt('Fixer les PV actuels :',p?.hp||0));if(p&&!Number.isNaN(n))mutate(()=>{p.hp=Math.max(0,Math.min(p.maxHp,n));checkPhaseTransition(p);},`${p.name} est fixé à ${Math.max(0,Math.min(p.maxHp,n))} PV.`);}
   else if(t.dataset.openCondition){state.encounter.selectedId=t.dataset.openCondition;openConditionDialog();}
