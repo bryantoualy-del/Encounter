@@ -191,7 +191,7 @@
   else return;
   body.append(section);
  }
- const baseRpgRenderDetail=renderDetail;renderDetail=function(){baseRpgRenderDetail();injectParticipantRpgControls()};
+ if(typeof renderDetail==='function'){const baseRpgRenderDetail=renderDetail;renderDetail=function(){baseRpgRenderDetail();injectParticipantRpgControls()}}
  document.addEventListener('click',e=>{const b=e.target.closest('[data-rpg-inline-cmd]');if(!b)return;const id=b.dataset.rpgId,cmd=b.dataset.rpgInlineCmd;if(!id)return;
   if(cmd==='grant'){command(id,'turn:grant',{text:'Le MJ vous donne la main.'});return}
   if(cmd==='reaction'){command(id,'reaction:requested',{text:'Le MJ demande votre réaction.'});return}
