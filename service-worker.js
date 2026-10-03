@@ -8,7 +8,7 @@ const ASSETS=[
   './rpg-connect-mj.css?v=25',
   './rpg-connect-mj.js?v=42',
   './creature-icons.js',
-  './app.js?v=8',
+  './app.js?v=9',
   './builtins.js',
   './manifest.webmanifest',
   './icon-192.png',
