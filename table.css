@@ -99,8 +99,8 @@ html,body{background:#0b121c;color:var(--text);font:14px/1.45 -apple-system,Blin
 /* iPad: ergonomic 2-row quick damage/heal dock */
 .quickbar>*{min-width:0}
 .quick-mode,.quick-amount,.quick-target,.quick-presets{min-width:0}
-@media (min-width:761px) and (max-width:1100px){
-  :root{--dock-height:110px;--rpg-live-height:32px}
+@media (min-width:761px) and (max-width:1366px){
+  :root{--dock-height:104px;--rpg-live-height:52px}
   .quickbar{
     grid-template-columns:minmax(150px,1fr) auto auto;
     grid-template-areas:
@@ -133,7 +133,7 @@ html,body{background:#0b121c;color:var(--text);font:14px/1.45 -apple-system,Blin
   .quick-amount button{min-width:0;min-height:40px;height:40px;padding:4px 6px;font-size:10px}
   .quickbar.healing .quick-amount{grid-template-columns:72px minmax(150px,1fr) 58px}
 }
-@media (min-width:761px) and (max-width:900px){
+@media (min-width:761px) and (max-width:980px){
   .quickbar{grid-template-columns:minmax(125px,1fr) auto auto;gap:4px 5px}
   .quick-mode button{min-width:61px;padding-inline:5px}
   .quick-presets button{width:31px}
@@ -143,4 +143,21 @@ html,body{background:#0b121c;color:var(--text);font:14px/1.45 -apple-system,Blin
 
 @media(max-width:760px){
   :root{--rpg-live-height:30px;--dock-height:128px}
+}
+
+@media (min-width:761px) and (max-width:1366px){
+  .table-row.combat-card{min-height:72px;padding:7px 5px}
+  .combat-mode .combat-list{gap:4px;padding:6px}
+  .compact-head{min-height:46px;padding:6px 10px}
+  .roster-legend{padding:6px 12px}
+  .table-hp b{font-size:21px}
+  .table-name strong{font-size:14px}
+  .table-meta{margin-top:3px}
+  .table-conditions{margin-top:4px}
+  .detail-header{padding:10px 12px 6px}
+  .economy-strip{padding:3px 10px 6px}
+  .stat-grid{padding:0 10px 6px}
+  .detail-tabs{padding:4px 8px}
+  .detail-tabs button{min-height:38px}
+  .detail-tab-body{padding:9px}
 }
