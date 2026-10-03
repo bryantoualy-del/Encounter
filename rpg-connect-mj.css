@@ -164,3 +164,12 @@
   #rpgCockpitOpen{height:30px;min-height:30px}
   body.combat-mode:has(#rpgMjCockpit.has-events){--rpg-live-height:46px}
 }
+
+.rpg-save-effect{margin:11px 0 0;padding:9px 10px;border:1px solid #40586d;border-radius:9px;background:rgba(10,20,30,.72);color:#d8e4ed;font-size:12px;line-height:1.4}
+.rpg-save-warning{margin-top:8px;padding:8px 9px;border:1px solid #9b7041;border-radius:8px;background:rgba(91,55,22,.28);color:#f0cf9d;font-size:11px}
+.rpg-save-actions{grid-template-columns:1fr}
+.rpg-save-manual{display:grid;grid-template-columns:minmax(90px,1fr) minmax(90px,1fr) auto;gap:8px;align-items:end}
+.rpg-save-manual label{display:grid;gap:4px;color:#b8c7d3;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.rpg-save-manual input{min-height:42px;width:100%;box-sizing:border-box;border:1px solid #536d82;border-radius:9px;background:#0d1822;color:#f5f8fb;padding:7px 9px;font-size:16px;font-weight:800}
+.rpg-save-manual button{min-height:42px}
+@media(max-width:650px){.rpg-save-manual{grid-template-columns:1fr 1fr}.rpg-save-manual button{grid-column:1/-1}}
