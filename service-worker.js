@@ -1,4 +1,4 @@
-const CACHE='encounter-v4.1-table-25';
+const CACHE='encounter-v4.1-table-26';
 const ASSETS=[
   './',
   './index.html',
