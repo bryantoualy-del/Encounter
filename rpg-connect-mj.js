@@ -202,15 +202,15 @@
  });
  const wrapConditionMutation=name=>{const original=globalThis[name];if(typeof original!=='function')return;globalThis[name]=function(...args){const result=original.apply(this,args);syncAllConditions();return result}};
  ['addConditionMany','removeCondition','resolveCondition','rollConditionSave'].forEach(wrapConditionMutation);
- const baseConditionStart=processStartTurn;processStartTurn=function(...args){const result=baseConditionStart.apply(this,args);syncAllConditions();return result};
- const baseConditionEnd=processEndTurn;processEndTurn=function(...args){const result=baseConditionEnd.apply(this,args);syncAllConditions();return result};
+ if(typeof processStartTurn==='function'){const baseConditionStart=processStartTurn;processStartTurn=function(...args){const result=baseConditionStart.apply(this,args);syncAllConditions();return result}}
+ if(typeof processEndTurn==='function'){const baseConditionEnd=processEndTurn;processEndTurn=function(...args){const result=baseConditionEnd.apply(this,args);syncAllConditions();return result}}
  const originalDamage=applyDamageMany,originalHeal=applyHealMany,originalDirectDamage=applyDamageDirect,originalDirectHeal=applyHealDirect;
  const split=ids=>({remote:connected?ids.filter(id=>Object.values(bindings).includes(id)):[],local:ids.filter(id=>!connected||!Object.values(bindings).includes(id))});
  applyDamageMany=function(ids,amount,type=''){let {remote,local}=split(ids);if(local.length)originalDamage(local,amount,type);for(const pid of remote){let id=Object.keys(bindings).find(k=>bindings[k]===pid);command(id,'hp:damage',{amount:Number(amount),options:{type}})}if(local.some(pid=>state.encounter.participants.find(p=>p.id===pid)?.kind==='enemy'))queueMicrotask(()=>broadcastTargets())};
  applyHealMany=function(ids,amount){let {remote,local}=split(ids);if(local.length)originalHeal(local,amount);for(const pid of remote){let id=Object.keys(bindings).find(k=>bindings[k]===pid);command(id,'hp:heal',{amount:Number(amount)})}if(local.some(pid=>state.encounter.participants.find(p=>p.id===pid)?.kind==='enemy'))queueMicrotask(()=>broadcastTargets())};
  applyDamageDirect=function(target,amount,type=''){let id=Object.keys(bindings).find(k=>bindings[k]===target.id);if(connected&&id){command(id,'hp:damage',{amount:Number(amount),options:{type}});return{amount:Number(amount),reason:'RPG Connect · en attente'}}const result=originalDirectDamage(target,amount,type);if(target?.kind==='enemy')queueMicrotask(()=>broadcastTargets());return result};
  applyHealDirect=function(target,amount){let id=Object.keys(bindings).find(k=>bindings[k]===target.id);if(connected&&id){command(id,'hp:heal',{amount:Number(amount)});return Number(amount)}const result=originalDirectHeal(target,amount);if(target?.kind==='enemy')queueMicrotask(()=>broadcastTargets());return result};
- const baseResolveTargetSelection=resolveTargetSelection;
+ if(typeof resolveTargetSelection==='function'){const baseResolveTargetSelection=resolveTargetSelection;
  resolveTargetSelection=function(targetId){
   const targeting=ui.targeting?{...ui.targeting}:null,actor=targeting?state.encounter.participants.find(p=>p.id===targeting.actorId):null,target=state.encounter.participants.find(p=>p.id===targetId),ability=targeting&&typeof currentTargetingAbility==='function'?currentTargetingAbility():null;
   const ccId=target?Object.keys(bindings).find(cid=>bindings[cid]===target.id):null,enemyAttack=!!(ccId&&online(ccId)&&actor?.kind==='enemy'&&ability&&(ability.kind==='attack'||(ability.kind==='recharge'&&ability.bonus!=null)));
@@ -223,7 +223,7 @@
    netlog(actor.name+' → '+target.name+' · '+(payload.hit?'TOUCHÉ':'RATÉ'),'info');
   }
   return result;
- };
+ }}
  const oldAdvance=actualAdvanceTurn;actualAdvanceTurn=function(){pendingTurnEnd=null;renderTurnEndPopup();const ending=activeParticipant(),endingId=Object.keys(bindings).find(cid=>bindings[cid]===ending?.id);if(combatMachine.state==='REACTION')transitionCombat('TURN','fin réaction');else if(combatMachine.state==='FIGHT')transitionCombat('TURN','tour actif');oldAdvance();if(endingId&&online(endingId))command(endingId,'turn:close',{text:'Votre tour est terminé.'});for(const cid of fightRoster().filter(online))command(cid,'defense:turn-ended',{participantId:ending?.id||null,participantName:ending?.name||'',round:state.encounter.round});broadcastTurn();broadcastTargets();syncOnlineState('turn-advance');const p=activeParticipant(),id=Object.keys(bindings).find(k=>bindings[k]===p?.id);if(id&&online(id))command(id,'turn:grant',{text:`À vous de jouer · round ${state.encounter.round}.`,round:state.encounter.round,participantId:p?.id||null,participantName:p?.name||''});netlog('Tour de '+(p?.name||'—')+' · diffusé à '+fightRoster().filter(online).length+' Companion'+(fightRoster().filter(online).length>1?'s':''),'turn');renderCockpit()};
  renderPanel();renderCockpit();window.RPGConnectMJ={send:command,getStatus:()=>({connected,room,players,machine:{...combatMachine},fight:{phase:fight.phase,requestId:fight.requestId,roster:[...fightRoster()],rolls:{...fight.rolls},validated:{...fight.validated}}}),syncState,stateSyncPayload,bind:(characterId,participantId)=>{bindings[characterId]=participantId;localStorage.setItem(bindingsKey,JSON.stringify(bindings));renderPanel()},prepareFight,startFight,resetFight:resetRpgFight,validateInitiative,approveTurnEnd,rejectTurnEnd,requestFightStart:()=>{if(!connected||!boundIds().length)return false;renderPanel();if(!dlg.open)dlg.show();if(fight.phase!=='preparation')prepareFight();return true}};
 })();
