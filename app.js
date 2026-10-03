@@ -334,7 +334,7 @@ function processStartTurn(p,silent=false){
 }
 function processEndTurn(p){
   if(!p||isLair(p))return;const removed=[];p.conditions.forEach(c=>{if(c.durationType==='untilEnd')removed.push(c.id);else if(c.durationType==='rounds'){c.remaining=Math.max(0,(Number(c.remaining)||1)-1);if(c.remaining<=0)removed.push(c.id);}});if(removed.length){const names=p.conditions.filter(c=>removed.includes(c.id)).map(c=>c.name);p.conditions=p.conditions.filter(c=>!removed.includes(c.id));log(`${p.name} : fin automatique de ${names.join(', ')}.`);}
-  const sourceExpired=[];for(const other of state.encounter.participants){if(!other?.conditions?.length)continue;const ids=other.conditions.filter(c=>c.durationType==='sourceTurnEnd'&&c.sourceParticipantId===p.id).map(c=>c.id);if(ids.length){sourceExpired.push(...other.conditions.filter(c=>ids.includes(c.id)).map(c=>`${other.name} : ${c.name}`));other.conditions=other.conditions.filter(c=>!ids.includes(c.id));}}
+  const sourceExpired=[];for(const other of state.encounter.participants){if(!other?.conditions?.length)continue;const ids=[];for(const c of other.conditions){if(c.durationType!=='sourceTurnEnd'||c.sourceParticipantId!==p.id)continue;c.remaining=Math.max(0,(Number(c.remaining)||1)-1);if(c.remaining<=0){ids.push(c.id);sourceExpired.push(`${other.name} : ${c.name}`)}}if(ids.length)other.conditions=other.conditions.filter(c=>!ids.includes(c.id));}
   if(sourceExpired.length)log(`Fin du tour de ${p.name} : ${sourceExpired.join(', ')} prend fin.`);
   const m=modelFor(p);(m?.traits||[]).filter(t=>t.timing==='end').forEach(t=>log(`⏱ Fin de tour ${p.name} — rappel : ${t.name}.`));
 }
