@@ -3,7 +3,7 @@ const ASSETS=[
   './',
   './index.html',
   './styles.css',
-  './table.css?v=2',
+  './table.css?v=3',
   './table.js',
   './rpg-connect-mj.css?v=22',
   './rpg-connect-mj.js',
