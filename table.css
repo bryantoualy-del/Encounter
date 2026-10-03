@@ -168,7 +168,7 @@ html,body{background:#0b121c;color:var(--text);font:14px/1.45 -apple-system,Blin
   :root{
     --top-height:58px;
     --round-height:70px;
-    --rpg-live-height:42px;
+    --rpg-live-height:40px;
     --dock-height:82px;
   }
 
