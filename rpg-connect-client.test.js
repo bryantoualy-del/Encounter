@@ -21,7 +21,8 @@ test('client compagnon : état, attaque, décision MJ, dégâts, reconnexion',as
  dom.window.eval(readFileSync(new URL('../Samoth/rpg-connect-client.js',import.meta.url),'utf8'));
  for(const [name,value] of Object.entries({endpoint:url,room,token}))dom.window.document.querySelector(`[name="${name}"]`).value=value;
  dom.window.document.querySelector('[data-connect]').click();await until(()=>dom.window.RPGConnect.getStatus().connected);
- const event={id:'samoth-roll-1',type:'attack:rolled',characterId:'samoth',timestamp:new Date().toISOString(),payload:{attackId:'samoth-roll-1',roll:21}};
+ dom.window.RPGConnect.setTargets([{id:'enemy-1',name:'Gobelin',creatureType:'humanoïde',boss:false,elite:false,ac:13,conditions:[],mechanics:{},healthGauge:null}],'enemy-1');
+ const event={id:'samoth-roll-1',type:'attack:rolled',characterId:'samoth',timestamp:new Date().toISOString(),payload:{attackId:'samoth-roll-1',roll:21,total:21,nat:14}};
  let forwarded=wait(gm,'event');listeners[0](event);assert.equal((await forwarded).event.payload.roll,21);
  let ack=wait(gm,'command-ack');send(gm,{type:'command',characterId:'samoth',event:{id:'gm-hit-1',type:'attack:decision',characterId:'samoth',payload:{attackId:'samoth-roll-1',hit:true}}});assert.equal((await ack).result,'applied');assert.equal(calls[0].type,'attack:decision');
  ack=wait(gm,'command-ack');send(gm,{type:'command',characterId:'samoth',event:{id:'gm-damage-1',type:'hp:damage',characterId:'samoth',payload:{amount:8}}});assert.equal((await ack).result,'applied');assert.equal(s.hp.current,64);
