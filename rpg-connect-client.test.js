@@ -17,7 +17,7 @@ test('client compagnon : état, attaque, décision MJ, dégâts, reconnexion',as
  const invite=wait(gm,'invite');send(gm,{type:'invite',characterId:'samoth'});const token=(await invite).payload.token;
  const dom=new JSDOM('<!doctype html><body></body>',{url:'https://bryantoualy-del.github.io/Samoth/',runScripts:'outside-only'});
  const calls=[],listeners=[],s={characterId:'samoth',hp:{current:72,max:72,temp:0},ac:14};
- dom.window.WebSocket=WebSocket;dom.window.CompanionAPI={getCharacter:()=>({id:'samoth',name:'Samoth'}),getState:()=>structuredClone(s),subscribe:fn=>listeners.push(fn),applyRemoteEvent:e=>{calls.push(e);if(e.type==='hp:damage')s.hp.current-=e.payload.amount;return true},emitLocal:e=>calls.push({type:e})};
+ dom.window.WebSocket=WebSocket;dom.window.requestAnimationFrame=fn=>dom.window.setTimeout(fn,0);dom.window.cancelAnimationFrame=id=>dom.window.clearTimeout(id);dom.window.CompanionAPI={getCharacter:()=>({id:'samoth',name:'Samoth'}),getState:()=>structuredClone(s),subscribe:fn=>listeners.push(fn),applyRemoteEvent:e=>{calls.push(e);if(e.type==='hp:damage')s.hp.current-=e.payload.amount;return true},emitLocal:e=>calls.push({type:e})};
  dom.window.eval(readFileSync(new URL('../Samoth/rpg-connect-client.js',import.meta.url),'utf8'));
  for(const [name,value] of Object.entries({endpoint:url,room,token}))dom.window.document.querySelector(`[name="${name}"]`).value=value;
  dom.window.document.querySelector('[data-connect]').click();await until(()=>dom.window.RPGConnect.getStatus().connected);
