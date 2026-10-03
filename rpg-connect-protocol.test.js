@@ -28,4 +28,20 @@ test('salle, invitation, événement, déduplication, commande MJ et ack',async(
  gm.close();again.close();fake.close();
 });
 
+
+test('contrat MJ étendu : toutes les commandes Encounter autorisées traversent le serveur',async()=>{
+ const gm=await open();let welcome=wait(gm,'welcome');send(gm,{type:'hello',role:'gm',key:process.env.RPG_CONNECT_GM_KEY});const room=(await welcome).room;
+ let invite=wait(gm,'invite');send(gm,{type:'invite',characterId:'kentaro'});const token=(await invite).payload.token;
+ const player=await open();let joined=wait(player,'welcome');send(player,{type:'hello',role:'player',room,characterId:'kentaro',token});await joined;
+ const commandTypes=['state:sync','conditions:set','turn:end-rejected','turn:close','defense:turn-ended','enemy:attack-result'];
+ for(let i=0;i<commandTypes.length;i++){
+   const type=commandTypes[i],id='gm-extended-'+i;
+   const command=wait(player,'command');
+   send(gm,{type:'command',characterId:'kentaro',event:{id,type,characterId:'kentaro',payload:{version:1,text:'test'}}});
+   const received=await command;assert.equal(received.event.type,type);
+   const ack=wait(gm,'command-ack');send(player,{type:'command-ack',id,result:'applied'});assert.equal((await ack).id,id);
+ }
+ player.close();gm.close();
+});
+
 test.after(async()=>{for(const client of wss.clients)client.terminate();await new Promise(resolve=>server.close(resolve))});
