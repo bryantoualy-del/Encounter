@@ -45,3 +45,15 @@ test('contrat MJ étendu : toutes les commandes Encounter autorisées traversent
 });
 
 test.after(async()=>{for(const client of wss.clients)client.terminate();await new Promise(resolve=>server.close(resolve))});
+
+test('protocole et capacités incompatibles : refus explicite',async()=>{
+ for(const extra of [{protocolVersion:2},{protocolVersion:1,requiredCapabilities:['unknown-capability']}]){
+  const client=await open(),failure=wait(client,'error');send(client,{type:'hello',role:'gm',key:process.env.RPG_CONNECT_GM_KEY,...extra});const error=await failure;assert.equal(error.code,'PROTOCOL_INCOMPATIBLE');assert.match(error.message,/incompatible/);client.terminate();
+ }
+ const response=await fetch(url.replace('ws:','http:')+'/health'),health=await response.json();assert.equal(health.protocolVersion,1);assert.ok(health.capabilities.includes('authoritative-save-v1'));
+});
+
+test('événement joueur retenu tant que le MJ est déconnecté et acquittement final',async()=>{
+ let gm=await open();let welcome=wait(gm,'welcome');send(gm,{type:'hello',role:'gm',key:process.env.RPG_CONNECT_GM_KEY});const room=(await welcome).room;let invitation=wait(gm,'invite');send(gm,{type:'invite',characterId:'kentaro'});const token=(await invitation).payload.token;const player=await open();welcome=wait(player,'welcome');send(player,{type:'hello',role:'player',room,characterId:'kentaro',token});await welcome;gm.close();await new Promise(r=>gm.once('close',r));const ack=wait(player,'ack');send(player,{type:'event',event:{id:'offline-mj-event',type:'journal:event',characterId:'kentaro',payload:{text:'offline'}}});await ack;
+ gm=await open();const replay=wait(gm,'event');send(gm,{type:'hello',role:'gm',room,key:process.env.RPG_CONNECT_GM_KEY});assert.equal((await replay).event.id,'offline-mj-event');send(gm,{type:'event-ack',id:'offline-mj-event'});await new Promise(r=>setTimeout(r,20));const {rooms}=await import('./rpg-connect-server.js');assert.equal(rooms.get(room).pendingEvents.size,0);gm.terminate();player.terminate();
+});

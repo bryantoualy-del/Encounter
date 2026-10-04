@@ -6,7 +6,7 @@ import WebSocket from 'ws';
 process.env.RPG_CONNECT_GM_KEY='test-key-abcdefghijklmnopqrstuvwxyz';process.env.PORT='0';
 const {server,wss}=await import('./rpg-connect-server.js');await new Promise(r=>server.listening?r():server.once('listening',r));
 const url=`ws://127.0.0.1:${server.address().port}`;
-const until=fn=>new Promise((resolve,reject)=>{let start=Date.now();const check=()=>fn()?resolve():Date.now()-start>2000?reject(Error('timeout')):setTimeout(check,10);check()});
+const until=fn=>new Promise((resolve,reject)=>{let origin=new Error('wait at').stack;let start=Date.now();const check=()=>fn()?resolve():Date.now()-start>2000?reject(Error('timeout '+origin)):setTimeout(check,10);check()});
 const wait=(ws,type)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>reject(Error('timeout '+type)),2000);let fn=data=>{let m=JSON.parse(String(data));if(m.type!==type)return;clearTimeout(timer);ws.off('message',fn);resolve(m)};ws.on('message',fn)});
 const waitCommand=(ws,eventType)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>reject(Error('timeout command '+eventType)),2000);let fn=data=>{let m=JSON.parse(String(data));if(m.type!=='command'||m.event?.type!==eventType)return;clearTimeout(timer);ws.off('message',fn);resolve(m.event)};ws.on('message',fn)});
 const waitSession=(ws,phase)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>reject(Error('timeout session '+phase)),2000);let fn=data=>{let m=JSON.parse(String(data));if(m.type!=='command'||m.event?.type!=='message:gm'||m.event?.payload?.session?.phase!==phase)return;clearTimeout(timer);ws.off('message',fn);resolve(m.event.payload.session)};ws.on('message',fn)});
@@ -17,6 +17,8 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  try{
  dom.window.WebSocket=WebSocket;let copied='';Object.defineProperty(dom.window.navigator,'clipboard',{value:{writeText:async value=>{copied=String(value)}}});Object.defineProperty(dom.window.crypto,'randomUUID',{value:()=>Math.random().toString(36).slice(2)});
  dom.window.eval(`window.state={ui:{mode:'prep'},encounter:{participants:[{id:'p1',name:'Samoth',kind:'player',hp:72,maxHp:72,tempHp:0,ac:14,initiative:0},{id:'p2',name:'Nans',kind:'player',hp:95,maxHp:95,tempHp:0,ac:16,initiative:7},{id:'e1',name:'Gobelin A',kind:'enemy',hp:30,maxHp:30,tempHp:0,ac:13,initiative:5,conditions:[{id:'restrained-1',name:'Entravé'}]},{id:'e2',name:'Gobelin B',kind:'enemy',hp:30,maxHp:30,tempHp:0,ac:13,initiative:4,conditions:[]}],log:[],round:1,currentTurn:0,selectedId:null}};window.localDamage=0;window.__rolls=[];window.saveState=()=>{};window.render=()=>{};window.log=()=>{};window.actionLog=()=>{};window.checkpoint=()=>{};window.sortedParticipants=()=>[...state.encounter.participants].sort((a,b)=>b.initiative-a.initiative);window.activeParticipant=()=>sortedParticipants()[state.encounter.currentTurn]||null;window.processStartTurn=()=>{};window.setMode=mode=>{state.ui.mode=mode};window.modelFor=p=>p?.kind==='enemy'?{type:'humanoïde',saveMods:{DEX:2,FOR:1},abilities:{DEX:14,FOR:12}}:null;window.effectiveAc=p=>p.ac;window.isLair=()=>false;window.conditionImmune=()=>false;window.addConditionMany=(ids,data)=>{for(const id of ids){const p=state.encounter.participants.find(x=>x.id===id);if(p){p.conditions=p.conditions||[];p.conditions.push({id:'test-'+p.conditions.length,...data})}}};window.rollD20=()=>({roll:(window.__rolls.shift()??10)});window.applyDamageMany=(ids,amount)=>{localDamage+=amount};window.applyHealMany=()=>{};window.applyDamageDirect=(target,amount)=>{if(target?.kind==='enemy'){target.hp=Math.max(0,target.hp-amount);return{amount}}localDamage+=amount;return{amount}};window.applyHealDirect=()=>{};window.actualAdvanceTurn=()=>{}`);
+ dom.window.HTMLDialogElement.prototype.showModal=function(){this.open=true};dom.window.HTMLDialogElement.prototype.close=function(){this.open=false};
+ dom.window.eval(readFileSync(new URL('./rpg-save-authority.js',import.meta.url),'utf8'));
  dom.window.eval(readFileSync(new URL('./rpg-connect-mj.js',import.meta.url),'utf8'));
  dom.window.document.querySelector('#rpgMjEndpoint').value=url;dom.window.document.querySelector('#rpgMjKey').value=process.env.RPG_CONNECT_GM_KEY;dom.window.document.querySelector('#rpgMjConnect').click();await until(()=>dom.window.RPGConnectMJ.getStatus().connected);const room=dom.window.RPGConnectMJ.getStatus().room;
  dom.window.document.querySelector('[data-invite="samoth"]').click();await until(()=>!!dom.window.document.querySelector('[data-copy="samoth"]'));dom.window.document.querySelector('[data-copy="samoth"]').click();await until(()=>copied.startsWith('RPGCONNECT|'));
@@ -32,6 +34,7 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  dom.window.eval("window.__rolls=[18,3]");
  let saveResultWait=waitCommand(player,'save:result');
  send(player,{type:'event',event:{id:'samoth-save-dis-1',type:'save:request',characterId:'samoth',timestamp:new Date().toISOString(),payload:{targetId:'e1',ability:'DEX',dc:12,source:'Vortex de test',damage:8,damageType:'froid',condition:'Aveuglé'}}});
+ await until(()=>dom.window.document.querySelector('[data-save-auto]'));dom.window.document.querySelector('[data-save-auto]').click();
  const saveDis=await saveResultWait;
  assert.equal(saveDis.payload.mode,'dis');assert.equal(saveDis.payload.automaticFailure,false);assert.deepEqual(saveDis.payload.dice,[18,3]);assert.equal(saveDis.payload.total,5);assert.equal(saveDis.payload.success,false);assert.equal(saveDis.payload.effectiveDamage,8);assert.equal(saveDis.payload.conditionApplied,'Aveuglé');assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp"),22);
  send(player,{type:'command-ack',id:saveDis.id,result:'applied'});
@@ -39,18 +42,22 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').conditions=[{id:'par-1',name:'Paralysé'}];window.__rolls=[20,20]");
  saveResultWait=waitCommand(player,'save:result');
  send(player,{type:'event',event:{id:'samoth-save-auto-1',type:'save:request',characterId:'samoth',timestamp:new Date().toISOString(),payload:{targetId:'e1',ability:'DEX',dc:1,source:'Test paralysie',damage:0}}});
+ await until(()=>dom.window.document.querySelector('#rpgSavePopup').open);dom.window.document.querySelector('[data-save-auto]').click();
  const saveAuto=await saveResultWait;
  assert.equal(saveAuto.payload.mode,'auto-fail');assert.equal(saveAuto.payload.automaticFailure,true);assert.deepEqual(saveAuto.payload.dice,[]);assert.equal(saveAuto.payload.total,0);assert.equal(saveAuto.payload.success,false);
  send(player,{type:'command-ack',id:saveAuto.id,result:'applied'});
 
  // Attack IDs keep their original target even if a later payload names another target.
  send(player,{type:'event',event:{id:'samoth-roll-a',type:'attack:rolled',characterId:'samoth',timestamp:new Date().toISOString(),payload:{attackId:'attack-a',targetId:'e1',target:{id:'e1',name:'Gobelin A'},roll:19,total:19}}});
- await until(()=>dom.window.RPGConnectMJ.getStatus().connected);
+ send(player,{type:'event',event:{id:'pending-a',type:'attack:pending-hit',characterId:'samoth',payload:{attackId:'attack-a',targetId:'e1'}}});
+ await until(()=>dom.window.document.querySelector('[data-popup-hit]'));{const decisionWait=waitCommand(player,'attack:decision');dom.window.document.querySelector('[data-popup-hit]').click();const decision=await decisionWait;send(player,{type:'command-ack',id:decision.id,result:'applied'});}
  send(player,{type:'event',event:{id:'samoth-dmg-a',type:'attack:damage',characterId:'samoth',timestamp:new Date().toISOString(),payload:{attackId:'attack-a',targetId:'e2',amount:5,components:[{amount:5,type:'froid'}]}}});
  await until(()=>dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp")===17);
  assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp"),30);
 
  send(player,{type:'event',event:{id:'samoth-roll-b',type:'attack:rolled',characterId:'samoth',timestamp:new Date().toISOString(),payload:{attackId:'attack-b',targetId:'e2',target:{id:'e2',name:'Gobelin B'},roll:21,total:21}}});
+ send(player,{type:'event',event:{id:'pending-b',type:'attack:pending-hit',characterId:'samoth',payload:{attackId:'attack-b',targetId:'e2'}}});
+ await until(()=>!dom.window.document.querySelector('#rpgHitPopup').hidden);{const decisionWait=waitCommand(player,'attack:decision');dom.window.document.querySelector('[data-popup-hit]').click();const decision=await decisionWait;send(player,{type:'command-ack',id:decision.id,result:'applied'});}
  send(player,{type:'event',event:{id:'samoth-dmg-b',type:'attack:damage',characterId:'samoth',timestamp:new Date().toISOString(),payload:{attackId:'attack-b',targetId:'e1',amount:6,components:[{amount:6,type:'force'}]}}});
  await until(()=>dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp")===24);
  assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp"),17);
