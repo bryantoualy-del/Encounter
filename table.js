@@ -11,6 +11,13 @@ document.getElementById('btnCombatLock').setAttribute('aria-label','Verrouiller 
 let tableDetailOpen=false;
 let lastTurnId=null;
 let lastSelectedId=null;
+function tableConditionIcon(name){
+ const src=window.RPGConnectIcons?.condition?.(name)||'';
+ return src?\`<img class="table-condition-icon" src="\${src}" alt="" aria-hidden="true">\`:'';
+}
+function tableConditionPill(c){return \`<span class="table-condition" title="\${esc(conditionDurationLabel(c))}">\${tableConditionIcon(c.name)}<span>\${esc(c.name)}\${conditionShort(c)}</span></span>\`;}
+function tableConditionSummary(list,limit=3){list=Array.isArray(list)?list:[];const shown=list.slice(0,limit),more=list.length-shown.length;return shown.map(tableConditionPill).join('')+(more?\`<span class="table-condition more" title="\${more} état\${more>1?'s':''} supplémentaire\${more>1?'s':''}">+\${more}</span>\`:'');}
+
 function tableRow(p,active){
  const lair=isLair(p),selected=p.id===selectedParticipant()?.id,chosen=ui.multiSelection.has(p.id),phase=currentPhase(p);
  const select=ui.multiMode&&!lair?`data-multi="${esc(p.id)}"`:`data-select="${esc(p.id)}"`;
@@ -19,7 +26,7 @@ function tableRow(p,active){
  <button class="row-select" ${select} aria-label="${ui.multiMode?'Cibler':'Sélectionner'} ${esc(p.name)}" aria-pressed="${ui.multiMode?chosen:selected}"></button>
  <span class="table-init">${ui.multiMode&&!lair?(chosen?'☑':'☐'):p.initiative}</span>
  <div class="table-name"><strong>${esc(p.name)}</strong><div class="table-meta"><span class="table-role ${p.kind}">${lair?'REPAIRE':roleLabel(p)}</span>${p.id===active?.id?'<span class="playing-tag">À JOUER</span>':''}${!lair?economy:''}</div>
- ${(p.conditions.length||phase||p.hp<=0&&!lair)?`<div class="table-conditions">${p.hp<=0&&!lair?'<span class="table-condition zero">À 0 PV</span>':''}${phase?`<span class="table-condition">${esc(phase.name)}</span>`:''}${p.conditions.map(c=>`<span class="table-condition" title="${esc(conditionDurationLabel(c))}">${esc(c.name)}${conditionShort(c)}</span>`).join('')}</div>`:''}</div>
+ ${(p.conditions.length||phase||p.hp<=0&&!lair)?`<div class="table-conditions">${p.hp<=0&&!lair?'<span class="table-condition zero">À 0 PV</span>':''}${phase?`<span class="table-condition">${esc(phase.name)}</span>`:''}${tableConditionSummary(p.conditions,3)}</div>`:''}</div>
  <div class="table-hp ${hpClass(p)}">${lair?'<small>Action<br>de repaire</small>':`<div><b>${p.hp}</b><small> / ${p.maxHp}</small></div>${p.tempHp?`<em>+${p.tempHp} temp.</em>`:''}<div class="table-health"><i style="width:${hpPct(p)}%"></i></div>`}</div>
  <div class="table-ac">${lair?'—':effectiveAc(p)}</div>
  <button class="row-sheet" data-table-sheet="${esc(p.id)}" aria-label="Ouvrir la fiche de ${esc(p.name)}">↗</button></article>`;
@@ -37,7 +44,7 @@ renderDetail=function(){
  tableOriginalDetail();const p=selectedParticipant();if(!p)return;
  const eyebrow=$('#activeDetail .detail-header .eyebrow');if(eyebrow)eyebrow.textContent=p.id===activeParticipant()?.id?'À JOUER · FICHE':'CIBLE SÉLECTIONNÉE · FICHE';
  const head=$('#activeDetail .detail-header');if(head&&!isLair(p)&&!head.querySelector('[data-edit-participant]'))head.insertAdjacentHTML('beforeend',`<button class="ghost small" data-edit-participant="${esc(p.id)}" aria-label="Modifier ${esc(p.name)}">Modifier</button>`);
- const conditions=$('#activeDetail .detail-tabs');if(conditions&&p.conditions.length)conditions.insertAdjacentHTML('beforebegin',`<button class="detail-condition-summary" data-open-condition="${esc(p.id)}">${p.conditions.map(c=>esc(c.name)+conditionShort(c)).join(' · ')} · gérer</button>`);
+ const conditions=$('#activeDetail .detail-tabs');if(conditions&&p.conditions.length)conditions.insertAdjacentHTML('beforebegin',`<button class="detail-condition-summary" data-open-condition="${esc(p.id)}">${tableConditionSummary(p.conditions,5)}<span class="detail-condition-manage">Gérer</span></button>`);
 };
 const tableOriginalQuick=renderQuickbar;
 renderQuickbar=function(){
@@ -93,3 +100,4 @@ addEventListener('click',e=>{if(!e.target.closest('#moreMenu,#btnMore'))$('#more
 // Measure actual occupied space, including safe-area insets and text wrapping.
 if('ResizeObserver' in window){const obs=new ResizeObserver(()=>{for(const [selector,variable] of [['.topbar','--top-height'],['.roundbar','--round-height'],['#quickBar','--dock-height'],['#targetingBanner','--target-height']]){const el=$(selector);document.documentElement.style.setProperty(variable,el.getBoundingClientRect().height+'px');}});['.topbar','.roundbar','#quickBar','#targetingBanner'].forEach(s=>obs.observe($(s)));}
 render();
+\nwindow.RPGConnectIcons?.ready?.then(()=>{try{render()}catch{}}).catch(()=>{});\n
