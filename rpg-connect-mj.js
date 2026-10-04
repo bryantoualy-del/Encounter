@@ -17,6 +17,7 @@
  try{let prior=JSON.parse(localStorage.getItem(savedKey)||'{}');endpointField.value=prior.endpoint||'';roomField.value=prior.room||''}catch{}
  function note(text){feedback.textContent=text}
  function note(text){feedback.textContent=text}
+ function safeEncounterRender(context='RPG Connect'){try{render();return true}catch(error){console.error(context+' · rendu Encounter',error);netlog(context+' · erreur d’affichage ignorée','wait');return false}}
  function compactTransmissionText(text=''){return String(text||'').replace(/\s+/g,' ').replace(/ · attackId[^·]*/ig,'').trim()}
  function netlog(text,tone='info'){networkEvents.unshift({text:compactTransmissionText(text),tone,time:new Date()});networkEvents.splice(18);renderCockpit()}
  function renderCockpit(){const summary=$r('#rpgCockpitSummary'),logbox=$r('#rpgCockpitLog');if(!summary||!logbox)return;const onlineIds=ids.filter(online),required=fightRoster(),awaiting=required.filter(id=>fight.rolls[id]&&!fight.validated[id]);let phase='Hors combat';if(fight.phase==='preparation')phase='Prépa';if(fight.phase==='fight')phase='Fight';summary.textContent=(connected?'●':'○')+' '+onlineIds.length+' · '+phase+(awaiting.length?' · '+awaiting.length+' init.':'');const useful=networkEvents.filter(ev=>!/cibles synchronisées|commande appliquée|défenses synchronisées/i.test(ev.text));cockpit.classList.toggle('has-events',useful.length>0);logbox.innerHTML=useful.length?useful.slice(0,3).map((ev,i)=>'<div class="rpg-net-event '+escape(ev.tone)+(i===0?' latest':'')+'" title="'+escape(ev.text)+'"><time>'+ev.time.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})+'</time><span>'+escape(ev.text)+'</span></div>').join(''):'<span class="muted tiny">Aucune transmission utile</span>'}
@@ -31,7 +32,7 @@
   let p=state.encounter.participants.find(x=>x.id===bindings[id]||x.id===stableIds[id]);if(p)return p;
   const model=state.monsters.find(m=>m.id===stableModels[id]);if(!model||typeof makeParticipant!=='function')return null;
   p=makeParticipant(model,1,0,null);p.id=stableIds[id];p.name=names[id];p.baseName=names[id];p.kind='player';p.modelId=stableModels[id];
-  state.encounter.participants.push(p);bindings[id]=p.id;localStorage.setItem(bindingsKey,JSON.stringify(bindings));saveState();render();netlog(names[id]+' ajouté aux participants','ok');return p;
+  state.encounter.participants.push(p);bindings[id]=p.id;localStorage.setItem(bindingsKey,JSON.stringify(bindings));saveState();safeEncounterRender('RPG Connect · ajout '+names[id]);netlog(names[id]+' ajouté aux participants','ok');return p;
  }
  function pruneOfflineCC(){
   const allStable=new Set(Object.values(stableIds)),onlineStable=new Set(ids.filter(online).map(id=>stableIds[id]));
@@ -39,7 +40,7 @@
   state.encounter.participants=state.encounter.participants.filter(p=>!allStable.has(p.id)||onlineStable.has(p.id));
   if(state.encounter.participants.length===before)return;
   for(const [id,pid] of Object.entries(bindings))if(!state.encounter.participants.some(p=>p.id===pid))delete bindings[id];
-  localStorage.setItem(bindingsKey,JSON.stringify(bindings));saveState();render();
+  localStorage.setItem(bindingsKey,JSON.stringify(bindings));saveState();safeEncounterRender('RPG Connect · nettoyage participants');
  }
  const participant=id=>state.encounter.participants.find(p=>p.id===bindings[id]||p.id===stableIds[id]);
  const online=id=>players.some(p=>p.characterId===id&&p.online);
@@ -107,8 +108,8 @@
   if(!bound.length){note(onlineIds.length?(names[onlineIds[0]]+' est connecté mais pas lié à un participant ENCOUNTER. Sélectionne son participant dans RPG Connect.'):'Aucun Companion lié à un participant ENCOUNTER.');renderPanel();return false}
   if(!roster.length){note(onlineIds.length?(onlineIds.map(id=>names[id]).join(', ')+' connecté'+(onlineIds.length>1?'s':'')+', mais aucun n’est lié au bon participant ENCOUNTER.'):'Aucun Companion lié n’est connecté. Connecte seulement celui que tu veux tester.');renderPanel();return false}
   clearTargets(roster);pending.clear();pendingSaves.clear();recentAttackRolls.clear();attackTargets.clear();for(const t of attackTargetTimers.values())clearTimeout(t);attackTargetTimers.clear();for(const t of attackWatchTimers.values())clearTimeout(t);attackWatchTimers.clear();decisionCommands.clear();
-  fight={phase:'preparation',requestId:uid(),roster:[...roster],rolls:{},validated:{}};if(combatMachine.state!=='LOBBY'&&combatMachine.state!=='END')transitionCombat('LOBBY','nouvelle préparation');transitionCombat('PREP','Prépa Fight');saveState();render();
-  for(const id of roster){sessionCommand(id,{phase:'preparation',resetCombat:true,text:'Tour 1 réinitialisé · '+roster.length+' Companion'+(roster.length>1?'s':'')+' actif'+(roster.length>1?'s':'')});syncConditionsFor(id);sendInitiativeRequest(id)}syncOnlineState('preparation')
+  fight={phase:'preparation',requestId:uid(),roster:[...roster],rolls:{},validated:{}};if(combatMachine.state!=='LOBBY'&&combatMachine.state!=='END')transitionCombat('LOBBY','nouvelle préparation');transitionCombat('PREP','Prépa Fight');saveState();
+  for(const id of roster){sessionCommand(id,{phase:'preparation',resetCombat:true,text:'Tour 1 réinitialisé · '+roster.length+' Companion'+(roster.length>1?'s':'')+' actif'+(roster.length>1?'s':'')});syncConditionsFor(id);sendInitiativeRequest(id)}syncOnlineState('preparation');safeEncounterRender('Prépa Fight')
   const ignored=bound.length-roster.length;
   note('Prépa Fight · initiative demandée à '+roster.length+' Companion'+(roster.length>1?'s':'')+' connecté'+(roster.length>1?'s':'')+(ignored?' · '+ignored+' hors ligne ne bloque'+(ignored>1?'nt':'')+' pas FIGHT.':'.'));netlog('Prépa Fight envoyée à '+roster.length+' Companion'+(roster.length>1?'s':''),'action');
   renderPanel();return true
