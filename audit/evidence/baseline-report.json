@@ -1,0 +1,62 @@
+{
+  "checks": [
+    {
+      "name": "both online",
+      "pass": true
+    },
+    {
+      "name": "Kentaro initiative visible and topmost",
+      "pass": true,
+      "detail": {
+        "hidden": false,
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1",
+        "zIndex": "10050",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1180,
+          "height": 820
+        },
+        "topmost": true,
+        "top": "<input data-init-manual=\"\" type=\"number\" min=\"1\" max=\"20\" inputmode=\"numeric\" placeholder=\"optionnel\">"
+      }
+    },
+    {
+      "name": "Brackmard initiative visible and topmost",
+      "pass": true,
+      "detail": {
+        "hidden": false,
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1",
+        "zIndex": "10050",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1180,
+          "height": 820
+        },
+        "topmost": true,
+        "top": "<input data-init-manual=\"\" type=\"number\" min=\"1\" max=\"20\" inputmode=\"numeric\" placeholder=\"optionnel\">"
+      }
+    },
+    {
+      "name": "initiative:rolled → MJ validation → FIGHT",
+      "pass": true
+    }
+  ],
+  "errors": [
+    {
+      "page": "Kentaro",
+      "message": "missing ) after argument list",
+      "stack": ""
+    },
+    {
+      "page": "Brackmard",
+      "message": "missing ) after argument list",
+      "stack": ""
+    }
+  ]
+}

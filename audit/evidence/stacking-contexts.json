@@ -247,6 +247,14 @@
       ]
     },
     {
+      "element": "SPAN",
+      "id": "",
+      "class": "table-eco spent",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
       "element": "IMG",
       "id": "",
       "class": "creature-type-icon detail-creature-icon",
@@ -1276,8 +1284,7 @@
       "class": "show tone-heal collapsed",
       "reasons": [
         "fixed",
-        "z-index 9999",
-        "transform"
+        "z-index 9999"
       ]
     },
     {
@@ -1507,6 +1514,22 @@
       "class": "ability v3-unavailable",
       "reasons": [
         "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
         "opacity"
       ]
     },
@@ -2298,6 +2321,14 @@
       ]
     },
     {
+      "element": "BUTTON",
+      "id": "ecoB",
+      "class": "eco used",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
       "element": "SECTION",
       "id": "cc-turnbar-standard",
       "class": "",
@@ -2328,6 +2359,15 @@
       "id": "",
       "class": "cc-turn-state",
       "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "cc-turn-cell cc-turn-bonus is-used",
+      "reasons": [
+        "filter",
         "opacity"
       ]
     },
@@ -2622,6 +2662,30 @@
       "reasons": [
         "sticky",
         "z-index 22"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
       ]
     },
     {
@@ -3715,6 +3779,14 @@
       "class": "v3-unavailable",
       "reasons": [
         "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
         "opacity"
       ]
     },

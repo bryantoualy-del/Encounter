@@ -49,58 +49,58 @@
     {
       "name": "Brack attack → MJ → correlated damage",
       "pass": true,
-      "attackId": "44af3a6b-fe8c-40ce-979d-8809baadcab0",
-      "amount": 17
+      "attackId": "21a69c81-cfb1-4cbb-91c4-78f00272e3c6",
+      "amount": 16
     },
     {
       "name": "Brack attack → MJ → correlated damage",
       "pass": true,
-      "attackId": "7eda348e-f6c1-4f71-a4b9-d8f31d0c20d9",
-      "amount": 17
-    },
-    {
-      "name": "Brack attack → MJ → correlated damage",
-      "pass": true,
-      "attackId": "f825b673-d903-4c57-a2b7-0233e7d747f4",
-      "amount": 18
-    },
-    {
-      "name": "Brack attack → MJ → correlated damage",
-      "pass": true,
-      "attackId": "e57edb39-ab75-466c-a2ed-7c67bbf8c512",
+      "attackId": "19ce550d-e325-4576-b820-230fc166f0e5",
       "amount": 20
     },
     {
       "name": "Brack attack → MJ → correlated damage",
       "pass": true,
-      "attackId": "24f7a712-e751-4c74-837f-0dad22127ab7",
-      "amount": 19
+      "attackId": "12429995-8438-48ce-801b-c477db31640a",
+      "amount": 25
     },
     {
       "name": "Brack attack → MJ → correlated damage",
       "pass": true,
-      "attackId": "a7380998-e175-4e83-95a8-f544e51fa7d6",
-      "amount": 22
+      "attackId": "c71ca271-78f6-4cc2-8b76-7fbc374872e4",
+      "amount": 21
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true,
+      "attackId": "344e29ca-4d82-4037-81f7-ab1a6e115bf0",
+      "amount": 24
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true,
+      "attackId": "ae7ba90f-7503-45e2-8a72-61e43d42610a",
+      "amount": 28
     },
     {
       "name": "Kentaro #solinar → MJ → correlated damage",
       "pass": true,
-      "attackId": "kentaro-muudn7zz-1k",
-      "amount": 13
+      "attackId": "kentaro-muue1qro-1k",
+      "amount": 11
     },
     {
       "name": "Kentaro #selhane → MJ → correlated damage",
       "pass": true,
-      "attackId": "kentaro-muudn8mp-1s",
-      "amount": 35
+      "attackId": "kentaro-muue1rfo-1s",
+      "amount": 21
     },
     {
       "name": "Kentaro native save → MJ manual → full resolution",
       "pass": true,
       "detail": {
-        "saveId": "kentaro-muudn8mp-1s:blade-save",
-        "requestId": "kentaro-muudn8mp-1s:blade-save",
-        "attackId": "kentaro-muudn8mp-1s",
+        "saveId": "kentaro-muue1rfo-1s:blade-save",
+        "requestId": "kentaro-muue1rfo-1s:blade-save",
+        "attackId": "kentaro-muue1rfo-1s",
         "actionId": null,
         "targetId": "e2e-target",
         "targetName": "Cible E2E",
@@ -142,8 +142,8 @@
     {
       "name": "Kentaro #thirdSun → MJ → correlated damage",
       "pass": true,
-      "attackId": "kentaro-muudn9jx-27",
-      "amount": 14
+      "attackId": "kentaro-muue1td0-27",
+      "amount": 12
     },
     {
       "name": "Kentaro bonus consumed",
@@ -153,16 +153,67 @@
       "name": "same attackId new eventId applied once",
       "pass": true,
       "detail": {
-        "hpBeforeReplay": 797,
-        "hpAfterReplay": 797
+        "hpBeforeReplay": 784,
+        "hpAfterReplay": 784
+      }
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true,
+      "attackId": "297afbc4-bb94-4b57-a8a5-2aa048ba78dd",
+      "amount": 26
+    },
+    {
+      "name": "Brackmard native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "ad16c96c-51ca-4e88-b7fb-33f7551a8529",
+        "requestId": "ad16c96c-51ca-4e88-b7fb-33f7551a8529",
+        "attackId": "297afbc4-bb94-4b57-a8a5-2aa048ba78dd",
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Croc-en-jambe",
+        "ability": "FOR",
+        "dc": 17,
+        "dice": [
+          1
+        ],
+        "die": 1,
+        "modifier": 3,
+        "total": 4,
+        "success": false,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 0,
+        "requestedDamage": 0,
+        "effectiveDamage": 0,
+        "components": [
+          {
+            "raw": 0,
+            "requested": 0,
+            "effective": 0,
+            "type": "",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [
+          "À terre"
+        ],
+        "conditionApplied": "À terre",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "",
+        "dead": false
       }
     },
     {
       "name": "Brackmard native save → MJ manual → full resolution",
       "pass": true,
       "detail": {
-        "saveId": "d1d6edbf-f1c3-4811-9db8-ed960844272d",
-        "requestId": "d1d6edbf-f1c3-4811-9db8-ed960844272d",
+        "saveId": "61a0c7f5-9173-4f48-b553-fd43d0f1cac7",
+        "requestId": "61a0c7f5-9173-4f48-b553-fd43d0f1cac7",
         "attackId": null,
         "actionId": null,
         "targetId": "e2e-target",
@@ -180,14 +231,14 @@
         "mode": "normal",
         "automaticFailure": false,
         "rollSource": "manual",
-        "rawDamage": 17,
-        "requestedDamage": 8,
-        "effectiveDamage": 8,
+        "rawDamage": 20,
+        "requestedDamage": 10,
+        "effectiveDamage": 10,
         "components": [
           {
-            "raw": 17,
-            "requested": 8,
-            "effective": 8,
+            "raw": 20,
+            "requested": 10,
+            "effective": 10,
             "type": "feu",
             "reason": ""
           }
@@ -204,8 +255,8 @@
       "name": "Kentaro native save → MJ manual → full resolution",
       "pass": true,
       "detail": {
-        "saveId": "5515be1a-2811-46e5-b942-06afa37857e1",
-        "requestId": "5515be1a-2811-46e5-b942-06afa37857e1",
+        "saveId": "14a4143f-08ce-47c8-8833-cd0f2cdd7ae8",
+        "requestId": "14a4143f-08ce-47c8-8833-cd0f2cdd7ae8",
         "attackId": null,
         "actionId": null,
         "targetId": "e2e-target",
@@ -223,14 +274,14 @@
         "mode": "normal",
         "automaticFailure": false,
         "rollSource": "manual",
-        "rawDamage": 32,
-        "requestedDamage": 32,
-        "effectiveDamage": 32,
+        "rawDamage": 33,
+        "requestedDamage": 33,
+        "effectiveDamage": 33,
         "components": [
           {
-            "raw": 32,
-            "requested": 32,
-            "effective": 32,
+            "raw": 33,
+            "requested": 33,
+            "effective": 33,
             "type": "psychiques",
             "reason": ""
           }
@@ -249,8 +300,8 @@
       "name": "Samoth native save → MJ manual → full resolution",
       "pass": true,
       "detail": {
-        "saveId": "e20c0d27-73f5-4162-b990-9b12dcd120e5",
-        "requestId": "e20c0d27-73f5-4162-b990-9b12dcd120e5",
+        "saveId": "f6df893b-eab6-4bbc-9cfa-7dd5b83cb184",
+        "requestId": "f6df893b-eab6-4bbc-9cfa-7dd5b83cb184",
         "attackId": null,
         "actionId": null,
         "targetId": "e2e-target",
@@ -268,14 +319,14 @@
         "mode": "normal",
         "automaticFailure": false,
         "rollSource": "manual",
-        "rawDamage": 36,
-        "requestedDamage": 18,
-        "effectiveDamage": 18,
+        "rawDamage": 33,
+        "requestedDamage": 16,
+        "effectiveDamage": 16,
         "components": [
           {
-            "raw": 36,
-            "requested": 18,
-            "effective": 18,
+            "raw": 33,
+            "requested": 16,
+            "effective": 16,
             "type": "froid",
             "reason": ""
           }
@@ -292,8 +343,8 @@
       "name": "Zephyr native save → MJ manual → full resolution",
       "pass": true,
       "detail": {
-        "saveId": "5dfda5fc-b91c-4b40-8d17-86127e994322",
-        "requestId": "5dfda5fc-b91c-4b40-8d17-86127e994322",
+        "saveId": "f2337853-d0c3-4689-9a9f-53b3d0c2ae61",
+        "requestId": "f2337853-d0c3-4689-9a9f-53b3d0c2ae61",
         "attackId": null,
         "actionId": null,
         "targetId": "e2e-target",
@@ -337,8 +388,8 @@
       "name": "Rufus native save → MJ manual → full resolution",
       "pass": true,
       "detail": {
-        "saveId": "9dbc30a3-50dc-48d6-ad65-6c2db763abd6",
-        "requestId": "9dbc30a3-50dc-48d6-ad65-6c2db763abd6",
+        "saveId": "1a7953f8-56f9-4c2d-9344-1fc2220ef442",
+        "requestId": "1a7953f8-56f9-4c2d-9344-1fc2220ef442",
         "attackId": null,
         "actionId": null,
         "targetId": "e2e-target",
@@ -381,11 +432,15 @@
       }
     },
     {
+      "name": "Rufus object concentration normalized to actual spell name",
+      "pass": true
+    },
+    {
       "name": "Nans native save → MJ manual → full resolution",
       "pass": true,
       "detail": {
-        "saveId": "b8ea0051-fda9-4594-acb2-e1b445b6cfb6",
-        "requestId": "b8ea0051-fda9-4594-acb2-e1b445b6cfb6",
+        "saveId": "498d20c7-13cb-46da-a552-d0d3c9d6d081",
+        "requestId": "498d20c7-13cb-46da-a552-d0d3c9d6d081",
         "attackId": null,
         "actionId": null,
         "targetId": "e2e-target",
@@ -403,14 +458,14 @@
         "mode": "normal",
         "automaticFailure": false,
         "rollSource": "manual",
-        "rawDamage": 20,
-        "requestedDamage": 20,
-        "effectiveDamage": 20,
+        "rawDamage": 12,
+        "requestedDamage": 12,
+        "effectiveDamage": 12,
         "components": [
           {
-            "raw": 20,
-            "requested": 20,
-            "effective": 20,
+            "raw": 12,
+            "requested": 12,
+            "effective": 12,
             "type": "tonnerre",
             "reason": ""
           }
@@ -424,11 +479,150 @@
       }
     },
     {
+      "name": "Zephyr native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "0d9e3c71-cdcb-4fa9-9b77-c5f60830c43c",
+        "requestId": "0d9e3c71-cdcb-4fa9-9b77-c5f60830c43c",
+        "attackId": null,
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Peur",
+        "ability": "SAG",
+        "dc": 16,
+        "dice": [
+          1
+        ],
+        "die": 1,
+        "modifier": 1,
+        "total": 2,
+        "success": false,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 0,
+        "requestedDamage": 0,
+        "effectiveDamage": 0,
+        "components": [
+          {
+            "raw": 0,
+            "requested": 0,
+            "effective": 0,
+            "type": "",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [
+          "Effrayé"
+        ],
+        "conditionApplied": "Effrayé",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "",
+        "dead": false
+      }
+    },
+    {
+      "name": "Zephyr native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "16e7be25-fe88-4e01-b775-64183ebe7013",
+        "requestId": "16e7be25-fe88-4e01-b775-64183ebe7013",
+        "attackId": "zephyr-muue2ahv-18",
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Châtiment tonitruant",
+        "ability": "FOR",
+        "dc": 16,
+        "dice": [
+          1
+        ],
+        "die": 1,
+        "modifier": 3,
+        "total": 4,
+        "success": false,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 0,
+        "requestedDamage": 0,
+        "effectiveDamage": 0,
+        "components": [
+          {
+            "raw": 0,
+            "requested": 0,
+            "effective": 0,
+            "type": "",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [
+          "À terre"
+        ],
+        "conditionApplied": "À terre",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "Repoussée de 3 m",
+        "dead": false
+      }
+    },
+    {
+      "name": "Zephyr native smite save keeps attackId",
+      "pass": true
+    },
+    {
+      "name": "Nans native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "67df0cae-88df-43fe-bccb-0e7672970811",
+        "requestId": "67df0cae-88df-43fe-bccb-0e7672970811",
+        "attackId": null,
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Présence intimidante",
+        "ability": "SAG",
+        "dc": 12,
+        "dice": [
+          1
+        ],
+        "die": 1,
+        "modifier": 1,
+        "total": 2,
+        "success": false,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 0,
+        "requestedDamage": 0,
+        "effectiveDamage": 0,
+        "components": [
+          {
+            "raw": 0,
+            "requested": 0,
+            "effective": 0,
+            "type": "",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [
+          "Effrayé"
+        ],
+        "conditionApplied": "Effrayé",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "",
+        "dead": false
+      }
+    },
+    {
       "name": "automatic JdS composite R/I/V absorbs temp HP first",
       "pass": true,
       "detail": {
-        "saveId": "9ab707d4-fe6d-4ac7-8c89-854491825f2b",
-        "requestId": "9ab707d4-fe6d-4ac7-8c89-854491825f2b",
+        "saveId": "6acca3f9-e26b-411d-8ae1-50b8d2b5a5ca",
+        "requestId": "6acca3f9-e26b-411d-8ae1-50b8d2b5a5ca",
         "attackId": null,
         "actionId": null,
         "targetId": "e2e-target",
@@ -525,11 +719,19 @@
       }
     },
     {
-      "name": "Kentaro rest modal topmost",
+      "name": "Kentaro short rest modal topmost",
       "pass": true
     },
     {
-      "name": "Kentaro cancelled rest preserves HP",
+      "name": "Kentaro cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Kentaro long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Kentaro cancelled long rest preserves HP",
       "pass": true
     },
     {
@@ -541,11 +743,19 @@
       }
     },
     {
-      "name": "Brackmard rest modal topmost",
+      "name": "Brackmard short rest modal topmost",
       "pass": true
     },
     {
-      "name": "Brackmard cancelled rest preserves HP",
+      "name": "Brackmard cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Brackmard long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Brackmard cancelled long rest preserves HP",
       "pass": true
     },
     {
@@ -557,11 +767,19 @@
       }
     },
     {
-      "name": "Samoth rest modal topmost",
+      "name": "Samoth short rest modal topmost",
       "pass": true
     },
     {
-      "name": "Samoth cancelled rest preserves HP",
+      "name": "Samoth cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Samoth long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Samoth cancelled long rest preserves HP",
       "pass": true
     },
     {
@@ -573,11 +791,19 @@
       }
     },
     {
-      "name": "Zephyr rest modal topmost",
+      "name": "Zephyr short rest modal topmost",
       "pass": true
     },
     {
-      "name": "Zephyr cancelled rest preserves HP",
+      "name": "Zephyr cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Zephyr long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Zephyr cancelled long rest preserves HP",
       "pass": true
     },
     {
@@ -589,11 +815,19 @@
       }
     },
     {
-      "name": "Rufus rest modal topmost",
+      "name": "Rufus short rest modal topmost",
       "pass": true
     },
     {
-      "name": "Rufus cancelled rest preserves HP",
+      "name": "Rufus cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Rufus long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Rufus cancelled long rest preserves HP",
       "pass": true
     },
     {
@@ -605,11 +839,19 @@
       }
     },
     {
-      "name": "Nans rest modal topmost",
+      "name": "Nans short rest modal topmost",
       "pass": true
     },
     {
-      "name": "Nans cancelled rest preserves HP",
+      "name": "Nans cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Nans long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Nans cancelled long rest preserves HP",
       "pass": true
     },
     {
