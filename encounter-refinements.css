@@ -108,7 +108,8 @@
 .table-eco small{position:absolute;right:-4px;bottom:-5px;font-size:7px;line-height:1;padding:2px 3px;border-radius:5px;background:#0a121b;color:#e2edf6;text-decoration:none}
 .ref-reaction-alert{opacity:1!important;filter:none!important;border-color:#d952dc!important;box-shadow:0 0 0 1px #d952dc66,0 0 12px #d952dc88!important;animation:refReactionPulse 1.35s ease-in-out infinite}
 @keyframes refReactionPulse{0%,100%{box-shadow:0 0 0 1px #d952dc44,0 0 5px #d952dc55}50%{box-shadow:0 0 0 1px #e875ea,0 0 15px #d952dccc}}
-.ref-concentration-mini{display:inline-grid;place-items:center;width:23px;height:23px;border:1px solid #63c98b;border-radius:5px;color:#8bf0ad;background:#153226;font-size:16px;box-shadow:0 0 9px #55cf8655}
+.ref-concentration-mini{display:inline-grid;place-items:center;width:23px;height:23px;border:1px solid #63c98b66;border-radius:5px;color:#8bf0ad;background-color:#153226;background-image:var(--ref-concentration-mini,none);background-repeat:no-repeat;background-position:center;background-size:contain;font-size:16px;box-shadow:0 0 9px #55cf8655}
+.ref-assets-ready .ref-concentration-mini{font-size:0}
 .ref-roster-condition{z-index:3!important;width:27px;height:27px;min-height:27px;padding:2px;border:1px solid #5a6574;background:#222e3a;border-radius:6px;display:grid;place-items:center}
 .ref-roster-condition:hover{border-color:#9aaec0;transform:translateY(-1px)}
 .table-condition.more{align-self:center}
@@ -193,8 +194,9 @@
 .ref-economy-strip .economy-marker.spent{opacity:.34!important;filter:saturate(.35) brightness(.7)}
 .ref-economy-strip .concentration{border-color:#3b6c54}
 .ref-economy-strip .concentration.active{background:#173327;border-color:#5fca87;box-shadow:inset 0 0 16px #4fc77b26}
-.ref-concentration-icon{display:grid;place-items:center;color:#7fe3a3;border:2px solid currentColor;border-radius:50%;font-size:22px;line-height:1}
+.ref-concentration-icon{display:grid;place-items:center;color:#7fe3a3;background-image:var(--ref-concentration,none);background-repeat:no-repeat;background-position:center;background-size:contain;font-size:22px;line-height:1}
 .ref-concentration-icon.full{width:34px;height:34px}
+.ref-assets-ready .ref-concentration-icon{font-size:0}
 .active-detail.ref-concentrating{box-shadow:inset 0 0 28px #4aca7620}
 .active-detail .stat-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;padding:0 12px 7px!important}
 .active-detail .statbox{min-height:54px!important;padding:6px 7px!important;border-radius:7px!important;display:flex;flex-direction:column;align-items:center;justify-content:center}
