@@ -9,12 +9,12 @@ const worker=readFileSync(new URL('./service-worker.js',import.meta.url),'utf8')
 
 test('refinement layer compiles and is loaded after RPG Connect',()=>{
   assert.doesNotThrow(()=>new Function(source));
-  const rpg=index.indexOf('rpg-connect-mj.js?v=51');
-  const refinement=index.indexOf('encounter-refinements.js?v=1');
+  const rpg=index.search(/rpg-connect-mj\.js\?v=\d+/);
+  const refinement=index.search(/encounter-refinements\.js\?v=\d+/);
   assert.ok(rpg>=0&&refinement>rpg,'refinement JS must wrap the final RPG Connect functions');
   assert.match(index,/encounter-refinements\.css\?v=1/);
   assert.doesNotMatch(index,/id="deviceProfile"/);
-  for(const asset of ['encounter-refinements.css?v=1','encounter-refinements.js?v=1','assets/refinement/actions-sprite.b64','assets/refinement/classes-sprite.b64','assets/refinement/concentration.webp.b64','assets/refinement/concentration-mini.webp.b64','assets/refinement/condition-icons.json'])assert.ok(worker.includes(asset),asset+' missing from offline cache');
+  for(const asset of ['encounter-refinements.css?v=1','encounter-refinements.js?v=2','assets/refinement/actions-sprite.b64','assets/refinement/classes-sprite.b64','assets/refinement/concentration.webp.b64','assets/refinement/concentration-mini.webp.b64','assets/refinement/condition-icons.json'])assert.ok(worker.includes(asset),asset+' missing from offline cache');
 });
 
 test('supplied icon bundles and local condition registry are valid',()=>{
