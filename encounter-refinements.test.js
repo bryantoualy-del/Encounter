@@ -14,11 +14,11 @@ test('refinement layer compiles and is loaded after RPG Connect',()=>{
   assert.ok(rpg>=0&&refinement>rpg,'refinement JS must wrap the final RPG Connect functions');
   assert.match(index,/encounter-refinements\.css\?v=1/);
   assert.doesNotMatch(index,/id="deviceProfile"/);
-  for(const asset of ['encounter-refinements.css?v=1','encounter-refinements.js?v=1','assets/refinement/actions-sprite.b64','assets/refinement/classes-sprite.b64','assets/refinement/condition-icons.json'])assert.ok(worker.includes(asset),asset+' missing from offline cache');
+  for(const asset of ['encounter-refinements.css?v=1','encounter-refinements.js?v=1','assets/refinement/actions-sprite.b64','assets/refinement/classes-sprite.b64','assets/refinement/concentration.webp.b64','assets/refinement/concentration-mini.webp.b64','assets/refinement/condition-icons.json'])assert.ok(worker.includes(asset),asset+' missing from offline cache');
 });
 
 test('supplied icon bundles and local condition registry are valid',()=>{
-  for(const file of ['actions-sprite.b64','classes-sprite.b64']){
+  for(const file of ['actions-sprite.b64','classes-sprite.b64','concentration.webp.b64','concentration-mini.webp.b64']){
     const raw=readFileSync(new URL('./assets/refinement/'+file,import.meta.url),'utf8').trim();
     const data=Buffer.from(raw,'base64');
     assert.equal(data.subarray(0,4).toString(),'RIFF');
@@ -124,4 +124,6 @@ test('refinement source preserves RPG Connect wrappers instead of replacing netw
   assert.match(source,/form\.elements\.kind\.value=c\.semantic==='enemy'\?'enemy':c\.semantic==='npc'\?'ally':'player'/,'custom participant category must map back to a valid core combat role');
   assert.match(source,/comp-crasseuse/,'Silas companion option must survive library staging');
   assert.match(source,/makeLairParticipant\(main,m\)/,'lair option must survive library staging');
+  assert.match(source,/--ref-concentration'/,'full concentration asset must be loaded');
+  assert.match(source,/--ref-concentration-mini'/,'mini concentration asset must be loaded');
 });
