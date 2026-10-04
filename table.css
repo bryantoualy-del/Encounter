@@ -512,3 +512,61 @@ body.combat-mode{--dock-height:0px!important}
 .detail-condition-summary .table-condition{pointer-events:none}
 .detail-condition-manage{margin-left:auto;color:#d9c18b;font-size:10px;font-weight:900;letter-spacing:.05em;text-transform:uppercase}
 @media(max-width:900px){.table-condition{font-size:9px}.table-condition-icon{width:14px;height:14px;min-width:14px}.detail-condition-summary{gap:3px}}
+
+
+/* TABLE DETAIL EXPANDED V1 — ↗ ouvre réellement la fiche en grand sur tablette/desktop */
+@media (min-width:761px){
+  .row-sheet{
+    position:relative;
+    z-index:4;
+    pointer-events:auto;
+  }
+  .combat-mode.table-detail-open{
+    overflow:hidden;
+  }
+  .combat-mode.table-detail-open .detail-panel{
+    display:flex;
+    flex-direction:column;
+    position:fixed;
+    z-index:85;
+    left:8px;
+    right:8px;
+    top:calc(var(--top-height) + var(--round-height) + var(--rpg-live-height) + 8px);
+    bottom:calc(var(--dock-height) + 8px);
+    width:auto;
+    height:auto;
+    max-height:none;
+    min-height:0;
+    border-color:#6c87a0;
+    box-shadow:0 0 0 100vmax rgba(3,10,19,.74),0 18px 48px rgba(0,0,0,.42);
+    overflow:hidden;
+  }
+  .combat-mode.table-detail-open .detail-close{
+    display:block;
+    flex:none;
+    min-height:42px;
+    padding:8px 12px;
+    border:0;
+    border-bottom:1px solid #40566c;
+    border-radius:0;
+    background:#24394d;
+    color:#d9ebfb;
+    text-align:left;
+    font-weight:800;
+  }
+  .combat-mode.table-detail-open .active-detail{
+    flex:1;
+    min-height:0;
+    height:auto;
+    overflow:hidden;
+  }
+  .combat-mode.table-detail-open .active-detail .detail-tab-body{
+    min-height:0;
+    overflow:auto;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+  }
+  .combat-mode.table-detail-open .quickbar{
+    z-index:86;
+  }
+}
