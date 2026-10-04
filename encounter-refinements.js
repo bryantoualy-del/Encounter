@@ -612,6 +612,7 @@ function showAdvancedDialog(){
 
 document.addEventListener('click',e=>{
   const button=e.target.closest('button');
+  if(button?.closest('#rpgMjDialog,#rpgMjCockpit,#rpgHitPopup,#rpgSavePopup,#rpgTurnEndPopup'))return;
   const prepRow=e.target.closest('#prepParticipants .prep-row[data-select]');
   if(prepRow&&!e.target.closest('button,input,select,label')){
     e.preventDefault();e.stopImmediatePropagation();state.encounter.selectedId=prepRow.dataset.select;saveState();renderPrep();return;
