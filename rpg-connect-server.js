@@ -23,7 +23,7 @@ wss.on('connection',ws=>{
     const m=JSON.parse(String(raw));if(m.v!==1||typeof m.type!=='string'||!m.type||JSON.stringify(m).length>65000)throw Error('Message invalide');
     if(!role){
       if(m.type!=='hello')throw Error('Identification requise');
-      if((m.protocolVersion!=null&&m.protocolVersion!==protocol.protocolVersion)||(m.requiredCapabilities||[]).some(c=>!protocol.capabilities.includes(c))){send(ws,{type:'error',code:'PROTOCOL_INCOMPATIBLE',message:'RPG Connect incompatible : protocole/capacités requis non disponibles',...protocol});ws.close(4002,'Protocole incompatible');return}
+      if((m.protocolVersion!==protocol.protocolVersion)||protocol.capabilities.some(c=>!m.clientCapabilities?.includes(c))||(m.requiredCapabilities||[]).some(c=>!protocol.capabilities.includes(c))){send(ws,{type:'error',code:'PROTOCOL_INCOMPATIBLE',message:'RPG Connect incompatible : protocole/capacités requis non disponibles',...protocol});ws.close(4002,'Protocole incompatible');return}
       if(m.role==='gm'){
         if(!equal(m.key,key))throw Error('Clé MJ invalide');
         const requested=String(m.room||'').trim();const roomId=requested&&/^[A-Z0-9_-]{6,32}$/i.test(requested)?requested:random(8);room=rooms.get(roomId);

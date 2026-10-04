@@ -6,7 +6,7 @@ const {server,wss}=await import('./rpg-connect-server.js');
 await new Promise(resolve=>server.listening?resolve():server.once('listening',resolve));
 const url=`ws://127.0.0.1:${server.address().port}`;
 const open=()=>new Promise((resolve,reject)=>{let ws=new WebSocket(url);ws.once('open',()=>resolve(ws));ws.once('error',reject)});
-const send=(ws,message)=>ws.send(JSON.stringify({v:1,...message}));
+const send=(ws,message)=>ws.send(JSON.stringify({v:1,protocolVersion:1,clientCapabilities:['event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions'],...message}));
 const wait=(ws,type)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>{ws.off('message',receive);reject(Error('timeout '+type))},1500);function receive(raw){const value=JSON.parse(String(raw));if(value.type!==type)return;clearTimeout(timer);ws.off('message',receive);resolve(value)}ws.on('message',receive)});
 
 test('salle, invitation, événement, déduplication, commande MJ et ack',async()=>{

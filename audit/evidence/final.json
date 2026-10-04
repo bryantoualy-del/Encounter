@@ -49,58 +49,58 @@
     {
       "name": "Brack attack → MJ → correlated damage",
       "pass": true,
-      "attackId": "249f60dc-b869-491a-80b7-d13e3283a88c",
-      "amount": 24
-    },
-    {
-      "name": "Brack attack → MJ → correlated damage",
-      "pass": true,
-      "attackId": "9d3be179-6701-4763-8ae9-d074c6d2de35",
+      "attackId": "44af3a6b-fe8c-40ce-979d-8809baadcab0",
       "amount": 17
     },
     {
       "name": "Brack attack → MJ → correlated damage",
       "pass": true,
-      "attackId": "f48ea590-528f-4c3c-9698-bc709e1258f8",
-      "amount": 23
-    },
-    {
-      "name": "Brack attack → MJ → correlated damage",
-      "pass": true,
-      "attackId": "0268479e-59ac-4fbf-9839-8d164361768f",
+      "attackId": "7eda348e-f6c1-4f71-a4b9-d8f31d0c20d9",
       "amount": 17
     },
     {
       "name": "Brack attack → MJ → correlated damage",
       "pass": true,
-      "attackId": "09a11665-94ce-4fc4-917c-394691c8b906",
-      "amount": 26
+      "attackId": "f825b673-d903-4c57-a2b7-0233e7d747f4",
+      "amount": 18
     },
     {
       "name": "Brack attack → MJ → correlated damage",
       "pass": true,
-      "attackId": "7c705367-2234-4545-a24e-c28a782c5c0b",
-      "amount": 26
+      "attackId": "e57edb39-ab75-466c-a2ed-7c67bbf8c512",
+      "amount": 20
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true,
+      "attackId": "24f7a712-e751-4c74-837f-0dad22127ab7",
+      "amount": 19
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true,
+      "attackId": "a7380998-e175-4e83-95a8-f544e51fa7d6",
+      "amount": 22
     },
     {
       "name": "Kentaro #solinar → MJ → correlated damage",
       "pass": true,
-      "attackId": "kentaro-muudfu7e-1k",
-      "amount": 15
+      "attackId": "kentaro-muudn7zz-1k",
+      "amount": 13
     },
     {
       "name": "Kentaro #selhane → MJ → correlated damage",
       "pass": true,
-      "attackId": "kentaro-muudfuvo-1s",
-      "amount": 26
+      "attackId": "kentaro-muudn8mp-1s",
+      "amount": 35
     },
     {
       "name": "Kentaro native save → MJ manual → full resolution",
       "pass": true,
       "detail": {
-        "saveId": "kentaro-muudfuvo-1s:blade-save",
-        "requestId": "kentaro-muudfuvo-1s:blade-save",
-        "attackId": "kentaro-muudfuvo-1s",
+        "saveId": "kentaro-muudn8mp-1s:blade-save",
+        "requestId": "kentaro-muudn8mp-1s:blade-save",
+        "attackId": "kentaro-muudn8mp-1s",
         "actionId": null,
         "targetId": "e2e-target",
         "targetName": "Cible E2E",
@@ -142,8 +142,8 @@
     {
       "name": "Kentaro #thirdSun → MJ → correlated damage",
       "pass": true,
-      "attackId": "kentaro-muudfvt3-27",
-      "amount": 13
+      "attackId": "kentaro-muudn9jx-27",
+      "amount": 14
     },
     {
       "name": "Kentaro bonus consumed",
@@ -153,16 +153,16 @@
       "name": "same attackId new eventId applied once",
       "pass": true,
       "detail": {
-        "hpBeforeReplay": 772,
-        "hpAfterReplay": 772
+        "hpBeforeReplay": 797,
+        "hpAfterReplay": 797
       }
     },
     {
       "name": "Brackmard native save → MJ manual → full resolution",
       "pass": true,
       "detail": {
-        "saveId": "a3106597-eedc-4c3d-99f1-10485fc009ca",
-        "requestId": "a3106597-eedc-4c3d-99f1-10485fc009ca",
+        "saveId": "d1d6edbf-f1c3-4811-9db8-ed960844272d",
+        "requestId": "d1d6edbf-f1c3-4811-9db8-ed960844272d",
         "attackId": null,
         "actionId": null,
         "targetId": "e2e-target",
@@ -180,14 +180,14 @@
         "mode": "normal",
         "automaticFailure": false,
         "rollSource": "manual",
-        "rawDamage": 23,
-        "requestedDamage": 11,
-        "effectiveDamage": 11,
+        "rawDamage": 17,
+        "requestedDamage": 8,
+        "effectiveDamage": 8,
         "components": [
           {
-            "raw": 23,
-            "requested": 11,
-            "effective": 11,
+            "raw": 17,
+            "requested": 8,
+            "effective": 8,
             "type": "feu",
             "reason": ""
           }
@@ -204,8 +204,8 @@
       "name": "Kentaro native save → MJ manual → full resolution",
       "pass": true,
       "detail": {
-        "saveId": "5ed3f584-8f08-43f3-a0a2-1fd976d11a01",
-        "requestId": "5ed3f584-8f08-43f3-a0a2-1fd976d11a01",
+        "saveId": "5515be1a-2811-46e5-b942-06afa37857e1",
+        "requestId": "5515be1a-2811-46e5-b942-06afa37857e1",
         "attackId": null,
         "actionId": null,
         "targetId": "e2e-target",
@@ -249,8 +249,8 @@
       "name": "Samoth native save → MJ manual → full resolution",
       "pass": true,
       "detail": {
-        "saveId": "0a8a0d66-d55a-4a0d-8f1a-b90246ae1287",
-        "requestId": "0a8a0d66-d55a-4a0d-8f1a-b90246ae1287",
+        "saveId": "e20c0d27-73f5-4162-b990-9b12dcd120e5",
+        "requestId": "e20c0d27-73f5-4162-b990-9b12dcd120e5",
         "attackId": null,
         "actionId": null,
         "targetId": "e2e-target",
@@ -292,8 +292,8 @@
       "name": "Zephyr native save → MJ manual → full resolution",
       "pass": true,
       "detail": {
-        "saveId": "543da469-6a84-4bf2-a309-bd575f7bdd45",
-        "requestId": "543da469-6a84-4bf2-a309-bd575f7bdd45",
+        "saveId": "5dfda5fc-b91c-4b40-8d17-86127e994322",
+        "requestId": "5dfda5fc-b91c-4b40-8d17-86127e994322",
         "attackId": null,
         "actionId": null,
         "targetId": "e2e-target",
@@ -337,8 +337,8 @@
       "name": "Rufus native save → MJ manual → full resolution",
       "pass": true,
       "detail": {
-        "saveId": "91301f21-058b-4b4f-a2ce-060e7e176fa6",
-        "requestId": "91301f21-058b-4b4f-a2ce-060e7e176fa6",
+        "saveId": "9dbc30a3-50dc-48d6-ad65-6c2db763abd6",
+        "requestId": "9dbc30a3-50dc-48d6-ad65-6c2db763abd6",
         "attackId": null,
         "actionId": null,
         "targetId": "e2e-target",
@@ -384,8 +384,8 @@
       "name": "Nans native save → MJ manual → full resolution",
       "pass": true,
       "detail": {
-        "saveId": "0f62c18e-e925-4dd5-b970-38c4b9768b9f",
-        "requestId": "0f62c18e-e925-4dd5-b970-38c4b9768b9f",
+        "saveId": "b8ea0051-fda9-4594-acb2-e1b445b6cfb6",
+        "requestId": "b8ea0051-fda9-4594-acb2-e1b445b6cfb6",
         "attackId": null,
         "actionId": null,
         "targetId": "e2e-target",
@@ -403,14 +403,14 @@
         "mode": "normal",
         "automaticFailure": false,
         "rollSource": "manual",
-        "rawDamage": 13,
-        "requestedDamage": 13,
-        "effectiveDamage": 13,
+        "rawDamage": 20,
+        "requestedDamage": 20,
+        "effectiveDamage": 20,
         "components": [
           {
-            "raw": 13,
-            "requested": 13,
-            "effective": 13,
+            "raw": 20,
+            "requested": 20,
+            "effective": 20,
             "type": "tonnerre",
             "reason": ""
           }
@@ -427,8 +427,8 @@
       "name": "automatic JdS composite R/I/V absorbs temp HP first",
       "pass": true,
       "detail": {
-        "saveId": "e46ba1ba-de8d-43c8-9836-cd6c41faf086",
-        "requestId": "e46ba1ba-de8d-43c8-9836-cd6c41faf086",
+        "saveId": "9ab707d4-fe6d-4ac7-8c89-854491825f2b",
+        "requestId": "9ab707d4-fe6d-4ac7-8c89-854491825f2b",
         "attackId": null,
         "actionId": null,
         "targetId": "e2e-target",
@@ -629,6 +629,34 @@
         "right": 750,
         "font": "36.864px"
       }
+    },
+    {
+      "name": "Kentaro single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Brackmard single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Samoth single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Zephyr single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Rufus single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Nans single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "incompatible application gets explicit persistent UI message",
+      "pass": true
     },
     {
       "name": "Kentaro initiative survives secondary faults and maximum-z HUD",
