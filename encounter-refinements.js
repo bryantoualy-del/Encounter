@@ -129,10 +129,14 @@ function loadAssets(){
   Promise.all([
     fetch('./assets/refinement/actions-sprite.b64',{cache:'force-cache'}).then(r=>{if(!r.ok)throw Error(r.status);return r.text()}),
     fetch('./assets/refinement/classes-sprite.b64',{cache:'force-cache'}).then(r=>{if(!r.ok)throw Error(r.status);return r.text()}),
+    fetch('./assets/refinement/concentration.webp.b64',{cache:'force-cache'}).then(r=>{if(!r.ok)throw Error(r.status);return r.text()}),
+    fetch('./assets/refinement/concentration-mini.webp.b64',{cache:'force-cache'}).then(r=>{if(!r.ok)throw Error(r.status);return r.text()}),
     fetch('./assets/refinement/condition-icons.json',{cache:'force-cache'}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()})
-  ]).then(([actions,classes,conds])=>{
+  ]).then(([actions,classes,concentrationFull,concentrationMini,conds])=>{
     root.style.setProperty('--ref-actions-sprite',`url("data:image/webp;base64,${actions.trim()}")`);
     root.style.setProperty('--ref-classes-sprite',`url("data:image/webp;base64,${classes.trim()}")`);
+    root.style.setProperty('--ref-concentration',`url("data:image/webp;base64,${concentrationFull.trim()}")`);
+    root.style.setProperty('--ref-concentration-mini',`url("data:image/webp;base64,${concentrationMini.trim()}")`);
     conditionIcons=conds?.icons||conds||{};
     root.classList.add('ref-assets-ready');
     try{render()}catch{}
