@@ -45,7 +45,7 @@ function makeDom(){
     <form id="monsterForm"><input name="monsterId"><label><select name="category"><option value="enemy">enemy</option><option value="character">character</option><option value="companion">companion</option><option value="npc">npc</option></select></label></form>
     <form id="participantEditorForm"><input name="participantId"><label><select name="kind"><option value="enemy">enemy</option><option value="player">player</option><option value="ally">ally</option></select></label></form>
   </body>`,{url:'https://encounter.test/',runScripts:'outside-only'});
-  dom.window.fetch=async()=>{throw Error('offline fixture')};
+  dom.window.fetch=async url=>({ok:true,text:async()=>Buffer.from('RIFF0000WEBP').toString('base64'),json:async()=>({icons:{}})});
   dom.window.eval(`
     window.CONDITIONS=['Aveuglé','Charmé','Entravé'];
     window.SKILLS=[{key:'acro',name:'Acrobaties',ability:'DEX'}];
@@ -104,12 +104,12 @@ test('preparation selection, staged library, HP keypad and states use existing c
     w.EncounterRefinements.openHp();
     d.querySelector('[data-ref-key="5"]').click();
     d.getElementById('refApplyHp').click();
-    assert.deepEqual(w.__damage,[{ids:[pid],amount:5,type:''}],'HP panel must route through applyDamageMany');
+    assert.deepEqual(JSON.parse(JSON.stringify(w.__damage)),[{ids:[pid],amount:5,type:''}],'HP panel must route through applyDamageMany');
 
     w.EncounterRefinements.openStates();
     d.getElementById('refApplyState').click();
     assert.equal(w.__conditions.length,1);
-    assert.deepEqual(w.__conditions[0].ids,[pid]);
+    assert.deepEqual(Array.from(w.__conditions[0].ids),[pid]);
     assert.equal(w.__conditions[0].data.name,'Aveuglé');
   }finally{dom.window.close()}
 });
