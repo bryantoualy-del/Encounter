@@ -116,8 +116,8 @@ function classNameForModel(m){
   const known=KNOWN_CLASSES[norm(m.name)]||KNOWN_CLASSES[norm(m.id)];
   if(known)return known;
   const text=norm(`${m.subtitle||''} ${(m.tags||[]).join(' ')} ${m.type||''}`);
-  for(const c of CLASS_NAMES)if(text.includes(norm(c)))return c;
-  return'';
+  const hits=CLASS_NAMES.map(c=>({name:c,index:text.indexOf(norm(c))})).filter(x=>x.index>=0).sort((a,b)=>a.index-b.index);
+  return hits[0]?.name||'';
 }
 function classIconHtml(m){
   const name=classNameForModel(m),pos=CLASS_POS[name];
@@ -263,7 +263,7 @@ function stageMonster(id){
   const m=state.monsters.find(x=>x.id===id);if(!m)return;
   const existing=stage.get(id);
   if(existing){if(m.category==='enemy')existing.count=Math.min(50,(existing.count||1)+1)}
-  else stage.set(id,{modelId:id,count:1,initiative:Number(m.initiative)||10,shared:true});
+  else stage.set(id,{modelId:id,count:1,initiative:Number(m.initiative)||10,shared:true,includeCompanion:id==='pj-silas-veyr'&&state.monsters.some(x=>x.id==='comp-crasseuse'),includeLair:!!m.lairActions?.length});
   renderStage();
 }
 function renderStage(){
@@ -274,8 +274,8 @@ function renderStage(){
     <p class="muted tiny">Ajoute les profils ici, règle le nombre et l’initiative, puis termine en une seule fois.</p>
     <div class="ref-stage-list">${entries.length?entries.map(entry=>{
       const m=state.monsters.find(x=>x.id===entry.modelId);if(!m)return'';
-      const multiple=m.category==='enemy';
-      return `<article class="ref-stage-item" data-ref-stage="${html(entry.modelId)}"><div><strong>${html(m.name)}</strong><small>${html(modelCategory(m).name)}</small></div><label>Nb <div class="ref-stepper"><button type="button" data-ref-stage-count="${html(entry.modelId)}|-1" ${!multiple?'disabled':''}>−</button><span>${entry.count}</span><button type="button" data-ref-stage-count="${html(entry.modelId)}|1" ${!multiple?'disabled':''}>+</button></div></label><label>INI <input data-ref-stage-initiative="${html(entry.modelId)}" type="number" value="${entry.initiative}"></label>${multiple?`<label class="ref-shared"><input type="checkbox" data-ref-stage-shared="${html(entry.modelId)}" ${entry.shared?'checked':''}> commune</label>`:'<span></span>'}<button type="button" class="danger ghost small" data-ref-stage-remove="${html(entry.modelId)}">Retirer</button></article>`;
+      const multiple=m.category==='enemy',hasCompanion=entry.modelId==='pj-silas-veyr'&&state.monsters.some(x=>x.id==='comp-crasseuse'),hasLair=!!m.lairActions?.length;
+      return `<article class="ref-stage-item" data-ref-stage="${html(entry.modelId)}"><div><strong>${html(m.name)}</strong><small>${html(modelCategory(m).name)}</small></div><label>Nb <div class="ref-stepper"><button type="button" data-ref-stage-count="${html(entry.modelId)}|-1" ${!multiple?'disabled':''}>−</button><span>${entry.count}</span><button type="button" data-ref-stage-count="${html(entry.modelId)}|1" ${!multiple?'disabled':''}>+</button></div></label><label>INI <input data-ref-stage-initiative="${html(entry.modelId)}" type="number" value="${entry.initiative}"></label>${multiple?`<label class="ref-shared"><input type="checkbox" data-ref-stage-shared="${html(entry.modelId)}" ${entry.shared?'checked':''}> initiative commune</label>`:'<span></span>'}${hasCompanion?`<label class="ref-stage-option"><input type="checkbox" data-ref-stage-companion="${html(entry.modelId)}" ${entry.includeCompanion?'checked':''}> ajouter C.R.A.S.S.E.U.S.E.</label>`:''}${hasLair?`<label class="ref-stage-option"><input type="checkbox" data-ref-stage-lair="${html(entry.modelId)}" ${entry.includeLair?'checked':''}> ajouter le repaire</label>`:''}<button type="button" class="danger ghost small" data-ref-stage-remove="${html(entry.modelId)}">Retirer</button></article>`;
     }).join(''):'<div class="ref-stage-empty">Aucun profil sélectionné.</div>'}</div>
     <button type="button" id="refStageFinish" class="primary ref-stage-finish" ${entries.length?'':'disabled'}>Terminer · ajouter à la rencontre</button>`;
 }
@@ -290,10 +290,15 @@ function applyStage(){
         const m=state.monsters.find(x=>x.id===entry.modelId);if(!m)continue;
         const count=m.category==='enemy'?Math.max(1,Math.min(50,Number(entry.count)||1)):1;
         const groupId=count>1?uid('group'):null;
+        let main=null;
         for(let i=1;i<=count;i++){
           const ini=entry.shared?(Number(entry.initiative)||0):(Number(entry.initiative)||0)+rollDie(6)-3;
-          state.encounter.participants.push(makeParticipant(m,count>1?i:1,ini,groupId));
+          const p=makeParticipant(m,count>1?i:1,ini,groupId);state.encounter.participants.push(p);if(i===1)main=p;
         }
+        if(entry.includeCompanion&&entry.modelId==='pj-silas-veyr'&&main){
+          const cm=state.monsters.find(x=>x.id==='comp-crasseuse');if(cm)state.encounter.participants.push(makeParticipant(cm,1,main.initiative,null,main.id));
+        }
+        if(entry.includeLair&&m.lairActions?.length&&main)state.encounter.participants.push(makeLairParticipant(main,m));
       }
       state.encounter.currentTurn=0;
       state.encounter.selectedId=sortedParticipants()[0]?.id||null;
@@ -529,6 +534,11 @@ function enhanceDetail(){
   const stats=root.querySelector('.stat-grid');
   if(stats)stats.insertAdjacentHTML('afterend',detailConditionStrip(p));
   root.classList.toggle('ref-concentrating',isConcentrating(p));
+  const rpgInline=root.querySelector('[data-rpg-inline]');
+  if(rpgInline&&rpgInline.parentElement?.classList.contains('detail-tab-body')){
+    rpgInline.classList.add('ref-rpg-inline');
+    root.append(rpgInline);
+  }
   const cat=participantCategory(p);root.style.setProperty('--ref-role-color',cat.color);
 }
 function enhancePrep(){
@@ -645,8 +655,11 @@ document.addEventListener('input',e=>{
 });
 document.addEventListener('change',e=>{
   if(e.target.matches('[data-ref-stage-shared]')){const entry=stage.get(e.target.dataset.refStageShared);if(entry)entry.shared=e.target.checked}
+  if(e.target.matches('[data-ref-stage-companion]')){const entry=stage.get(e.target.dataset.refStageCompanion);if(entry)entry.includeCompanion=e.target.checked}
+  if(e.target.matches('[data-ref-stage-lair]')){const entry=stage.get(e.target.dataset.refStageLair);if(entry)entry.includeLair=e.target.checked}
   if(e.target.id==='refStateDuration')updateStateOptionVisibility();
 });
+injectDialogMarkup();
 document.getElementById('refAdvancedForm')?.addEventListener('submit',e=>{
   e.preventDefault();advanced=Object.fromEntries(new FormData(e.currentTarget).entries());refLibraryFilter='all';renderLibrary();document.getElementById('refAdvancedDialog').close();
 });
@@ -655,7 +668,6 @@ document.getElementById('refAdvancedReset')?.addEventListener('click',()=>{
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSidePanels()});
 
-injectDialogMarkup();
 ensureLibraryTools();
 ensureCombatPanels();
 removeDeviceSwitch();
