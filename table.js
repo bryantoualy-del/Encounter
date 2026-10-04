@@ -15,8 +15,8 @@ function tableConditionIcon(name){
  const src=window.RPGConnectIcons?.condition?.(name)||'';
  return src?`<img class="table-condition-icon" src="${src}" alt="" aria-hidden="true">`:'';
 }
-function tableConditionPill(c){return `<span class="table-condition" title="${esc(conditionDurationLabel(c))}">${tableConditionIcon(c.name)}<span>${esc(c.name)}${conditionShort(c)}</span></span>`;}
-function tableConditionSummary(list,limit=3){list=Array.isArray(list)?list:[];const shown=list.slice(0,limit),more=list.length-shown.length;return shown.map(tableConditionPill).join('')+(more?`<span class="table-condition more" title="${more} état${more>1?'s':''} supplémentaire${more>1?'s':''}">+${more}</span>`:'');}
+function tableConditionPill(c,compact=false){return `<span class="table-condition${compact?' compact':''}" title="${esc(c.name)} · ${esc(conditionDurationLabel(c))}">${tableConditionIcon(c.name)}<span>${esc(c.name)}${compact?'':conditionShort(c)}</span></span>`;}
+function tableConditionSummary(list,limit=3,compact=false){list=Array.isArray(list)?list:[];const shown=list.slice(0,limit),more=list.length-shown.length;return shown.map(c=>tableConditionPill(c,compact)).join('')+(more?`<span class="table-condition more" title="${more} état${more>1?'s':''} supplémentaire${more>1?'s':''}">+${more}</span>`:'');}
 
 function tableRow(p,active){
  const lair=isLair(p),selected=p.id===selectedParticipant()?.id,chosen=ui.multiSelection.has(p.id),phase=currentPhase(p);
@@ -26,7 +26,7 @@ function tableRow(p,active){
  <button class="row-select" ${select} aria-label="${ui.multiMode?'Cibler':'Sélectionner'} ${esc(p.name)}" aria-pressed="${ui.multiMode?chosen:selected}"></button>
  <span class="table-init">${ui.multiMode&&!lair?(chosen?'☑':'☐'):p.initiative}</span>
  <div class="table-name"><strong>${esc(p.name)}</strong><div class="table-meta"><span class="table-role ${p.kind}">${lair?'REPAIRE':roleLabel(p)}</span>${p.id===active?.id?'<span class="playing-tag">À JOUER</span>':''}${!lair?economy:''}</div>
- ${(p.conditions.length||phase||p.hp<=0&&!lair)?`<div class="table-conditions">${p.hp<=0&&!lair?'<span class="table-condition zero">À 0 PV</span>':''}${phase?`<span class="table-condition">${esc(phase.name)}</span>`:''}${tableConditionSummary(p.conditions,3)}</div>`:''}</div>
+ ${(p.conditions.length||phase||p.hp<=0&&!lair)?`<div class="table-conditions">${p.hp<=0&&!lair?'<span class="table-condition zero">À 0 PV</span>':''}${phase?`<span class="table-condition">${esc(phase.name)}</span>`:''}${tableConditionSummary(p.conditions,2,true)}</div>`:''}</div>
  <div class="table-hp ${hpClass(p)}">${lair?'<small>Action<br>de repaire</small>':`<div><b>${p.hp}</b><small> / ${p.maxHp}</small></div>${p.tempHp?`<em>+${p.tempHp} temp.</em>`:''}<div class="table-health"><i style="width:${hpPct(p)}%"></i></div>`}</div>
  <div class="table-ac">${lair?'—':effectiveAc(p)}</div>
  <button class="row-sheet" data-table-sheet="${esc(p.id)}" aria-label="Ouvrir la fiche de ${esc(p.name)}">↗</button></article>`;
