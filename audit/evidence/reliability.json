@@ -1,0 +1,87 @@
+{
+  "checks": [
+    {
+      "name": "both online",
+      "pass": true
+    },
+    {
+      "name": "Kentaro initiative visible and topmost",
+      "pass": true,
+      "detail": {
+        "hidden": false,
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1",
+        "zIndex": "10050",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1180,
+          "height": 820
+        },
+        "topmost": true,
+        "top": "<label>Jet manuel d20 <input data-init-manual=\"\" type=\"number\" min=\"1\" max=\"20\" inputmode=\"numeric\" placeholder=\"optionnel\"></label>"
+      }
+    },
+    {
+      "name": "Brackmard initiative visible and topmost",
+      "pass": true,
+      "detail": {
+        "hidden": false,
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1",
+        "zIndex": "10050",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1180,
+          "height": 820
+        },
+        "topmost": true,
+        "top": "<label>Jet manuel d20 <input data-init-manual=\"\" type=\"number\" min=\"1\" max=\"20\" inputmode=\"numeric\" placeholder=\"optionnel\"></label>"
+      }
+    },
+    {
+      "name": "initiative:rolled → MJ validation → FIGHT",
+      "pass": true
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true,
+      "attackId": "brackmard-muuc9co4-u",
+      "amount": 21
+    },
+    {
+      "name": "Kentaro #solinar → MJ → correlated damage",
+      "pass": true,
+      "attackId": "kentaro-muuc9cv5-10",
+      "amount": 12
+    },
+    {
+      "name": "Kentaro #selhane → MJ → correlated damage",
+      "pass": true,
+      "attackId": "kentaro-muuc9d40-18",
+      "amount": 30
+    },
+    {
+      "name": "Kentaro #thirdSun → MJ → correlated damage",
+      "pass": true,
+      "attackId": "kentaro-muuc9dyg-1l",
+      "amount": 10
+    },
+    {
+      "name": "Kentaro bonus consumed",
+      "pass": true
+    },
+    {
+      "name": "same attackId new eventId applied once",
+      "pass": true,
+      "detail": {
+        "hpBeforeReplay": 927,
+        "hpAfterReplay": 927
+      }
+    }
+  ],
+  "errors": []
+}
