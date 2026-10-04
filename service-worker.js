@@ -1,4 +1,4 @@
-const CACHE='encounter-v4.1-table-43';
+const CACHE='encounter-v4.1-table-44';
 const ASSETS=[
   './',
   './index.html',
@@ -11,6 +11,8 @@ const ASSETS=[
   './encounter-refinements.js?v=1',
   './assets/refinement/actions-sprite.b64',
   './assets/refinement/classes-sprite.b64',
+  './assets/refinement/concentration.webp.b64',
+  './assets/refinement/concentration-mini.webp.b64',
   './assets/refinement/condition-icons.json',
   './creature-icons.js',
   './app.js?v=13',
