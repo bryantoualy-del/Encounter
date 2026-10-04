@@ -343,7 +343,11 @@ if(baseOpenParticipantEditor)openParticipantEditor=function(id){
 const baseSaveParticipantInstance=typeof saveParticipantInstance==='function'?saveParticipantInstance:null;
 if(baseSaveParticipantInstance)saveParticipantInstance=function(){
   const form=document.getElementById('participantEditorForm'),sel=document.getElementById('refParticipantCategory'),pid=form?.elements.participantId?.value;
-  if(pid&&sel){participantCats[pid]=sel.value;persistCategories()}
+  if(pid&&sel){
+    const c=categoryById(sel.value);
+    if(c&&form.elements.kind)form.elements.kind.value=c.semantic==='enemy'?'enemy':c.semantic==='npc'?'ally':'player';
+    participantCats[pid]=sel.value;persistCategories();
+  }
   return baseSaveParticipantInstance();
 };
 
