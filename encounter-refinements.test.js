@@ -121,6 +121,7 @@ test('refinement source preserves RPG Connect wrappers instead of replacing netw
   assert.match(source,/RPGConnectMJ\?\.send\?\.\(cid,'tempHp:set'/);
   assert.doesNotMatch(source,/WebSocket\s*=/);
   assert.doesNotMatch(source,/rpg-connect-mj\.js/);
+  assert.match(source,/button\?\.closest\('#rpgMjDialog,#rpgMjCockpit,#rpgHitPopup,#rpgSavePopup,#rpgTurnEndPopup'\)/,'refinement click capture must explicitly ignore RPG Connect controls');
   assert.match(source,/form\.elements\.kind\.value=c\.semantic==='enemy'\?'enemy':c\.semantic==='npc'\?'ally':'player'/,'custom participant category must map back to a valid core combat role');
   assert.match(source,/comp-crasseuse/,'Silas companion option must survive library staging');
   assert.match(source,/makeLairParticipant\(main,m\)/,'lair option must survive library staging');
