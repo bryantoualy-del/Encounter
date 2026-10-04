@@ -415,7 +415,27 @@ function testRecharge(pid,aid){const p=state.encounter.participants.find(x=>x.id
 function adjustResource(pid,rid,delta){const p=state.encounter.participants.find(x=>x.id===pid),m=modelFor(p),r=m?.resources?.find(x=>x.id===rid);if(!p||!r)return;const current=Number.isFinite(Number(p.resourceState?.[rid]))?Number(p.resourceState[rid]):r.start,next=Math.max(0,Math.min(r.max,current+Number(delta)));mutate(()=>{p.resourceState=p.resourceState||{};p.resourceState[rid]=next;},`${p.name} — ${r.name} : ${next}/${r.max}.`);}
 
 function conditionImmune(p,name){return effectiveConditionImmunities(p).some(x=>normKey(x)===normKey(name));}
-function addConditionMany(ids,data){if(!ids.length)return false;const ps=ids.map(id=>state.encounter.participants.find(p=>p.id===id)).filter(p=>p&&!isLair(p));if(!ps.length)return false;const applied=[],immune=[];mutate(()=>{ps.forEach(p=>{if(conditionImmune(p,data.name)){immune.push(p.name);return;}p.conditions=p.conditions.filter(c=>normKey(c.name)!==normKey(data.name));p.conditions.push(normalizeCondition(Object.assign({},data,{id:uid('cond')})));applied.push(p.name);});},`${data.name} : ${applied.length} cible(s) affectée(s)${immune.length?` · immunité : ${immune.join(', ')}`:''}.`);requestConditionSync();return applied.length>0;}
+function uniqueConditions(list){const out=[],seen=new Set();for(const raw of Array.isArray(list)?list:[]){const c=normalizeCondition(raw),key=normKey(c.name);if(!key||seen.has(key))continue;seen.add(key);out.push(c);}return out;}
+function addConditionMany(ids,data){
+  ids=[...new Set((ids||[]).map(String))];if(!ids.length)return false;
+  const ps=ids.map(id=>state.encounter.participants.find(p=>p.id===id)).filter(p=>p&&!isLair(p));if(!ps.length)return false;
+  const applied=[],immune=[],failed=[],key=normKey(data.name);
+  mutate(()=>{
+    ps.forEach(p=>{
+      if(conditionImmune(p,data.name)){immune.push(p.name);return;}
+      const before=uniqueConditions(p.conditions),beforeKeys=new Set(before.map(c=>normKey(c.name)));
+      const next=before.filter(c=>normKey(c.name)!==key);
+      next.push(normalizeCondition(Object.assign({},data,{id:uid('cond')})));
+      p.conditions=uniqueConditions(next);
+      const afterKeys=new Set(p.conditions.map(c=>normKey(c.name))),expected=new Set([...beforeKeys,key]);
+      if([...expected].some(k=>!afterKeys.has(k))){p.conditions=before;failed.push(p.name);return;}
+      applied.push(p.name);
+    });
+  },`${data.name} : ${applied.length} cible(s) affectée(s)${immune.length?` · immunité : ${immune.join(', ')}`:''}${failed.length?` · échec : ${failed.join(', ')}`:''}.`);
+  if(applied.length){requestConditionSync();const counts=ps.filter(p=>applied.includes(p.name)).map(p=>uniqueConditions(p.conditions).length);toast(`${data.name} appliqué${applied.length>1?` · ${applied.length} cibles`:counts.length?` · ${counts[0]} état${counts[0]>1?'s':''} actif${counts[0]>1?'s':''}`:''}`);}
+  if(failed.length){console.error('Condition transaction failed',{condition:data.name,targets:failed});return false;}
+  return applied.length>0;
+}
 function removeCondition(pid,cid){const p=state.encounter.participants.find(x=>x.id===pid);if(!p)return;const c=p.conditions.find(x=>x.id===cid);if(!c)return;mutate(()=>p.conditions=p.conditions.filter(x=>x.id!==cid),`${p.name} : ${c.name} retiré.`);requestConditionSync();}
 function resolveCondition(pid,cid,success){const p=state.encounter.participants.find(x=>x.id===pid),c=p?.conditions.find(x=>x.id===cid);if(!p||!c)return;mutate(()=>{if(success)p.conditions=p.conditions.filter(x=>x.id!==cid);},`${p.name} — ${c.name} : sauvegarde ${success?'réussie, état retiré':'échouée, état maintenu'}.`);requestConditionSync();}
 function conditionSaveMod(p,c){const m=modelFor(p),a=c?.saveAbility;if(!m||!a)return null;if(m.saveMods?.[a]!=null)return Number(m.saveMods[a]);if(m.abilities?.[a]!=null)return abilityMod(m.abilities[a]);return null;}
