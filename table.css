@@ -570,3 +570,25 @@ body.combat-mode{--dock-height:0px!important}
     z-index:86;
   }
 }
+
+
+/* QUICK CONDITIONS V2 — deux états garantis visibles dans la ligne de combat */
+.table-conditions{
+  flex-wrap:nowrap;
+  overflow:hidden;
+  min-width:0;
+}
+.table-conditions .table-condition.compact{
+  flex:1 1 0;
+  min-width:0;
+  max-width:calc(50% - 2px);
+}
+.table-conditions .table-condition.compact>span{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.table-conditions .table-condition.more{
+  flex:0 0 auto;
+}
