@@ -13,10 +13,10 @@ let lastTurnId=null;
 let lastSelectedId=null;
 function tableConditionIcon(name){
  const src=window.RPGConnectIcons?.condition?.(name)||'';
- return src?\`<img class="table-condition-icon" src="\${src}" alt="" aria-hidden="true">\`:'';
+ return src?`<img class="table-condition-icon" src="${src}" alt="" aria-hidden="true">`:'';
 }
-function tableConditionPill(c){return \`<span class="table-condition" title="\${esc(conditionDurationLabel(c))}">\${tableConditionIcon(c.name)}<span>\${esc(c.name)}\${conditionShort(c)}</span></span>\`;}
-function tableConditionSummary(list,limit=3){list=Array.isArray(list)?list:[];const shown=list.slice(0,limit),more=list.length-shown.length;return shown.map(tableConditionPill).join('')+(more?\`<span class="table-condition more" title="\${more} état\${more>1?'s':''} supplémentaire\${more>1?'s':''}">+\${more}</span>\`:'');}
+function tableConditionPill(c){return `<span class="table-condition" title="${esc(conditionDurationLabel(c))}">${tableConditionIcon(c.name)}<span>${esc(c.name)}${conditionShort(c)}</span></span>`;}
+function tableConditionSummary(list,limit=3){list=Array.isArray(list)?list:[];const shown=list.slice(0,limit),more=list.length-shown.length;return shown.map(tableConditionPill).join('')+(more?`<span class="table-condition more" title="${more} état${more>1?'s':''} supplémentaire${more>1?'s':''}">+${more}</span>`:'');}
 
 function tableRow(p,active){
  const lair=isLair(p),selected=p.id===selectedParticipant()?.id,chosen=ui.multiSelection.has(p.id),phase=currentPhase(p);
@@ -100,4 +100,4 @@ addEventListener('click',e=>{if(!e.target.closest('#moreMenu,#btnMore'))$('#more
 // Measure actual occupied space, including safe-area insets and text wrapping.
 if('ResizeObserver' in window){const obs=new ResizeObserver(()=>{for(const [selector,variable] of [['.topbar','--top-height'],['.roundbar','--round-height'],['#quickBar','--dock-height'],['#targetingBanner','--target-height']]){const el=$(selector);document.documentElement.style.setProperty(variable,el.getBoundingClientRect().height+'px');}});['.topbar','.roundbar','#quickBar','#targetingBanner'].forEach(s=>obs.observe($(s)));}
 render();
-\nwindow.RPGConnectIcons?.ready?.then(()=>{try{render()}catch{}}).catch(()=>{});\n
+window.RPGConnectIcons?.ready?.then(()=>{try{render()}catch{}}).catch(()=>{});
