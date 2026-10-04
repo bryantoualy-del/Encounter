@@ -46,10 +46,13 @@
  const online=id=>players.some(p=>p.characterId===id&&p.online);
  function command(id,type,payload){if(!connected){note('Connecte la console au serveur.');return false}const event={id:uid(),type,characterId:id,timestamp:new Date().toISOString(),payload};send({type:'command',room,characterId:id,event});note(`${names[id]} · commande ${online(id)?'envoyée':'en attente de connexion'}.`);return event.id}
  function sendInitiativeRequest(id){
-  if(!connected||!online(id))return false;
+  if(!connected||!online(id)){netlog((names[id]||id)+' · initiative non envoyée · Companion hors ligne','wait');return false}
   let item=[...initiativeCommands.values()].find(x=>x.characterId===id&&x.requestId===fight.requestId);
   if(!item){const event={id:uid(),type:'initiative:request',characterId:id,timestamp:new Date().toISOString(),payload:{requestId:fight.requestId,participantId:bindings[id],round:1,text:'Le MJ demande ton initiative.'}};item={characterId:id,requestId:fight.requestId,event,attempts:0};initiativeCommands.set(event.id,item)}
-  item.attempts+=1;send({type:'command',room,characterId:id,event:item.event});clearTimeout(initiativeTimers.get(item.event.id));
+  item.attempts+=1;
+  if(!send({type:'command',room,characterId:id,event:item.event})){netlog(names[id]+' · initiative non envoyée · socket indisponible','wait');return false}
+  netlog(names[id]+' · initiative envoyée · tentative '+item.attempts,'action');
+  clearTimeout(initiativeTimers.get(item.event.id));
   initiativeTimers.set(item.event.id,setTimeout(()=>{if(!initiativeCommands.has(item.event.id)||fight.requestId!==item.requestId)return;if(item.attempts<3){netlog(names[id]+' · initiative non confirmée · nouvel essai','wait');sendInitiativeRequest(id)}else{netlog(names[id]+' · initiative non confirmée après 3 essais','wait');note(names[id]+' · le Companion n’a pas confirmé la demande d’initiative. Vérifie sa connexion RPG Connect.')}},1200));
   return item.event.id
  }
@@ -107,9 +110,19 @@
   const bound=boundIds(),roster=bound.filter(online),onlineIds=ids.filter(online);
   if(!bound.length){note(onlineIds.length?(names[onlineIds[0]]+' est connecté mais pas lié à un participant ENCOUNTER. Sélectionne son participant dans RPG Connect.'):'Aucun Companion lié à un participant ENCOUNTER.');renderPanel();return false}
   if(!roster.length){note(onlineIds.length?(onlineIds.map(id=>names[id]).join(', ')+' connecté'+(onlineIds.length>1?'s':'')+', mais aucun n’est lié au bon participant ENCOUNTER.'):'Aucun Companion lié n’est connecté. Connecte seulement celui que tu veux tester.');renderPanel();return false}
-  clearTargets(roster);pending.clear();pendingSaves.clear();recentAttackRolls.clear();attackTargets.clear();for(const t of attackTargetTimers.values())clearTimeout(t);attackTargetTimers.clear();for(const t of attackWatchTimers.values())clearTimeout(t);attackWatchTimers.clear();decisionCommands.clear();
+  pending.clear();pendingSaves.clear();recentAttackRolls.clear();attackTargets.clear();for(const t of attackTargetTimers.values())clearTimeout(t);attackTargetTimers.clear();for(const t of attackWatchTimers.values())clearTimeout(t);attackWatchTimers.clear();decisionCommands.clear();
   fight={phase:'preparation',requestId:uid(),roster:[...roster],rolls:{},validated:{}};if(combatMachine.state!=='LOBBY'&&combatMachine.state!=='END')transitionCombat('LOBBY','nouvelle préparation');transitionCombat('PREP','Prépa Fight');saveState();
-  for(const id of roster){sessionCommand(id,{phase:'preparation',resetCombat:true,text:'Tour 1 réinitialisé · '+roster.length+' Companion'+(roster.length>1?'s':'')+' actif'+(roster.length>1?'s':'')});syncConditionsFor(id);sendInitiativeRequest(id)}syncOnlineState('preparation');safeEncounterRender('Prépa Fight')
+  /* Critical path: initiative goes first. Nothing cosmetic/state-related may block it. */
+  const initiativeSent=roster.filter(id=>!!sendInitiativeRequest(id));
+  if(!initiativeSent.length){note('Prépa Fight · aucune demande d’initiative n’a pu être envoyée.');netlog('Prépa Fight · échec envoi initiative','wait');return false}
+  /* Secondary sync is deliberately isolated from initiative delivery. */
+  try{clearTargets(roster)}catch(error){console.error('Prépa Fight · clearTargets',error);netlog('Prépa Fight · synchro cibles ignorée après erreur','wait')}
+  for(const id of roster){
+    try{sessionCommand(id,{phase:'preparation',resetCombat:true,text:'Tour 1 réinitialisé · '+roster.length+' Companion'+(roster.length>1?'s':'')+' actif'+(roster.length>1?'s':'')})}catch(error){console.error('Prépa Fight · session '+id,error);netlog(names[id]+' · reset session ignoré après erreur','wait')}
+    try{syncConditionsFor(id)}catch(error){console.error('Prépa Fight · conditions '+id,error);netlog(names[id]+' · synchro états ignorée après erreur','wait')}
+  }
+  try{syncOnlineState('preparation')}catch(error){console.error('Prépa Fight · state sync',error);netlog('Prépa Fight · resynchronisation secondaire ignorée','wait')}
+  safeEncounterRender('Prépa Fight');
   const ignored=bound.length-roster.length;
   note('Prépa Fight · initiative demandée à '+roster.length+' Companion'+(roster.length>1?'s':'')+' connecté'+(roster.length>1?'s':'')+(ignored?' · '+ignored+' hors ligne ne bloque'+(ignored>1?'nt':'')+' pas FIGHT.':'.'));netlog('Prépa Fight envoyée à '+roster.length+' Companion'+(roster.length>1?'s':''),'action');
   renderPanel();return true
@@ -223,7 +236,7 @@
    if(m.type==='invite'){invites[m.characterId]=m.payload?.token;renderPanel();return}
    if(m.type==='state'){bindState(m.characterId,m.state);return}
    if(m.type==='event'){try{onEvent(m.event)}catch(error){console.error('RPG Connect event',error);netlog('Événement réseau ignoré · Encounter reste disponible','wait')}return}
-   if(m.type==='queued'){note(`${names[m.characterId]} · ${m.online?'commande remise':'commande en attente de reconnexion'}.`);netlog(`${names[m.characterId]} · ${m.online?'commande remise':'commande en attente de reconnexion'}`,m.online?'ok':'wait');return}
+   if(m.type==='queued'){const initiative=initiativeCommands.has(m.id);const label=initiative?'initiative':'commande';note(`${names[m.characterId]} · ${label} ${m.online?'remise':'en attente de reconnexion'}.`);netlog(`${names[m.characterId]} · ${label} ${m.online?'remise au Companion':'en attente de reconnexion'}`,m.online?'ok':'wait');return}
    if(m.type==='command-ack'){netlog(`${names[m.characterId]} · ${m.result==='applied'?'commande appliquée':m.result}`,m.result==='applied'?'ok':'wait');const initItem=initiativeCommands.get(m.id);if(initItem){clearTimeout(initiativeTimers.get(m.id));initiativeTimers.delete(m.id);initiativeCommands.delete(m.id);netlog(names[initItem.characterId]+' · demande d’initiative confirmée',m.result==='applied'||m.result==='duplicate'?'ok':'wait')}let attackId=decisionCommands.get(m.id);if(attackId){clearTimeout(decisionTimers.get(m.id));decisionTimers.delete(m.id);let item=pending.get(attackId);if(m.result==='applied'||m.result==='duplicate')pending.delete(attackId);else if(item){item.deciding=false;item.decisionStatus='Refus Companion · '+m.result}decisionCommands.delete(m.id);renderPanel();renderHitPopup()}note(`${names[m.characterId]} · ${m.result==='applied'?'commande appliquée':m.result}.`);return}
    if(m.type==='error'){note(m.message);if(!connected){active=false;current.close()}}
   };
