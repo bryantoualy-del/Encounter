@@ -1,4 +1,4 @@
-const CACHE='encounter-v4.1-table-44';
+const CACHE='encounter-v4.1-table-45';
 const ASSETS=[
   './',
   './index.html',
@@ -6,7 +6,7 @@ const ASSETS=[
   './table.css?v=10',
   './table.js?v=9',
   './rpg-connect-mj.css?v=27',
-  './rpg-connect-mj.js?v=51',
+  './rpg-connect-mj.js?v=52',
   './encounter-refinements.css?v=1',
   './encounter-refinements.js?v=1',
   './assets/refinement/actions-sprite.b64',
