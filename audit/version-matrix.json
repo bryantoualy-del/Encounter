@@ -1,0 +1,223 @@
+[
+  {
+    "repo": "Brackmard",
+    "ref": "origin/main",
+    "sha": "1b7fd8d52daa9d77e4b0c30c5e7d5f6ab4b0a51a",
+    "files": {
+      "rpg-connect-client.js": "cc9e25d92d57",
+      "rpg-connect-client.css": "d6803631bf56",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Brackmard",
+    "ref": "origin/baseline-2026-10-03-2330",
+    "sha": "d603d049d0d21334fbe553ccf1268632d0d153ee",
+    "files": {
+      "rpg-connect-client.js": "f87fa1af7a30",
+      "rpg-connect-client.css": "9f9c0f300402",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Brackmard",
+    "ref": "origin/backup-before-rollback-2026-10-04-2243",
+    "sha": "3e9f90f51d197a3e177abda0d8b3ea3e60c2e9b0",
+    "files": {
+      "rpg-connect-client.js": "298d692449c8",
+      "rpg-connect-client.css": "137fe2dd8d15",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Encounter",
+    "ref": "origin/main",
+    "sha": "87867998680785c54a0546f95459c39733cf371f",
+    "files": {
+      "rpg-connect-mj.js": "bd4881b3f801",
+      "rpg-connect-server.js": "aa4f5473ba20"
+    }
+  },
+  {
+    "repo": "Encounter",
+    "ref": "origin/baseline-2026-10-03-2330",
+    "sha": "81d84e8ee45c0c4beb3d06224887762871c83340",
+    "files": {
+      "rpg-connect-mj.js": "e1f4a140a5ec",
+      "rpg-connect-server.js": "aa4f5473ba20"
+    }
+  },
+  {
+    "repo": "Encounter",
+    "ref": "origin/backup-before-rollback-2026-10-04-2243",
+    "sha": "f53f4b014db5725c4af21040896e3584a70f7025",
+    "files": {
+      "rpg-connect-mj.js": "7b37078818e1",
+      "rpg-connect-server.js": "ab0f8a1805c5"
+    }
+  },
+  {
+    "repo": "Kentaro",
+    "ref": "origin/main",
+    "sha": "cdbe8fae1d7e925fc33300dab03a0f70f7c1867b",
+    "files": {
+      "rpg-connect-client.js": "339e0ad4f4a0",
+      "rpg-connect-client.css": "d6803631bf56",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Kentaro",
+    "ref": "origin/baseline-2026-10-03-2330",
+    "sha": "63d2cb812ac60706a1ef3d941626cd6cd47d03e3",
+    "files": {
+      "rpg-connect-client.js": "6f6451c49e39",
+      "rpg-connect-client.css": "9f9c0f300402",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Kentaro",
+    "ref": "origin/backup-before-rollback-2026-10-04-2243",
+    "sha": "70b9c98af0f6b932c64650955020c4d0d29204ee",
+    "files": {
+      "rpg-connect-client.js": "e7f6a4b7bcc5",
+      "rpg-connect-client.css": "137fe2dd8d15",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Nans",
+    "ref": "origin/main",
+    "sha": "d05dd0273f4b4dc5e3d33d68437005a8434ea419",
+    "files": {
+      "rpg-connect-client.js": "cc9e25d92d57",
+      "rpg-connect-client.css": "d6803631bf56",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Nans",
+    "ref": "origin/backup-before-rollback-2026-10-04-2243",
+    "sha": "3ccbd17605a352956179c6e4677faa1a954f60b9",
+    "files": {
+      "rpg-connect-client.js": "298d692449c8",
+      "rpg-connect-client.css": "137fe2dd8d15",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Pik",
+    "ref": "origin/main",
+    "sha": "4fd9a6cd53d1efc39d4c4a550170aad85c3a9397",
+    "files": {}
+  },
+  {
+    "repo": "RPG-Connect",
+    "ref": "origin/main",
+    "sha": "ba640794c73df8ee2067375e09d73446f378482a",
+    "files": {}
+  },
+  {
+    "repo": "Rufus",
+    "ref": "origin/main",
+    "sha": "e515e1d94bb2624fd2cdf9370860c6247e10cf08",
+    "files": {
+      "rpg-connect-client.js": "54017dc7add2",
+      "rpg-connect-client.css": "d6803631bf56",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Rufus",
+    "ref": "origin/baseline-2026-10-03-2330",
+    "sha": "a623cce525b505f96a60b91e2b14df3506e0a30b",
+    "files": {
+      "rpg-connect-client.js": "6e7e612b5a5b",
+      "rpg-connect-client.css": "9f9c0f300402",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Rufus",
+    "ref": "origin/backup-before-rollback-2026-10-04-2243",
+    "sha": "1465cec1f6bf83304627ac085d849865b4c401e5",
+    "files": {
+      "rpg-connect-client.js": "bdc3b423cb8e",
+      "rpg-connect-client.css": "137fe2dd8d15",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Samoth",
+    "ref": "origin/main",
+    "sha": "6494771c4a294fcba70ff0d3b8be7056a19310d5",
+    "files": {
+      "rpg-connect-client.js": "cc9e25d92d57",
+      "rpg-connect-client.css": "d6803631bf56",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Samoth",
+    "ref": "origin/baseline-2026-10-03-2330",
+    "sha": "075526e479071ff28e7403d458a707ffd62d59a7",
+    "files": {
+      "rpg-connect-client.js": "f87fa1af7a30",
+      "rpg-connect-client.css": "9f9c0f300402",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Samoth",
+    "ref": "origin/backup-before-rollback-2026-10-04-2243",
+    "sha": "254deea46a558eb2508e31c1747d31e877a0516e",
+    "files": {
+      "rpg-connect-client.js": "2367af72a920",
+      "rpg-connect-client.css": "137fe2dd8d15",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Silas",
+    "ref": "origin/main",
+    "sha": "f33fd9fd08db4ccb74eb3c692df308064d313aa3",
+    "files": {}
+  },
+  {
+    "repo": "Wonq",
+    "ref": "origin/main",
+    "sha": "2da7a9d32510c9f33fb89a1a7c2bf62bd08774a8",
+    "files": {}
+  },
+  {
+    "repo": "Zephyr",
+    "ref": "origin/main",
+    "sha": "a3a35bd61aa239686859007391982e7810d7fa1c",
+    "files": {
+      "rpg-connect-client.js": "cc9e25d92d57",
+      "rpg-connect-client.css": "d6803631bf56",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Zephyr",
+    "ref": "origin/baseline-2026-10-03-2330",
+    "sha": "6de44d13efcf70d6b74dd800b628738a19ec3259",
+    "files": {
+      "rpg-connect-client.js": "f87fa1af7a30",
+      "rpg-connect-client.css": "9f9c0f300402",
+      "companion-api.js": "589a82c686ab"
+    }
+  },
+  {
+    "repo": "Zephyr",
+    "ref": "origin/backup-before-rollback-2026-10-04-2243",
+    "sha": "13fb3885bf46bca9038caaeb9906ed6071630b60",
+    "files": {
+      "rpg-connect-client.js": "298d692449c8",
+      "rpg-connect-client.css": "137fe2dd8d15",
+      "companion-api.js": "589a82c686ab"
+    }
+  }
+]
