@@ -173,3 +173,59 @@
 .rpg-save-manual input{min-height:42px;width:100%;box-sizing:border-box;border:1px solid #536d82;border-radius:9px;background:#0d1822;color:#f5f8fb;padding:7px 9px;font-size:16px;font-weight:800}
 .rpg-save-manual button{min-height:42px}
 @media(max-width:650px){.rpg-save-manual{grid-template-columns:1fr 1fr}.rpg-save-manual button{grid-column:1/-1}}
+
+
+/* SAMSUNG S7 FE · RPG LIVE V1 — profil paysage dédié, sans toucher à l'iPad */
+@media (min-width:960px) and (orientation:landscape){
+  body.device-samsung-s7fe .rpg-mj-cockpit{
+    box-sizing:border-box;
+    height:36px;
+    min-height:36px;
+    margin:0 8px;
+    padding:2px 6px;
+    border-radius:7px;
+  }
+  body.device-samsung-s7fe .rpg-mj-cockpit.has-events{
+    height:42px;
+    min-height:42px;
+    padding-block:3px;
+  }
+  body.device-samsung-s7fe .rpg-mj-netline{
+    height:30px;
+    min-height:30px;
+    grid-template-columns:auto minmax(0,1fr) auto auto;
+    gap:6px;
+  }
+  body.device-samsung-s7fe .rpg-mj-cockpit.has-events .rpg-mj-netline{
+    height:34px;
+    min-height:34px;
+  }
+  body.device-samsung-s7fe .rpg-mj-netline>.eyebrow{
+    font-size:8px;
+    letter-spacing:.08em;
+  }
+  body.device-samsung-s7fe .rpg-mj-netline #rpgCockpitLog{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:4px;
+  }
+  body.device-samsung-s7fe .rpg-net-event{
+    display:grid;
+    height:28px;
+    padding:3px 6px;
+    font-size:9px;
+  }
+  body.device-samsung-s7fe .rpg-net-event:nth-child(n+4){display:none}
+  body.device-samsung-s7fe .rpg-net-event time{font-size:8px}
+  body.device-samsung-s7fe .rpg-cockpit-summary{
+    max-width:145px;
+    font-size:9px;
+  }
+  body.device-samsung-s7fe #rpgCockpitOpen{
+    height:28px;
+    min-height:28px;
+    padding:2px 7px;
+    font-size:9px;
+  }
+  body.device-samsung-s7fe.combat-mode{--rpg-live-height:36px}
+  body.device-samsung-s7fe.combat-mode:has(#rpgMjCockpit.has-events){--rpg-live-height:42px}
+}
