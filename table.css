@@ -503,3 +503,12 @@ body.combat-mode{--dock-height:0px!important}
   .temp-hp-controls{grid-template-columns:72px 1fr 1fr}
 }
 
+
+/* RPG Connect · états visuels v1 */
+.table-condition{display:inline-flex;align-items:center;gap:4px;max-width:100%;white-space:nowrap}
+.table-condition-icon{width:15px;height:15px;min-width:15px;object-fit:contain;border-radius:4px;background:#17121d;padding:1px}
+.table-condition.more{min-width:23px;justify-content:center;color:#c9d3dc;background:#222a34;border-color:#4a5867;font-weight:800}
+.detail-condition-summary{display:flex;align-items:center;flex-wrap:wrap;gap:4px;padding:6px 8px}
+.detail-condition-summary .table-condition{pointer-events:none}
+.detail-condition-manage{margin-left:auto;color:#d9c18b;font-size:10px;font-weight:900;letter-spacing:.05em;text-transform:uppercase}
+@media(max-width:900px){.table-condition{font-size:9px}.table-condition-icon{width:14px;height:14px;min-width:14px}.detail-condition-summary{gap:3px}}
