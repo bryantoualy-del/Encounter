@@ -1,14 +1,14 @@
-const CACHE='encounter-v4.1-table-38';
+const CACHE='encounter-v4.1-table-37';
 const ASSETS=[
   './',
   './index.html',
-  './styles.css?v=3',
+  './styles.css',
   './table.css?v=7',
   './table.js',
   './rpg-connect-mj.css?v=25',
   './rpg-connect-mj.js?v=42',
   './creature-icons.js',
-  './app.js?v=11',
+  './app.js?v=9',
   './builtins.js',
   './manifest.webmanifest',
   './icon-192.png',

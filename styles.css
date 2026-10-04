@@ -1,7 +1,7 @@
 :root{--bg:#0a0807;--panel:#17110f;--panel2:#211915;--panel3:#2a201b;--line:#44342c;--line2:#5c4639;--text:#f2ece7;--muted:#a9968b;--gold:#d7a85b;--gold2:#f0cc85;--red:#b84d48;--red2:#e06a62;--green:#5b8c67;--green2:#7fba8f;--violet:#765a85;--blue:#557b94;--orange:#a96b37;--shadow:0 18px 55px rgba(0,0,0,.38);--quick-h:78px}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 20% -10%,rgba(161,105,54,.13),transparent 34%),linear-gradient(180deg,#100d0b,#080706 58%,#050404);color:var(--text);font-family:Georgia,'Times New Roman',serif}body{min-height:100dvh}button,input,select,textarea{font:inherit}button{min-height:42px;border:1px solid #514037;border-radius:10px;background:#211915;color:var(--text);padding:8px 12px;cursor:pointer}button:hover{border-color:#795f4b}button:active{transform:translateY(1px)}button:disabled{opacity:.38;cursor:not-allowed;transform:none}.primary{background:linear-gradient(180deg,#6d4d29,#3c2a1d);border-color:#9a6d3c;color:#fff1cf;font-weight:800}.danger{background:linear-gradient(180deg,#5a2726,#341717);border-color:#82413e;color:#ffd0cb}.heal{background:linear-gradient(180deg,#315a3c,#203c29);border-color:#527b5d;color:#d9f6df}.ghost{background:#171210}.small{min-height:34px;padding:5px 9px;font-size:12px}.hidden{display:none!important}.muted{color:var(--muted)}.eyebrow{display:block;color:#b9905b;font:800 10px/1.2 ui-sans-serif,system-ui;letter-spacing:.16em;text-transform:uppercase}.count-badge{display:grid;place-items:center;min-width:30px;height:30px;border-radius:999px;background:#33271f;border:1px solid #5e4738;color:var(--gold2);font:800 12px ui-sans-serif,system-ui}.icon-btn{width:40px;min-width:40px;height:40px;padding:0;border-radius:50%;font-size:23px;line-height:1}.toast{position:fixed;top:max(70px,env(safe-area-inset-top));left:50%;transform:translate(-50%,-140%);z-index:1000;background:#402a1d;border:1px solid #9f713f;color:#fff0c8;border-radius:12px;padding:10px 16px;box-shadow:var(--shadow);opacity:0;transition:.2s;pointer-events:none;max-width:min(720px,calc(100vw - 20px));font:750 14px ui-sans-serif,system-ui}.toast.show{transform:translate(-50%,0);opacity:1}
 
-.topbar{position:sticky;top:0;z-index:80;height:62px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:8px max(10px,env(safe-area-inset-left)) 8px max(10px,env(safe-area-inset-right));background:rgba(12,9,8,.96);border-bottom:1px solid #332720;backdrop-filter:blur(14px)}.brand{display:flex;gap:9px;align-items:center;min-width:190px}.brand-mark{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:1px solid #6c5039;background:radial-gradient(circle,#42301f,#18110d);color:var(--gold2);font-size:20px}.brand h1{margin:0;font-size:20px;letter-spacing:.13em}.brand p{margin:1px 0 0;color:var(--muted);font:11px ui-sans-serif,system-ui}.mode-switch{justify-self:center;display:flex;padding:3px;border:1px solid #3d3029;border-radius:12px;background:#0d0a09}.mode-btn{min-height:36px;border:none;background:transparent;color:#ad9a8e;font:800 12px ui-sans-serif,system-ui}.mode-btn.active{background:linear-gradient(180deg,#4c351f,#2d2017);color:#ffe5ad;box-shadow:inset 0 0 0 1px #735437}.top-actions{display:flex;gap:6px;align-items:center}.top-actions button{font:700 12px ui-sans-serif,system-ui;white-space:nowrap}.lock-btn{width:44px;padding:0}.lock-btn.locked{border-color:#b6793f;background:#3e2818;box-shadow:0 0 14px rgba(214,149,72,.18)}.icon-only{min-width:44px;font-size:15px}.more-menu{position:fixed;right:12px;top:58px;z-index:120;width:250px;padding:7px;border:1px solid #584238;border-radius:12px;background:#17110f;box-shadow:var(--shadow);display:grid;gap:5px}.more-menu button{text-align:left;font:700 12px ui-sans-serif,system-ui}.device-profile-setting{display:grid;gap:5px;padding:8px 9px;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);color:#b9a79a;font:800 10px ui-sans-serif,system-ui;text-transform:uppercase;letter-spacing:.05em}.device-profile-setting select{width:100%;height:38px;border:1px solid #564238;border-radius:9px;background:#100d0b;color:#f2ece7;padding:6px 8px;font:750 12px ui-sans-serif,system-ui;text-transform:none;letter-spacing:0}
+.topbar{position:sticky;top:0;z-index:80;height:62px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:8px max(10px,env(safe-area-inset-left)) 8px max(10px,env(safe-area-inset-right));background:rgba(12,9,8,.96);border-bottom:1px solid #332720;backdrop-filter:blur(14px)}.brand{display:flex;gap:9px;align-items:center;min-width:190px}.brand-mark{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:1px solid #6c5039;background:radial-gradient(circle,#42301f,#18110d);color:var(--gold2);font-size:20px}.brand h1{margin:0;font-size:20px;letter-spacing:.13em}.brand p{margin:1px 0 0;color:var(--muted);font:11px ui-sans-serif,system-ui}.mode-switch{justify-self:center;display:flex;padding:3px;border:1px solid #3d3029;border-radius:12px;background:#0d0a09}.mode-btn{min-height:36px;border:none;background:transparent;color:#ad9a8e;font:800 12px ui-sans-serif,system-ui}.mode-btn.active{background:linear-gradient(180deg,#4c351f,#2d2017);color:#ffe5ad;box-shadow:inset 0 0 0 1px #735437}.top-actions{display:flex;gap:6px;align-items:center}.top-actions button{font:700 12px ui-sans-serif,system-ui;white-space:nowrap}.lock-btn{width:44px;padding:0}.lock-btn.locked{border-color:#b6793f;background:#3e2818;box-shadow:0 0 14px rgba(214,149,72,.18)}.icon-only{min-width:44px;font-size:15px}.more-menu{position:fixed;right:12px;top:58px;z-index:120;width:210px;padding:7px;border:1px solid #584238;border-radius:12px;background:#17110f;box-shadow:var(--shadow);display:grid;gap:5px}.more-menu button{text-align:left;font:700 12px ui-sans-serif,system-ui}
 
 .roundbar{position:sticky;top:62px;z-index:70;display:grid;grid-template-columns:minmax(190px,1fr) minmax(0,2.4fr) auto;align-items:center;gap:10px;padding:8px 12px;background:rgba(20,15,13,.97);border-bottom:1px solid #3c2e27;box-shadow:0 8px 24px rgba(0,0,0,.18)}.encounter-name{width:100%;border:none;background:transparent;color:var(--text);font-weight:900;font-size:18px;padding:2px 0}.encounter-name:focus{outline:none;color:var(--gold2)}.round-center{display:flex;align-items:center;min-width:0;gap:8px}.round-box{min-width:60px;text-align:center;border:1px solid #523d30;border-radius:10px;background:#130f0d;padding:5px 8px}.round-box span{display:block;color:var(--muted);font:9px ui-sans-serif,system-ui;text-transform:uppercase}.round-box strong{font-size:22px;color:var(--gold2)}.initiative-ribbon{display:flex;align-items:center;gap:5px;min-width:0;overflow-x:auto;scrollbar-width:none;padding:2px 4px}.initiative-ribbon::-webkit-scrollbar{display:none}.init-chip{flex:0 0 auto;display:flex;gap:5px;align-items:center;min-height:36px;padding:6px 9px;border-radius:999px;background:#15100e;border-color:#42342c;color:#c8b9b0;font:750 11px ui-sans-serif,system-ui;transition:.15s}.init-chip b{color:#a88962}.init-chip.active{background:linear-gradient(180deg,#604526,#322319);border-color:#b48043;color:#fff2d2;transform:scale(1.06);box-shadow:0 0 18px rgba(215,168,91,.18)}.init-chip.active b{color:#ffd995}.init-chip.dead{opacity:.42;text-decoration:line-through}.turn-next-wrap{text-align:right;min-width:160px}.next-turn{width:100%;min-height:42px}.turn-next-wrap small{display:block;margin-top:2px;color:var(--muted);font:10px ui-sans-serif,system-ui;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
@@ -174,76 +174,3 @@
 @media(max-width:900px){.action-popup{top:max(12px,env(safe-area-inset-top))!important}.drawer-close-hint{max-width:120px;font-size:8px}.member-vitals b{font-size:17px}}
 
 html,body{overflow-x:hidden}body{overflow-y:auto;-webkit-overflow-scrolling:touch}.combat-list,.detail-tab-body,.monster-library,.drawer-body{scrollbar-gutter:stable;touch-action:pan-y;-webkit-overflow-scrolling:touch}
-
-
-/* =========================================================
-   Profil tablette — Samsung Galaxy Tab S7 FE paysage
-   12,4" WQXGA 2560×1600 (16:10). Le profil est volontairement
-   explicite : il ne modifie jamais le rendu iPad par défaut.
-   ========================================================= */
-@media (min-width:960px) and (orientation:landscape){
-  body.device-samsung-s7fe{--quick-h:70px}
-  body.device-samsung-s7fe .topbar{height:56px;gap:8px;padding-top:6px;padding-bottom:6px}
-  body.device-samsung-s7fe .brand{min-width:164px;gap:7px}
-  body.device-samsung-s7fe .brand-mark{width:34px;height:34px}
-  body.device-samsung-s7fe .brand h1{font-size:18px}
-  body.device-samsung-s7fe .brand p{font-size:9px}
-  body.device-samsung-s7fe .mode-switch{padding:2px}
-  body.device-samsung-s7fe .mode-btn{min-height:32px;padding:5px 10px;font-size:11px}
-  body.device-samsung-s7fe .top-actions{gap:4px}
-  body.device-samsung-s7fe .top-actions button{min-height:36px;padding:5px 8px;font-size:11px}
-  body.device-samsung-s7fe .lock-btn,
-  body.device-samsung-s7fe .icon-only{width:40px;min-width:40px}
-  body.device-samsung-s7fe .more-menu{top:53px}
-
-  body.device-samsung-s7fe .roundbar{top:56px;grid-template-columns:minmax(170px,.85fr) minmax(0,2.65fr) auto;gap:8px;padding:6px 10px}
-  body.device-samsung-s7fe .encounter-name{font-size:16px}
-  body.device-samsung-s7fe .round-center{gap:6px}
-  body.device-samsung-s7fe .round-box{min-width:54px;padding:4px 7px}
-  body.device-samsung-s7fe .round-box strong{font-size:19px}
-  body.device-samsung-s7fe .init-chip{padding:5px 7px}
-  body.device-samsung-s7fe .turn-next-wrap{min-width:132px}
-  body.device-samsung-s7fe .next-turn{min-height:38px;padding:6px 10px}
-
-  body.device-samsung-s7fe .prep-view{max-width:none;padding:8px 10px 20px}
-  body.device-samsung-s7fe .prep-hero{padding:12px 14px}
-  body.device-samsung-s7fe .prep-hero h2{font-size:21px}
-  body.device-samsung-s7fe .prep-grid{grid-template-columns:minmax(560px,1.45fr) minmax(390px,.85fr);gap:8px;margin-top:8px}
-  body.device-samsung-s7fe .prep-participants-panel,
-  body.device-samsung-s7fe .prep-preview-panel{min-height:0}
-
-  body.device-samsung-s7fe .combat-view{grid-template-columns:minmax(320px,32%) minmax(0,68%);gap:8px;max-width:none;padding:8px 8px calc(var(--quick-h) + 10px)}
-  body.device-samsung-s7fe.combat-mode .combat-view{min-height:calc(100dvh - 56px - 62px - var(--quick-h));padding-bottom:calc(var(--quick-h) + 10px)}
-  body.device-samsung-s7fe.combat-mode .participant-panel,
-  body.device-samsung-s7fe.combat-mode .detail-panel{min-height:0;max-height:calc(100dvh - 56px - 62px - var(--quick-h));height:auto}
-  body.device-samsung-s7fe.combat-mode .combat-list{max-height:calc(100dvh - 56px - 62px - var(--quick-h) - 50px)}
-  body.device-samsung-s7fe .panel-head{padding:9px 11px}
-  body.device-samsung-s7fe .panel-head h2{font-size:17px}
-  body.device-samsung-s7fe .compact-head{min-height:50px}
-  body.device-samsung-s7fe .combat-list{padding:6px;gap:5px}
-  body.device-samsung-s7fe .combat-card,
-  body.device-samsung-s7fe .group-card{padding:7px 8px}
-  body.device-samsung-s7fe .combat-ident strong{font-size:14px}
-  body.device-samsung-s7fe .group-members{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;padding:5px}
-  body.device-samsung-s7fe .member-chip{min-height:54px!important}
-  body.device-samsung-s7fe .detail-header{padding:10px 12px 6px}
-  body.device-samsung-s7fe .detail-header h2{font-size:24px}
-  body.device-samsung-s7fe .stat-grid{gap:5px;padding:0 11px 8px}
-  body.device-samsung-s7fe .statbox{padding:6px 5px}
-  body.device-samsung-s7fe .detail-tabs{padding:5px 10px}
-  body.device-samsung-s7fe .detail-tabs button{min-height:34px}
-  body.device-samsung-s7fe .detail-tab-body{padding:8px 10px 14px}
-  body.device-samsung-s7fe .detail-section{margin-bottom:10px}
-  body.device-samsung-s7fe .ability-card{margin-bottom:5px;padding:7px 8px}
-
-  body.device-samsung-s7fe .quickbar{grid-template-columns:minmax(145px,.55fr) auto auto minmax(410px,1.5fr);gap:7px;padding:6px 10px calc(6px + env(safe-area-inset-bottom))}
-  body.device-samsung-s7fe .quick-target strong{font-size:14px}
-  body.device-samsung-s7fe .quick-mode{gap:4px}
-  body.device-samsung-s7fe .quick-mode button{min-width:74px;min-height:38px;padding:5px 7px;font-size:10px}
-  body.device-samsung-s7fe .quick-presets{gap:4px}
-  body.device-samsung-s7fe .quick-presets button{width:42px;min-height:38px}
-  body.device-samsung-s7fe .quick-amount{grid-template-columns:minmax(82px,.72fr) minmax(135px,1.12fr) auto auto;gap:5px}
-  body.device-samsung-s7fe .quick-amount input,
-  body.device-samsung-s7fe .quick-amount select{height:38px}
-  body.device-samsung-s7fe .quick-amount button{min-height:38px;padding:5px 8px}
-}

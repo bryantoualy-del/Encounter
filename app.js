@@ -148,12 +148,12 @@ function pruneLegacyAutoCCPlayers(encounter){
   return encounter;
 }
 function blankState(){
-  return {version:APP_VERSION,ui:{mode:'prep',locked:false,density:'comfortable',deviceProfile:'ipad'},encounter:{name:'Rencontre sans titre',savedId:null,round:1,currentTurn:0,selectedId:null,participants:[],log:[],turnNotices:[],pendingPhase:null},monsters:clone(SAMPLE_MONSTERS).map(normalizeMonster),savedEncounters:[],trash:[]};
+  return {version:APP_VERSION,ui:{mode:'prep',locked:false,density:'comfortable'},encounter:{name:'Rencontre sans titre',savedId:null,round:1,currentTurn:0,selectedId:null,participants:[],log:[],turnNotices:[],pendingPhase:null},monsters:clone(SAMPLE_MONSTERS).map(normalizeMonster),savedEncounters:[],trash:[]};
 }
 function loadState(){
   try{
     const raw=localStorage.getItem(STORAGE_KEY); if(!raw)return blankState();
-    const s=JSON.parse(raw); s.version=APP_VERSION;s.ui=Object.assign({mode:'prep',locked:false,density:'comfortable',deviceProfile:'ipad'},s.ui||{});s.savedEncounters=Array.isArray(s.savedEncounters)?s.savedEncounters:[];s.trash=Array.isArray(s.trash)?s.trash:[];
+    const s=JSON.parse(raw); s.version=APP_VERSION;s.ui=Object.assign({mode:'prep',locked:false,density:'comfortable'},s.ui||{});s.savedEncounters=Array.isArray(s.savedEncounters)?s.savedEncounters:[];s.trash=Array.isArray(s.trash)?s.trash:[];
     if(!s.monsters?.length)s.monsters=clone(SAMPLE_MONSTERS);
     const builtinMap=new Map(SAMPLE_MONSTERS.map(x=>[x.id,x]));
     s.monsters=s.monsters.map(m=>mergeBuiltinEnhancements(m,builtinMap.get(m.id)));
@@ -527,7 +527,7 @@ function forceBackup(reason='Backup automatique'){
   const items=backupStore();items.unshift(snapshot);writeBackupStore(items);lastBackupAt=Date.now();return snapshot;
 }
 function maybeAutoBackup(){const now=Date.now();if(now-lastBackupAt<BACKUP_INTERVAL)return;forceBackup('Sauvegarde automatique');}
-function restoreBackup(id){const b=backupStore().find(x=>x.id===id);if(!b)return;forceBackup('Avant restauration');state=b.state;state.version=APP_VERSION;state.ui=Object.assign({mode:'prep',locked:false,density:'comfortable',deviceProfile:'ipad'},state.ui||{});state.savedEncounters=state.savedEncounters||[];state.trash=state.trash||[];localStorage.setItem(STORAGE_KEY,JSON.stringify(state));render();renderBackupDialog();toast('Backup restauré.');}
+function restoreBackup(id){const b=backupStore().find(x=>x.id===id);if(!b)return;forceBackup('Avant restauration');state=b.state;state.version=APP_VERSION;state.ui=Object.assign({mode:'prep',locked:false,density:'comfortable'},state.ui||{});state.savedEncounters=state.savedEncounters||[];state.trash=state.trash||[];localStorage.setItem(STORAGE_KEY,JSON.stringify(state));render();renderBackupDialog();toast('Backup restauré.');}
 
 function showActionPopup(msg,title='Résolution'){
   const box=$('#actionPopup');if(!box)return;$('#actionPopupTitle').textContent=title;$('#actionPopupText').textContent=msg;box.classList.add('show');clearTimeout(showActionPopup.t);showActionPopup.t=setTimeout(()=>box.classList.remove('show'),3600);
@@ -553,7 +553,7 @@ normalizeMonster=function(m={}){
 };
 // Renormalise l'état déjà chargé avant l'override.
 state.monsters=state.monsters.map(normalizeMonster);state.encounter.participants=state.encounter.participants.map(normalizeParticipant);
-state.ui=Object.assign({mode:'prep',locked:false,density:'comfortable',deviceProfile:'ipad'},state.ui||{});state.savedEncounters=state.savedEncounters||[];state.trash=state.trash||[];
+state.ui=Object.assign({mode:'prep',locked:false,density:'comfortable'},state.ui||{});state.savedEncounters=state.savedEncounters||[];state.trash=state.trash||[];
 
 function categoriesForMonster(m){const cats=[...(m.tags||[])];if(m.category==='character')cats.push('PJ');else if(m.category==='companion')cats.push('Compagnons');else if(m.category==='npc')cats.push('PNJ alliés');else cats.push('Adversaires');if(m.isBoss||m.legendaryActions?.length)cats.push('Boss');if(/SRD 5\.1/i.test(m.source||''))cats.push('SRD 5.1');else if(/dossier utilisateur/i.test(m.source||''))cats.push('Dossiers utilisateur');const types=['Aberration','Artificiel','Bête','Céleste','Dragon','Élémentaire','Fée','Fiélon','Géant','Humanoïde','Monstruosité','Mort-vivant','Plante','Vase'];types.forEach(t=>{if(normKey(m.type).includes(normKey(t)))cats.push(t);});return [...new Set(cats.filter(Boolean))];}
 function tagsForLibrary(){return [...new Set(state.monsters.flatMap(categoriesForMonster))].sort((a,b)=>a.localeCompare(b,'fr'));}
@@ -673,7 +673,7 @@ function toggleBossInstance(id){const p=state.encounter.participants.find(x=>x.i
 const renderDetailV25=renderDetail;
 renderDetail=function(){renderDetailV25();const p=selectedParticipant();if(!p||isLair(p))return;const h=$('#activeDetail .detail-header h2');if(h&&isBossParticipant(p)&&!h.querySelector('.boss-name-badge'))h.insertAdjacentHTML('beforeend',' <span class="boss-name-badge">BOSS</span>');};
 const renderV25=render;
-render=function(){const deviceProfile=state.ui.deviceProfile==='samsung-s7fe'?'samsung-s7fe':'ipad';document.body.classList.toggle('density-compact',state.ui.density==='compact');document.body.classList.toggle('device-samsung-s7fe',deviceProfile==='samsung-s7fe');document.body.classList.toggle('device-ipad',deviceProfile==='ipad');renderV25();renderTargeting();const d=$('#btnDensity');if(d)d.textContent=`Densité : ${state.ui.density==='compact'?'Compacte':'Confortable'}`;const device=$('#deviceProfile');if(device&&device.value!==deviceProfile)device.value=deviceProfile;};
+render=function(){document.body.classList.toggle('density-compact',state.ui.density==='compact');renderV25();renderTargeting();const d=$('#btnDensity');if(d)d.textContent=`Densité : ${state.ui.density==='compact'?'Compacte':'Confortable'}`;};
 
 function saveMonsterFromForm(){
   if(structuralGuard())return;const f=$('#monsterForm'),id=f.elements.monsterId.value||uid('monster'),existing=state.monsters.find(x=>x.id===id),abilities={},saveMods={},skills={};ABILITIES.forEach(a=>{if(f.elements[`ability_${a}`].value!=='')abilities[a]=Number(f.elements[`ability_${a}`].value);if(f.elements[`save_${a}`].value!=='')saveMods[a]=Number(f.elements[`save_${a}`].value);});SKILLS.forEach(sk=>{const val=f.elements[`skill_${sk.key}`]?.value,status=f.elements[`skillstatus_${sk.key}`]?.value||'';if(val!=='')skills[sk.key]={mod:Number(val),status,note:existing?.skills?.[sk.key]?.note||''};});
@@ -717,7 +717,6 @@ $('#btnSaveEncounter')?.addEventListener('click',()=>saveEncounterSnapshot(false
 $('#btnBackups')?.addEventListener('click',()=>{renderBackupDialog();$('#backupDialog').showModal();});$('#btnBackupNow')?.addEventListener('click',()=>{forceBackup('Backup manuel');renderBackupDialog();toast('Backup créé.');});
 $('#btnTrash')?.addEventListener('click',()=>{renderTrash();$('#trashDialog').showModal();});$('#btnEmptyTrash')?.addEventListener('click',()=>{if(confirm('Vider définitivement la corbeille ?'))mutate(()=>state.trash=[], 'Corbeille vidée.');renderTrash();});
 $('#btnDensity')?.addEventListener('click',()=>{state.ui.density=state.ui.density==='compact'?'comfortable':'compact';saveState();render();});
-$('#deviceProfile')?.addEventListener('change',e=>{state.ui.deviceProfile=e.target.value==='samsung-s7fe'?'samsung-s7fe':'ipad';saveState();render();toast(state.ui.deviceProfile==='samsung-s7fe'?'Interface Samsung S7 FE activée.':'Interface iPad activée.');});
 $('#btnFavoriteFilter')?.addEventListener('click',()=>{ui.favoritesOnly=!ui.favoritesOnly;renderLibrary();});$('#libraryTagFilter')?.addEventListener('change',e=>{ui.libraryTag=e.target.value;renderLibrary();});
 
 // Démarre avec un backup de migration V3 et maintient des snapshots périodiques.
