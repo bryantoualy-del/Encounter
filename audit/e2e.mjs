@@ -51,9 +51,9 @@ const hpAfterReplay=await gm.evaluate(()=>state.encounter.participants.find(p=>p
 checks.push({name:'same attackId new eventId applied once',pass:hpBeforeReplay===hpAfterReplay,detail:{hpBeforeReplay,hpAfterReplay}});
 console.log('ATTACKS',checks.length);
 await b.evaluate(()=>CompanionAPI.nextTurn());await b.locator('[data-combat-subtab="offense"]').click();await b.locator('#manSelect').selectOption('trip');await attack(b,'button[onclick="startAttack()"]','#manualRoll');await b.locator('#manSelect').selectOption('');
-await b.evaluate(()=>CompanionAPI.nextTurn());await b.evaluate(()=>forgeBreath());await resolveSave('Brackmard',20);
-await k.evaluate(()=>CompanionAPI.nextTurn());await k.evaluate(()=>KentaroAPI.state.slots=2);await k.evaluate(()=>document.querySelector('[data-spell="Perturbations synaptiques"]').click());await resolveSave('Kentaro',1);
-for(const name of ['Samoth','Zephyr','Rufus','Nans']){const p=await page(name),id=name.toLowerCase();await gm.locator('#rpgMjOpen').click();await gm.locator(`[data-copy="${id}"]`).evaluate(el=>el.closest('details').open=true);await gm.locator(`[data-copy="${id}"]`).click();const invite=await gm.evaluate(()=>navigator.clipboard.readText());await p.locator('.rpg-connect-launch').click();await p.locator('[name=invite]').fill(invite);await p.locator('[data-connect]').click();await gm.waitForFunction(id=>RPGConnectMJ.getStatus().players.some(p=>p.characterId===id&&p.online),id);await gm.locator('#rpgMjSyncTargets').click();await gm.locator('[data-rpg-close]').click();await p.waitForFunction(()=>RPGConnect.getTargets().some(t=>t.id==='e2e-target'));await p.evaluate(()=>RPGConnect.selectTarget('e2e-target'));await p.locator('[data-close]').click();
+await b.evaluate(()=>CompanionAPI.nextTurn());await b.evaluate(()=>{RPGConnect.prepareTargets({targetMode:'multi'});RPGConnect.selectTargets(['e2e-target'])});await b.evaluate(()=>forgeBreath());await resolveSave('Brackmard',20);
+await k.evaluate(()=>CompanionAPI.nextTurn());await k.evaluate(()=>KentaroAPI.state.slots=2);await k.evaluate(()=>{RPGConnect.prepareTargets({targetMode:'multi'});RPGConnect.selectTargets(['e2e-target'])});await k.evaluate(()=>document.querySelector('[data-spell="Perturbations synaptiques"]').click());await resolveSave('Kentaro',1);
+for(const name of ['Samoth','Zephyr','Rufus','Nans']){const p=await page(name),id=name.toLowerCase();await gm.locator('#rpgMjOpen').click();await gm.locator(`[data-copy="${id}"]`).evaluate(el=>el.closest('details').open=true);await gm.locator(`[data-copy="${id}"]`).click();const invite=await gm.evaluate(()=>navigator.clipboard.readText());await p.locator('.rpg-connect-launch').click();await p.locator('[name=invite]').fill(invite);await p.locator('[data-connect]').click();await gm.waitForFunction(id=>RPGConnectMJ.getStatus().players.some(p=>p.characterId===id&&p.online),id);await gm.locator('#rpgMjSyncTargets').click();await gm.locator('[data-rpg-close]').click();await p.waitForFunction(()=>RPGConnect.getTargets().some(t=>t.id==='e2e-target'));await p.evaluate(()=>RPGConnect.selectTarget('e2e-target'));if(['Samoth','Zephyr','Rufus','Nans'].includes(name))await p.evaluate(()=>{RPGConnect.prepareTargets({targetMode:'multi'});RPGConnect.selectTargets(['e2e-target'])});await p.locator('[data-close]').click();
 if(name==='Samoth'){await p.locator('#combatSpell').selectOption('vortex');await p.locator('#combatCast').click();}
 if(name==='Zephyr')await p.evaluate(()=>document.querySelector('#presenceBtn').click());
 if(name==='Rufus')await p.evaluate(()=>document.querySelector('[data-hex-spell="Motif hypnotique"]').click());
@@ -64,6 +64,50 @@ await playerDiceHandler(p);
 
 
 
+
+// Generic multi-target browser scenario: heterogeneous targets, independent saves, target death, reconnect, dedup and atomic undo.
+const sam=pages.Samoth;
+await gm.evaluate(()=>{
+ const defs=[
+  {id:'mt-wolf-model',name:'Loup sanguinaire',category:'enemy',type:'bête',hp:1,ac:14,saveMods:{FOR:3,DEX:2,CON:3,INT:-4,SAG:1,CHA:-2},damageResistances:['froid']},
+  {id:'mt-goblin-model',name:'Gobelin multi',category:'enemy',type:'humanoïde',hp:30,ac:15,saveMods:{FOR:-1,DEX:4,CON:0,INT:0,SAG:-1,CHA:-1}},
+  {id:'mt-elemental-model',name:'Élémentaire de glace',category:'enemy',type:'élémentaire',hp:40,ac:14,saveMods:{FOR:3,DEX:1,CON:4,INT:-2,SAG:0,CHA:0},damageImmunities:['froid']}
+ ];
+ for(const d of defs){const old=state.monsters.find(m=>m.id===d.id);if(!old)state.monsters.push(normalizeMonster(d));const m=state.monsters.find(m=>m.id===d.id);const pid=d.id.replace('-model','');if(!state.encounter.participants.some(p=>p.id===pid)){const p=makeParticipant(m,1,0,null);p.id=pid;p.name=d.name;p.baseName=d.name;p.kind='enemy';state.encounter.participants.push(p)}}
+ saveState();render()
+});
+await gm.locator('#rpgMjOpen').click();await gm.locator('#rpgMjSyncTargets').click();await gm.locator('[data-rpg-close]').click();
+await sam.waitForFunction(()=>['mt-wolf','mt-goblin','mt-elemental'].every(id=>RPGConnect.getTargets().some(t=>t.id===id)));
+await sam.evaluate(()=>CompanionAPI.nextTurn());
+const beforeMulti=await gm.evaluate(()=>Object.fromEntries(['mt-wolf','mt-goblin','mt-elemental'].map(id=>{const p=state.encounter.participants.find(x=>x.id===id);return[id,{hp:p.hp,tempHp:p.tempHp||0,conditions:JSON.stringify(p.conditions||[])}]})));
+await sam.evaluate(()=>{RPGConnect.prepareTargets({targetMode:'multi'});RPGConnect.selectTargets(['mt-wolf','mt-goblin','mt-elemental'])});
+const selectedMulti=await sam.evaluate(()=>RPGConnect.getStatus().targets.map(t=>t.id));checks.push({name:'Samoth multi selector holds three explicit targets',pass:selectedMulti.join(',')==='mt-wolf,mt-goblin,mt-elemental',detail:selectedMulti});
+const iconState=await sam.locator('[data-target-id="mt-wolf"] img').evaluate(img=>({src:img.getAttribute('src'),naturalWidth:img.naturalWidth}));checks.push({name:'multi target keeps creature vignette',pass:!!iconState.src&&iconState.naturalWidth>0,detail:iconState});
+const beforeFrames=frames.length;
+await sam.locator('#combatSpell').selectOption('vortex');await sam.locator('#combatCast').click();
+await gm.locator('#rpgSavePopup').waitFor({state:'visible',timeout:5000});
+const first=await resolveSave('Samoth',1);
+checks.push({name:'target reaching zero does not close the logical multi action',pass:first.targetId==='mt-wolf'&&first.dead===true&&await gm.locator('#rpgSavePopup').isVisible(),detail:first});
+await sam.evaluate(()=>RPGConnect.disconnect());await sam.waitForFunction(()=>!RPGConnect.getStatus().connected);await sam.evaluate(()=>RPGConnect.connect());await sam.waitForFunction(()=>RPGConnect.getStatus().connected,{timeout:10000});
+checks.push({name:'multi action survives Companion reconnect and STATE_SYNC',pass:await gm.locator('#rpgSavePopup').isVisible()});
+const second=await resolveSave('Samoth',20),third=await resolveSave('Samoth',1),multiResults=[first,second,third];
+checks.push({name:'three independent JdS resolved',pass:new Set(multiResults.map(x=>x.targetId)).size===3&&multiResults.filter(x=>x.success).length===1,detail:multiResults.map(x=>({targetId:x.targetId,total:x.total,success:x.success,effectiveDamage:x.effectiveDamage}))});
+checks.push({name:'one shared raw damage roll reused for all targets',pass:new Set(multiResults.map(x=>x.rawDamage)).size===1&&multiResults[0].rawDamage>0,detail:multiResults.map(x=>x.rawDamage)});
+const elemental=multiResults.find(x=>x.targetId==='mt-elemental'),wolf=multiResults.find(x=>x.targetId==='mt-wolf'),goblin=multiResults.find(x=>x.targetId==='mt-goblin');
+checks.push({name:'per-target defenses and save scaling applied',pass:elemental?.effectiveDamage===0&&wolf?.effectiveDamage>0&&goblin?.requestedDamage===Math.floor(goblin?.rawDamage/2),detail:{wolf,goblin,elemental}});
+checks.push({name:'multi action consumes one action economy only',pass:await sam.evaluate(()=>CompanionAPI.getState().turn.action===false)});
+const outboundMulti=frames.slice(beforeFrames).find(f=>f.page==='Samoth'&&f.direction==='sent'&&f.data.event?.type==='save:request')?.data.event;
+checks.push({name:'Companion emitted one multi save intention',pass:!!outboundMulti&&outboundMulti.payload.targets.length===3&&!!outboundMulti.payload.actionId,detail:outboundMulti?.payload});
+const hpBeforeReplay=await gm.evaluate(()=>Object.fromEntries(['mt-wolf','mt-goblin','mt-elemental'].map(id=>[id,state.encounter.participants.find(x=>x.id===id)?.hp??0])));
+await sam.evaluate(payload=>CompanionAPI.emitLocal('save:request',payload,'multi-replay-new-event-id'),outboundMulti.payload);await gm.waitForTimeout(250);
+const hpAfterReplay=await gm.evaluate(()=>Object.fromEntries(['mt-wolf','mt-goblin','mt-elemental'].map(id=>[id,state.encounter.participants.find(x=>x.id===id)?.hp??0])));
+checks.push({name:'same action/save IDs with a new eventId are deduplicated',pass:JSON.stringify(hpBeforeReplay)===JSON.stringify(hpAfterReplay),detail:{hpBeforeReplay,hpAfterReplay}});
+await sam.evaluate(()=>CompanionAPI.undo());await gm.waitForFunction(before=>['mt-wolf','mt-goblin','mt-elemental'].every(id=>{const p=state.encounter.participants.find(x=>x.id===id),b=before[id];return p&&p.hp===b.hp&&(p.tempHp||0)===b.tempHp&&JSON.stringify(p.conditions||[])===b.conditions}),beforeMulti,{timeout:5000});
+checks.push({name:'atomic undo restores every target in the logical action',pass:true});
+await gm.evaluate(()=>actualAdvanceTurn());checks.push({name:'turn can advance after a multi-target kill',pass:true});
+// Advance five complete encounter rounds through the real turn engine to expose stale locks/freezes.
+const roundStart=await gm.evaluate(()=>state.encounter.round);for(let r=0;r<5;r++){const n=await gm.evaluate(()=>Math.max(1,sortedParticipants().length));for(let i=0;i<n;i++)await gm.evaluate(()=>actualAdvanceTurn())}
+const roundEnd=await gm.evaluate(()=>state.encounter.round);checks.push({name:'five-round post-multi combat simulation stays live',pass:roundEnd>=roundStart+5,detail:{roundStart,roundEnd}});
 
 // Additional native save families: Zephyr spell/smite and Nans fear.
 const z=pages.Zephyr,n=pages.Nans;await z.evaluate(()=>CompanionAPI.nextTurn());await z.locator('[data-name="Peur"]').evaluate(el=>el.click());await resolveSave('Zephyr',1);
