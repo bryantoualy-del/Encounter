@@ -1,38 +1,38 @@
 {
   "protocolVersion": 1,
-  "branch": "audit/recovery-2026-10-04",
+  "branch": "feature/multi-target-2026-10-05",
   "repositories": {
     "Kentaro": {
-      "sha": "089e2423d5718d35d4c52437f58f7c1599b3196c",
-      "tree": "8b91fb48d3a33d68059714dc1e4aa810248f7ea1"
+      "sha": "9169773df6a7a906e271a3d036ca07695fa7eea3",
+      "tree": "d4618c2a20acb4180e2897d9b14afa4e912f1d42"
     },
     "Brackmard": {
-      "sha": "6ca4d52f7d009473f4a93e44381e5ce0dda0dbb4",
-      "tree": "47f8ee77b13b3db4add777bd18d8b3cbd7786c09"
+      "sha": "cf7499cdb5ef28ee9fc5e944cf2b124eb41d9c5c",
+      "tree": "210b3be6e1479cc0235e69effe55fcabe6725116"
     },
     "Zephyr": {
-      "sha": "0a53015c336ae8396945f81b792d2ca701e647ab",
-      "tree": "06bd551c1df50ecc9dd01567b88ecb5e2a72b184"
+      "sha": "e9874128c1558f5941372e5c2cf66033eda13d14",
+      "tree": "14553b78f261d969d9ec9769fa55bf6fd7573a8b"
     },
     "Rufus": {
-      "sha": "8162494dd5e7ed1380da369d124f04293db3c947",
-      "tree": "12c783afa5d10d21827c404f47457cfa49d525da"
+      "sha": "5df70ccb10dbb517b54c8371aa6872b3cacff89c",
+      "tree": "4faa1de948c3f0718a661c286b22fafab673cb17"
     },
     "Samoth": {
-      "sha": "3125d037b233b816732be5cd538bdc6a89afca3f",
-      "tree": "887a8318a47c5cf5ff6dd0b2316a2e3f9ccd6aa6"
+      "sha": "d5b7f1b782b808b375096a9845fc323ab704b965",
+      "tree": "33580e31024c33a40554ffce88d4e98761577003"
     },
     "Nans": {
-      "sha": "f4847b126d836c71b9b6cad899773a5d7b5115e6",
-      "tree": "44b96a46316c6eb5c8b1518f5c0380b6e0281ba3"
+      "sha": "a6174c7d83ab5a4d24d1a157819a3963cee68e04",
+      "tree": "1512c15566635fcd390b780fe391a6d81a19d2da"
     },
     "Encounter": {
-      "sha": "634b988680ee2964a5c98806cd1360f4252a00c7",
-      "tree": "158c8befe16f668d4ab00e164c19ce49f18bfa92"
+      "sha": "70bc68540f092c2e90580b47ba811eb9e939f0c7",
+      "tree": "1998e0359d708c7b90889cbc14052ca41178eed5"
     },
     "RPG-Connect": {
-      "sha": "6104f8bdd6f64df1aa7be597f7166d454a510fe7",
-      "tree": "3a8d45afc538767a05ed7bc55d9bc9a9889135cf"
+      "sha": "c117b408816a0f52a08449d6fa5554d94794c0b4",
+      "tree": "5819683b5b25ae8f7421948fe27ad5423ca1263b"
     }
   }
 }
