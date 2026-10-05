@@ -62,6 +62,18 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  await until(()=>dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp")===24);
  assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp"),17);
 
+ // Two independently validated attacks can belong to one logical multi-target action and undo atomically.
+ dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp=20;state.encounter.participants.find(p=>p.id==='e2').hp=20");
+ for(const [attackId,targetId,amount] of [['multi-atk-1','e1',3],['multi-atk-2','e2',4]]){
+  send(player,{type:'event',event:{id:attackId+'-roll',type:'attack:rolled',characterId:'samoth',payload:{attackId,actionId:'multi-attack-action',targetId,roll:20,total:20}}});
+  send(player,{type:'event',event:{id:attackId+'-pending',type:'attack:pending-hit',characterId:'samoth',payload:{attackId,actionId:'multi-attack-action',targetId}}});
+  await until(()=>!dom.window.document.querySelector('#rpgHitPopup').hidden);const decisionWait=waitCommand(player,'attack:decision');dom.window.document.querySelector('[data-popup-hit]').click();const decision=await decisionWait;send(player,{type:'command-ack',id:decision.id,result:'applied'});
+  send(player,{type:'event',event:{id:attackId+'-damage',type:'attack:damage',characterId:'samoth',payload:{attackId,actionId:'multi-attack-action',targetId,amount,components:[{amount,type:'force'}]}}});
+ }
+ await until(()=>dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp")===17&&dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp")===16);
+ {const undoWait=waitCommand(player,'message:gm');send(player,{type:'event',event:{id:'multi-attack-undo',type:'action:undo-request',characterId:'samoth',payload:{actionId:'multi-attack-action'}}});const undo=await undoWait;assert.match(undo.payload.text,/2 cibles restaurées/);}
+ assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp"),20);assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp"),20);
+
  // Encounter remains authoritative even if an outdated client emits an attack while incapacitated.
  dom.window.eval("state.encounter.participants.find(p=>p.id==='p1').conditions=[{id:'pc-par-1',name:'Paralysé'}]");
  send(player,{type:'event',event:{id:'samoth-blocked-roll',type:'attack:rolled',characterId:'samoth',timestamp:new Date().toISOString(),payload:{attackId:'attack-blocked',targetId:'e2',target:{id:'e2',name:'Gobelin B'},roll:25,total:25}}});
