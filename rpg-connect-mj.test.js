@@ -9,6 +9,7 @@ const url=`ws://127.0.0.1:${server.address().port}`;
 const until=fn=>new Promise((resolve,reject)=>{let origin=new Error('wait at').stack;let start=Date.now();const check=()=>fn()?resolve():Date.now()-start>2000?reject(Error('timeout '+origin)):setTimeout(check,10);check()});
 const wait=(ws,type)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>reject(Error('timeout '+type)),2000);let fn=data=>{let m=JSON.parse(String(data));if(m.type!==type)return;clearTimeout(timer);ws.off('message',fn);resolve(m)};ws.on('message',fn)});
 const waitCommand=(ws,eventType)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>reject(Error('timeout command '+eventType)),2000);let fn=data=>{let m=JSON.parse(String(data));if(m.type!=='command'||m.event?.type!==eventType)return;clearTimeout(timer);ws.off('message',fn);resolve(m.event)};ws.on('message',fn)});
+const waitUndo=ws=>new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('timeout undo reply')),2000);const fn=data=>{const m=JSON.parse(String(data));if(m.type!=='command'||m.event?.type!=='message:gm'||!m.event.payload?.text?.startsWith('Action multi-cible annulée'))return;clearTimeout(timer);ws.off('message',fn);resolve(m.event)};ws.on('message',fn)});
 const waitSession=(ws,phase)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>reject(Error('timeout session '+phase)),2000);let fn=data=>{let m=JSON.parse(String(data));if(m.type!=='command'||m.event?.type!=='message:gm'||m.event?.payload?.session?.phase!==phase)return;clearTimeout(timer);ws.off('message',fn);resolve(m.event.payload.session)};ws.on('message',fn)});
 const send=(ws,m)=>ws.send(JSON.stringify({v:1,protocolVersion:1,clientCapabilities:['event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions'],...m}));
 test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double mutation',async()=>{
@@ -67,12 +68,23 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  for(const [attackId,targetId,amount] of [['multi-atk-1','e1',3],['multi-atk-2','e2',4]]){
   send(player,{type:'event',event:{id:attackId+'-roll',type:'attack:rolled',characterId:'samoth',payload:{attackId,actionId:'multi-attack-action',targetId,roll:20,total:20}}});
   send(player,{type:'event',event:{id:attackId+'-pending',type:'attack:pending-hit',characterId:'samoth',payload:{attackId,actionId:'multi-attack-action',targetId}}});
-  await until(()=>!dom.window.document.querySelector('#rpgHitPopup').hidden);const decisionWait=waitCommand(player,'attack:decision');dom.window.document.querySelector('[data-popup-hit]').click();const decision=await decisionWait;send(player,{type:'command-ack',id:decision.id,result:'applied'});
+  await until(()=>!!dom.window.document.querySelector(`[data-popup-hit="${attackId}"]:not(:disabled)`));assert.match(dom.window.document.querySelector('#rpgHitPopup').textContent,new RegExp(targetId==='e1'?'Gobelin A':'Gobelin B'));assert.match(dom.window.document.querySelector('#rpgHitPopup').textContent,/CA 13/);const decisionWait=waitCommand(player,'attack:decision');dom.window.document.querySelector(`[data-popup-hit="${attackId}"]`).click();const decision=await decisionWait;assert.equal(decision.payload.attackId,attackId);send(player,{type:'command-ack',id:decision.id,result:'applied'});
   send(player,{type:'event',event:{id:attackId+'-damage',type:'attack:damage',characterId:'samoth',payload:{attackId,actionId:'multi-attack-action',targetId,amount,components:[{amount,type:'force'}]}}});
  }
  await until(()=>dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp")===17&&dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp")===16);
- {const undoWait=waitCommand(player,'message:gm');send(player,{type:'event',event:{id:'multi-attack-undo',type:'action:undo-request',characterId:'samoth',payload:{actionId:'multi-attack-action'}}});const undo=await undoWait;assert.match(undo.payload.text,/2 cibles restaurées/);}
+ await until(()=>dom.window.document.querySelector('#rpgHitPopup').hidden);
+ {const undoWait=waitUndo(player);send(player,{type:'event',event:{id:'multi-attack-undo',type:'action:undo-request',characterId:'samoth',payload:{actionId:'multi-attack-action'}}});const undo=await undoWait;assert.match(undo.payload.text,/état Encounter restauré/);}
  assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp"),20);assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp"),20);
+
+ // A repeated roll with a changed target cannot move an existing attack lock.
+ send(player,{type:'event',event:{id:'immutable-roll',type:'attack:rolled',characterId:'samoth',payload:{attackId:'immutable',actionId:'immutable-action',targetId:'e1',roll:20,total:20}}});
+ send(player,{type:'event',event:{id:'immutable-pending',type:'attack:pending-hit',characterId:'samoth',payload:{attackId:'immutable',actionId:'immutable-action',targetId:'e1'}}});
+ await until(()=>!!dom.window.document.querySelector('[data-popup-hit="immutable"]:not(:disabled)'));
+ {const decisionWait=waitCommand(player,'attack:decision');dom.window.document.querySelector('[data-popup-hit="immutable"]').click();const decision=await decisionWait;send(player,{type:'command-ack',id:decision.id,result:'applied'});}
+ send(player,{type:'event',event:{id:'immutable-retarget',type:'attack:rolled',characterId:'samoth',payload:{attackId:'immutable',actionId:'immutable-action',targetId:'e2',roll:20,total:20}}});
+ send(player,{type:'event',event:{id:'immutable-damage',type:'attack:damage',characterId:'samoth',payload:{attackId:'immutable',actionId:'immutable-action',targetId:'e2',amount:1}}});
+ await until(()=>dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp")===19);assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp"),20);
+ {const undoWait=waitUndo(player);send(player,{type:'event',event:{id:'immutable-undo',type:'action:undo-request',characterId:'samoth',payload:{actionId:'immutable-action'}}});await undoWait;}
 
  // Encounter remains authoritative even if an outdated client emits an attack while incapacitated.
  dom.window.eval("state.encounter.participants.find(p=>p.id==='p1').conditions=[{id:'pc-par-1',name:'Paralysé'}]");
@@ -80,7 +92,7 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  await new Promise(resolve=>setTimeout(resolve,20));
  send(player,{type:'event',event:{id:'samoth-blocked-dmg',type:'attack:damage',characterId:'samoth',timestamp:new Date().toISOString(),payload:{attackId:'attack-blocked',targetId:'e2',amount:20,components:[{amount:20,type:'force'}]}}});
  await new Promise(resolve=>setTimeout(resolve,40));
- assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp"),24);
+ assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp"),20);
 
  // Multi-target save: one action, independent target results, then atomic network undo.
  dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').conditions=[];state.encounter.participants.find(p=>p.id==='e2').conditions=[];state.encounter.participants.find(p=>p.id==='e1').hp=20;state.encounter.participants.find(p=>p.id==='e2').hp=20");
@@ -90,7 +102,11 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  await until(()=>dom.window.document.querySelector('#rpgSavePopup')?.open);multiResult=waitCommand(player,'save:result');dom.window.document.querySelector('[data-save-die]').value='20';dom.window.document.querySelector('[data-save-manual]').click();const mr2=await multiResult;send(player,{type:'command-ack',id:mr2.id,result:'applied'});
  assert.equal(mr1.payload.actionId,'multi-action');assert.equal(mr2.payload.actionId,'multi-action');assert.notEqual(mr1.payload.targetId,mr2.payload.targetId);assert.equal(mr1.payload.rawDamage,8);assert.equal(mr2.payload.rawDamage,8);assert.equal(mr1.payload.success,false);assert.equal(mr2.payload.success,true);
  const afterMulti=dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>p.hp)");assert.ok(afterMulti.some((hp,i)=>hp<beforeMulti[i].hp));
- const undoAck=waitCommand(player,'message:gm');send(player,{type:'event',event:{id:'multi-undo-event',type:'action:undo-request',characterId:'samoth',combatId:dom.window.RPGConnectMJ.getStatus().fight.requestId,payload:{actionId:'multi-action'}}});const undoMsg=await undoAck;assert.match(undoMsg.payload.text,/restauré/);
+ send(player,{type:'event',event:{id:'stale-multi-undo',type:'action:undo-request',characterId:'samoth',combatId:'replaced-combat',payload:{actionId:'multi-action'}}});await new Promise(resolve=>setTimeout(resolve,40));
+ assert.deepEqual(dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>p.hp)"),afterMulti,'stale-combat undo cannot mutate a current action');
+ const reused=waitCommand(player,'save:result');send(player,{type:'event',event:{id:'multi-reused-action',type:'save:request',characterId:'samoth',payload:{saveId:'new-save-id',actionId:'multi-action',targets:['e1','e2'],ability:'DEX',dc:15,damage:8}}});
+ assert.equal((await reused).payload.cancelled,true);assert.equal(dom.window.document.querySelector('#rpgSavePopup').open,false);assert.deepEqual(dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>p.hp)"),afterMulti);
+ const undoAck=waitUndo(player);send(player,{type:'event',event:{id:'multi-undo-event',type:'action:undo-request',characterId:'samoth',combatId:dom.window.RPGConnectMJ.getStatus().fight.requestId,payload:{actionId:'multi-action'}}});const undoMsg=await undoAck;assert.match(undoMsg.payload.text,/restauré/);
  const restored=dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>({id:p.id,hp:p.hp,tempHp:p.tempHp,conditions:JSON.stringify(p.conditions)}))");assert.deepEqual(restored,beforeMulti);
  dom.window.RPGConnectMJ.getStatus();
  }finally{

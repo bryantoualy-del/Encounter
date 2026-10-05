@@ -123,3 +123,10 @@ test('15. network undo carries the logical actionId instead of target-scoped ids
  const h=clientHarness();h.dom.window.RPGConnect.prepareTargets({targetMode:'multi'});h.dom.window.RPGConnect.selectTargets(['a','b']);h.dom.window.RPGConnect.requestSave({ability:'DEX',dc:16,source:'Vortex',targetMode:'multi',damage:12,actionId:'logical-1'});
  h.dom.window.CompanionAPI.emitLocal('undo:performed',{});await new Promise(r=>setTimeout(r,0));const undo=h.events.find(e=>e.type==='action:undo-request');assert.equal(undo.payload.actionId,'logical-1');h.dom.window.close();
 });
+
+test('16. cancelling a partially resolved action removes every remaining save',()=>{
+ const h=saveHarness();h.authority.enqueue('samoth',{id:'interrupt',payload:{saveId:'interrupt',actionId:'interrupt-action',targets:['a','b'],ability:'DEX',dc:18,damage:4,damageType:'force'}});
+ h.manual(1);assert.equal(h.authority.pending(),1);const hp=h.participants[1].hp;
+ h.authority.cancelAction('interrupt-action');assert.equal(h.authority.pending(),0);assert.equal(h.dom.window.document.querySelector('#rpgSavePopup').open,false);
+ assert.equal(h.sent.at(-1).payload.cancelled,true);h.manual(1);assert.equal(h.participants[1].hp,hp);h.dom.window.close();
+});

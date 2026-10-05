@@ -38,6 +38,21 @@ for(const name of ['Kentaro','Nans','Samoth','Brackmard','Zephyr','Rufus'])test(
     assert.match(html,/emitsAttackDamage:true/,'Kentaro explicit damage transport disabled');
     assert.match(html,/attack:damage[^\n]+p\.attackId/,'Kentaro damage is not correlated to the pending attackId');
   }
+  if(name==='Samoth'){
+    const modes=[];w.RPGConnect={prepareTargets:options=>modes.push(options.targetMode)};
+    const selector=w.document.querySelector('#combatSpell'),before=api.getState();
+    selector.value='vortex';selector.dispatchEvent(new w.Event('change',{bubbles:true}));
+    selector.value='rayon';selector.dispatchEvent(new w.Event('change',{bubbles:true}));
+    assert.deepEqual(modes,['multi','single'],'changing from a zone spell to an attack must reset selection mode');
+    assert.deepEqual(api.getState().resources,before.resources,'choosing a spell must not spend resources');
+    assert.deepEqual(api.getState().turn,before.turn,'choosing a spell must not spend action economy');
+  }
+  if(name==='Nans'){
+    const modes=[];w.RPGConnect={prepareTargets:options=>modes.push(options.targetMode)};
+    const before=api.getState();w.document.querySelector('[data-combat-tab="attacks"]').click();
+    assert.deepEqual(modes,['single'],'returning from horn powers to attacks must reset selection mode');
+    assert.deepEqual(api.getState().resources,before.resources);assert.deepEqual(api.getState().turn,before.turn);
+  }
   assert.equal(errors.length,0,errors.map(e=>e.message).join('\n'));
  }finally{dom.window.close()}
 });

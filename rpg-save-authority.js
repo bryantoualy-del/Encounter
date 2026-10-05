@@ -15,7 +15,7 @@ window.createRPGSaveAuthority=deps=>{
  function enqueue(characterId,event){
   const p=event.payload||{},targetIds=normalizeRefs(p),baseSaveId=String(p.saveId||event.id),actionId=String(p.actionId||p.parentActionId||baseSaveId),multi=targetIds.length>1,ledger=deps.ledger(),dc=Number(p.dc);
   if(!targetIds.length){const item={key:baseSaveId,baseSaveId,actionId,characterId,event,targetId:'',targetIds:[],targetIndex:0};respond(item,{error:'Aucune cible fournie',source:p.source});return false}
-  deps.beginAction?.(actionId,characterId,targetIds,{kind:'savingThrow',source:p.source,saveId:baseSaveId,eventId:event.id});
+  if(deps.beginAction?.(actionId,characterId,targetIds,{kind:'savingThrow',source:p.source,saveId:baseSaveId,eventId:event.id})===false){respond({key:baseSaveId,baseSaveId,actionId,characterId,event,targetIds,targetIndex:0},{cancelled:true,error:'Action annulée ou identifiant déjà utilisé'});return false}
   let added=0;
   targetIds.forEach((targetId,index)=>{
    const key=keyFor(baseSaveId,targetId,multi),item={key,baseSaveId,actionId,characterId,event:{...event,payload:{...p,targetId,actionId,parentActionId:actionId,targets:p.targets||targetIds}},targetId,targetIds:[...targetIds],targetIndex:index},s=profile(item);
@@ -48,5 +48,5 @@ window.createRPGSaveAuthority=deps=>{
  }
  function error(text){const el=popup.querySelector('[data-save-error]');if(el)el.textContent=text}
  popup.addEventListener('click',e=>{if(e.target.closest('[data-save-reset]')){deps.resetCombat?.();return}if(e.target.closest('[data-save-auto]'))resolve('auto');if(e.target.closest('[data-save-manual]'))resolve('manual')});
- return{enqueue,render,snapshot:()=>[...queue],restore(items){queue.clear();for(const [key,item] of items||[])if(item?.event&&item?.characterId)queue.set(key,item);render()},reset(){for(const item of queue.values())respond(item,{cancelled:true,error:'Combat réinitialisé'});queue.clear();render()},pending:()=>queue.size};
+ return{enqueue,render,snapshot:()=>[...queue],restore(items){queue.clear();for(const [key,item] of items||[])if(item?.event&&item?.characterId)queue.set(key,item);render()},cancelAction(actionId){for(const [key,item]of queue)if(item.actionId===actionId){queue.delete(key);respond(item,{targetId:item.targetId,cancelled:true,error:'Action annulée'})}render()},reset(){for(const item of queue.values())respond(item,{cancelled:true,error:'Combat réinitialisé'});queue.clear();render()},pending:()=>queue.size};
 };})();
