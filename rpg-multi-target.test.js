@@ -35,7 +35,7 @@ function saveHarness(){
   immune:(p,name)=>p.id==='c'&&norm(name)==='entrave',addCondition:(id,data)=>participants.find(p=>p.id===id).conditions.push(data),damage,
   beginAction:(actionId,characterId,targetIds,meta)=>transactions.push({actionId,characterId,targetIds:[...targetIds],meta}),icon:()=>'',persist:()=>{},refresh:()=>{},log:()=>{}
  });
- const manual=(die,mod)=>{const pop=dom.window.document.querySelector('#rpgSavePopup');const input=pop.querySelector('[data-save-die]');if(input)input.value=String(die);const m=pop.querySelector('[data-save-mod]');if(m&&mod!=null)m.value=String(mod);pop.querySelector('[data-save-manual]').click()};
+ const manual=(die)=>{rolls.push(Number(die));const pop=dom.window.document.querySelector('#rpgSavePopup');pop.querySelector('[data-save-auto]').click()};
  return{dom,participants,models,sent,ledger,transactions,rolls,authority,manual};
 }
 
@@ -116,7 +116,7 @@ test('13. client multi selection sends one logical save event with targets[]',()
 });
 
 test('14. maxTargets caps the selected target set',()=>{
- const h=clientHarness();h.dom.window.RPGConnect.prepareTargets({targetMode:'multi',maxTargets:2});h.dom.window.RPGConnect.selectTargets(['a','b','c']);assert.deepEqual(h.dom.window.RPGConnect.getSelectedTargets().map(x=>x.id),['a','b']);h.dom.window.close();
+ const h=clientHarness();h.dom.window.RPGConnect.prepareTargets({targetMode:'multi',maxTargets:2});h.dom.window.RPGConnect.selectTargets(['a','b','c']);assert.equal(Array.from(h.dom.window.RPGConnect.getSelectedTargets(),x=>x.id).join(','),'a,b');h.dom.window.close();
 });
 
 test('15. network undo carries the logical actionId instead of target-scoped ids',async()=>{
