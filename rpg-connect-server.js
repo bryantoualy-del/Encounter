@@ -8,6 +8,9 @@ const key=process.env.RPG_CONNECT_GM_KEY;
 if(!key||key.length<24)throw Error('RPG_CONNECT_GM_KEY doit contenir au moins 24 caractères aléatoires.');
 const origins=(process.env.RPG_CONNECT_ORIGINS||'').split(',').map(x=>x.trim()).filter(Boolean);
 const port=Number(process.env.PORT||3000),rooms=new Map();
+let connectionSeq=0;
+const trace=(connectionId,event,details={})=>console.log('[RPG TRACE]',JSON.stringify({at:new Date().toISOString(),connectionId,event,...details}));
+const safeOrigin=origin=>String(origin||'(none)').slice(0,180);
 const random=(bytes=18)=>randomBytes(bytes).toString('base64url');
 const equal=(a,b)=>{const x=Buffer.from(String(a||'')),y=Buffer.from(String(b||''));return x.length===y.length&&timingSafeEqual(x,y)};
 const send=(ws,message)=>{if(ws?.readyState===WebSocket.OPEN)ws.send(JSON.stringify({v:1,...message}))};
@@ -15,24 +18,35 @@ const peers=room=>[...new Set([...room.tokens.keys(),...room.states.keys(),...ro
 const acceptState=(room,id,value)=>{const epoch=String(value.stateEpoch||'legacy'),revision=Number(value.stateRevision)||0,marks=room.stateWatermarks||(room.stateWatermarks=new Map()),prior=marks.get(id);if(prior&&(prior.retired.has(epoch)||(prior.epoch===epoch&&revision<prior.revision)))return false;const retired=prior?.retired||new Set();if(prior&&prior.epoch!==epoch)retired.add(prior.epoch);marks.set(id,{epoch,revision,retired});room.states.set(id,value);return true};
 const notify=room=>send(room.gm,{type:'roster',room:room.id,payload:{players:peers(room)}});
 const server=createServer((req,res)=>{if(req.url==='/health'){res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify({ok:true,rooms:rooms.size,...protocol}));return}res.writeHead(404);res.end()});
-const wss=new WebSocketServer({server,maxPayload:65536,verifyClient:({origin},done)=>done(!origins.length||origins.includes(origin),403,'Origin non autorisée')});
-wss.on('connection',ws=>{
+const wss=new WebSocketServer({server,maxPayload:65536,verifyClient:({origin,req},done)=>{
+  const connectionId='c'+(++connectionSeq).toString(36);
+  req.rpgConnectionId=connectionId;
+  const accepted=!origins.length||origins.includes(origin);
+  trace(connectionId,'upgrade',{origin:safeOrigin(origin),originAccepted:accepted,path:req.url||'/'});
+  done(accepted,403,'Origin non autorisée');
+}});
+wss.on('connection',(ws,req)=>{
+  const connectionId=req?.rpgConnectionId||'c?';
   let room=null,role=null,characterId=null;ws.isAlive=true;
+  trace(connectionId,'socket-open',{origin:safeOrigin(req?.headers?.origin)});
   ws.on('pong',()=>ws.isAlive=true);
   ws.on('message',raw=>{try{
     const m=JSON.parse(String(raw));if(m.v!==1||typeof m.type!=='string'||!m.type||JSON.stringify(m).length>65000)throw Error('Message invalide');
     if(!role){
       if(m.type!=='hello')throw Error('Identification requise');
-      if((m.protocolVersion!==protocol.protocolVersion)||protocol.capabilities.some(c=>!m.clientCapabilities?.includes(c))||(m.requiredCapabilities||[]).some(c=>!protocol.capabilities.includes(c))){send(ws,{type:'error',code:'PROTOCOL_INCOMPATIBLE',message:'RPG Connect incompatible : protocole/capacités requis non disponibles',...protocol});ws.close(4002,'Protocole incompatible');return}
+      const compatibility=(m.protocolVersion===protocol.protocolVersion)&&!protocol.capabilities.some(c=>!m.clientCapabilities?.includes(c))&&!(m.requiredCapabilities||[]).some(c=>!protocol.capabilities.includes(c));
+      trace(connectionId,'hello',{role:String(m.role||''),room:String(m.room||'').slice(0,40),protocolVersion:m.protocolVersion??null,clientCapabilities:Array.isArray(m.clientCapabilities)?m.clientCapabilities:[],requiredCapabilities:Array.isArray(m.requiredCapabilities)?m.requiredCapabilities:[],protocolCompatible:compatibility});
+      if(!compatibility){trace(connectionId,'protocol-rejected');send(ws,{type:'error',code:'PROTOCOL_INCOMPATIBLE',message:'RPG Connect incompatible : protocole/capacités requis non disponibles',...protocol});ws.close(4002,'Protocole incompatible');return}
       if(m.role==='gm'){
-        if(!equal(m.key,key))throw Error('Clé MJ invalide');
+        if(!equal(m.key,key)){trace(connectionId,'gm-auth',{auth:'rejected'});throw Error('Clé MJ invalide')}
+        trace(connectionId,'gm-auth',{auth:'accepted'});
         const requested=String(m.room||'').trim();const roomId=requested&&/^[A-Z0-9_-]{6,32}$/i.test(requested)?requested:random(8);room=rooms.get(roomId);
         if(!room){room={id:roomId,gm:null,players:new Map(),tokens:new Map(),states:new Map(),seen:new Set(),pending:new Map(),pendingEvents:new Map()};rooms.set(roomId,room)}
-        if(room.gm&&room.gm!==ws)room.gm.close(4001,'Autre session MJ');room.gm=ws;role='gm';send(ws,{type:'welcome',...protocol,room:room.id,role:'gm',payload:{players:peers(room)}});for(const event of room.pendingEvents.values())send(ws,{type:'event',room:room.id,characterId:event.characterId,event});notify(room);return;
+        if(room.gm&&room.gm!==ws)room.gm.close(4001,'Autre session MJ');room.gm=ws;role='gm';send(ws,{type:'welcome',...protocol,room:room.id,role:'gm',payload:{players:peers(room)}});trace(connectionId,'welcome-sent',{role:'gm',room:room.id});for(const event of room.pendingEvents.values())send(ws,{type:'event',room:room.id,characterId:event.characterId,event});notify(room);return;
       }
       if(m.role==='player'){
         const r=rooms.get(String(m.room||'')),id=String(m.characterId||'').toLowerCase();if(!r||!characters.has(id)||!equal(m.token,r.tokens.get(id)))throw Error('Invitation invalide');
-        room=r;role='player';characterId=id;const old=room.players.get(id);if(old&&old!==ws)old.close(4001,'Nouvelle connexion');room.players.set(id,ws);send(ws,{type:'welcome',...protocol,room:room.id,role:'player',characterId:id});for(const [commandId,cmd] of room.pending)if(cmd.characterId===id)send(ws,cmd);notify(room);return;
+        room=r;role='player';characterId=id;trace(connectionId,'player-auth',{auth:'accepted',room:room.id,characterId:id});const old=room.players.get(id);if(old&&old!==ws)old.close(4001,'Nouvelle connexion');room.players.set(id,ws);send(ws,{type:'welcome',...protocol,room:room.id,role:'player',characterId:id});for(const [commandId,cmd] of room.pending)if(cmd.characterId===id)send(ws,cmd);notify(room);return;
       }
       throw Error('Rôle invalide');
     }
@@ -52,8 +66,8 @@ wss.on('connection',ws=>{
     }
     if(m.type==='command-ack'&&role==='player'){const command=room.pending.get(m.id);if(command?.characterId===characterId){room.pending.delete(m.id);send(room.gm,{type:'command-ack',id:m.id,characterId,result:m.result||'applied'})}return}
     throw Error('Opération refusée');
-  }catch(error){send(ws,{type:'error',message:String(error.message||'Erreur')});if(!role)ws.close(4003,'Accès refusé')}});
-  ws.on('close',()=>{if(!room)return;if(role==='gm'&&room.gm===ws)room.gm=null;if(role==='player'&&room.players.get(characterId)===ws)room.players.delete(characterId);notify(room)});
+  }catch(error){trace(connectionId,'message-error',{stage:role?'session':'handshake',message:String(error.message||'Erreur').slice(0,160)});send(ws,{type:'error',code:!role&&String(error.message||'').includes('Clé MJ')?'GM_AUTH_REJECTED':undefined,message:String(error.message||'Erreur')});if(!role)ws.close(4003,'Accès refusé')}});
+  ws.on('close',(code,reason)=>{trace(connectionId,'socket-close',{code,reason:String(reason||'').slice(0,120),role:role||'',room:room?.id||'',characterId:characterId||''});if(!room)return;if(role==='gm'&&room.gm===ws)room.gm=null;if(role==='player'&&room.players.get(characterId)===ws)room.players.delete(characterId);notify(room)});
 });
 const pulse=setInterval(()=>{for(const ws of wss.clients){if(ws.readyState!==WebSocket.OPEN)continue;if(ws.isAlive===false){ws.terminate();continue}ws.isAlive=false;ws.ping()}},30000);pulse.unref();
 server.listen(port,()=>console.log(`RPG Connect écoute sur ${server.address().port}`));
