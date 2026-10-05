@@ -1,5 +1,7 @@
 # Audit de compatibilité — 4 octobre 2026
 
+Revalidation du 5 octobre : les huit branches publiées ont été récupérées et leurs arbres Git comparés aux sources locales sans différence. Les 77 contrôles E2E sur le serveur WebSocket isolé et les 16 tests automatisés sont de nouveau verts, sans erreur JavaScript de page. Preuve : `evidence/retest-2026-10-05.json`. Aucun changement sur main ni déploiement de production lors de cette revalidation.
+
 État initial figé avant toute correction. La cohérence statique ne constitue pas une validation E2E.
 
 | Dépôt | Ref | Commit | Client SHA256 | Serveur SHA256 |
