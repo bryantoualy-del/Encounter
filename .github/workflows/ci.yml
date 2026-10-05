@@ -2,7 +2,7 @@ name: Encounter CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, audit/recovery-2026-10-04]
   pull_request:
 
 concurrency:
@@ -25,11 +25,18 @@ jobs:
       - name: Protocol and MJ tests
         run: npm test
       - name: Checkout Companion repos
-        run: |
-          for repo in Kentaro Samoth Brackmard Rufus Nans Zephyr; do
-            git clone --depth 1 "https://github.com/bryantoualy-del/${repo}.git" "../${repo}"
-          done
+        run: npm run audit:checkout
       - name: Companion bridge tests
         run: npm run test:companions
       - name: Creature icon tests
         run: npm run test:icons
+      - name: Install real Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Isolated WebSocket and browser E2E
+        run: npm run test:e2e
+      - name: E2E evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: isolated-rpg-e2e
+          path: audit/results/

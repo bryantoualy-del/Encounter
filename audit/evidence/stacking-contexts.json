@@ -1,0 +1,3870 @@
+{
+  "Encounter": [
+    {
+      "element": "DIV",
+      "id": "toast",
+      "class": "toast",
+      "reasons": [
+        "fixed",
+        "z-index 1000",
+        "transform",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "drawerScrim",
+      "class": "drawer-scrim",
+      "reasons": [
+        "fixed",
+        "z-index 88",
+        "opacity"
+      ]
+    },
+    {
+      "element": "HEADER",
+      "id": "",
+      "class": "topbar",
+      "reasons": [
+        "z-index 80"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "moreMenu",
+      "class": "more-menu hidden",
+      "reasons": [
+        "fixed",
+        "z-index 120"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "",
+      "class": "roundbar",
+      "reasons": [
+        "z-index 70"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "creature-type-icon initiative-creature-icon",
+      "reasons": [
+        "filter"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ghost small instance-edit-prep",
+      "reasons": [
+        "z-index 5"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ghost small instance-edit-prep",
+      "reasons": [
+        "z-index 5"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "creature-type-icon detail-creature-icon",
+      "reasons": [
+        "filter"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "targetingBanner",
+      "class": "targeting-banner hidden",
+      "reasons": [
+        "z-index 60"
+      ]
+    },
+    {
+      "element": "ARTICLE",
+      "id": "",
+      "class": "table-row combat-card role-pj   active   ",
+      "reasons": [
+        "isolation"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "row-select",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "ARTICLE",
+      "id": "",
+      "class": "table-row combat-card role-pj      ",
+      "reasons": [
+        "isolation"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "row-select",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "table-eco spent",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "ARTICLE",
+      "id": "",
+      "class": "table-row combat-card role-enemy    selected  ",
+      "reasons": [
+        "isolation"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "row-select",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "creature-type-icon combat-creature-icon",
+      "reasons": [
+        "filter"
+      ]
+    },
+    {
+      "element": "ARTICLE",
+      "id": "",
+      "class": "table-row combat-card role-pj      ",
+      "reasons": [
+        "isolation"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "row-select",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "table-eco spent",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "ARTICLE",
+      "id": "",
+      "class": "table-row combat-card role-pj      ",
+      "reasons": [
+        "isolation"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "row-select",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "table-eco spent",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "ARTICLE",
+      "id": "",
+      "class": "table-row combat-card role-pj      ",
+      "reasons": [
+        "isolation"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "row-select",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "table-eco spent",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "ARTICLE",
+      "id": "",
+      "class": "table-row combat-card role-pj      ",
+      "reasons": [
+        "isolation"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "row-select",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "table-eco spent",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "table-eco spent",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "creature-type-icon detail-creature-icon",
+      "reasons": [
+        "filter"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "quickBar",
+      "class": "quickbar hidden",
+      "reasons": [
+        "fixed",
+        "z-index 86"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "btnQuickHeal",
+      "class": "heal",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "libraryDrawer",
+      "class": "drawer drawer-left",
+      "reasons": [
+        "fixed",
+        "z-index 90",
+        "transform"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "journalDrawer",
+      "class": "drawer drawer-right",
+      "reasons": [
+        "fixed",
+        "z-index 90",
+        "transform"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "actionPopup",
+      "class": "action-popup",
+      "reasons": [
+        "fixed",
+        "z-index 90",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "rpgMjStartFight",
+      "class": "ghost",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "rpgHitPopup",
+      "class": "rpg-hit-popup",
+      "reasons": [
+        "fixed",
+        "z-index 10050",
+        "filter",
+        "isolation"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "rpg-hit-card",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "rpg-hit-actions",
+      "reasons": [
+        "z-index 3"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "z-index 4"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "z-index 4"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "rpgTurnEndPopup",
+      "class": "rpg-hit-popup",
+      "reasons": [
+        "fixed",
+        "z-index 10050",
+        "filter",
+        "isolation"
+      ]
+    },
+    {
+      "element": "DIALOG",
+      "id": "rpgSavePopup",
+      "class": "rpg-hit-popup rpg-save-popup",
+      "reasons": [
+        "fixed",
+        "z-index 10050",
+        "filter",
+        "isolation"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "rpg-hit-card",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "rpg-hit-actions",
+      "reasons": [
+        "z-index 3"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "z-index 4"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "z-index 4"
+      ]
+    }
+  ],
+  "Kentaro": [
+    {
+      "element": "DIV",
+      "id": "fxOverlay",
+      "class": "",
+      "reasons": [
+        "fixed",
+        "z-index 9998",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "wrap",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "identity-copy",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "kentaro-signature",
+      "reasons": [
+        "transform"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "cc-turnbar-standard",
+      "class": "",
+      "reasons": [
+        "sticky",
+        "z-index 42"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "cc-turn-cell cc-turn-action passive is-used",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "turn-economy",
+      "reasons": [
+        "sticky",
+        "z-index 30"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "ecoAction",
+      "class": "eco used",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "ecoConc",
+      "class": "eco used",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "NAV",
+      "id": "",
+      "class": "tabs",
+      "reasons": [
+        "z-index 27"
+      ]
+    },
+    {
+      "element": "svg",
+      "id": "",
+      "class": {},
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "svg",
+      "id": "",
+      "class": {},
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "svg",
+      "id": "",
+      "class": {},
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "svg",
+      "id": "",
+      "class": {},
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "svg",
+      "id": "",
+      "class": {},
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "svg",
+      "id": "",
+      "class": {},
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "target-stack",
+      "reasons": [
+        "sticky"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "rpg-target-dock",
+      "class": "rpg-target-dock embedded",
+      "reasons": [
+        "z-index 20"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "transform",
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "solinar",
+      "class": "",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "transform",
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "selhane",
+      "class": "",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "thirdSmart",
+      "class": "",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "thirdSun",
+      "class": "btn-sun",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "thirdMoon",
+      "class": "btn-moon",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "smiteCrit",
+      "class": "",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "eldritch",
+      "class": "",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "filter"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "filter"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "filter"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "filter"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "filter"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "item-art",
+      "reasons": [
+        "filter"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "spectreActionCell",
+      "class": "spectre-turn-cell",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "spectreMoveCell",
+      "class": "spectre-turn-cell",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "spectre",
+      "class": "",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "v3-switch v3-social-mode",
+      "reasons": [
+        "sticky",
+        "z-index 20"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "sessionToast",
+      "class": "session-toast",
+      "reasons": [
+        "fixed",
+        "z-index 10010",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "saveStatus",
+      "class": "meta save-status-compact",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "kentaro-ribbon",
+      "class": "tone-heal",
+      "reasons": [
+        "fixed",
+        "z-index 9999",
+        "transform",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "kentaro-hit-modal",
+      "class": "",
+      "reasons": [
+        "fixed",
+        "z-index 10030"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "lastBadge",
+      "class": "result-badge show",
+      "reasons": [
+        "fixed",
+        "z-index 9997"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "kentaroFxStage",
+      "class": "",
+      "reasons": [
+        "fixed",
+        "z-index 9996",
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-sun",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-moon",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-core",
+      "reasons": [
+        "transform",
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-glyph",
+      "reasons": [
+        "transform",
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-veil",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-spectre",
+      "reasons": [
+        "transform",
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-spectre-icon",
+      "reasons": [
+        "transform",
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-life-source",
+      "reasons": [
+        "transform",
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-life-stream",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-life-heart",
+      "reasons": [
+        "transform",
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-solar-disc",
+      "reasons": [
+        "transform",
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-lunar-crescent",
+      "reasons": [
+        "transform",
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-blade-trail",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-blade-dust",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "rpg-connect rpg-connected",
+      "reasons": [
+        "fixed",
+        "z-index 110"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "",
+      "class": "rpg-session-banner",
+      "reasons": [
+        "fixed",
+        "z-index 108",
+        "transform"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "",
+      "class": "rpg-resolution-toast",
+      "reasons": [
+        "fixed",
+        "z-index 10030"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "rpg-remembered",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "rpg-connect-details",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIALOG",
+      "id": "",
+      "class": "rpg-initiative-request",
+      "reasons": [
+        "fixed",
+        "z-index 10050"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    }
+  ],
+  "Brackmard": [
+    {
+      "element": "DIV",
+      "id": "fxLayer",
+      "class": "",
+      "reasons": [
+        "fixed",
+        "z-index 9000",
+        "isolation"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "ribbon",
+      "class": "show tone-heal collapsed",
+      "reasons": [
+        "fixed",
+        "z-index 9999"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "hitModal",
+      "class": "hit-modal",
+      "reasons": [
+        "fixed",
+        "z-index 10020"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "identity-copy",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "signature",
+      "reasons": [
+        "z-index 1",
+        "transform"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "z-index 2",
+        "filter"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "cc-turnbar-standard",
+      "class": "",
+      "reasons": [
+        "sticky",
+        "z-index 42"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "cc-turn-cell cc-turn-action passive is-used",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "turnbar",
+      "class": "turnbar",
+      "reasons": [
+        "sticky",
+        "z-index 40"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "ecoAction",
+      "class": "eco used",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "rpg-target-dock",
+      "class": "rpg-target-dock",
+      "reasons": [
+        "z-index 20"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary attack-btn v3-unavailable",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "gwmBonusBtn",
+      "class": "attack-btn bonus-attack v3-unavailable",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "dwarfBtn",
+      "class": "resource-use v3-unavailable",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "breathCard",
+      "class": "breath-resource used",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "breath",
+      "class": "resource-use v3-unavailable",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ability v3-unavailable",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ability green v3-unavailable",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ability v3-unavailable",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "rpg-connect rpg-connected",
+      "reasons": [
+        "fixed",
+        "z-index 110"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "",
+      "class": "rpg-session-banner",
+      "reasons": [
+        "fixed",
+        "z-index 108"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "",
+      "class": "rpg-resolution-toast",
+      "reasons": [
+        "fixed",
+        "z-index 10030"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "rpg-remembered",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "rpg-connect-details",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIALOG",
+      "id": "",
+      "class": "rpg-initiative-request",
+      "reasons": [
+        "fixed",
+        "z-index 10050"
+      ]
+    }
+  ],
+  "Samoth": [
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "signature-icon",
+      "reasons": [
+        "transform",
+        "filter"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "cc-turnbar-standard",
+      "class": "",
+      "reasons": [
+        "sticky",
+        "z-index 42"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "cc-turn-cell cc-turn-action is-used",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "turnbar",
+      "class": "turnbar",
+      "reasons": [
+        "sticky",
+        "z-index 44"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "economy used",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "concButton",
+      "class": "turn-conc used",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "rpg-target-dock",
+      "class": "rpg-target-dock",
+      "reasons": [
+        "z-index 20"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "combatCast",
+      "class": "primary caster-cast",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "meta-chip ",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "dragon-logo",
+      "reasons": [
+        "filter"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ability dragon-summon",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ability",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "eyebrow",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "social-v3-mode",
+      "reasons": [
+        "sticky",
+        "z-index 61"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "result",
+      "class": "journal tone-heal collapsed",
+      "reasons": [
+        "fixed",
+        "z-index 50"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "resultClose",
+      "class": "journal-toggle",
+      "reasons": [
+        "transform"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "samothFx",
+      "class": "samoth-fx vortex",
+      "reasons": [
+        "fixed",
+        "z-index 9999",
+        "isolation",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "rpg-connect rpg-connected",
+      "reasons": [
+        "fixed",
+        "z-index 110"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "",
+      "class": "rpg-session-banner",
+      "reasons": [
+        "fixed",
+        "z-index 108"
+      ]
+    },
+    {
+      "element": "DIALOG",
+      "id": "",
+      "class": "rpg-initiative-request",
+      "reasons": [
+        "fixed",
+        "z-index 10050"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "",
+      "class": "rpg-resolution-toast",
+      "reasons": [
+        "fixed",
+        "z-index 10030"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "rpg-remembered",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "rpg-connect-details",
+      "reasons": [
+        "opacity"
+      ]
+    }
+  ],
+  "Zephyr": [
+    {
+      "element": "DIV",
+      "id": "fxLayer",
+      "class": "fx-layer",
+      "reasons": [
+        "fixed",
+        "z-index 95"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "hitModal",
+      "class": "hit-modal",
+      "reasons": [
+        "fixed",
+        "z-index 120"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "ribbon",
+      "class": "show tone-heal",
+      "reasons": [
+        "fixed",
+        "z-index 81",
+        "transform"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "zephyr-emblem",
+      "reasons": [
+        "transform",
+        "filter"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "",
+      "class": "hud",
+      "reasons": [
+        "z-index 20"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "ecoA",
+      "class": "eco used",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "ecoB",
+      "class": "eco used",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "cc-turnbar-standard",
+      "class": "",
+      "reasons": [
+        "sticky",
+        "z-index 60"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "cc-turn-cell cc-turn-action is-used",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "cc-turn-cell cc-turn-bonus is-used",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "NAV",
+      "id": "",
+      "class": "nav",
+      "reasons": [
+        "sticky",
+        "z-index 52"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "rpg-target-dock",
+      "class": "rpg-target-dock",
+      "reasons": [
+        "z-index 20"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "subtabs",
+      "reasons": [
+        "sticky",
+        "z-index 46"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "binah-sigil",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "binah-kicker",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "binah-name",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "meta",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "subtabs",
+      "reasons": [
+        "sticky",
+        "z-index 46"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "social-modebar sticky-rollmode",
+      "reasons": [
+        "sticky",
+        "z-index 45"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "skill-roll",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "NAV",
+      "id": "",
+      "class": "journal-tabs",
+      "reasons": [
+        "sticky",
+        "z-index 22"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "rpg-connect rpg-connected",
+      "reasons": [
+        "fixed",
+        "z-index 110"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "",
+      "class": "rpg-session-banner",
+      "reasons": [
+        "fixed",
+        "z-index 108"
+      ]
+    },
+    {
+      "element": "DIALOG",
+      "id": "",
+      "class": "rpg-initiative-request",
+      "reasons": [
+        "fixed",
+        "z-index 10050"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "",
+      "class": "rpg-resolution-toast",
+      "reasons": [
+        "fixed",
+        "z-index 10030"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "rpg-remembered",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "rpg-connect-details",
+      "reasons": [
+        "opacity"
+      ]
+    }
+  ],
+  "Rufus": [
+    {
+      "element": "DIV",
+      "id": "fxStage",
+      "class": "fx-stage raven",
+      "reasons": [
+        "fixed",
+        "z-index 70",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "fx-ring",
+      "reasons": [
+        "transform",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "fx-slash",
+      "reasons": [
+        "transform",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "fxLabel",
+      "class": "fx-label",
+      "reasons": [
+        "transform",
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "I",
+      "id": "",
+      "class": "fx-particle",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "signature-icon",
+      "reasons": [
+        "transform",
+        "filter"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "cc-turnbar-standard",
+      "class": "",
+      "reasons": [
+        "sticky",
+        "z-index 42"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "cc-turn-cell cc-turn-action is-used",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "turnbar",
+      "class": "turnbar",
+      "reasons": [
+        "sticky",
+        "z-index 40"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "economy used",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "nextTurn",
+      "class": "next",
+      "reasons": [
+        "filter"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "rpg-target-dock",
+      "class": "rpg-target-dock",
+      "reasons": [
+        "z-index 20"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "subtabs",
+      "reasons": [
+        "sticky",
+        "z-index 33"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "condition-grid soulknife-conditions",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "toggle",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary attack-btn",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ability psi-secondary",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary attack-btn",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary attack-btn",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "primary attack-btn",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "pendingAttack",
+      "class": "pending",
+      "reasons": [
+        "fixed",
+        "z-index 95"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "subtabs",
+      "reasons": [
+        "sticky",
+        "z-index 33"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "psiWhispersBtn",
+      "class": "primary",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ability hex-spell",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ability hex-spell",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ability hex-spell",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ability linceul-use",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ability linceul-use",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "ARTICLE",
+      "id": "",
+      "class": "card linceul-card awakened-only locked",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ability linceul-use",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "ARTICLE",
+      "id": "",
+      "class": "card linceul-card awakened-only locked",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "ability linceul-use",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "ARTICLE",
+      "id": "",
+      "class": "card linceul-card awakened-only locked",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "visionBtn",
+      "class": "primary",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "woundBtn",
+      "class": "primary",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "invisibilityBtn",
+      "class": "primary",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "subtabs social-main-tabs social-surface-tabs",
+      "reasons": [
+        "sticky",
+        "z-index 33"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "subtabs social-main-tabs social-profile-tabs",
+      "reasons": [
+        "sticky",
+        "z-index 33"
+      ]
+    },
+    {
+      "element": "FORM",
+      "id": "itemEditor",
+      "class": "item-editor",
+      "reasons": [
+        "fixed",
+        "z-index 100"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "subtabs",
+      "reasons": [
+        "sticky",
+        "z-index 33"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "resultRibbon",
+      "class": "result-ribbon collapsed tone-heal",
+      "reasons": [
+        "fixed",
+        "z-index 72"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "ribbonToggle",
+      "class": "ribbon-toggle",
+      "reasons": [
+        "transform"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "toast",
+      "class": "toast",
+      "reasons": [
+        "fixed",
+        "z-index 80",
+        "transform",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "rpg-connect rpg-connected",
+      "reasons": [
+        "fixed",
+        "z-index 110"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "",
+      "class": "rpg-session-banner",
+      "reasons": [
+        "fixed",
+        "z-index 108"
+      ]
+    },
+    {
+      "element": "DIALOG",
+      "id": "",
+      "class": "rpg-initiative-request",
+      "reasons": [
+        "fixed",
+        "z-index 10050"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "",
+      "class": "rpg-resolution-toast",
+      "reasons": [
+        "fixed",
+        "z-index 10030"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "rpg-remembered",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "rpg-connect-details",
+      "reasons": [
+        "opacity"
+      ]
+    }
+  ],
+  "Nans": [
+    {
+      "element": "DIV",
+      "id": "fx",
+      "class": "",
+      "reasons": [
+        "fixed",
+        "z-index 9000"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "rageAura",
+      "class": "",
+      "reasons": [
+        "fixed",
+        "z-index 0",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "ribbon",
+      "class": "show tone-heal",
+      "reasons": [
+        "fixed",
+        "z-index 9999",
+        "transform"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "hitModal",
+      "class": "hit-modal",
+      "reasons": [
+        "fixed",
+        "z-index 10020"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "wrap",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "head-copy",
+      "reasons": [
+        "z-index 1"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "nans-mark",
+      "reasons": [
+        "z-index 1",
+        "filter"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "rpg-target-dock",
+      "class": "rpg-target-dock",
+      "reasons": [
+        "z-index 20"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "cc-turnbar-standard",
+      "class": "",
+      "reasons": [
+        "sticky",
+        "z-index 42"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "cc-turn-cell cc-turn-action passive is-used",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "",
+      "class": "cc-turn-state",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SECTION",
+      "id": "turnbar",
+      "class": "turnbar",
+      "reasons": [
+        "sticky",
+        "z-index 60"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "ecoAction",
+      "class": "eco used",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "frenzy-emblem",
+      "reasons": [
+        "transform",
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "volto-meter",
+      "reasons": [
+        "z-index 2"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "chargeOnlyBtn",
+      "class": "charge-action primary-charge",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "chargeAxeBtn",
+      "class": "charge-action charge-switch",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "weapon-switch",
+      "reasons": [
+        "z-index 2"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "mode-icon",
+      "reasons": [
+        "filter"
+      ]
+    },
+    {
+      "element": "IMG",
+      "id": "",
+      "class": "mode-icon",
+      "reasons": [
+        "filter"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "attack-integrated",
+      "reasons": [
+        "sticky"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "attackBtn",
+      "class": "btn-main main-attack",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "attackHint",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "impactBtn",
+      "class": "btn-main impact-attack v3-unavailable",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "SPAN",
+      "id": "impactHint",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "btn-horn btn-main v3-unavailable",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "howlCard",
+      "class": "card feature red awake-only locked",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "howlBtn",
+      "class": "btn-rage btn-main v3-unavailable",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "ancCard",
+      "class": "card feature green awake-only locked",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "ancBtn",
+      "class": "btn-green btn-main v3-unavailable",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "v3-unavailable",
+      "reasons": [
+        "filter",
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "TIME",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "DIV",
+      "id": "",
+      "class": "rpg-connect rpg-connected",
+      "reasons": [
+        "fixed",
+        "z-index 110"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "",
+      "class": "rpg-session-banner",
+      "reasons": [
+        "fixed",
+        "z-index 108"
+      ]
+    },
+    {
+      "element": "DIALOG",
+      "id": "",
+      "class": "rpg-initiative-request",
+      "reasons": [
+        "fixed",
+        "z-index 10050"
+      ]
+    },
+    {
+      "element": "ASIDE",
+      "id": "",
+      "class": "rpg-resolution-toast",
+      "reasons": [
+        "fixed",
+        "z-index 10030"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "SMALL",
+      "id": "",
+      "class": "rpg-remembered",
+      "reasons": [
+        "opacity"
+      ]
+    },
+    {
+      "element": "BUTTON",
+      "id": "",
+      "class": "rpg-connect-details",
+      "reasons": [
+        "opacity"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "protocolVersion": 1,
+  "branch": "audit/recovery-2026-10-04",
+  "repositories": {
+    "Kentaro": {
+      "sha": "089e2423d5718d35d4c52437f58f7c1599b3196c",
+      "tree": "8b91fb48d3a33d68059714dc1e4aa810248f7ea1"
+    },
+    "Brackmard": {
+      "sha": "6ca4d52f7d009473f4a93e44381e5ce0dda0dbb4",
+      "tree": "47f8ee77b13b3db4add777bd18d8b3cbd7786c09"
+    },
+    "Zephyr": {
+      "sha": "0a53015c336ae8396945f81b792d2ca701e647ab",
+      "tree": "06bd551c1df50ecc9dd01567b88ecb5e2a72b184"
+    },
+    "Rufus": {
+      "sha": "8162494dd5e7ed1380da369d124f04293db3c947",
+      "tree": "12c783afa5d10d21827c404f47457cfa49d525da"
+    },
+    "Samoth": {
+      "sha": "3125d037b233b816732be5cd538bdc6a89afca3f",
+      "tree": "887a8318a47c5cf5ff6dd0b2316a2e3f9ccd6aa6"
+    },
+    "Nans": {
+      "sha": "f4847b126d836c71b9b6cad899773a5d7b5115e6",
+      "tree": "44b96a46316c6eb5c8b1518f5c0380b6e0281ba3"
+    },
+    "Encounter": {
+      "sha": "634b988680ee2964a5c98806cd1360f4252a00c7",
+      "tree": "158c8befe16f668d4ab00e164c19ce49f18bfa92"
+    },
+    "RPG-Connect": {
+      "sha": "6104f8bdd6f64df1aa7be597f7166d454a510fe7",
+      "tree": "3a8d45afc538767a05ed7bc55d9bc9a9889135cf"
+    }
+  }
+}

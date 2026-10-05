@@ -1,0 +1,943 @@
+{
+  "checks": [
+    {
+      "name": "both online",
+      "pass": true
+    },
+    {
+      "name": "Kentaro initiative visible and topmost",
+      "pass": true,
+      "detail": {
+        "hidden": false,
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1",
+        "zIndex": "10050",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1180,
+          "height": 820
+        },
+        "topmost": true,
+        "top": "<label>Jet manuel d20 <input data-init-manual=\"\" type=\"number\" min=\"1\" max=\"20\" inputmode=\"numeric\" placeholder=\"optionnel\"></label>"
+      }
+    },
+    {
+      "name": "Brackmard initiative visible and topmost",
+      "pass": true,
+      "detail": {
+        "hidden": false,
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1",
+        "zIndex": "10050",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1180,
+          "height": 820
+        },
+        "topmost": true,
+        "top": "<label>Jet manuel d20 <input data-init-manual=\"\" type=\"number\" min=\"1\" max=\"20\" inputmode=\"numeric\" placeholder=\"optionnel\"></label>"
+      }
+    },
+    {
+      "name": "initiative:rolled → MJ validation → FIGHT",
+      "pass": true
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true,
+      "attackId": "21a69c81-cfb1-4cbb-91c4-78f00272e3c6",
+      "amount": 16
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true,
+      "attackId": "19ce550d-e325-4576-b820-230fc166f0e5",
+      "amount": 20
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true,
+      "attackId": "12429995-8438-48ce-801b-c477db31640a",
+      "amount": 25
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true,
+      "attackId": "c71ca271-78f6-4cc2-8b76-7fbc374872e4",
+      "amount": 21
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true,
+      "attackId": "344e29ca-4d82-4037-81f7-ab1a6e115bf0",
+      "amount": 24
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true,
+      "attackId": "ae7ba90f-7503-45e2-8a72-61e43d42610a",
+      "amount": 28
+    },
+    {
+      "name": "Kentaro #solinar → MJ → correlated damage",
+      "pass": true,
+      "attackId": "kentaro-muue1qro-1k",
+      "amount": 11
+    },
+    {
+      "name": "Kentaro #selhane → MJ → correlated damage",
+      "pass": true,
+      "attackId": "kentaro-muue1rfo-1s",
+      "amount": 21
+    },
+    {
+      "name": "Kentaro native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "kentaro-muue1rfo-1s:blade-save",
+        "requestId": "kentaro-muue1rfo-1s:blade-save",
+        "attackId": "kentaro-muue1rfo-1s",
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Sélhane renforcée",
+        "ability": "SAG",
+        "dc": 15,
+        "dice": [
+          1
+        ],
+        "die": 1,
+        "modifier": 1,
+        "total": 2,
+        "success": false,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 0,
+        "requestedDamage": 0,
+        "effectiveDamage": 0,
+        "components": [
+          {
+            "raw": 0,
+            "requested": 0,
+            "effective": 0,
+            "type": "",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [
+          "Halo lunaire — désavantage contre Kentaro"
+        ],
+        "conditionApplied": "Halo lunaire — désavantage contre Kentaro",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "",
+        "dead": false
+      }
+    },
+    {
+      "name": "Kentaro #thirdSun → MJ → correlated damage",
+      "pass": true,
+      "attackId": "kentaro-muue1td0-27",
+      "amount": 12
+    },
+    {
+      "name": "Kentaro bonus consumed",
+      "pass": true
+    },
+    {
+      "name": "same attackId new eventId applied once",
+      "pass": true,
+      "detail": {
+        "hpBeforeReplay": 784,
+        "hpAfterReplay": 784
+      }
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true,
+      "attackId": "297afbc4-bb94-4b57-a8a5-2aa048ba78dd",
+      "amount": 26
+    },
+    {
+      "name": "Brackmard native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "ad16c96c-51ca-4e88-b7fb-33f7551a8529",
+        "requestId": "ad16c96c-51ca-4e88-b7fb-33f7551a8529",
+        "attackId": "297afbc4-bb94-4b57-a8a5-2aa048ba78dd",
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Croc-en-jambe",
+        "ability": "FOR",
+        "dc": 17,
+        "dice": [
+          1
+        ],
+        "die": 1,
+        "modifier": 3,
+        "total": 4,
+        "success": false,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 0,
+        "requestedDamage": 0,
+        "effectiveDamage": 0,
+        "components": [
+          {
+            "raw": 0,
+            "requested": 0,
+            "effective": 0,
+            "type": "",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [
+          "À terre"
+        ],
+        "conditionApplied": "À terre",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "",
+        "dead": false
+      }
+    },
+    {
+      "name": "Brackmard native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "61a0c7f5-9173-4f48-b553-fd43d0f1cac7",
+        "requestId": "61a0c7f5-9173-4f48-b553-fd43d0f1cac7",
+        "attackId": null,
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Souffle de la forge",
+        "ability": "DEX",
+        "dc": 16,
+        "dice": [
+          20
+        ],
+        "die": 20,
+        "modifier": 4,
+        "total": 24,
+        "success": true,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 20,
+        "requestedDamage": 10,
+        "effectiveDamage": 10,
+        "components": [
+          {
+            "raw": 20,
+            "requested": 10,
+            "effective": 10,
+            "type": "feu",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [],
+        "conditionApplied": "",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "",
+        "dead": false
+      }
+    },
+    {
+      "name": "Kentaro native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "14a4143f-08ce-47c8-8833-cd0f2cdd7ae8",
+        "requestId": "14a4143f-08ce-47c8-8833-cd0f2cdd7ae8",
+        "attackId": null,
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Perturbations synaptiques",
+        "ability": "INT",
+        "dc": 16,
+        "dice": [
+          1
+        ],
+        "die": 1,
+        "modifier": 2,
+        "total": 3,
+        "success": false,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 33,
+        "requestedDamage": 33,
+        "effectiveDamage": 33,
+        "components": [
+          {
+            "raw": 33,
+            "requested": 33,
+            "effective": 33,
+            "type": "psychiques",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [
+          "Perturbations synaptiques"
+        ],
+        "conditionApplied": "Perturbations synaptiques",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "−1d6 aux jets d’attaque, tests de caractéristiques et JdS de concentration pendant 1 min",
+        "dead": false
+      }
+    },
+    {
+      "name": "Samoth native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "f6df893b-eab6-4bbc-9cfa-7dd5b83cb184",
+        "requestId": "f6df893b-eab6-4bbc-9cfa-7dd5b83cb184",
+        "attackId": null,
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Vortex de glace",
+        "ability": "DEX",
+        "dc": 18,
+        "dice": [
+          20
+        ],
+        "die": 20,
+        "modifier": 4,
+        "total": 24,
+        "success": true,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 33,
+        "requestedDamage": 16,
+        "effectiveDamage": 16,
+        "components": [
+          {
+            "raw": 33,
+            "requested": 16,
+            "effective": 16,
+            "type": "froid",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [],
+        "conditionApplied": "",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "",
+        "dead": false
+      }
+    },
+    {
+      "name": "Zephyr native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "f2337853-d0c3-4689-9a9f-53b3d0c2ae61",
+        "requestId": "f2337853-d0c3-4689-9a9f-53b3d0c2ae61",
+        "attackId": null,
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Présence conquérante",
+        "ability": "SAG",
+        "dc": 16,
+        "dice": [
+          1
+        ],
+        "die": 1,
+        "modifier": 1,
+        "total": 2,
+        "success": false,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 0,
+        "requestedDamage": 0,
+        "effectiveDamage": 0,
+        "components": [
+          {
+            "raw": 0,
+            "requested": 0,
+            "effective": 0,
+            "type": "",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [
+          "Effrayé"
+        ],
+        "conditionApplied": "Effrayé",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "",
+        "dead": false
+      }
+    },
+    {
+      "name": "Rufus native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "1a7953f8-56f9-4c2d-9344-1fc2220ef442",
+        "requestId": "1a7953f8-56f9-4c2d-9344-1fc2220ef442",
+        "attackId": null,
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Motif hypnotique",
+        "ability": "SAG",
+        "dc": 15,
+        "dice": [
+          1
+        ],
+        "die": 1,
+        "modifier": 1,
+        "total": 2,
+        "success": false,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 0,
+        "requestedDamage": 0,
+        "effectiveDamage": 0,
+        "components": [
+          {
+            "raw": 0,
+            "requested": 0,
+            "effective": 0,
+            "type": "",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [
+          "Charmé",
+          "Incapacité",
+          "Vitesse 0"
+        ],
+        "conditionApplied": "Charmé + Incapacité + Vitesse 0",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "L’effet cesse si la cible subit des dégâts ou si une créature utilise une action pour la secouer.",
+        "dead": false
+      }
+    },
+    {
+      "name": "Rufus object concentration normalized to actual spell name",
+      "pass": true
+    },
+    {
+      "name": "Nans native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "498d20c7-13cb-46da-a552-d0d3c9d6d081",
+        "requestId": "498d20c7-13cb-46da-a552-d0d3c9d6d081",
+        "attackId": null,
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Fracas de guerre",
+        "ability": "CON",
+        "dc": 12,
+        "dice": [
+          1
+        ],
+        "die": 1,
+        "modifier": 5,
+        "total": 6,
+        "success": false,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 12,
+        "requestedDamage": 12,
+        "effectiveDamage": 12,
+        "components": [
+          {
+            "raw": 12,
+            "requested": 12,
+            "effective": 12,
+            "type": "tonnerre",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [],
+        "conditionApplied": "",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "Repoussée de 3 m",
+        "dead": false
+      }
+    },
+    {
+      "name": "Zephyr native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "0d9e3c71-cdcb-4fa9-9b77-c5f60830c43c",
+        "requestId": "0d9e3c71-cdcb-4fa9-9b77-c5f60830c43c",
+        "attackId": null,
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Peur",
+        "ability": "SAG",
+        "dc": 16,
+        "dice": [
+          1
+        ],
+        "die": 1,
+        "modifier": 1,
+        "total": 2,
+        "success": false,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 0,
+        "requestedDamage": 0,
+        "effectiveDamage": 0,
+        "components": [
+          {
+            "raw": 0,
+            "requested": 0,
+            "effective": 0,
+            "type": "",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [
+          "Effrayé"
+        ],
+        "conditionApplied": "Effrayé",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "",
+        "dead": false
+      }
+    },
+    {
+      "name": "Zephyr native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "16e7be25-fe88-4e01-b775-64183ebe7013",
+        "requestId": "16e7be25-fe88-4e01-b775-64183ebe7013",
+        "attackId": "zephyr-muue2ahv-18",
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Châtiment tonitruant",
+        "ability": "FOR",
+        "dc": 16,
+        "dice": [
+          1
+        ],
+        "die": 1,
+        "modifier": 3,
+        "total": 4,
+        "success": false,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 0,
+        "requestedDamage": 0,
+        "effectiveDamage": 0,
+        "components": [
+          {
+            "raw": 0,
+            "requested": 0,
+            "effective": 0,
+            "type": "",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [
+          "À terre"
+        ],
+        "conditionApplied": "À terre",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "Repoussée de 3 m",
+        "dead": false
+      }
+    },
+    {
+      "name": "Zephyr native smite save keeps attackId",
+      "pass": true
+    },
+    {
+      "name": "Nans native save → MJ manual → full resolution",
+      "pass": true,
+      "detail": {
+        "saveId": "67df0cae-88df-43fe-bccb-0e7672970811",
+        "requestId": "67df0cae-88df-43fe-bccb-0e7672970811",
+        "attackId": null,
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Présence intimidante",
+        "ability": "SAG",
+        "dc": 12,
+        "dice": [
+          1
+        ],
+        "die": 1,
+        "modifier": 1,
+        "total": 2,
+        "success": false,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "manual",
+        "rawDamage": 0,
+        "requestedDamage": 0,
+        "effectiveDamage": 0,
+        "components": [
+          {
+            "raw": 0,
+            "requested": 0,
+            "effective": 0,
+            "type": "",
+            "reason": ""
+          }
+        ],
+        "conditionsApplied": [
+          "Effrayé"
+        ],
+        "conditionApplied": "Effrayé",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "",
+        "dead": false
+      }
+    },
+    {
+      "name": "automatic JdS composite R/I/V absorbs temp HP first",
+      "pass": true,
+      "detail": {
+        "saveId": "6acca3f9-e26b-411d-8ae1-50b8d2b5a5ca",
+        "requestId": "6acca3f9-e26b-411d-8ae1-50b8d2b5a5ca",
+        "attackId": null,
+        "actionId": null,
+        "targetId": "e2e-target",
+        "targetName": "Cible E2E",
+        "source": "Composite E2E",
+        "ability": "DEX",
+        "dc": 18,
+        "dice": [
+          1
+        ],
+        "die": 1,
+        "modifier": 4,
+        "total": 5,
+        "success": false,
+        "mode": "normal",
+        "automaticFailure": false,
+        "rollSource": "auto",
+        "rawDamage": 26,
+        "requestedDamage": 26,
+        "effectiveDamage": 18,
+        "components": [
+          {
+            "raw": 12,
+            "requested": 12,
+            "effective": 6,
+            "type": "froid",
+            "reason": "résistance"
+          },
+          {
+            "raw": 8,
+            "requested": 8,
+            "effective": 0,
+            "type": "feu",
+            "reason": "immunité"
+          },
+          {
+            "raw": 6,
+            "requested": 6,
+            "effective": 12,
+            "type": "radiants",
+            "reason": "vulnérabilité"
+          }
+        ],
+        "conditionsApplied": [],
+        "conditionApplied": "",
+        "conditionImmune": false,
+        "conditionImmuneNames": [],
+        "failureEffect": "",
+        "dead": false
+      }
+    },
+    {
+      "name": "two conditions visible in Encounter quick view",
+      "pass": true,
+      "detail": [
+        {
+          "text": "Aveuglé",
+          "width": 62.953125,
+          "height": 21
+        },
+        {
+          "text": "Empoisonné",
+          "width": 80.171875,
+          "height": 21
+        }
+      ]
+    },
+    {
+      "name": "stale Companion state cannot restore old HP",
+      "pass": true
+    },
+    {
+      "name": "stale condition command cannot restore removed state",
+      "pass": true
+    },
+    {
+      "name": "POINTS DE VIE temp HP UI",
+      "pass": true
+    },
+    {
+      "name": "local concentration reaches Encounter",
+      "pass": true
+    },
+    {
+      "name": "local concentration removal reaches Encounter",
+      "pass": true
+    },
+    {
+      "name": "Kentaro semantic damage/heal ribbons",
+      "pass": true,
+      "detail": {
+        "red": true,
+        "green": true
+      }
+    },
+    {
+      "name": "Kentaro short rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Kentaro cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Kentaro long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Kentaro cancelled long rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Brackmard semantic damage/heal ribbons",
+      "pass": true,
+      "detail": {
+        "red": true,
+        "green": true
+      }
+    },
+    {
+      "name": "Brackmard short rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Brackmard cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Brackmard long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Brackmard cancelled long rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Samoth semantic damage/heal ribbons",
+      "pass": true,
+      "detail": {
+        "red": true,
+        "green": true
+      }
+    },
+    {
+      "name": "Samoth short rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Samoth cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Samoth long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Samoth cancelled long rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Zephyr semantic damage/heal ribbons",
+      "pass": true,
+      "detail": {
+        "red": true,
+        "green": true
+      }
+    },
+    {
+      "name": "Zephyr short rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Zephyr cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Zephyr long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Zephyr cancelled long rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Rufus semantic damage/heal ribbons",
+      "pass": true,
+      "detail": {
+        "red": true,
+        "green": true
+      }
+    },
+    {
+      "name": "Rufus short rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Rufus cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Rufus long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Rufus cancelled long rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Nans semantic damage/heal ribbons",
+      "pass": true,
+      "detail": {
+        "red": true,
+        "green": true
+      }
+    },
+    {
+      "name": "Nans short rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Nans cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Nans long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Nans cancelled long rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Kentaro header 390px fits viewport",
+      "pass": true,
+      "detail": {
+        "width": 374,
+        "right": 382,
+        "font": "26.4px"
+      }
+    },
+    {
+      "name": "Kentaro header 768px fits viewport",
+      "pass": true,
+      "detail": {
+        "width": 732,
+        "right": 750,
+        "font": "36.864px"
+      }
+    },
+    {
+      "name": "Kentaro single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Brackmard single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Samoth single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Zephyr single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Rufus single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Nans single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "incompatible application gets explicit persistent UI message",
+      "pass": true
+    },
+    {
+      "name": "Kentaro initiative survives secondary faults and maximum-z HUD",
+      "pass": true,
+      "detail": {
+        "hidden": false,
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1",
+        "zIndex": "10050",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1180,
+          "height": 820
+        },
+        "topmost": true,
+        "top": "<label>Jet manuel d20 <input data-init-manual=\"\" type=\"number\" min=\"1\" max=\"20\" inputmode=\"numeric\" placeholder=\"optionnel\" style=\"\"></label>"
+      }
+    },
+    {
+      "name": "Brackmard initiative survives secondary faults and maximum-z HUD",
+      "pass": true,
+      "detail": {
+        "hidden": false,
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1",
+        "zIndex": "10050",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1180,
+          "height": 820
+        },
+        "topmost": true,
+        "top": "<label>Jet manuel d20 <input data-init-manual=\"\" type=\"number\" min=\"1\" max=\"20\" inputmode=\"numeric\" placeholder=\"optionnel\" style=\"\"></label>"
+      }
+    }
+  ],
+  "errors": []
+}

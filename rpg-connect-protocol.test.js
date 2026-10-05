@@ -6,7 +6,7 @@ const {server,wss}=await import('./rpg-connect-server.js');
 await new Promise(resolve=>server.listening?resolve():server.once('listening',resolve));
 const url=`ws://127.0.0.1:${server.address().port}`;
 const open=()=>new Promise((resolve,reject)=>{let ws=new WebSocket(url);ws.once('open',()=>resolve(ws));ws.once('error',reject)});
-const send=(ws,message)=>ws.send(JSON.stringify({v:1,...message}));
+const send=(ws,message)=>ws.send(JSON.stringify({v:1,protocolVersion:1,clientCapabilities:['event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions'],...message}));
 const wait=(ws,type)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>{ws.off('message',receive);reject(Error('timeout '+type))},1500);function receive(raw){const value=JSON.parse(String(raw));if(value.type!==type)return;clearTimeout(timer);ws.off('message',receive);resolve(value)}ws.on('message',receive)});
 
 test('salle, invitation, événement, déduplication, commande MJ et ack',async()=>{
@@ -45,3 +45,15 @@ test('contrat MJ étendu : toutes les commandes Encounter autorisées traversent
 });
 
 test.after(async()=>{for(const client of wss.clients)client.terminate();await new Promise(resolve=>server.close(resolve))});
+
+test('protocole et capacités incompatibles : refus explicite',async()=>{
+ for(const extra of [{protocolVersion:2},{protocolVersion:1,requiredCapabilities:['unknown-capability']}]){
+  const client=await open(),failure=wait(client,'error');send(client,{type:'hello',role:'gm',key:process.env.RPG_CONNECT_GM_KEY,...extra});const error=await failure;assert.equal(error.code,'PROTOCOL_INCOMPATIBLE');assert.match(error.message,/incompatible/);client.terminate();
+ }
+ const response=await fetch(url.replace('ws:','http:')+'/health'),health=await response.json();assert.equal(health.protocolVersion,1);assert.ok(health.capabilities.includes('authoritative-save-v1'));
+});
+
+test('événement joueur retenu tant que le MJ est déconnecté et acquittement final',async()=>{
+ let gm=await open();let welcome=wait(gm,'welcome');send(gm,{type:'hello',role:'gm',key:process.env.RPG_CONNECT_GM_KEY});const room=(await welcome).room;let invitation=wait(gm,'invite');send(gm,{type:'invite',characterId:'kentaro'});const token=(await invitation).payload.token;const player=await open();welcome=wait(player,'welcome');send(player,{type:'hello',role:'player',room,characterId:'kentaro',token});await welcome;gm.close();await new Promise(r=>gm.once('close',r));const ack=wait(player,'ack');send(player,{type:'event',event:{id:'offline-mj-event',type:'journal:event',characterId:'kentaro',payload:{text:'offline'}}});await ack;
+ gm=await open();const replay=wait(gm,'event');send(gm,{type:'hello',role:'gm',room,key:process.env.RPG_CONNECT_GM_KEY});assert.equal((await replay).event.id,'offline-mj-event');send(gm,{type:'event-ack',id:'offline-mj-event'});await new Promise(r=>setTimeout(r,20));const {rooms}=await import('./rpg-connect-server.js');assert.equal(rooms.get(room).pendingEvents.size,0);gm.terminate();player.terminate();
+});

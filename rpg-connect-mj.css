@@ -164,3 +164,6 @@
   #rpgCockpitOpen{height:30px;min-height:30px}
   body.combat-mode:has(#rpgMjCockpit.has-events){--rpg-live-height:46px}
 }
+
+/* Saving throw decisions share Encounter typography in the native top layer. */
+dialog.rpg-save-popup{position:fixed;inset:0;margin:auto;width:min(560px,calc(100vw - 24px));max-height:90dvh;overflow:auto;border:0;padding:0;background:transparent;color:#eef8ff}dialog.rpg-save-popup::backdrop{background:#02070dc9}dialog.rpg-save-popup[hidden]{display:none}dialog.rpg-save-popup input{display:block;width:100%;box-sizing:border-box;min-height:42px;background:#101923;color:#fff;border:1px solid #627482;border-radius:8px;margin:5px 0 10px;padding:7px}

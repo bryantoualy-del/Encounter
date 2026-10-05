@@ -3,7 +3,7 @@
 for(const id of ['btnEncounterManager','btnLibraryDrawer','btnJournalDrawer','btnCombatLock']){
   const button=document.getElementById(id);document.getElementById('moreMenu').prepend(button);
 }
-document.getElementById('btnModePrep').textContent='Préparer';
+document.getElementById('btnModePrep').textContent='Préparation';
 document.getElementById('btnModeCombat').textContent='Combat';
 document.getElementById('btnMore').setAttribute('aria-label','Rencontres, bibliothèque et outils');
 document.getElementById('btnUndo').setAttribute('aria-label','Annuler la dernière modification');
@@ -15,11 +15,11 @@ function tableRow(p,active){
  const lair=isLair(p),selected=p.id===selectedParticipant()?.id,chosen=ui.multiSelection.has(p.id),phase=currentPhase(p);
  const select=ui.multiMode&&!lair?`data-multi="${esc(p.id)}"`:`data-select="${esc(p.id)}"`;
  const economy=[['A',p.actionUsed],['B',p.bonusActionUsed],['R',p.reactionUsed]].map(([label,spent])=>`<span class="table-eco ${spent?'spent':''}" title="${label==='A'?'Action':label==='B'?'Action bonus':'Réaction'} ${spent?'utilisée':'disponible'}">${label}</span>`).join('');
- return `<article class="table-row combat-card ${targetClassFor(p)} ${flashClassFor(p)} ${p.id===active?.id?'active':''} ${selected?'selected':''} ${chosen?'multi-selected':''} ${p.hp<=0&&!lair?'down':''}" data-row-id="${esc(p.id)}">
+ return `<article class="table-row combat-card ${roleClass(p)} ${targetClassFor(p)} ${flashClassFor(p)} ${p.id===active?.id?'active':''} ${selected?'selected':''} ${chosen?'multi-selected':''} ${p.hp<=0&&!lair?'down':''}" data-row-id="${esc(p.id)}">
  <button class="row-select" ${select} aria-label="${ui.multiMode?'Cibler':'Sélectionner'} ${esc(p.name)}" aria-pressed="${ui.multiMode?chosen:selected}"></button>
  <span class="table-init">${ui.multiMode&&!lair?(chosen?'☑':'☐'):p.initiative}</span>
  <div class="table-name"><strong>${esc(p.name)}</strong><div class="table-meta"><span class="table-role ${p.kind}">${lair?'REPAIRE':roleLabel(p)}</span>${p.id===active?.id?'<span class="playing-tag">À JOUER</span>':''}${!lair?economy:''}</div>
- ${(p.conditions.length||phase||p.hp<=0&&!lair)?`<div class="table-conditions">${p.hp<=0&&!lair?'<span class="table-condition zero">À 0 PV</span>':''}${phase?`<span class="table-condition">${esc(phase.name)}</span>`:''}${p.conditions.map(c=>`<span class="table-condition" title="${esc(conditionDurationLabel(c))}">${esc(c.name)}${conditionShort(c)}</span>`).join('')}</div>`:''}</div>
+ ${(p.conditions.length||phase||p.hp<=0&&!lair)?`<div class="table-conditions">${p.hp<=0&&!lair?'<span class="table-condition zero">À 0 PV</span>':''}${phase?`<span class="table-condition">${esc(phase.name)}</span>`:''}${p.conditions.map(c=>`<span class="table-condition" title="${esc(conditionDurationLabel(c))}">${window.RPGConnectIcons?.condition?.(c.name)?`<img class="condition-icon" src="${window.RPGConnectIcons.condition(c.name)}" alt="">`:""}${esc(c.name)}${conditionShort(c)}</span>`).join('')}</div>`:''}</div>
  <div class="table-hp ${hpClass(p)}">${lair?'<small>Action<br>de repaire</small>':`<div><b>${p.hp}</b><small> / ${p.maxHp}</small></div>${p.tempHp?`<em>+${p.tempHp} temp.</em>`:''}<div class="table-health"><i style="width:${hpPct(p)}%"></i></div>`}</div>
  <div class="table-ac">${lair?'—':effectiveAc(p)}</div>
  <button class="row-sheet" data-table-sheet="${esc(p.id)}" aria-label="Ouvrir la fiche de ${esc(p.name)}">↗</button></article>`;
@@ -93,3 +93,5 @@ addEventListener('click',e=>{if(!e.target.closest('#moreMenu,#btnMore'))$('#more
 // Measure actual occupied space, including safe-area insets and text wrapping.
 if('ResizeObserver' in window){const obs=new ResizeObserver(()=>{for(const [selector,variable] of [['.topbar','--top-height'],['.roundbar','--round-height'],['#quickBar','--dock-height'],['#targetingBanner','--target-height']]){const el=$(selector);document.documentElement.style.setProperty(variable,el.getBoundingClientRect().height+'px');}});['.topbar','.roundbar','#quickBar','#targetingBanner'].forEach(s=>obs.observe($(s)));}
 render();
+
+window.RPGConnectIcons?.ready?.then(()=>renderCombat());

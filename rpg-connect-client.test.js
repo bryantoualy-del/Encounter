@@ -9,7 +9,7 @@ await new Promise(resolve=>server.listening?resolve():server.once('listening',re
 const url=`ws://127.0.0.1:${server.address().port}`;
 const open=()=>new Promise((resolve,reject)=>{let ws=new WebSocket(url);ws.once('open',()=>resolve(ws));ws.once('error',reject)});
 const wait=(ws,type)=>new Promise((resolve,reject)=>{let timeout=setTimeout(()=>reject(Error('timeout '+type)),2000);const fn=data=>{let value=JSON.parse(String(data));if(value.type!==type)return;clearTimeout(timeout);ws.off('message',fn);resolve(value)};ws.on('message',fn)});
-const send=(ws,m)=>ws.send(JSON.stringify({v:1,...m}));
+const send=(ws,m)=>ws.send(JSON.stringify({v:1,protocolVersion:1,clientCapabilities:['event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions'],...m}));
 const until=(fn)=>new Promise((resolve,reject)=>{let start=Date.now();const check=()=>{if(fn())return resolve();if(Date.now()-start>2000)return reject(Error('condition timeout'));setTimeout(check,10)};check()});
 
 test('client compagnon : état, attaque, décision MJ, dégâts, reconnexion',async()=>{
