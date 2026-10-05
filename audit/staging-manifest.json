@@ -3,27 +3,27 @@
   "branch": "feature/multi-target-2026-10-05",
   "repositories": {
     "Kentaro": {
-      "sha": "2b2b0cd8c287b490756d7069435c4064860573f6",
+      "sha": "9169773df6a7a906e271a3d036ca07695fa7eea3",
       "tree": "d4618c2a20acb4180e2897d9b14afa4e912f1d42"
     },
     "Brackmard": {
-      "sha": "2b0b2377838984a2f2cc765af3778b34e45be84f",
+      "sha": "cf7499cdb5ef28ee9fc5e944cf2b124eb41d9c5c",
       "tree": "210b3be6e1479cc0235e69effe55fcabe6725116"
     },
     "Zephyr": {
-      "sha": "1aeddc9fed2cb84b48bea8f9f0b8f540e83e867a",
+      "sha": "e9874128c1558f5941372e5c2cf66033eda13d14",
       "tree": "14553b78f261d969d9ec9769fa55bf6fd7573a8b"
     },
     "Rufus": {
-      "sha": "a0fc525a3256c89776d1a8ec575bdc62f1f5d3af",
+      "sha": "5df70ccb10dbb517b54c8371aa6872b3cacff89c",
       "tree": "4faa1de948c3f0718a661c286b22fafab673cb17"
     },
     "Samoth": {
-      "sha": "d7e0ebc71eacd594dc0f6f8b807ede230754cc1a",
+      "sha": "186e3497ca1a9eeeb566834863d51daf575a82ea",
       "tree": "b849d7cc9aa47faaf518fcdf1ec2780c03212c76"
     },
     "Nans": {
-      "sha": "1c3cf474edc8b0faf4b2630d31b2f7f308bc817a",
+      "sha": "39356ca27e337d269a3f2cebceafcc9b5485bb68",
       "tree": "dd24c16f63e7482c4926fb95180dcde1aaea236b"
     },
     "Encounter": {
