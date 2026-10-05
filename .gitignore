@@ -1,2 +1,5 @@
 node_modules
 audit/results/
+
+# Generated browser evidence stays outside the runtime release.
+audit/*/

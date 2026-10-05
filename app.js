@@ -159,7 +159,7 @@ function loadState(){
     s.monsters=s.monsters.map(m=>mergeBuiltinEnhancements(m,builtinMap.get(m.id)));
     const known=new Set(s.monsters.map(m=>m.id));
     SAMPLE_MONSTERS.map(normalizeMonster).forEach(m=>{if(!known.has(m.id))s.monsters.push(m);});
-    s.encounter=Object.assign(blankState().encounter,s.encounter||{});s.encounter.participants=(s.encounter.participants||[]).map(normalizeParticipant);pruneLegacyAutoCCPlayers(s.encounter);s.encounter.log=s.encounter.log||[];s.encounter.turnNotices=s.encounter.turnNotices||[];
+    s.encounter=Object.assign(blankState().encounter,s.encounter||{});s.encounter.participants=(s.encounter.participants||[]).map(normalizeParticipant);let activeRpgFight=false;try{activeRpgFight=['preparation','fight'].includes(JSON.parse(localStorage.getItem('rpg-connect:fight:v1')||'{}').phase)}catch{}if(!activeRpgFight)pruneLegacyAutoCCPlayers(s.encounter);s.encounter.log=s.encounter.log||[];s.encounter.turnNotices=s.encounter.turnNotices||[];
     return s;
   }catch(err){console.warn(err);return blankState();}
 }
