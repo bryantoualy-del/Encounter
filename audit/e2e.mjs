@@ -98,10 +98,10 @@ checks.push({name:'per-target defenses and save scaling applied',pass:elemental?
 checks.push({name:'multi action consumes one action economy only',pass:await sam.evaluate(()=>CompanionAPI.getState().turn.action===false)});
 const outboundMulti=frames.slice(beforeFrames).find(f=>f.page==='Samoth'&&f.direction==='sent'&&f.data.event?.type==='save:request')?.data.event;
 checks.push({name:'Companion emitted one multi save intention',pass:!!outboundMulti&&outboundMulti.payload.targets.length===3&&!!outboundMulti.payload.actionId,detail:outboundMulti?.payload});
-const hpBeforeReplay=await gm.evaluate(()=>Object.fromEntries(['mt-wolf','mt-goblin','mt-elemental'].map(id=>[id,state.encounter.participants.find(x=>x.id===id)?.hp??0])));
+const multiHpBeforeReplay=await gm.evaluate(()=>Object.fromEntries(['mt-wolf','mt-goblin','mt-elemental'].map(id=>[id,state.encounter.participants.find(x=>x.id===id)?.hp??0])));
 await sam.evaluate(payload=>CompanionAPI.emitLocal('save:request',payload,'multi-replay-new-event-id'),outboundMulti.payload);await gm.waitForTimeout(250);
-const hpAfterReplay=await gm.evaluate(()=>Object.fromEntries(['mt-wolf','mt-goblin','mt-elemental'].map(id=>[id,state.encounter.participants.find(x=>x.id===id)?.hp??0])));
-checks.push({name:'same action/save IDs with a new eventId are deduplicated',pass:JSON.stringify(hpBeforeReplay)===JSON.stringify(hpAfterReplay),detail:{hpBeforeReplay,hpAfterReplay}});
+const multiHpAfterReplay=await gm.evaluate(()=>Object.fromEntries(['mt-wolf','mt-goblin','mt-elemental'].map(id=>[id,state.encounter.participants.find(x=>x.id===id)?.hp??0])));
+checks.push({name:'same action/save IDs with a new eventId are deduplicated',pass:JSON.stringify(multiHpBeforeReplay)===JSON.stringify(multiHpAfterReplay),detail:{hpBeforeReplay:multiHpBeforeReplay,hpAfterReplay:multiHpAfterReplay}});
 await sam.evaluate(()=>CompanionAPI.undo());await gm.waitForFunction(before=>['mt-wolf','mt-goblin','mt-elemental'].every(id=>{const p=state.encounter.participants.find(x=>x.id===id),b=before[id];return p&&p.hp===b.hp&&(p.tempHp||0)===b.tempHp&&JSON.stringify(p.conditions||[])===b.conditions}),beforeMulti,{timeout:5000});
 checks.push({name:'atomic undo restores every target in the logical action',pass:true});
 await gm.evaluate(()=>actualAdvanceTurn());checks.push({name:'turn can advance after a multi-target kill',pass:true});
