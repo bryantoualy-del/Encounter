@@ -70,6 +70,16 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  await new Promise(resolve=>setTimeout(resolve,40));
  assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp"),24);
 
+ // Multi-target save: one action, independent target results, then atomic network undo.
+ dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').conditions=[];state.encounter.participants.find(p=>p.id==='e2').conditions=[];state.encounter.participants.find(p=>p.id==='e1').hp=20;state.encounter.participants.find(p=>p.id==='e2').hp=20");
+ const beforeMulti=dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>({id:p.id,hp:p.hp,tempHp:p.tempHp,conditions:JSON.stringify(p.conditions)}))");
+ send(player,{type:'event',event:{id:'multi-save-event',type:'save:request',characterId:'samoth',combatId:dom.window.RPGConnectMJ.getStatus().fight.requestId,timestamp:new Date().toISOString(),payload:{saveId:'multi-save',actionId:'multi-action',targetMode:'multi',targets:[{targetId:'e1'},{targetId:'e2'}],ability:'DEX',dc:15,source:'Vortex multi test',damageRollMode:'shared',components:[{amount:8,type:'froid'}],halfOnSuccess:true,condition:{name:'Entravé'}}}});
+ await until(()=>dom.window.document.querySelector('#rpgSavePopup')?.open);let multiResult=waitCommand(player,'save:result');dom.window.document.querySelector('[data-save-die]').value='1';dom.window.document.querySelector('[data-save-manual]').click();const mr1=await multiResult;send(player,{type:'command-ack',id:mr1.id,result:'applied'});
+ await until(()=>dom.window.document.querySelector('#rpgSavePopup')?.open);multiResult=waitCommand(player,'save:result');dom.window.document.querySelector('[data-save-die]').value='20';dom.window.document.querySelector('[data-save-manual]').click();const mr2=await multiResult;send(player,{type:'command-ack',id:mr2.id,result:'applied'});
+ assert.equal(mr1.payload.actionId,'multi-action');assert.equal(mr2.payload.actionId,'multi-action');assert.notEqual(mr1.payload.targetId,mr2.payload.targetId);assert.equal(mr1.payload.rawDamage,8);assert.equal(mr2.payload.rawDamage,8);assert.equal(mr1.payload.success,false);assert.equal(mr2.payload.success,true);
+ const afterMulti=dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>p.hp)");assert.ok(afterMulti.some((hp,i)=>hp<beforeMulti[i].hp));
+ const undoAck=waitCommand(player,'message:gm');send(player,{type:'event',event:{id:'multi-undo-event',type:'action:undo-request',characterId:'samoth',combatId:dom.window.RPGConnectMJ.getStatus().fight.requestId,payload:{actionId:'multi-action'}}});const undoMsg=await undoAck;assert.match(undoMsg.payload.text,/restauré/);
+ const restored=dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>({id:p.id,hp:p.hp,tempHp:p.tempHp,conditions:JSON.stringify(p.conditions)}))");assert.deepEqual(restored,beforeMulti);
  dom.window.RPGConnectMJ.getStatus();
  }finally{
   try{dom.window.document.querySelector('#rpgMjDisconnect')?.click()}catch{}
