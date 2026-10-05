@@ -22,10 +22,10 @@ jobs:
           cache: npm
       - name: Install
         run: npm ci
-      - name: Protocol and MJ tests
-        run: npm test
       - name: Checkout Companion repos
         run: npm run audit:checkout
+      - name: Protocol, MJ and multi-target tests
+        run: npm test
       - name: Companion bridge tests
         run: npm run test:companions
       - name: Creature icon tests
