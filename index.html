@@ -270,7 +270,7 @@
         <label>PV actuels<input name="hp" type="number" min="0" required inputmode="numeric"></label>
         <label>PV maximum<input name="maxHp" type="number" min="1" required inputmode="numeric"></label>
         <label>PV temporaires<input name="tempHp" type="number" min="0" inputmode="numeric"></label>
-        <label>Initiative<input name="initiative" type="number" inputmode="numeric"></label>
+        <label>Statut vital<select name="lifeStatus"><option value="alive">Vivant</option><option value="unconscious">Inconscient (0 PV)</option><option value="dead">Mort (0 PV)</option></select></label><label>Mort depuis (secondes, optionnel)<input name="deathAge" type="number" min="0" inputmode="numeric"></label><label>Initiative<input name="initiative" type="number" inputmode="numeric"></label>
         <label>Vitesse personnalisée<input name="speedOverride" placeholder="ex. 12 m"></label>
       </div>
       <label class="boss-instance-check"><input type="checkbox" name="bossOverride"> Considérer cette instance comme BOSS</label>
@@ -288,12 +288,12 @@
   <script src="builtins.js"></script>
   <script src="rpg-target-names.js?v=1"></script>
   <script src="rpg-condition-rolls.js?v=2"></script>
-  <script src="app.js?v=14"></script>
+  <script src="app.js?v=15"></script>
   <script src="table.js?v=2"></script>
   <script src="rpg-connect-icon-registry.js?v=5"></script>
   <script src="rpg-save-authority.js?v=5"></script>
-  <script src="rpg-health-authority.js?v=1"></script>
-<script src="rpg-connect-mj.js?v=62"></script>
+  <script src="rpg-health-authority.js?v=2"></script>
+<script src="rpg-connect-mj.js?v=63"></script>
   <script src="creature-icons.js"></script>
   <script>if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js?v=51',{updateViaCache:'none'}).catch(console.warn));}</script>
 </body>

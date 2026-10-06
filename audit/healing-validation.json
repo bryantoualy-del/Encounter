@@ -1,137 +1,28 @@
 {
-  "scope": "HEAL staging only; full requested mission incomplete",
-  "unit_tests": {
-    "main": 66,
-    "companions": 7,
-    "icons": 4
+  "date": "2026-10-06",
+  "branch": "feature/healing-authority-20261006",
+  "scope": [
+    "HEAL",
+    "TEMP_HP",
+    "HP_MAX_CHANGE",
+    "REVIVE"
+  ],
+  "unit": {
+    "passed": 86,
+    "failed": 0
   },
-  "browser": {
-    "heal_scenarios": {
-      "checks": [
-        {
-          "name": "combat 1 distinct library enemies",
-          "pass": true,
-          "detail": [
-            {
-              "id": "srd-loup-sanguinaire",
-              "name": "Loup sanguinaire"
-            },
-            {
-              "id": "srd-gobelin",
-              "name": "Gobelin"
-            }
-          ]
-        },
-        {
-          "name": "combat 1 all six initiatives and fight",
-          "pass": true
-        },
-        {
-          "name": "Second souffle overflow and double click",
-          "pass": true
-        },
-        {
-          "name": "Heal logical duplicate after damage applies once",
-          "pass": true
-        },
-        {
-          "name": "Damage after heal keeps existing command pipeline",
-          "pass": true
-        },
-        {
-          "name": "Vigueur naine one die spent",
-          "pass": true
-        },
-        {
-          "name": "Lay on NPC no Companion",
-          "pass": true
-        },
-        {
-          "name": "Cure free use consumed",
-          "pass": true
-        },
-        {
-          "name": "NPC overflow capped",
-          "pass": true
-        },
-        {
-          "name": "combat 1 three rounds remain live",
-          "pass": true
-        },
-        {
-          "name": "combat 2 distinct library enemies",
-          "pass": true,
-          "detail": [
-            {
-              "id": "srd-ogre",
-              "name": "Ogre"
-            }
-          ]
-        },
-        {
-          "name": "combat 2 all six initiatives and fight",
-          "pass": true
-        },
-        {
-          "name": "Twinned Companion plus NPC heal",
-          "pass": true
-        },
-        {
-          "name": "Disconnected target STATE_SYNC",
-          "pass": true
-        },
-        {
-          "name": "Two NPCs twinned",
-          "pass": true
-        },
-        {
-          "name": "combat 2 three rounds remain live",
-          "pass": true
-        },
-        {
-          "name": "combat 3 distinct library enemies",
-          "pass": true,
-          "detail": [
-            {
-              "id": "srd-orc",
-              "name": "Orc"
-            },
-            {
-              "id": "srd-squelette",
-              "name": "Squelette"
-            }
-          ]
-        },
-        {
-          "name": "combat 3 all six initiatives and fight",
-          "pass": true
-        },
-        {
-          "name": "Living zero HP NPC heals",
-          "pass": true
-        },
-        {
-          "name": "Healer disconnect before result exactly once",
-          "pass": true
-        },
-        {
-          "name": "Encounter reload keeps healed NPC",
-          "pass": true
-        },
-        {
-          "name": "combat 3 three rounds remain live",
-          "pass": true
-        },
-        {
-          "name": "No browser exceptions",
-          "pass": true,
-          "detail": []
-        }
-      ],
-      "failure": null,
-      "errors": []
-    },
-    "regression": {
+  "bridges": {
+    "passed": 7,
+    "failed": 0
+  },
+  "icons": {
+    "passed": 4,
+    "failed": 0
+  },
+  "browserSuites": {
+    "global": {
+      "count": 114,
+      "passed": 114,
       "checks": [
         {
           "name": "both online",
@@ -182,70 +73,70 @@
         {
           "name": "Brack attack → MJ → correlated damage",
           "pass": true,
-          "attackId": "2b9b0475-1055-48cc-a534-e8503fbf4e83",
-          "amount": 24
+          "attackId": "b0816373-399e-4175-844f-cd79acaa56d2",
+          "amount": 15
         },
         {
           "name": "Brack attack counter uses effective damage after fire resistance",
           "pass": true,
           "detail": {
-            "raw": 24,
-            "effective": 20,
-            "counter": 20
+            "raw": 15,
+            "effective": 13,
+            "counter": 13
           }
         },
         {
           "name": "Brack attack → MJ → correlated damage",
           "pass": true,
-          "attackId": "6441cc4f-ddc7-40cb-8569-ccdb1cb34ddd",
-          "amount": 29
+          "attackId": "b1d90ccb-a056-489d-bd8e-bdb4d928faf6",
+          "amount": 17
         },
         {
           "name": "Brack attack → MJ → correlated damage",
           "pass": true,
-          "attackId": "dec11542-98dc-4137-9a42-f001154a0237",
+          "attackId": "5e63f835-5d48-4624-a61d-f2787019ff73",
           "amount": 25
         },
         {
           "name": "Brack attack → MJ → correlated damage",
           "pass": true,
-          "attackId": "bbccb29d-f432-4b8a-8cf6-bdeb9e8501b4",
-          "amount": 24
+          "attackId": "51942b38-52f8-4f9b-91ee-12f2f7fb2a71",
+          "amount": 18
         },
         {
           "name": "Brack attack → MJ → correlated damage",
           "pass": true,
-          "attackId": "46dd4b76-69b8-4e5b-9532-87fcbe43206c",
-          "amount": 25
+          "attackId": "e91a5227-7434-4d43-817d-6bb90485b2ff",
+          "amount": 28
         },
         {
           "name": "Brack attack → MJ → correlated damage",
           "pass": true,
-          "attackId": "79159673-7c59-45fb-a6b6-04b539b612be",
-          "amount": 29
+          "attackId": "decc8448-e0da-4fd5-a85f-7c090ae9c68d",
+          "amount": 23
         },
         {
           "name": "Kentaro #solinar → MJ → correlated damage",
           "pass": true,
-          "attackId": "kentaro-muwpi6gu-1l",
-          "amount": 9
+          "attackId": "kentaro-muwt5ykg-1n",
+          "amount": 13
         },
         {
           "name": "Kentaro #selhane → MJ → correlated damage",
           "pass": true,
-          "attackId": "kentaro-muwpi6xc-1t",
-          "amount": 29
+          "attackId": "kentaro-muwt5z79-1v",
+          "amount": 24
         },
         {
           "name": "Kentaro native save → MJ manual → full resolution",
           "pass": true,
           "detail": {
-            "saveId": "kentaro-muwpi6xc-1t:blade-save",
-            "resolutionId": "kentaro-muwpi6xc-1t:blade-save",
-            "requestId": "kentaro-muwpi6xc-1t:blade-save",
-            "attackId": "kentaro-muwpi6xc-1t",
-            "actionId": "kentaro-muwpi6xc-1t:blade-save",
-            "parentActionId": "kentaro-muwpi6xc-1t:blade-save",
+            "saveId": "kentaro-muwt5z79-1v:blade-save",
+            "resolutionId": "kentaro-muwt5z79-1v:blade-save",
+            "requestId": "kentaro-muwt5z79-1v:blade-save",
+            "attackId": "kentaro-muwt5z79-1v",
+            "actionId": "kentaro-muwt5z79-1v:blade-save",
+            "parentActionId": "kentaro-muwt5z79-1v:blade-save",
             "targetIndex": 0,
             "targetCount": 1,
             "targetId": "e2e-target",
@@ -292,15 +183,15 @@
           "name": "Kentaro turn damage reflects effective save damage",
           "pass": true,
           "detail": {
-            "counterBefore": 38,
-            "counterAfter": 38,
+            "counterBefore": 37,
+            "counterAfter": 37,
             "effective": 0
           }
         },
         {
           "name": "Kentaro #thirdSun → MJ → correlated damage",
           "pass": true,
-          "attackId": "kentaro-muwpi8lq-29",
+          "attackId": "kentaro-muwt605u-2b",
           "amount": 14
         },
         {
@@ -311,26 +202,26 @@
           "name": "same attackId new eventId applied once",
           "pass": true,
           "detail": {
-            "hpBeforeReplay": 806,
-            "hpAfterReplay": 806
+            "hpBeforeReplay": 818,
+            "hpAfterReplay": 818
           }
         },
         {
           "name": "Brack attack → MJ → correlated damage",
           "pass": true,
-          "attackId": "dae76a15-ff5b-41bb-8e9c-ebebbf32f9a9",
-          "amount": 30
+          "attackId": "d37f941f-c9e5-4305-99c1-bdac40db9c16",
+          "amount": 31
         },
         {
           "name": "Brackmard native save → MJ manual → full resolution",
           "pass": true,
           "detail": {
-            "saveId": "f4498d3c-2a4c-49c9-b2d1-dee5eb653784",
-            "resolutionId": "f4498d3c-2a4c-49c9-b2d1-dee5eb653784",
-            "requestId": "f4498d3c-2a4c-49c9-b2d1-dee5eb653784",
-            "attackId": "dae76a15-ff5b-41bb-8e9c-ebebbf32f9a9",
-            "actionId": "f4498d3c-2a4c-49c9-b2d1-dee5eb653784",
-            "parentActionId": "f4498d3c-2a4c-49c9-b2d1-dee5eb653784",
+            "saveId": "680f0719-2328-4dcb-8e35-00a2f9b717ba",
+            "resolutionId": "680f0719-2328-4dcb-8e35-00a2f9b717ba",
+            "requestId": "680f0719-2328-4dcb-8e35-00a2f9b717ba",
+            "attackId": "d37f941f-c9e5-4305-99c1-bdac40db9c16",
+            "actionId": "680f0719-2328-4dcb-8e35-00a2f9b717ba",
+            "parentActionId": "680f0719-2328-4dcb-8e35-00a2f9b717ba",
             "targetIndex": 0,
             "targetCount": 1,
             "targetId": "e2e-target",
@@ -386,12 +277,12 @@
           "name": "Brackmard native save → MJ manual → full resolution",
           "pass": true,
           "detail": {
-            "saveId": "7dfcdd34-1f31-42bd-80b5-6ce159a35e89",
-            "resolutionId": "7dfcdd34-1f31-42bd-80b5-6ce159a35e89",
-            "requestId": "7dfcdd34-1f31-42bd-80b5-6ce159a35e89",
+            "saveId": "a5043177-ff63-450d-a051-c0f85d97c285",
+            "resolutionId": "a5043177-ff63-450d-a051-c0f85d97c285",
+            "requestId": "a5043177-ff63-450d-a051-c0f85d97c285",
             "attackId": null,
-            "actionId": "7dfcdd34-1f31-42bd-80b5-6ce159a35e89",
-            "parentActionId": "7dfcdd34-1f31-42bd-80b5-6ce159a35e89",
+            "actionId": "a5043177-ff63-450d-a051-c0f85d97c285",
+            "parentActionId": "a5043177-ff63-450d-a051-c0f85d97c285",
             "targetIndex": 0,
             "targetCount": 1,
             "targetId": "e2e-target",
@@ -445,12 +336,12 @@
           "name": "Kentaro native save → MJ manual → full resolution",
           "pass": true,
           "detail": {
-            "saveId": "e8e9b73d-4b80-48ac-b3c5-cbc598b548cf",
-            "resolutionId": "e8e9b73d-4b80-48ac-b3c5-cbc598b548cf",
-            "requestId": "e8e9b73d-4b80-48ac-b3c5-cbc598b548cf",
+            "saveId": "f23a355f-73ec-4833-85ac-edb86673ac1c",
+            "resolutionId": "f23a355f-73ec-4833-85ac-edb86673ac1c",
+            "requestId": "f23a355f-73ec-4833-85ac-edb86673ac1c",
             "attackId": null,
-            "actionId": "e8e9b73d-4b80-48ac-b3c5-cbc598b548cf",
-            "parentActionId": "e8e9b73d-4b80-48ac-b3c5-cbc598b548cf",
+            "actionId": "f23a355f-73ec-4833-85ac-edb86673ac1c",
+            "parentActionId": "f23a355f-73ec-4833-85ac-edb86673ac1c",
             "targetIndex": 0,
             "targetCount": 1,
             "targetId": "e2e-target",
@@ -470,15 +361,15 @@
             "mode": "normal",
             "automaticFailure": false,
             "rollSource": "manual",
-            "rawDamage": 30,
-            "requestedDamage": 30,
-            "effectiveDamage": 30,
+            "rawDamage": 21,
+            "requestedDamage": 21,
+            "effectiveDamage": 21,
             "damageRollMode": "shared",
             "components": [
               {
-                "raw": 30,
-                "requested": 30,
-                "effective": 30,
+                "raw": 21,
+                "requested": 21,
+                "effective": 21,
                 "type": "psychiques",
                 "reason": ""
               }
@@ -498,20 +389,20 @@
           "pass": true,
           "detail": {
             "counterBefore": 0,
-            "counterAfter": 30,
-            "effective": 30
+            "counterAfter": 21,
+            "effective": 21
           }
         },
         {
           "name": "Samoth native save → MJ manual → full resolution",
           "pass": true,
           "detail": {
-            "saveId": "a63d5841-7276-4f27-a328-12b1147fbacd",
-            "resolutionId": "a63d5841-7276-4f27-a328-12b1147fbacd",
-            "requestId": "a63d5841-7276-4f27-a328-12b1147fbacd",
+            "saveId": "dccf64ed-060c-46ba-b683-f08fb667b186",
+            "resolutionId": "dccf64ed-060c-46ba-b683-f08fb667b186",
+            "requestId": "dccf64ed-060c-46ba-b683-f08fb667b186",
             "attackId": null,
-            "actionId": "a63d5841-7276-4f27-a328-12b1147fbacd",
-            "parentActionId": "a63d5841-7276-4f27-a328-12b1147fbacd",
+            "actionId": "dccf64ed-060c-46ba-b683-f08fb667b186",
+            "parentActionId": "dccf64ed-060c-46ba-b683-f08fb667b186",
             "targetIndex": 0,
             "targetCount": 1,
             "targetId": "e2e-target",
@@ -531,15 +422,15 @@
             "mode": "normal",
             "automaticFailure": false,
             "rollSource": "manual",
-            "rawDamage": 32,
-            "requestedDamage": 16,
-            "effectiveDamage": 16,
+            "rawDamage": 37,
+            "requestedDamage": 18,
+            "effectiveDamage": 18,
             "damageRollMode": "shared",
             "components": [
               {
-                "raw": 32,
-                "requested": 16,
-                "effective": 16,
+                "raw": 37,
+                "requested": 18,
+                "effective": 18,
                 "type": "froid",
                 "reason": ""
               }
@@ -557,20 +448,20 @@
           "pass": true,
           "detail": {
             "counterBefore": 0,
-            "counterAfter": 16,
-            "effective": 16
+            "counterAfter": 18,
+            "effective": 18
           }
         },
         {
           "name": "Zephyr native save → MJ manual → full resolution",
           "pass": true,
           "detail": {
-            "saveId": "7ac0cd98-d883-4ea2-bf05-8fa2110c8c09",
-            "resolutionId": "7ac0cd98-d883-4ea2-bf05-8fa2110c8c09",
-            "requestId": "7ac0cd98-d883-4ea2-bf05-8fa2110c8c09",
+            "saveId": "344a90dc-f8eb-4335-a96b-99dcbddffc32",
+            "resolutionId": "344a90dc-f8eb-4335-a96b-99dcbddffc32",
+            "requestId": "344a90dc-f8eb-4335-a96b-99dcbddffc32",
             "attackId": null,
-            "actionId": "7ac0cd98-d883-4ea2-bf05-8fa2110c8c09",
-            "parentActionId": "7ac0cd98-d883-4ea2-bf05-8fa2110c8c09",
+            "actionId": "344a90dc-f8eb-4335-a96b-99dcbddffc32",
+            "parentActionId": "344a90dc-f8eb-4335-a96b-99dcbddffc32",
             "targetIndex": 0,
             "targetCount": 1,
             "targetId": "e2e-target",
@@ -626,12 +517,12 @@
           "name": "Rufus native save → MJ manual → full resolution",
           "pass": true,
           "detail": {
-            "saveId": "48bfb98c-cf13-40b1-aade-f874cd0163bb",
-            "resolutionId": "48bfb98c-cf13-40b1-aade-f874cd0163bb",
-            "requestId": "48bfb98c-cf13-40b1-aade-f874cd0163bb",
+            "saveId": "d13cfa96-4dc7-431e-b84c-6854224f90cf",
+            "resolutionId": "d13cfa96-4dc7-431e-b84c-6854224f90cf",
+            "requestId": "d13cfa96-4dc7-431e-b84c-6854224f90cf",
             "attackId": null,
-            "actionId": "48bfb98c-cf13-40b1-aade-f874cd0163bb",
-            "parentActionId": "48bfb98c-cf13-40b1-aade-f874cd0163bb",
+            "actionId": "d13cfa96-4dc7-431e-b84c-6854224f90cf",
+            "parentActionId": "d13cfa96-4dc7-431e-b84c-6854224f90cf",
             "targetIndex": 0,
             "targetCount": 1,
             "targetId": "e2e-target",
@@ -693,12 +584,12 @@
           "name": "Nans native save → MJ manual → full resolution",
           "pass": true,
           "detail": {
-            "saveId": "f1f92232-122a-4520-aea1-d485f0378da6",
-            "resolutionId": "f1f92232-122a-4520-aea1-d485f0378da6",
-            "requestId": "f1f92232-122a-4520-aea1-d485f0378da6",
+            "saveId": "d2599b1e-3473-41a3-bde3-2cea52bd00cf",
+            "resolutionId": "d2599b1e-3473-41a3-bde3-2cea52bd00cf",
+            "requestId": "d2599b1e-3473-41a3-bde3-2cea52bd00cf",
             "attackId": null,
-            "actionId": "f1f92232-122a-4520-aea1-d485f0378da6",
-            "parentActionId": "f1f92232-122a-4520-aea1-d485f0378da6",
+            "actionId": "d2599b1e-3473-41a3-bde3-2cea52bd00cf",
+            "parentActionId": "d2599b1e-3473-41a3-bde3-2cea52bd00cf",
             "targetIndex": 0,
             "targetCount": 1,
             "targetId": "e2e-target",
@@ -718,15 +609,15 @@
             "mode": "normal",
             "automaticFailure": false,
             "rollSource": "manual",
-            "rawDamage": 14,
-            "requestedDamage": 14,
-            "effectiveDamage": 14,
+            "rawDamage": 16,
+            "requestedDamage": 16,
+            "effectiveDamage": 16,
             "damageRollMode": "shared",
             "components": [
               {
-                "raw": 14,
-                "requested": 14,
-                "effective": 14,
+                "raw": 16,
+                "requested": 16,
+                "effective": 16,
                 "type": "tonnerre",
                 "reason": ""
               }
@@ -744,8 +635,8 @@
           "pass": true,
           "detail": {
             "counterBefore": 0,
-            "counterAfter": 14,
-            "effective": 14
+            "counterAfter": 16,
+            "effective": 16
           }
         },
         {
@@ -761,7 +652,7 @@
           "name": "multi target keeps creature vignette",
           "pass": true,
           "detail": {
-            "src": "http://127.0.0.1:33847/RPG-Connect/assets/icons/creatures/standard/beast.png",
+            "src": "http://127.0.0.1:46657/RPG-Connect/assets/icons/creatures/standard/beast.png",
             "naturalWidth": 384
           }
         },
@@ -769,12 +660,12 @@
           "name": "Samoth native save → MJ manual → full resolution",
           "pass": true,
           "detail": {
-            "saveId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-            "resolutionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d:mt-wolf",
-            "requestId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+            "saveId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+            "resolutionId": "7d799b78-10e5-46e7-b987-bc54597844e8:mt-wolf",
+            "requestId": "7d799b78-10e5-46e7-b987-bc54597844e8",
             "attackId": null,
-            "actionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-            "parentActionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+            "actionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+            "parentActionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
             "targetIndex": 0,
             "targetCount": 3,
             "targetId": "mt-wolf",
@@ -794,14 +685,14 @@
             "mode": "normal",
             "automaticFailure": false,
             "rollSource": "manual",
-            "rawDamage": 30,
-            "requestedDamage": 30,
+            "rawDamage": 32,
+            "requestedDamage": 32,
             "effectiveDamage": 1,
             "damageRollMode": "shared",
             "components": [
               {
-                "raw": 30,
-                "requested": 30,
+                "raw": 32,
+                "requested": 32,
                 "effective": 1,
                 "type": "froid",
                 "reason": "résistance"
@@ -828,12 +719,12 @@
           "name": "target reaching zero does not close the logical multi action",
           "pass": true,
           "detail": {
-            "saveId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-            "resolutionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d:mt-wolf",
-            "requestId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+            "saveId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+            "resolutionId": "7d799b78-10e5-46e7-b987-bc54597844e8:mt-wolf",
+            "requestId": "7d799b78-10e5-46e7-b987-bc54597844e8",
             "attackId": null,
-            "actionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-            "parentActionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+            "actionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+            "parentActionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
             "targetIndex": 0,
             "targetCount": 3,
             "targetId": "mt-wolf",
@@ -853,14 +744,14 @@
             "mode": "normal",
             "automaticFailure": false,
             "rollSource": "manual",
-            "rawDamage": 30,
-            "requestedDamage": 30,
+            "rawDamage": 32,
+            "requestedDamage": 32,
             "effectiveDamage": 1,
             "damageRollMode": "shared",
             "components": [
               {
-                "raw": 30,
-                "requested": 30,
+                "raw": 32,
+                "requested": 32,
                 "effective": 1,
                 "type": "froid",
                 "reason": "résistance"
@@ -882,12 +773,12 @@
           "name": "Samoth native save → MJ manual → full resolution",
           "pass": true,
           "detail": {
-            "saveId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-            "resolutionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d:mt-goblin",
-            "requestId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+            "saveId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+            "resolutionId": "7d799b78-10e5-46e7-b987-bc54597844e8:mt-goblin",
+            "requestId": "7d799b78-10e5-46e7-b987-bc54597844e8",
             "attackId": null,
-            "actionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-            "parentActionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+            "actionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+            "parentActionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
             "targetIndex": 1,
             "targetCount": 3,
             "targetId": "mt-goblin",
@@ -907,15 +798,15 @@
             "mode": "normal",
             "automaticFailure": false,
             "rollSource": "manual",
-            "rawDamage": 30,
-            "requestedDamage": 15,
-            "effectiveDamage": 15,
+            "rawDamage": 32,
+            "requestedDamage": 16,
+            "effectiveDamage": 16,
             "damageRollMode": "shared",
             "components": [
               {
-                "raw": 30,
-                "requested": 15,
-                "effective": 15,
+                "raw": 32,
+                "requested": 16,
+                "effective": 16,
                 "type": "froid",
                 "reason": ""
               }
@@ -933,20 +824,20 @@
           "pass": true,
           "detail": {
             "counterBefore": 1,
-            "counterAfter": 16,
-            "effective": 15
+            "counterAfter": 17,
+            "effective": 16
           }
         },
         {
           "name": "Samoth native save → MJ manual → full resolution",
           "pass": true,
           "detail": {
-            "saveId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-            "resolutionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d:mt-elemental",
-            "requestId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+            "saveId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+            "resolutionId": "7d799b78-10e5-46e7-b987-bc54597844e8:mt-elemental",
+            "requestId": "7d799b78-10e5-46e7-b987-bc54597844e8",
             "attackId": null,
-            "actionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-            "parentActionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+            "actionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+            "parentActionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
             "targetIndex": 2,
             "targetCount": 3,
             "targetId": "mt-elemental",
@@ -966,14 +857,14 @@
             "mode": "normal",
             "automaticFailure": false,
             "rollSource": "manual",
-            "rawDamage": 30,
-            "requestedDamage": 30,
+            "rawDamage": 32,
+            "requestedDamage": 32,
             "effectiveDamage": 0,
             "damageRollMode": "shared",
             "components": [
               {
-                "raw": 30,
-                "requested": 30,
+                "raw": 32,
+                "requested": 32,
                 "effective": 0,
                 "type": "froid",
                 "reason": "immunité"
@@ -991,8 +882,8 @@
           "name": "Samoth turn damage reflects effective save damage",
           "pass": true,
           "detail": {
-            "counterBefore": 16,
-            "counterAfter": 16,
+            "counterBefore": 17,
+            "counterAfter": 17,
             "effective": 0
           }
         },
@@ -1010,7 +901,7 @@
               "targetId": "mt-goblin",
               "total": 24,
               "success": true,
-              "effectiveDamage": 15
+              "effectiveDamage": 16
             },
             {
               "targetId": "mt-elemental",
@@ -1024,9 +915,9 @@
           "name": "one shared raw damage roll reused for all targets",
           "pass": true,
           "detail": [
-            30,
-            30,
-            30
+            32,
+            32,
+            32
           ]
         },
         {
@@ -1034,12 +925,12 @@
           "pass": true,
           "detail": {
             "wolf": {
-              "saveId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-              "resolutionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d:mt-wolf",
-              "requestId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+              "saveId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+              "resolutionId": "7d799b78-10e5-46e7-b987-bc54597844e8:mt-wolf",
+              "requestId": "7d799b78-10e5-46e7-b987-bc54597844e8",
               "attackId": null,
-              "actionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-              "parentActionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+              "actionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+              "parentActionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
               "targetIndex": 0,
               "targetCount": 3,
               "targetId": "mt-wolf",
@@ -1059,14 +950,14 @@
               "mode": "normal",
               "automaticFailure": false,
               "rollSource": "manual",
-              "rawDamage": 30,
-              "requestedDamage": 30,
+              "rawDamage": 32,
+              "requestedDamage": 32,
               "effectiveDamage": 1,
               "damageRollMode": "shared",
               "components": [
                 {
-                  "raw": 30,
-                  "requested": 30,
+                  "raw": 32,
+                  "requested": 32,
                   "effective": 1,
                   "type": "froid",
                   "reason": "résistance"
@@ -1080,12 +971,12 @@
               "dead": true
             },
             "goblin": {
-              "saveId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-              "resolutionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d:mt-goblin",
-              "requestId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+              "saveId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+              "resolutionId": "7d799b78-10e5-46e7-b987-bc54597844e8:mt-goblin",
+              "requestId": "7d799b78-10e5-46e7-b987-bc54597844e8",
               "attackId": null,
-              "actionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-              "parentActionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+              "actionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+              "parentActionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
               "targetIndex": 1,
               "targetCount": 3,
               "targetId": "mt-goblin",
@@ -1105,15 +996,15 @@
               "mode": "normal",
               "automaticFailure": false,
               "rollSource": "manual",
-              "rawDamage": 30,
-              "requestedDamage": 15,
-              "effectiveDamage": 15,
+              "rawDamage": 32,
+              "requestedDamage": 16,
+              "effectiveDamage": 16,
               "damageRollMode": "shared",
               "components": [
                 {
-                  "raw": 30,
-                  "requested": 15,
-                  "effective": 15,
+                  "raw": 32,
+                  "requested": 16,
+                  "effective": 16,
                   "type": "froid",
                   "reason": ""
                 }
@@ -1126,12 +1017,12 @@
               "dead": false
             },
             "elemental": {
-              "saveId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-              "resolutionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d:mt-elemental",
-              "requestId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+              "saveId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+              "resolutionId": "7d799b78-10e5-46e7-b987-bc54597844e8:mt-elemental",
+              "requestId": "7d799b78-10e5-46e7-b987-bc54597844e8",
               "attackId": null,
-              "actionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-              "parentActionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+              "actionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+              "parentActionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
               "targetIndex": 2,
               "targetCount": 3,
               "targetId": "mt-elemental",
@@ -1151,14 +1042,14 @@
               "mode": "normal",
               "automaticFailure": false,
               "rollSource": "manual",
-              "rawDamage": 30,
-              "requestedDamage": 30,
+              "rawDamage": 32,
+              "requestedDamage": 32,
               "effectiveDamage": 0,
               "damageRollMode": "shared",
               "components": [
                 {
-                  "raw": 30,
-                  "requested": 30,
+                  "raw": 32,
+                  "requested": 32,
                   "effective": 0,
                   "type": "froid",
                   "reason": "immunité"
@@ -1187,19 +1078,19 @@
             "targetMode": "multi",
             "damageRollMode": "shared",
             "halfOnSuccess": true,
-            "damage": 30,
+            "damage": 32,
             "damageType": "froid",
             "components": [
               {
-                "amount": 30,
+                "amount": 32,
                 "type": "froid"
               }
             ],
             "condition": null,
             "saveMode": "normal",
-            "saveId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-            "actionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
-            "parentActionId": "8f411da9-e7df-4371-b4ed-104e03d3fa2d",
+            "saveId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+            "actionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
+            "parentActionId": "7d799b78-10e5-46e7-b987-bc54597844e8",
             "maxTargets": null,
             "targetId": "e2e-target",
             "target": {
@@ -1239,7 +1130,7 @@
                 "ac": 14
               }
             ],
-            "combatId": "a123bc67-7e13-4ada-bd3f-f1b170aece47"
+            "combatId": "c2394e86-c1b5-4cdf-b51d-c2d43a8350b6"
           }
         },
         {
@@ -1248,12 +1139,12 @@
           "detail": {
             "hpBeforeReplay": {
               "mt-wolf": 0,
-              "mt-goblin": 15,
+              "mt-goblin": 14,
               "mt-elemental": 40
             },
             "hpAfterReplay": {
               "mt-wolf": 0,
-              "mt-goblin": 15,
+              "mt-goblin": 14,
               "mt-elemental": 40
             }
           }
@@ -1278,12 +1169,12 @@
           "name": "Zephyr native save → MJ manual → full resolution",
           "pass": true,
           "detail": {
-            "saveId": "86a99f36-209a-40e8-bffa-a907d042eb20",
-            "resolutionId": "86a99f36-209a-40e8-bffa-a907d042eb20",
-            "requestId": "86a99f36-209a-40e8-bffa-a907d042eb20",
+            "saveId": "3ccff6f4-8f06-4f6e-beae-a7dff0979c76",
+            "resolutionId": "3ccff6f4-8f06-4f6e-beae-a7dff0979c76",
+            "requestId": "3ccff6f4-8f06-4f6e-beae-a7dff0979c76",
             "attackId": null,
-            "actionId": "86a99f36-209a-40e8-bffa-a907d042eb20",
-            "parentActionId": "86a99f36-209a-40e8-bffa-a907d042eb20",
+            "actionId": "3ccff6f4-8f06-4f6e-beae-a7dff0979c76",
+            "parentActionId": "3ccff6f4-8f06-4f6e-beae-a7dff0979c76",
             "targetIndex": 0,
             "targetCount": 1,
             "targetId": "e2e-target",
@@ -1339,12 +1230,12 @@
           "name": "Zephyr native save → MJ manual → full resolution",
           "pass": true,
           "detail": {
-            "saveId": "4a83ce3d-cbcd-4d01-a205-9e19c60dffbf",
-            "resolutionId": "4a83ce3d-cbcd-4d01-a205-9e19c60dffbf",
-            "requestId": "4a83ce3d-cbcd-4d01-a205-9e19c60dffbf",
-            "attackId": "zephyr-muwpjat0-aq",
-            "actionId": "4a83ce3d-cbcd-4d01-a205-9e19c60dffbf",
-            "parentActionId": "4a83ce3d-cbcd-4d01-a205-9e19c60dffbf",
+            "saveId": "18cb004f-1fba-4f35-bfed-116148c6573e",
+            "resolutionId": "18cb004f-1fba-4f35-bfed-116148c6573e",
+            "requestId": "18cb004f-1fba-4f35-bfed-116148c6573e",
+            "attackId": "zephyr-muwt74y8-as",
+            "actionId": "18cb004f-1fba-4f35-bfed-116148c6573e",
+            "parentActionId": "18cb004f-1fba-4f35-bfed-116148c6573e",
             "targetIndex": 0,
             "targetCount": 1,
             "targetId": "e2e-target",
@@ -1391,8 +1282,8 @@
           "name": "Zephyr turn damage reflects effective save damage",
           "pass": true,
           "detail": {
-            "counterBefore": 17,
-            "counterAfter": 17,
+            "counterBefore": 21,
+            "counterAfter": 21,
             "effective": 0
           }
         },
@@ -1404,12 +1295,12 @@
           "name": "Nans native save → MJ manual → full resolution",
           "pass": true,
           "detail": {
-            "saveId": "98bf9bb4-6959-437b-8297-4bbb7bbe8ecc",
-            "resolutionId": "98bf9bb4-6959-437b-8297-4bbb7bbe8ecc",
-            "requestId": "98bf9bb4-6959-437b-8297-4bbb7bbe8ecc",
+            "saveId": "1710180e-cdd6-425c-af37-8a56bed4bfc2",
+            "resolutionId": "1710180e-cdd6-425c-af37-8a56bed4bfc2",
+            "requestId": "1710180e-cdd6-425c-af37-8a56bed4bfc2",
             "attackId": null,
-            "actionId": "98bf9bb4-6959-437b-8297-4bbb7bbe8ecc",
-            "parentActionId": "98bf9bb4-6959-437b-8297-4bbb7bbe8ecc",
+            "actionId": "1710180e-cdd6-425c-af37-8a56bed4bfc2",
+            "parentActionId": "1710180e-cdd6-425c-af37-8a56bed4bfc2",
             "targetIndex": 0,
             "targetCount": 1,
             "targetId": "e2e-target",
@@ -1465,12 +1356,12 @@
           "name": "automatic JdS composite R/I/V absorbs temp HP first",
           "pass": true,
           "detail": {
-            "saveId": "55162c96-9cd7-4c4b-8a17-77ce0a0f32fd",
-            "resolutionId": "55162c96-9cd7-4c4b-8a17-77ce0a0f32fd",
-            "requestId": "55162c96-9cd7-4c4b-8a17-77ce0a0f32fd",
+            "saveId": "f2bcada7-e4d2-444a-907a-d54d8e555ca1",
+            "resolutionId": "f2bcada7-e4d2-444a-907a-d54d8e555ca1",
+            "requestId": "f2bcada7-e4d2-444a-907a-d54d8e555ca1",
             "attackId": null,
-            "actionId": "55162c96-9cd7-4c4b-8a17-77ce0a0f32fd",
-            "parentActionId": "55162c96-9cd7-4c4b-8a17-77ce0a0f32fd",
+            "actionId": "f2bcada7-e4d2-444a-907a-d54d8e555ca1",
+            "parentActionId": "f2bcada7-e4d2-444a-907a-d54d8e555ca1",
             "targetIndex": 0,
             "targetCount": 1,
             "targetId": "e2e-target",
@@ -1842,29 +1733,386 @@
           }
         }
       ],
-      "failure": null,
-      "errors": []
+      "errors": [],
+      "failure": null
     },
-    "hit_dice": {
+    "threeCombats": {
+      "count": 26,
+      "passed": 26,
+      "checks": [
+        {
+          "name": "combat 1 distinct library enemies",
+          "pass": true,
+          "detail": [
+            {
+              "id": "srd-loup-sanguinaire",
+              "name": "Loup sanguinaire"
+            },
+            {
+              "id": "srd-gobelin",
+              "name": "Gobelin"
+            }
+          ]
+        },
+        {
+          "name": "combat 1 all six initiatives and fight",
+          "pass": true
+        },
+        {
+          "name": "Second souffle overflow and double click",
+          "pass": true
+        },
+        {
+          "name": "Heal logical duplicate after damage applies once",
+          "pass": true
+        },
+        {
+          "name": "Damage after heal keeps existing command pipeline",
+          "pass": true
+        },
+        {
+          "name": "Vigueur naine one die spent",
+          "pass": true
+        },
+        {
+          "name": "Lay on NPC no Companion",
+          "pass": true
+        },
+        {
+          "name": "Cure free use consumed",
+          "pass": true
+        },
+        {
+          "name": "NPC overflow capped",
+          "pass": true
+        },
+        {
+          "name": "combat 1 three rounds remain live",
+          "pass": true
+        },
+        {
+          "name": "combat 2 distinct library enemies",
+          "pass": true,
+          "detail": [
+            {
+              "id": "srd-ogre",
+              "name": "Ogre"
+            },
+            {
+              "id": "srd-gobelin",
+              "name": "Gobelin"
+            }
+          ]
+        },
+        {
+          "name": "combat 2 all six initiatives and fight",
+          "pass": true
+        },
+        {
+          "name": "Twinned Companion plus NPC heal",
+          "pass": true
+        },
+        {
+          "name": "Closed Companion damage applied immediately before healing",
+          "pass": true
+        },
+        {
+          "name": "Heal uses HP after queued closed-Companion damage",
+          "pass": true
+        },
+        {
+          "name": "Disconnected target STATE_SYNC",
+          "pass": true
+        },
+        {
+          "name": "Two NPCs twinned",
+          "pass": true
+        },
+        {
+          "name": "combat 2 three rounds remain live",
+          "pass": true
+        },
+        {
+          "name": "combat 3 distinct library enemies",
+          "pass": true,
+          "detail": [
+            {
+              "id": "srd-orc",
+              "name": "Orc"
+            },
+            {
+              "id": "srd-squelette",
+              "name": "Squelette"
+            }
+          ]
+        },
+        {
+          "name": "combat 3 all six initiatives and fight",
+          "pass": true
+        },
+        {
+          "name": "Living zero HP NPC heals",
+          "pass": true
+        },
+        {
+          "name": "Healer disconnect before result exactly once",
+          "pass": true
+        },
+        {
+          "name": "Encounter reload keeps healed NPC",
+          "pass": true
+        },
+        {
+          "name": "Aura real next combat round and new beneficiary",
+          "pass": true
+        },
+        {
+          "name": "combat 3 three rounds remain live",
+          "pass": true
+        },
+        {
+          "name": "No browser exceptions",
+          "pass": true,
+          "detail": []
+        }
+      ],
+      "errors": [],
+      "failure": null
+    },
+    "families": {
+      "count": 33,
+      "passed": 33,
+      "checks": [
+        {
+          "name": "Marque actual overflow 5 costs max 2",
+          "pass": true
+        },
+        {
+          "name": "Full HP consumes requested pool and no max penalty",
+          "pass": true
+        },
+        {
+          "name": "Aide 3 mixed max/current",
+          "pass": true
+        },
+        {
+          "name": "Samoth Aide above native maximum",
+          "pass": true
+        },
+        {
+          "name": "Aide persisted after reload",
+          "pass": true
+        },
+        {
+          "name": "MJ manual Aide removal keeps intervening damage",
+          "pass": true
+        },
+        {
+          "name": "Automatic Aide expiration keeps damage",
+          "pass": true
+        },
+        {
+          "name": "Brackmard Aide native maximum and displayed input",
+          "pass": true
+        },
+        {
+          "name": "Kentaro Aide native maximum and displayed input",
+          "pass": true
+        },
+        {
+          "name": "Nans Aide native maximum and displayed input",
+          "pass": true
+        },
+        {
+          "name": "Écorce source and double click",
+          "pass": true
+        },
+        {
+          "name": "Lower pool preserves Écorce",
+          "pass": true
+        },
+        {
+          "name": "Écorce depletion",
+          "pass": true
+        },
+        {
+          "name": "Disconnected authority mode never spends an untransmitted ability",
+          "pass": true
+        },
+        {
+          "name": "Soif native resource once",
+          "pass": true
+        },
+        {
+          "name": "Kentaro Agathys original amount",
+          "pass": true
+        },
+        {
+          "name": "Agathys STATE_SYNC source",
+          "pass": true
+        },
+        {
+          "name": "Agathys last temp hit retains original cold retaliation",
+          "pass": true
+        },
+        {
+          "name": "Lazarus replaces and clears Agathys",
+          "pass": true
+        },
+        {
+          "name": "Zephyr Agathys source",
+          "pass": true
+        },
+        {
+          "name": "Zephyr Agathys last temp hit preserves original cold amount",
+          "pass": true
+        },
+        {
+          "name": "Marque long rest authoritative restore",
+          "pass": true
+        },
+        {
+          "name": "Aura launched with concentration/action",
+          "pass": true
+        },
+        {
+          "name": "Aura different beneficiary p_muwtcje8_lwyjf2",
+          "pass": true
+        },
+        {
+          "name": "Aura different beneficiary p_muwtcjs7_qqrftk",
+          "pass": true
+        },
+        {
+          "name": "Aura cannot heal after concentration ends",
+          "pass": true
+        },
+        {
+          "name": "Revivifier dead allied NPC returns 1 under MJ validation",
+          "pass": true
+        },
+        {
+          "name": "Invalid Revivifier age rejects and releases slot/action",
+          "pass": true
+        },
+        {
+          "name": "Rufus end/reset turn never recovers prematurely",
+          "pass": true
+        },
+        {
+          "name": "Rufus offline recovers on actual next turn",
+          "pass": true
+        },
+        {
+          "name": "Rufus reconnect synchronizes health and spent resource",
+          "pass": true
+        },
+        {
+          "name": "Recovery persisted without second trigger",
+          "pass": true
+        },
+        {
+          "name": "No browser exceptions",
+          "pass": true,
+          "detail": []
+        }
+      ],
+      "errors": [],
+      "failure": null
+    },
+    "complex": {
+      "count": 15,
+      "passed": 15,
+      "checks": [
+        {
+          "name": "Multicible sender before ACK and offline recipient reconnect",
+          "pass": true
+        },
+        {
+          "name": "Rally actual 2d6+4 on 6 mixed allies",
+          "pass": true
+        },
+        {
+          "name": "Rally retains stronger Écorce and mechanics",
+          "pass": true
+        },
+        {
+          "name": "Rally releases fear and gives immunity",
+          "pass": true
+        },
+        {
+          "name": "Nans native weapon rolled advantage",
+          "pass": true
+        },
+        {
+          "name": "Rally consumed exactly at weapon attack",
+          "pass": true
+        },
+        {
+          "name": "Spell does not consume weapon advantage",
+          "pass": true
+        },
+        {
+          "name": "NPC weapon consumes advantage",
+          "pass": true
+        },
+        {
+          "name": "Normal arrow damage plus authoritative self-heal",
+          "pass": true
+        },
+        {
+          "name": "Sacrificial arrow NPC heal and self cost in one ledger",
+          "pass": true
+        },
+        {
+          "name": "Sacrificial transaction duplicate has no second cost",
+          "pass": true
+        },
+        {
+          "name": "Ancre arms without premature healing",
+          "pass": true
+        },
+        {
+          "name": "Ancre halves chosen next attack then heals 3 mixed allies",
+          "pass": true
+        },
+        {
+          "name": "Ancre resource and pending consumed once",
+          "pass": true
+        },
+        {
+          "name": "No browser exceptions",
+          "pass": true,
+          "detail": []
+        }
+      ],
+      "errors": [],
+      "failure": null
+    },
+    "hitDice": {
+      "count": 1,
+      "passed": 1,
       "checks": [
         {
           "name": "Samoth hit dice HEAL with existing vial recovery",
           "pass": true,
           "detail": {
             "local": {
-              "hp": 55,
+              "hp": 49,
               "hitDice": 8,
               "sp": 9,
               "vial": 0
             },
-            "mj": 55
+            "mj": 49
           }
         }
       ],
-      "failure": null,
-      "errors": []
+      "errors": [],
+      "failure": null
     },
     "compatibility": {
+      "count": 4,
+      "passed": 4,
       "checks": [
         {
           "name": "Existing Écorce source preserved after authoritative heal",
@@ -1875,7 +2123,7 @@
           "pass": true
         },
         {
-          "name": "Legacy Jugement kept functional (not migrated REVIVE)",
+          "name": "Judgment cannot fire on local turn reset before real Encounter turn",
           "pass": true
         },
         {
@@ -1883,8 +2131,20 @@
           "pass": true
         }
       ],
-      "failure": null,
-      "errors": []
+      "errors": [],
+      "failure": null
     }
-  }
+  },
+  "environment": "Real Chromium, actual isolated HTTP and RPG Connect WebSocket server, six Companion contexts and Encounter",
+  "manual": [
+    "Potions without defined amount",
+    "Wood ring/hour under MJ validation",
+    "Agathys attacker HP retaliation under MJ",
+    "Lazarus inactive turn under MJ",
+    "Rally fear immunity duration/removal under MJ",
+    "Revivifier material and excluded causes under MJ"
+  ],
+  "mainChanged": false,
+  "merged": false,
+  "deployed": false
 }

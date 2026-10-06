@@ -49,8 +49,8 @@ try{
  for(let scenario=1;scenario<=3;scenario++){
   if(scenario>1){await gm.locator('#rpgMjOpen').click();await gm.locator('#rpgMjEndFight').click();await gm.locator('[data-rpg-close]').click();await gm.evaluate(()=>{state.encounter.participants=state.encounter.participants.filter(p=>p.id.startsWith('cc-'));state.ui.locked=false;setMode('prep');saveState();render()});}
   await pages.Zephyr.evaluate(()=>CompanionAPI.setResource('lay',50));
-  const enemy=await gm.evaluate(i=>{const terms=i===1?['Loup sanguinaire','Gobelin']:i===2?['Duergar','Ogre']:['Orc','Squelette'];return terms.map(term=>state.monsters.find(m=>m.category==='enemy'&&m.name.toLowerCase().includes(term.toLowerCase()))).filter(Boolean).map(m=>({id:m.id,name:m.name}))},scenario);
-  check('combat '+scenario+' distinct library enemies',enemy.length>=1,enemy);
+  const enemy=await gm.evaluate(i=>{const terms=i===1?['Loup sanguinaire','Gobelin']:i===2?['Ogre','Gobelin']:['Orc','Squelette'];return terms.map(term=>state.monsters.find(m=>m.category==='enemy'&&m.name.toLowerCase().includes(term.toLowerCase()))).filter(Boolean).map(m=>({id:m.id,name:m.name}))},scenario);
+  check('combat '+scenario+' distinct library enemies',enemy.length>=2,enemy);
   for(const m of [...enemy,...allyModels])await fromLibrary(m);
   const allies=await gm.evaluate(()=>state.encounter.participants.filter(p=>['Garde de Sharn','Capitaine allié','Invocation alliée'].includes(p.baseName)).map(p=>({id:p.id,name:p.baseName})));
   const guard=allies.find(p=>p.name==='Garde de Sharn').id,cap=allies.find(p=>p.name==='Capitaine allié').id;
@@ -71,7 +71,7 @@ try{
   }
   if(scenario===2){
    await setHp(guard,20);await setHp('cc-brackmard',70,'Brackmard');await cure(['cc-brackmard',guard],false);check('Twinned Companion plus NPC heal',await gm.evaluate(id=>state.encounter.participants.find(p=>p.id===id).hp>20,guard));
-   await setHp(cap,20);await pages.Brackmard.evaluate(()=>RPGConnect.disconnect());await lay('cc-brackmard',3);await syncRecipient('Brackmard');const hp=await gm.evaluate(()=>state.encounter.participants.find(p=>p.id==='cc-brackmard').hp);check('Disconnected target STATE_SYNC',await pages.Brackmard.evaluate(hp=>CompanionAPI.getState().hp.current===hp,hp));
+   await setHp(cap,20);const beforeClosedDamage=await gm.evaluate(()=>state.encounter.participants.find(p=>p.id==='cc-brackmard').hp);await pages.Brackmard.evaluate(()=>RPGConnect.disconnect());await gm.evaluate(()=>applyDamageMany(['cc-brackmard'],20,'force'));check('Closed Companion damage applied immediately before healing',await gm.evaluate(hp=>state.encounter.participants.find(p=>p.id==='cc-brackmard').hp===hp-20,beforeClosedDamage));await lay('cc-brackmard',3);check('Heal uses HP after queued closed-Companion damage',await gm.evaluate(hp=>state.encounter.participants.find(p=>p.id==='cc-brackmard').hp===hp-17,beforeClosedDamage));await syncRecipient('Brackmard');const hp=await gm.evaluate(()=>state.encounter.participants.find(p=>p.id==='cc-brackmard').hp);check('Disconnected target STATE_SYNC',await pages.Brackmard.evaluate(hp=>CompanionAPI.getState().hp.current===hp,hp));
    await cure([guard,cap],false);check('Two NPCs twinned',await gm.evaluate(id=>state.encounter.participants.find(p=>p.id===id).hp>20,cap));
   }
   if(scenario===3){
@@ -79,6 +79,11 @@ try{
    // Disconnect immediately after the durable intention is sent; ACK/result can be lost.
    const z=pages.Zephyr;await z.evaluate(()=>CompanionAPI.nextTurn());z.once('dialog',d=>d.accept('5'));await z.locator('#healBtn').evaluate(el=>el.click());await z.locator('#rpgMultiTargetPicker').waitFor({state:'visible'});await z.locator(`[data-multi-target="${guard}"]`).click();await z.evaluate(()=>{const off=CompanionAPI.subscribe(e=>{if(e.type==='heal:request'){off();RPGConnect.disconnect()}});document.querySelector('[data-multi-done]').click()});await z.waitForTimeout(150);await z.evaluate(()=>RPGConnect.connect());await z.waitForFunction(()=>RPGConnect.getStatus().connected);await z.waitForFunction(()=>!RPGHealth.getPending());check('Healer disconnect before result exactly once',await gm.evaluate(id=>state.encounter.participants.find(p=>p.id===id).hp===9,guard));
    const hp=await gm.evaluate(id=>state.encounter.participants.find(p=>p.id===id).hp,guard);await gm.reload();await gm.waitForFunction(()=>RPGConnectMJ.getStatus().connected);check('Encounter reload keeps healed NPC',await gm.evaluate(({id,hp})=>state.encounter.participants.find(p=>p.id===id)?.hp===hp,{id:guard,hp}));
+  }
+
+  if(scenario===3){
+   const z=pages.Zephyr;const goToZephyr=async()=>{const count=await gm.evaluate(()=>sortedParticipants().length);do{await gm.evaluate(()=>actualAdvanceTurn())}while(!await gm.evaluate(()=>activeParticipant().id==='cc-zephyr')&&--goToZephyr.remaining>0)};goToZephyr.remaining=50;
+   await goToZephyr();await goToZephyr();await z.waitForFunction(()=>!__CompanionBridge.read().eco.a);await z.locator('.cast[data-name="Aura de vitalité"]').evaluate(el=>el.click());await setHp(guard,10);await z.locator('#vitalityHeal').evaluate(el=>el.click());await choose(z,[guard]);const firstRound=await gm.evaluate(()=>state.encounter.round);await goToZephyr();await z.waitForFunction(()=>!__CompanionBridge.read().eco.b);await setHp(cap,10);await z.locator('#vitalityHeal').evaluate(el=>el.click());await choose(z,[cap]);check('Aura real next combat round and new beneficiary',await gm.evaluate(r=>state.encounter.round>r,firstRound)&&await gm.evaluate(id=>state.encounter.participants.find(p=>p.id===id).hp>10,cap));
   }
   // Advance through three complete rounds using the native Encounter turn engine.
   const roundStart=await gm.evaluate(()=>state.encounter.round);for(let i=0;i<3;i++){const count=await gm.evaluate(()=>sortedParticipants().length);for(let j=0;j<count;j++)await gm.evaluate(()=>actualAdvanceTurn())}
