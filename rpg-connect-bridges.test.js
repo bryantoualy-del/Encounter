@@ -39,6 +39,8 @@ for(const name of ['Kentaro','Nans','Samoth','Brackmard','Zephyr','Rufus'])test(
     assert.match(html,/attack:damage[^\n]+p\.attackId/,'Kentaro damage is not correlated to the pending attackId');
   }
   if(name==='Samoth'){
+    const undoEvents=events.filter(e=>e.type==='undo:performed').length;api.damage(1);w.document.querySelector('#undo').click();
+    assert.equal(events.filter(e=>e.type==='undo:performed').length,undoEvents+1,'native Undo must emit the shared undo event');
     const modes=[];w.RPGConnect={prepareTargets:options=>modes.push(options.targetMode)};
     const selector=w.document.querySelector('#combatSpell'),before=api.getState();
     selector.value='vortex';selector.dispatchEvent(new w.Event('change',{bubbles:true}));
