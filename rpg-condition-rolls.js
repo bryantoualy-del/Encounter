@@ -7,5 +7,10 @@
   const die=rollDie(6);
   return{amount:die,detail:`− 1d6 (${die})`};
  }
- globalThis.EncounterConditionRolls={penalty};
+ function saveRules(conditions,ability,requestedMode='normal'){
+  const keys=new Set((conditions||[]).map(c=>normalize(c?.name))),autoFail=['FOR','DEX'].includes(ability)&&['etourdi','paralyse','inconscient'].some(k=>keys.has(k));
+  const disadvantage=ability==='DEX'&&keys.has('entrave'),advantage=requestedMode==='adv';
+  return{autoFail,mode:autoFail?'auto-fail':disadvantage?(advantage?'normal':'dis'):requestedMode};
+ }
+ globalThis.EncounterConditionRolls={penalty,saveRules};
 })();

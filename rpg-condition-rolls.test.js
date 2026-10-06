@@ -13,3 +13,12 @@ test('Perturbations synaptiques affects only attack, ability and concentration r
  assert.equal(penalty([{name:'Aveuglé'}],'attack',()=>4).amount,0);
  assert.equal(penalty([{name:'Perturbations synaptiques'},{name:'Perturbations synaptiques'}],'attack',()=>4).amount,4);
 });
+test('manual saving throws match Encounter network condition rules',()=>{
+ const rules=context.EncounterConditionRolls.saveRules;
+ assert.equal(rules([{name:'Entravé'}],'DEX').mode,'dis');
+ assert.equal(rules([{name:'Entravé'}],'DEX','adv').mode,'normal');
+ assert.equal(rules([{name:'Entravé'}],'CON').mode,'normal');
+ for(const name of ['Étourdi','Paralysé','Inconscient'])assert.equal(rules([{name}],'FOR').autoFail,true);
+ assert.equal(rules([{name:'Paralysé'}],'CON').autoFail,false);
+ assert.equal(rules([{name:'Perturbations synaptiques'}],'DEX').mode,'normal');
+});
