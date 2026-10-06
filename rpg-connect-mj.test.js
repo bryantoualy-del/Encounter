@@ -111,6 +111,10 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  assert.equal((await reused).payload.cancelled,true);assert.equal(dom.window.document.querySelector('#rpgSavePopup').open,false);assert.deepEqual(dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>p.hp)"),afterMulti);
  const undoAck=waitUndo(player);send(player,{type:'event',event:{id:'multi-undo-event',type:'action:undo-request',characterId:'samoth',combatId:dom.window.RPGConnectMJ.getStatus().fight.requestId,payload:{actionId:'multi-action'}}});const undoMsg=await undoAck;assert.match(undoMsg.payload.text,/restauré/);
  const restored=dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>({id:p.id,hp:p.hp,tempHp:p.tempHp,conditions:JSON.stringify(p.conditions)}))");assert.deepEqual(restored,beforeMulti);
+ assert.equal(dom.window.RPGConnectMJ.endFight(),true);assert.equal(dom.window.RPGConnectMJ.getStatus().machine.state,'END');assert.equal(dom.window.RPGConnectMJ.getStatus().fight.phase,'ended');
+ assert.deepEqual(dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>({id:p.id,hp:p.hp,tempHp:p.tempHp,conditions:JSON.stringify(p.conditions)}))"),restored);
+ send(player,{type:'event',event:{id:'late-save-after-finish',type:'save:request',characterId:'samoth',payload:{saveId:'late-save',actionId:'late-action',targetId:'e1',ability:'DEX',dc:12,damage:10}}});
+ await new Promise(resolve=>setTimeout(resolve,40));assert.equal(dom.window.document.querySelector('#rpgSavePopup').open,false);assert.deepEqual(dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>p.hp)"),restored.map(p=>p.hp));
  dom.window.RPGConnectMJ.getStatus();
  }finally{
   try{dom.window.document.querySelector('#rpgMjDisconnect')?.click()}catch{}
