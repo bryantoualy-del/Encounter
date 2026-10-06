@@ -29,9 +29,10 @@ function saveHarness(){
   const absorbed=Math.min(p.tempHp||0,n);p.tempHp=(p.tempHp||0)-absorbed;n-=absorbed;p.hp=Math.max(0,p.hp-n);return{reason}
  };
  dom.window.eval(readFileSync(new URL('./rpg-target-names.js',import.meta.url),'utf8'));
+ dom.window.eval(readFileSync(new URL('./rpg-condition-rolls.js',import.meta.url),'utf8'));
  dom.window.eval(readFileSync(new URL('./rpg-save-authority.js',import.meta.url),'utf8'));
  const authority=dom.window.createRPGSaveAuthority({
-  label:p=>dom.window.encounterTargetLabel(p,participants,x=>models[x.id]),target:id=>participants.find(p=>p.id===id&&p.hp>0),model:p=>models[p.id],mechanics:()=>({}),name:()=> 'Samoth',normalize:norm,participantId:()=> 'samoth',
+  label:p=>dom.window.encounterTargetLabel(p,participants,x=>models[x.id]),target:id=>participants.find(p=>p.id===id&&p.hp>0),model:p=>models[p.id],mechanics:()=>({}),penalty:(p,kind)=>dom.window.EncounterConditionRolls.penalty(p.conditions,kind,()=>4),name:()=> 'Samoth',normalize:norm,participantId:()=> 'samoth',
   send:(id,type,payload)=>{sent.push({id,type,payload})},resetCombat:()=>{},ledger:()=>ledger,roll:()=>rolls.shift()??10,
   immune:(p,name)=>p.id==='c'&&norm(name)==='entrave',addCondition:(id,data)=>participants.find(p=>p.id===id).conditions.push(data),damage,
   beginAction:(actionId,characterId,targetIds,meta)=>transactions.push({actionId,characterId,targetIds:[...targetIds],meta}),icon:()=>'',persist:()=>{},refresh:()=>{},log:()=>{}
@@ -39,6 +40,14 @@ function saveHarness(){
  const manual=(die)=>{rolls.push(Number(die));const pop=dom.window.document.querySelector('#rpgSavePopup');pop.querySelector('[data-save-auto]').click()};
  return{dom,participants,models,sent,ledger,transactions,rolls,authority,manual};
 }
+
+test('concentration save receives synaptic penalty, ordinary CON save does not',()=>{
+ const h=saveHarness(),p=h.participants.find(x=>x.id==='b');p.conditions.push({name:'Perturbations synaptiques'});h.models.b.saveMods.CON=2;
+ h.authority.enqueue('samoth',{id:'ordinary',payload:{saveId:'ordinary',targetId:'b',ability:'CON',dc:12,source:'Poison'}});h.manual(10);
+ assert.equal(h.sent.at(-1).payload.total,12);assert.equal(h.sent.at(-1).payload.penalty,0);
+ h.authority.enqueue('samoth',{id:'concentration',payload:{saveId:'concentration',targetId:'b',ability:'CON',dc:12,source:'Concentration',concentration:true}});h.manual(10);
+ assert.equal(h.sent.at(-1).payload.total,8);assert.equal(h.sent.at(-1).payload.penalty,4);assert.equal(h.sent.at(-1).payload.success,false);h.dom.window.close();
+});
 
 test('1. legacy targetId is normalized as a single target',()=>{
  const h=saveHarness();h.authority.enqueue('samoth',{id:'evt1',payload:{saveId:'legacy',targetId:'b',ability:'DEX',dc:12,source:'Legacy',damage:4,damageType:'froid'}});h.manual(10);

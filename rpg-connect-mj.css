@@ -117,6 +117,10 @@
 .rpg-net-event.latest{border-color:#6d879e;background:#112131}
 .rpg-cockpit-summary{font-size:10px;max-width:138px;overflow:hidden;text-overflow:ellipsis}
 #rpgCockpitOpen{min-height:32px;height:32px;padding:3px 8px;font-size:10px}
+.rpg-mj-cockpit.fight-compact{height:auto;min-height:34px;padding-block:2px}
+.rpg-mj-cockpit.fight-compact .rpg-mj-netline{height:auto;min-height:30px;grid-template-columns:auto minmax(0,1fr) auto auto}
+.rpg-mj-cockpit.fight-compact .rpg-net-event:nth-child(n+2){display:none}
+.rpg-mj-cockpit.fight-compact .rpg-net-event{height:27px;padding-block:3px}
 @media(max-width:1100px){
  .rpg-mj-cockpit{margin-inline:8px}
  .rpg-mj-netline #rpgCockpitLog{grid-template-columns:repeat(2,minmax(0,1fr))}
