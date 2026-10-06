@@ -23,6 +23,7 @@ test('ENCOUNTER reçoit l’état et route les dégâts au compagnon sans double
  dom.window.eval(readFileSync(new URL('./rpg-condition-rolls.js',import.meta.url),'utf8'));
  dom.window.rollDie=()=>4;
  dom.window.eval(readFileSync(new URL('./rpg-save-authority.js',import.meta.url),'utf8'));
+ dom.window.eval(readFileSync(new URL('./rpg-health-authority.js',import.meta.url),'utf8'));
  dom.window.eval(readFileSync(new URL('./rpg-connect-mj.js',import.meta.url),'utf8'));
  dom.window.document.querySelector('#rpgMjEndpoint').value=url;dom.window.document.querySelector('#rpgMjKey').value=process.env.RPG_CONNECT_GM_KEY;dom.window.document.querySelector('#rpgMjConnect').click();await until(()=>dom.window.RPGConnectMJ.getStatus().connected);const room=dom.window.RPGConnectMJ.getStatus().room;
  dom.window.document.querySelector('[data-invite="samoth"]').click();await until(()=>!!dom.window.document.querySelector('[data-copy="samoth"]'));dom.window.document.querySelector('[data-copy="samoth"]').click();await until(()=>copied.startsWith('RPGCONNECT|'));
