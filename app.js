@@ -243,6 +243,9 @@ function renderLibrary(){
 }
 function renderPrep(){
   const list=sortedParticipants();$('#prepCount').textContent=list.length;$('#prepParticipants').innerHTML=list.length?list.map(p=>isLair(p)?`<article class="prep-row lair-row ${p.id===state.encounter.selectedId?'selected':''}" data-select="${p.id}"><div><strong>🏰 ${esc(participantLabel(p))}</strong><small>Action de repaire · initiative ${p.initiative}</small></div><label>INI <input data-init="${p.id}" type="number" value="${p.initiative}"></label><div></div><button class="danger ghost small" data-remove="${p.id}">Retirer</button></article>`:`<article class="prep-row ${p.id===state.encounter.selectedId?'selected':''} ${hpBandClass(p)}" data-select="${p.id}"><div><strong>${esc(participantLabel(p))}</strong><small>${modelFor(p)?.category==='character'?esc(modelFor(p)?.subtitle||'Personnage'):modelFor(p)?.category==='companion'?esc(modelFor(p)?.subtitle||'Compagnon'):p.kind==='enemy'?esc(modelFor(p)?.type||'Adversaire'):'PJ / PNJ'} · CA ${effectiveAc(p)} · ${p.hp}/${p.maxHp} PV</small></div><label>INI <input data-init="${p.id}" type="number" value="${p.initiative}"></label><div class="mini-hp"><i style="width:${hpPct(p)}%"></i></div><button class="danger ghost small" data-remove="${p.id}">Retirer</button></article>`).join(''):'<div class="empty-prep">Aucun participant. Ouvre la bibliothèque pour ajouter tes adversaires.</div>';
+  renderPrepPreview();
+}
+function renderPrepPreview(){
   const p=selectedParticipant();if(!p){$('#prepPreview').innerHTML='<div class="empty-detail"><div class="empty-crest">✦</div><p>Sélectionne un participant.</p></div>';return;}const m=modelFor(p);
   $('#prepPreview').innerHTML=isLair(p)?`<div class="preview-head"><div><span class="eyebrow">REPAIRE</span><h2>${esc(participantLabel(p))}</h2><p>${m?.lairActions.length||0} action(s) de repaire</p></div></div>`:`<div class="preview-head"><div><span class="eyebrow">${m?.category==='character'?'PERSONNAGE':m?.category==='companion'?'COMPAGNON':p.kind==='enemy'?'ADVERSAIRE':'PARTICIPANT'}</span><h2>${esc(participantLabel(p))}</h2><p>${m?esc(m.category==='character'||m.category==='companion'?(m.subtitle||m.type):[m.size,m.type,`FP ${m.cr||'—'}`].filter(Boolean).join(' · ')):'PJ / PNJ'}</p></div>${m?`<button class="ghost small" data-edit-monster="${m.id}">✎ Modifier</button>`:''}</div><div class="stat-grid"><div class="statbox"><span>CA</span><b>${effectiveAc(p)}</b></div><div class="statbox"><span>PV</span><b>${p.hp}/${p.maxHp}</b></div><div class="statbox"><span>INI</span><b>${p.initiative}</b></div><div class="statbox"><span>VIT</span><b>${esc(effectiveSpeed(p,m))}</b></div></div>${m?`<div class="preview-summary"><b>${m.actions.length}</b> action(s) · <b>${m.reactions.length}</b> réaction(s) · <b>${m.legendaryActions.length}</b> légendaire(s)</div><p class="detail-notes">${esc(m.notes||'')}</p>`:'<p class="detail-notes">Suivi simple des PV, CA et initiative.</p>'}`;
 }
@@ -490,7 +493,14 @@ addEventListener('click',e=>{
 });
 
 addEventListener('change',e=>{
-  if(e.target.matches('[data-init]')){if(structuralGuard()){render();return;}const p=state.encounter.participants.find(x=>x.id===e.target.dataset.init);if(p){checkpoint();p.initiative=Number(e.target.value)||0;state.encounter.currentTurn=0;state.encounter.selectedId=sortedParticipants()[0]?.id||null;saveState();render();}}
+  if(e.target.matches('[data-init]')){if(structuralGuard()){render();return;}const p=state.encounter.participants.find(x=>x.id===e.target.dataset.init);if(p){checkpoint();p.initiative=Number(e.target.value)||0;state.encounter.currentTurn=0;state.encounter.selectedId=sortedParticipants()[0]?.id||null;saveState();
+      if(state.ui.mode==='prep'){
+        // A blur/change occurs before the pressed button receives its click.
+        // Refresh the preview without replacing that button or its row.
+        renderInitiative();renderPrepPreview();
+        $$('#prepParticipants .prep-row').forEach(row=>row.classList.toggle('selected',row.dataset.select===state.encounter.selectedId));
+        const active=activeParticipant();if($('#nowPlaying'))$('#nowPlaying').textContent=active?participantLabel(active):'Aucun combattant';
+      }else render();}}
   if(e.target.id==='conditionDuration')updateConditionOptionVisibility();if(e.target.id==='checkDc')ui.checkDc=Math.max(1,Number(e.target.value)||15);
 });
 

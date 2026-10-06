@@ -1,0 +1,44 @@
+import {createRequire} from 'node:module';
+import {createServer} from 'node:http';
+import {readFile, mkdir, writeFile} from 'node:fs/promises';
+import {resolve, extname} from 'node:path';
+const require=createRequire(import.meta.url);
+const {chromium}=require(process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES?process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES+'/playwright':'playwright');
+const root=resolve(process.env.E2E_ROOT||new URL('../../',import.meta.url).pathname);
+const out=resolve(process.env.E2E_OUT||new URL('./results',import.meta.url).pathname);await mkdir(out,{recursive:true});
+process.env.RPG_CONNECT_GM_KEY='isolated-e2e-key-abcdefghijklmnopqrstuvwxyz';process.env.PORT='0';process.env.RPG_CONNECT_ORIGINS='';
+const {server,wss}=await import('../rpg-connect-server.js');await new Promise(r=>server.listening?r():server.once('listening',r));
+const endpoint=`ws://127.0.0.1:${server.address().port}`;
+const http=createServer(async(req,res)=>{try{let path=decodeURIComponent(new URL(req.url,'http://local').pathname);if(path.endsWith('/'))path+='index.html';const file=resolve(root,'.'+path);if(!file.startsWith(root+'/'))throw Error('path');const data=await readFile(file);res.setHeader('Content-Type',({'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp'})[extname(file)]||'application/octet-stream');res.end(data)}catch{res.writeHead(404);res.end()}});await new Promise(r=>http.listen(0,'127.0.0.1',r));const base=`http://127.0.0.1:${http.address().port}`;
+const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||(process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES?'/tmp/chromium':undefined),args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'],headless:true});
+const pages={},errors=[],frames=[],checks=[];let failure;
+async function page(name){const ctx=await browser.newContext({hasTouch:true,viewport:{width:1180,height:820},serviceWorkers:'block',permissions:['clipboard-read','clipboard-write']});await ctx.tracing.start({screenshots:true,snapshots:true});await ctx.addInitScript(root=>{window.RPG_CONNECT_ICON_ROOT=root},base+'/RPG-Connect/');const p=await ctx.newPage();p.setDefaultTimeout(8000);p.on('pageerror',e=>errors.push({page:name,message:e.message,stack:e.stack}));p.on('websocket',ws=>{ws.on('framesent',f=>{try{frames.push({page:name,direction:'sent',data:JSON.parse(f.payload)})}catch{}});ws.on('framereceived',f=>{try{frames.push({page:name,direction:'received',data:JSON.parse(f.payload)})}catch{}})});await p.goto(`${base}/${name}/`,{waitUntil:'domcontentloaded'});pages[name]=p;return p}
+async function modal(p,selector){return p.locator(selector).evaluate(el=>{let r=el.getBoundingClientRect(),s=getComputedStyle(el),top=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return{hidden:el.hidden,display:s.display,visibility:s.visibility,opacity:s.opacity,zIndex:s.zIndex,rect:{x:r.x,y:r.y,width:r.width,height:r.height},topmost:el.contains(top),top:top?.outerHTML.slice(0,220)}})}
+// The native dice result intentionally waits for a player tap, including in WebGL CI.
+// Do not force gameplay clicks through it or disable the production dice renderer.
+async function dismissDice(p){
+ const overlay=p.locator('#ccDiceOverlay.open');
+ if(!await overlay.count())return;
+ await p.waitForFunction(()=>{const el=document.querySelector('#ccDiceOverlay');return !el?.classList.contains('open')||el.dataset.dismissable==='1'},{},{timeout:15000});
+ if(await overlay.count())await overlay.click({position:{x:20,y:20}});
+ await p.locator('#ccDiceOverlay').waitFor({state:'hidden',timeout:5000});
+}
+async function playerDiceHandler(p){await dismissDice(p);await p.addLocatorHandler(p.locator('#ccDiceOverlay.open'),()=>dismissDice(p));}
+const observations=[],invitations={};
+function check(name,pass,detail){checks.push({name,pass,detail});console.log(pass?'PASS':'FAIL',name);if(!pass)throw Error(name)}
+async function emit(p,type,payload,id){await p.evaluate(({type,payload,id})=>{if(window.__probeSocket){__probeSocket.send(JSON.stringify({v:1,type:'event',event:{id,type,characterId:'kentaro',payload}}))}else CompanionAPI.emitLocal(type,payload,id)},{type,payload,id})}
+async function snapshot(gm){return gm.evaluate(()=>Object.fromEntries(state.encounter.participants.filter(p=>p.kind==='enemy').map(p=>[p.id,{hp:p.hp,tempHp:p.tempHp||0,conditions:JSON.stringify(p.conditions||[])}])))}
+async function resolveSave(gm,die){await gm.locator('#rpgSavePopup').waitFor({state:'visible'});check('JDS popup topmost',(await modal(gm,'#rpgSavePopup')).topmost);const start=frames.length;if(die!=='auto')await gm.locator('[data-save-die]').fill(String(die));if(await gm.locator('[data-save-die-second]').count())await gm.locator('[data-save-die-second]').fill(String(die===1?20:1));await gm.locator(die==='auto'?'[data-save-auto]':'[data-save-manual]').click();await gm.waitForFunction(()=>true);for(let i=0;i<50;i++){const result=frames.slice(start).find(f=>f.page==='Samoth'&&f.direction==='received'&&f.data.event?.type==='save:result');if(result)return result.data.event.payload;await gm.waitForTimeout(50)}throw Error('No save result')}
+async function genericAttack(gm,p,{attackId,actionId,targetId,amount,hit=true}){const start=frames.length;const payload={attackId,actionId,targetId,roll:12,total:20,name:'Generic multi-attack probe'};await emit(p,'attack:rolled',payload,attackId+'-roll');await emit(p,'attack:pending-hit',payload,attackId+'-pending');await gm.locator(`[data-popup-hit="${attackId}"]:not(:disabled)`).waitFor();check('Popup uses '+targetId,(await gm.locator('#rpgHitPopup').innerText()).includes(targetId==='probe-a'?'Loup sanguinaire':'Gobelin'));await gm.locator(hit?`[data-popup-hit="${attackId}"]`:`[data-popup-miss="${attackId}"]`).click();await gm.waitForFunction(()=>document.querySelector('#rpgHitPopup').hidden);if(hit){await emit(p,'attack:damage',{...payload,amount,components:[{amount,type:'force'}]},attackId+'-damage');await gm.waitForFunction(id=>!!state.encounter.rpgAppliedAttacks?.[id],attackId)}return frames.slice(start)}
+try{
+const gm=await page('Encounter');await gm.setViewportSize({width:1180,height:820});
+await gm.evaluate(()=>{state.ui.mode='prep';state.ui.locked=false;state.encounter.participants=[];for(const name of ['Ogre des ruines','Gobelin vétéran','Goule','Vétéran']){const m=state.monsters.find(m=>m.name===name)||state.monsters.find(m=>m.category==='enemy');state.encounter.participants.push(makeParticipant(m,1,10,null))}saveState();render()});
+const initial=await gm.evaluate(()=>state.encounter.participants.length);const id=await gm.locator('[data-remove]').first().getAttribute('data-remove');await gm.locator(`[data-init="${id}"]`).fill('17');await gm.locator(`[data-remove="${id}"]`).click();await gm.waitForTimeout(100);
+check('Retirer removes the selected participant in preparation',await gm.evaluate(id=>!state.encounter.participants.some(p=>p.id===id),id),{errors});
+check('other participants stay',await gm.evaluate(()=>state.encounter.participants.length)===initial-1);
+await gm.locator('#btnUndo').click();check('Undo restores the removed participant',await gm.evaluate(id=>state.encounter.participants.some(p=>p.id===id&&p.initiative===17),id));
+const other=await gm.locator('[data-remove]').last().getAttribute('data-remove');await gm.locator(`[data-init="${id}"]`).fill('19');await gm.locator(`[data-remove="${other}"]`).tap();check('touch removes another participant immediately after initiative edit',await gm.evaluate(id=>!state.encounter.participants.some(p=>p.id===id),other));check('edited initiative remains saved',await gm.evaluate(id=>state.encounter.participants.find(p=>p.id===id).initiative===19,id));
+await gm.locator(`[data-init="${id}"]`).fill('21');await gm.locator(`[data-edit-participant="${id}"]`).first().click();check('Edit also receives first click after initiative edit',await gm.locator('#participantEditorDialog').isVisible());
+
+
+}catch(e){failure={message:e.message,stack:e.stack};console.log('FAIL',e.stack)}finally{await writeFile(out+'/report.json',JSON.stringify({checks,observations,errors,failure,frames},null,2));for(const[n,p]of Object.entries(pages)){await p.screenshot({path:out+'/'+n+'-final.png',timeout:10000,animations:'disabled'}).catch(()=>{});await p.context().tracing.stop({path:out+'/'+n+'-trace.zip'}).catch(()=>{})}await browser.close();for(const ws of wss.clients)ws.terminate();wss.close();server.close();http.close()}if(failure||errors.length||observations.some(x=>!x.pass))process.exitCode=1;
