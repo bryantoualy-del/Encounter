@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node rpg-connect-server.js",
-    "test": "node --test rpg-connect-protocol.test.js rpg-connect-mj.test.js rpg-multi-target.test.js rpg-multi-target-ui.test.js rpg-condition-rolls.test.js rpg-concentration.test.js rpg-effective-damage.test.js rpg-health-authority.test.js rpg-health-client.test.js rpg-summon-authority.test.js",
+    "test": "node --test rpg-connect-protocol.test.js rpg-connect-mj.test.js rpg-multi-target.test.js rpg-multi-target-ui.test.js rpg-condition-rolls.test.js rpg-concentration.test.js rpg-reaction-authority.test.js rpg-reactions-client.test.js rpg-effective-damage.test.js rpg-health-authority.test.js rpg-health-client.test.js rpg-summon-authority.test.js",
     "test:companions": "node --test --test-force-exit rpg-connect-client.test.js rpg-connect-bridges.test.js",
     "test:icons": "node --test creature-icons.test.js",
     "test:e2e": "node audit/e2e.mjs",
