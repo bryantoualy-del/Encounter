@@ -89,7 +89,7 @@ Pour reproduire : placer les huit repos comme répertoires frères, installer le
 
 ## Livraison et fichiers
 
-Branche coordonnée : `feature/mj-ergonomie-journal-20261007-review`, PR en brouillon dans Encounter et chaque Companion, destinées à main mais sans merge. Livraison coordonnée du serveur Encounter et des six modules clients nécessaire. Cache Encounter V4.2 et URL des scripts Companions avancés ; aucune donnée utilisateur effacée. RPG-Connect : aucune modification.
+Branche Encounter : `feature/mj-ergonomie-journal-20261007-delivery`. Branches des six Companions : `feature/mj-ergonomie-journal-20261007-review`. Branches révisables destinées à main, sans merge. L’ouverture des PR en brouillon est bloquée par une erreur interne du connecteur GitHub (essais Encounter et Kentaro, aucune PR créée). Livraison coordonnée du serveur Encounter et des six modules clients nécessaire. Cache Encounter V4.2 et URL des scripts Companions avancés ; aucune donnée utilisateur effacée. RPG-Connect : aucune modification.
 
 Liste exacte des fichiers ci-dessous. Les sept checkouts locaux conservent leurs modifications préparées dans l’index, correspondant au code des arbres Git publiés. Le terminal est devenu indisponible à la finalisation : aucun nettoyage ni changement de référence locale n’a été effectué. Le présent compte rendu de livraison est complété directement dans la branche GitHub. RPG-Connect reste inchangé. Les répertoires de preuves ignorés, dépendances et archives rattachées ne sont pas une livraison runtime. Le checkout concurrent n'a pas été touché.
 
@@ -255,3 +255,15 @@ Preuves compactes : `audit/MJ-VALIDATION-20261007.json` (résultats, scénarios 
 
 
 Les branches de revue sont créées directement sur les commits validés. Deux branches initiales `feature/mj-ergonomie-journal-20261007` (Encounter et Kentaro), restées sur les commits de départ après l’erreur GitHub d’avancement de référence, ne constituent pas la livraison.
+
+### Publication vérifiée
+
+- Encounter : commit de revue `190c0167f15133cdcc6d82e077f43d00ed75f2b5`
+- Kentaro : commit de revue `b2987c56b5d86698f6c36475c3e3093fa3f409ce`
+- Samoth : commit de revue `74378cd3afe6f1ccdb6714717ec31056a42cb50e`
+- Brackmard : commit de revue `8db601711f51e0372d750ff503b48e6731167e9b`
+- Zephyr : commit de revue `6d3ee6e67622fd94292731ef47e140e339fe24cf`
+- Rufus : commit de revue `1a8cc3ecfe3aa24d80d2a377e45aa2ca7d83c63e`
+- Nans : commit de revue `7d0515e9d17e2294c1b9a0b441e4c897992d2e0c`
+
+Encounter contient ensuite un commit de compte rendu uniquement, sur sa branche `feature/mj-ergonomie-journal-20261007-delivery`. Son code et ses scénarios restent identiques à ceux testés. Les branches `-review` restent accessibles ; la branche Encounter `-delivery` porte le compte rendu final exact. Aucun main avancé.
