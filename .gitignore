@@ -3,3 +3,5 @@ audit/results/
 
 # Generated browser evidence stays outside the runtime release.
 audit/*/
+audit/architecture-run.log
+audit/architecture-unit.log

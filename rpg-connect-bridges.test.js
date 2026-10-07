@@ -48,6 +48,13 @@ for(const name of ['Kentaro','Nans','Samoth','Brackmard','Zephyr','Rufus'])test(
     assert.deepEqual(modes,['multi','single'],'changing from a zone spell to an attack must reset selection mode');
     assert.deepEqual(api.getState().resources,before.resources,'choosing a spell must not spend resources');
     assert.deepEqual(api.getState().turn,before.turn,'choosing a spell must not spend action economy');
+    for(const [spell,field] of [['dragon','dragon'],['animateobjects','animatedObjects']]){
+      api.resetCombat();selector.value=spell;selector.dispatchEvent(new w.Event('change',{bubbles:true}));w.document.querySelector('#combatCast').click();
+      assert.ok(w.__CompanionBridge.read()[field],spell+' must create its native dependent entity');
+      api.clearConcentration();
+      assert.equal(w.__CompanionBridge.read()[field],null,spell+' must be removed by native concentration cleanup');
+      assert.equal(api.getState().concentration,null);
+    }
   }
   if(name==='Nans'){
     const modes=[];w.RPGConnect={prepareTargets:options=>modes.push(options.targetMode)};

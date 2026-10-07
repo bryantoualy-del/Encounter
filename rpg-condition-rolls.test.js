@@ -36,3 +36,7 @@ test('condition hardening uses only known context',()=>{
  assert.equal(mechanics([{name:'Paralysé'}]).autoCritical,false);
  assert.equal(mechanics([{name:'Paralysé'}],{distanceFeet:5}).autoCritical,true);
 });
+
+test('central registry includes all fifteen standard icons',()=>{const data=JSON.parse(readFileSync(new URL('../RPG-Connect/assets/icon-data/condition-icons.json',import.meta.url),'utf8'));for(const name of ['aveugle','charme','assourdi','effraye','empoisonne','entrave','etourdi','inconscient','invisible','paralyse','petrifie','a_terre','agrippe','incapacite','epuisement'])assert.ok(data.icons['conditions/'+name],name)});
+
+test('petrified is incapacitating and fails STR/DEX automatically',()=>{const r=context.EncounterConditionRolls;assert.equal(r.mechanics([{name:'Pétrifié'}]).incapacitated,true);assert.equal(r.mechanics([{name:'Pétrifié'}]).attacksAgainstAdvantage,true);assert.equal(r.saveRules([{name:'Pétrifié'}],'DEX').autoFail,true)});

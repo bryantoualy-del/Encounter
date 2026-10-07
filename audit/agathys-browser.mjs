@@ -37,7 +37,7 @@ try{
   if(conc){await k.evaluate(()=>CompanionAPI.setConcentration('Voile spirituel'));await gm.waitForFunction(()=>state.encounter.participants.find(p=>p.id==='cc-kentaro').conditions.some(c=>c.origin==='rpg-concentration'))}
   const count=await gm.evaluate(()=>Object.values(state.encounter.rpgTriggers||{}).length);
   if(hit)await gm.evaluate(({enemy,damage,mode})=>applyDamageDirect(state.encounter.participants.find(p=>p.id==='cc-kentaro'),damage,'perforant',{attack:{attackerId:enemy,hit:true,mode},source:'Attaque de test'}),{enemy,damage,mode});
-  if(conc){await k.locator('[data-concentration-roll]').waitFor({state:'visible'});await k.locator('[data-concentration-roll]').click();await k.waitForFunction(()=>document.querySelector('#ccDiceOverlay.open'));await dismissDice(k)}
+  if(conc){await k.locator('[data-concentration-roll]').waitFor({state:'visible'});await k.locator('[data-concentration-roll]').click();await k.waitForFunction(()=>document.querySelector('#ccDiceOverlay.open'));await k.waitForFunction(()=>document.querySelector('#ccDiceOverlay')?.dataset.dismissable==='1');check('concentration verdict is not an automatic critical',/CONCENTRATION (MAINTENUE|PERDUE)/.test(await k.locator('.cc-dice-verdict').innerText()));await k.screenshot({path:out+'/final-concentration-verdict.png'});await dismissDice(k)}
   if(hit)await gm.waitForFunction(count=>Object.values(state.encounter.rpgTriggers||{}).length>count&&Object.values(state.encounter.rpgTriggers).every(x=>x.result),count);
   return gm.evaluate(()=>({hp:state.encounter.participants.find(p=>p.kind==='enemy').hp,temp:state.encounter.participants.find(p=>p.id==='cc-kentaro').tempHp,results:Object.values(state.encounter.rpgTriggers||{}).map(x=>x.result)}));
  }

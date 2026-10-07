@@ -2,7 +2,7 @@ import {createServer} from 'node:http';
 import {randomBytes, timingSafeEqual} from 'node:crypto';
 import {WebSocketServer, WebSocket} from 'ws';
 
-const protocol={protocolVersion:1,serverVersion:'audit-2026-10-04',capabilities:['event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions','companion-concentration-v1','reaction-transactions-v1','triggered-effects-v1']};
+const protocol={protocolVersion:1,serverVersion:'combat-2026-10-06',capabilities:['event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions','companion-concentration-v1','reaction-transactions-v1','triggered-effects-v1']};
 const coreCapabilities=protocol.capabilities.filter(c=>!['companion-concentration-v1','reaction-transactions-v1','triggered-effects-v1'].includes(c));
 const characters=new Set(['kentaro','samoth','brackmard','rufus','nans','zephyr']);
 const key=process.env.RPG_CONNECT_GM_KEY;

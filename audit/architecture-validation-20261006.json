@@ -1,0 +1,228 @@
+{
+  "date": "2026-10-06",
+  "automated": {
+    "encounter": 136,
+    "companions": 7,
+    "icons": 4
+  },
+  "fights": [
+    {
+      "fight": 1,
+      "creatures": [
+        "Gobelin",
+        "Orc",
+        "Ogre"
+      ],
+      "rounds": 4,
+      "victory": true,
+      "recordedNativeActions": 24,
+      "companions": [
+        "Rufus",
+        "Kentaro",
+        "Brackmard",
+        "Nans",
+        "Zephyr",
+        "Samoth"
+      ],
+      "evidence": "architecture-first-run"
+    },
+    {
+      "fight": 2,
+      "creatures": [
+        "Loup sanguinaire",
+        "Ombre",
+        "Squelette"
+      ],
+      "rounds": 3,
+      "victory": true,
+      "recordedNativeActions": 20,
+      "companions": [
+        "Rufus",
+        "Brackmard",
+        "Zephyr",
+        "Samoth",
+        "Nans",
+        "Kentaro"
+      ],
+      "evidence": "architecture-second-run"
+    },
+    {
+      "fight": 3,
+      "creatures": [
+        "Fausse hydre — Démo",
+        "Sectateur",
+        "Vétéran"
+      ],
+      "rounds": 5,
+      "victory": true,
+      "recordedNativeActions": 38,
+      "companions": [
+        "Rufus",
+        "Kentaro",
+        "Brackmard",
+        "Zephyr",
+        "Samoth",
+        "Nans"
+      ],
+      "evidence": "architecture-summary"
+    }
+  ],
+  "focused": [
+    {
+      "name": "agathys",
+      "checks": [
+        {
+          "name": "native fight started",
+          "pass": true
+        },
+        {
+          "name": "A positive temp melee",
+          "pass": true
+        },
+        {
+          "name": "B last temp destroyed",
+          "pass": true
+        },
+        {
+          "name": "C zero temp",
+          "pass": true
+        },
+        {
+          "name": "D ranged",
+          "pass": true
+        },
+        {
+          "name": "E miss",
+          "pass": true
+        },
+        {
+          "name": "F resistance",
+          "pass": true
+        },
+        {
+          "name": "F immunity",
+          "pass": true
+        },
+        {
+          "name": "F vulnerability",
+          "pass": true
+        },
+        {
+          "name": "concentration verdict is not an automatic critical",
+          "pass": true
+        },
+        {
+          "name": "G concentration plus Agathys",
+          "pass": true
+        },
+        {
+          "name": "Agathys never consumes native reaction",
+          "pass": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "counterspell",
+      "checks": [
+        {
+          "name": "native fight started",
+          "pass": true
+        },
+        {
+          "name": "spell suspended before targeting, saves, damage",
+          "pass": true
+        },
+        {
+          "name": "automatic counterspell consumes one slot and one reaction, cancels original action",
+          "pass": true
+        },
+        {
+          "name": "counterspell verdict is not an automatic critical",
+          "pass": true
+        },
+        {
+          "name": "failed Counterspell resumes original spell before its effects",
+          "pass": true
+        },
+        {
+          "name": "high level counterspell uses native dice and deterministic result",
+          "pass": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "opportunity",
+      "checks": [
+        {
+          "name": "native fight started",
+          "pass": true
+        },
+        {
+          "name": "native own turn Sneak applied through MJ hit",
+          "pass": true
+        },
+        {
+          "name": "manual opportunity without movement, Sneak on opposing turn, reaction consumed",
+          "pass": true
+        },
+        {
+          "name": "Sentinel speed zero until current turn ends",
+          "pass": true
+        },
+        {
+          "name": "Sentinel expires at correct turn end",
+          "pass": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "profile",
+      "checks": [
+        {
+          "name": "six companion fight starts",
+          "pass": true
+        },
+        {
+          "name": "Encounter profile contains health temp concentration reaction states",
+          "pass": true
+        },
+        {
+          "name": "Companion compact party available",
+          "pass": true
+        },
+        {
+          "name": "network enemy catalog never leaks absolute health",
+          "pass": true
+        },
+        {
+          "name": "tablet horizontal layout remains inside viewport",
+          "pass": true
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "harnessRetries": [
+    {
+      "run": "architecture-first-run",
+      "error": "page.waitForFunction: Timeout 15000ms exceeded.",
+      "completedFights": [
+        1
+      ]
+    },
+    {
+      "run": "architecture-second-run",
+      "error": "page.waitForFunction: Timeout 45000ms exceeded.",
+      "completedFights": [
+        2
+      ]
+    }
+  ],
+  "notes": [
+    "Three complete fights validated in successive isolated Chromium executions; first two runs stopped in the following scenario, corrected and retested.",
+    "Native Three.js renderer retained; deterministic roll fixtures only for critical branches."
+  ]
+}

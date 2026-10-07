@@ -203,10 +203,10 @@ function checkPhaseTransition(p){
 function effectiveAc(p){const ph=currentPhase(p);return p?.acOverride!=null?p.acOverride:(ph?.ac??p.ac);}
 function effectiveSpeed(p,m=modelFor(p)){return globalThis.EncounterConditionRolls.mechanics(p?.conditions).speedZero?'0':p?.speedOverride||currentPhase(p,m)?.speed||m?.speed||'—';}
 function effectiveLegendaryMax(p,m=modelFor(p)){const ph=currentPhase(p,m);return ph?.legendaryMax??m?.legendaryMax??0;}
-function effectiveDamageResistances(p,m=modelFor(p)){return [...new Set([...(m?.damageResistances||[]),...(currentPhase(p,m)?.addResistances||[]),...(p?.dynamicDefenses?.resistances||[])])];}
-function effectiveDamageImmunities(p,m=modelFor(p)){return [...new Set([...(m?.damageImmunities||[]),...(currentPhase(p,m)?.addImmunities||[]),...(p?.dynamicDefenses?.immunities||[])])];}
+function effectiveDamageResistances(p,m=modelFor(p)){return [...new Set([...(m?.damageResistances||[]),...(currentPhase(p,m)?.addResistances||[]),...(p?.dynamicDefenses?.resistances||[]),...((p?.conditions||[]).some(c=>normKey(c.name)==='petrifie')?DAMAGE_TYPES:[])])];}
+function effectiveDamageImmunities(p,m=modelFor(p)){return [...new Set([...(m?.damageImmunities||[]),...(currentPhase(p,m)?.addImmunities||[]),...(p?.dynamicDefenses?.immunities||[]),...((p?.conditions||[]).some(c=>normKey(c.name)==='petrifie')?['poison']:[])])];}
 function effectiveDamageVulnerabilities(p,m=modelFor(p)){return [...new Set([...(m?.damageVulnerabilities||[]),...(p?.dynamicDefenses?.vulnerabilities||[])])];}
-function effectiveConditionImmunities(p,m=modelFor(p)){return [...new Set([...(m?.conditionImmunities||[]),...(p?.dynamicDefenses?.conditionImmunities||[])])];}
+function effectiveConditionImmunities(p,m=modelFor(p)){return [...new Set([...(m?.conditionImmunities||[]),...(p?.dynamicDefenses?.conditionImmunities||[]),...((p?.conditions||[]).some(c=>normKey(c.name)==='petrifie')?['Empoisonné']:[])])];}
 function hpPct(p){return Math.max(0,Math.min(100,p.hp/p.maxHp*100));}
 function hpClass(p){const pct=hpPct(p);return pct>60?'healthy':pct>30?'mid':'low';}
 function hpBandClass(p){const pct=hpPct(p);return p.hp<=0?'hp-down':pct>75?'hp-high':pct>50?'hp-good':pct>25?'hp-warn':'hp-critical';}
