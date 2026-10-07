@@ -1,6 +1,6 @@
 # Encounter — ergonomie MJ, bibliothèque, journal et annulation
 
-Mission du 7 octobre 2026. Travail isolé à partir de la tranche Préparation / Invocations / Assistant déjà livrée. Aucun merge, push sur main ou déploiement. Le serveur et les huit applications de test sont servis uniquement sur la boucle locale, avec salles, clés, invitations et stockages de navigateur propres aux tests. La partie réelle n'a pas été contactée.
+Rapport de validation préparé avant intégration, le 7 octobre 2026. La décision ultérieure d’intégration autorisée figure en fin de document. Travail isolé à partir de la tranche Préparation / Invocations / Assistant déjà livrée. Aucun merge, push sur main ou déploiement. Le serveur et les huit applications de test sont servis uniquement sur la boucle locale, avec salles, clés, invitations et stockages de navigateur propres aux tests. La partie réelle n'a pas été contactée.
 
 ## Bases et audit
 
@@ -283,3 +283,17 @@ Encounter contient ensuite un commit de compte rendu uniquement, sur sa branche 
 ## Vérification avant intégration sur main
 
 Le contrôle GitHub initial utilisait encore le manifest historique multicible : modules de santé/réaction absents dans les six clones CI. Le manifest est maintenant fixé sur les six commits de livraison testés. Les ressources Three du navigateur sont une dépendance npm figée, sans dossier manuel extérieur. Ces corrections concernent les tests et leur reproductibilité, sans modification des règles de combat.
+
+## Intégration autorisée sur main — 7 octobre 2026
+
+Après l’instruction explicite du propriétaire, CI GitHub verte sur `98436459dd985c84c2d34e1fe511abddbd80218a` ([exécution validée](https://github.com/bryantoualy-del/Encounter/actions/runs/37646770098)) et nouveau replay local : 159 tests unitaires, 7 Companions, 4 icônes et 114 contrôles navigateur, sans erreurs. Les six PR Companions ont été mergées, puis Encounter #9. Les arbres intégrés sont identiques aux arbres de revue validés. RPG-Connect reste inchangé ; les sept checkouts livrés sont propres et synchronisés sur main.
+
+- Kentaro : merge `32e7c9436ab900481bf4bb812c759ccfcfabdabd` (PR #6).
+- Samoth : merge `186d1ef8583a483ab206b0713c45591ac8642436` (PR #6).
+- Brackmard : merge `d73747718b14a0742f7d1b797caf554f4720e8ed` (PR #4).
+- Zephyr : merge `8f4bf9aad03528b58eba81437d51f7e7a050756b` (PR #5).
+- Rufus : merge `8b497355b2dd9f11bb07e29bcb83c55d2b17085d` (PR #13).
+- Nans : merge `7781b3d63b18a13cdf56a7ba884ee80fb97dbfc9` (PR #4).
+- Encounter : merge `f98c9c01d7c57a3c59259d6001e8c05c98ce8062` (PR #9).
+
+La publication GitHub Pages d’Encounter sur le merge a réussi. Ce dernier ajout au rapport est uniquement documentaire. Aucun reset ou effacement des données de partie ; aucune commande envoyée à la partie en cours. Les limites d’annulation et de contrôle Safari/matériel décrites plus haut restent applicables.
