@@ -174,3 +174,5 @@
 @media(max-width:900px){.action-popup{top:max(12px,env(safe-area-inset-top))!important}.drawer-close-hint{max-width:120px;font-size:8px}.member-vitals b{font-size:17px}}
 
 html,body{overflow-x:hidden}body{overflow-y:auto;-webkit-overflow-scrolling:touch}.combat-list,.detail-tab-body,.monster-library,.drawer-body{scrollbar-gutter:stable;touch-action:pan-y;-webkit-overflow-scrolling:touch}
+
+.combat-condition-icon{width:22px;height:22px;object-fit:contain;vertical-align:middle;margin-right:5px}

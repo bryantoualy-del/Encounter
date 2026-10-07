@@ -22,3 +22,17 @@ test('manual saving throws match Encounter network condition rules',()=>{
  assert.equal(rules([{name:'Paralysé'}],'CON').autoFail,false);
  assert.equal(rules([{name:'Perturbations synaptiques'}],'DEX').mode,'normal');
 });
+
+test('condition hardening uses only known context',()=>{
+ const {mechanics,abilityRules}=context.EncounterConditionRolls;
+ assert.equal(abilityRules([{name:'Empoisonné'}]).mode,'dis');
+ assert.equal(abilityRules([{name:'Empoisonné'}],'adv').mode,'normal');
+ for(const name of ['Agrippé','Entravé'])assert.equal(mechanics([{name}]).speedZero,true);
+ for(const name of ['Incapacité','Étourdi','Paralysé','Inconscient'])assert.equal(mechanics([{name}]).incapacitated,true);
+ assert.equal(mechanics([{name:'Effrayé'}]).attackDisadvantage,false);
+ assert.equal(mechanics([{name:'Effrayé'}],{fearSourceVisible:true}).attackDisadvantage,true);
+ assert.equal(mechanics([{name:'À terre'}]).attacksAgainstAdvantage,false);
+ assert.equal(mechanics([{name:'À terre'}],{distanceFeet:5}).attacksAgainstAdvantage,true);
+ assert.equal(mechanics([{name:'Paralysé'}]).autoCritical,false);
+ assert.equal(mechanics([{name:'Paralysé'}],{distanceFeet:5}).autoCritical,true);
+});
