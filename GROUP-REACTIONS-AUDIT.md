@@ -68,7 +68,7 @@ Voir `audit/group-browser.mjs`, `rpg-group-mission.test.js`, les tests de réact
 
 Fichiers modifiés par dépôt :
 
-- **Encounter** : `audit/e2e.mjs`, `index.html`, `mj-journal.js`, `package.json`, `rpg-connect-mj.js`, `rpg-connect-mj.test.js`, `rpg-connect-server.js`, `rpg-participant-profiles.js`, `rpg-reaction-authority.js`, `audit/group-browser.mjs`, `rpg-diversion-authority.js`, `rpg-group-mission.test.js`.
+- **Encounter** : `audit/e2e.mjs`, `index.html`, `mj-journal.js`, `package.json`, `rpg-connect-mj.js`, `rpg-connect-mj.test.js`, `rpg-connect-server.js`, `rpg-participant-profiles.js`, `rpg-reaction-authority.js`, `rpg-reaction-authority.test.js`, `rpg-reactions-client.test.js`, `audit/mission-browser.mjs`, `audit/group-browser.mjs`, `rpg-diversion-authority.js`, `rpg-group-mission.test.js`.
 
 - **RPG-Connect** : `rpg-group.js`, `rpg-instruction.js`, `rpg-native-reactions.js`, `rpg-resources.js`, `rpg-weapon-gate.js`.
 
@@ -111,3 +111,5 @@ L’activation exige le serveur Encounter mis à jour (transport `attack:grant`)
 Derniers contrôles : un refus automatique d’une autre fenêtre de réaction préserve l’Instruction accordée et son composant de dégâts. Une invalidation partagée avant grant ferme la demande du candidat sans consommation (les autres candidats restent éligibles dans une fenêtre commune). Après grant, si l’attaquant devient inconscient avant la décision MJ, Encounter ferme la réaction et annule le jet natif en attente sans dégâts; la réaction déjà dépensée au stade natif reste dépensée. Le scénario navigateur supplémentaire couvre ce dernier cas avec Kentaro. Ces corrections utilisent toujours le même ledger générique.
 
 La dernière reprise du scénario de non-régression a démontré une collision de séquence : l’appel public `RPGConnect.requestSave` réutilisait l’origine d’une conséquence MJ antérieure, et pouvait être rejeté par le ledger de JdS comme identifiant déjà utilisé. L’appel public réserve désormais sa propre origine (ou l’identifiant explicite fourni), tandis que l’observation interne des JdS natifs conserve leur séquence et leurs coûts. Le run échoué est conservé; il ne compte pas comme réussite.
+
+Après correction de l’appel public de JdS, le scénario complet de non-régression repasse : **112 contrôles réussis, aucune erreur JavaScript**, sur cinq rounds, fin/rechargement et reprise des flux natifs. Les clients/bridges ont été rejoués : 7 tests passent. Les résultats courants sont 169 tests unitaires, 41 contrôles Groupe, 112 contrôles de non-régression, 7 tests clients/bridges et 4 tests icônes. Le scénario additionnel monster-assistant/invocations (`test:mission`) conserve son timeout de pilote documenté; la matrice exhaustive et Samoth restent les limites de livraison déjà indiquées.
