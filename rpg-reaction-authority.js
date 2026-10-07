@@ -11,8 +11,8 @@
    if(event.type==='reaction:decline'){if(w.claim?.characterId===id)return false;decline(w,id);return true}
    if(event.type==='reaction:claim'){
     if(w.claim){if(w.claim.characterId===id&&w.claim.optionId===q.optionId)send(id,'reaction:grant',{...context(w),optionId:q.optionId});else send(id,'reaction:closed',{...context(w),claimedBy:w.claim.characterId});return true}
-    if(w.status!=='open'||w.declined.includes(id)||!w.offers[id]?.some(x=>x.id===q.optionId)||!deps.available(id,w)||Object.values(ledger()).some(other=>other!==w&&other.status==='granted'&&other.claim?.characterId===id))return false;
-    w.claim={characterId:id,optionId:q.optionId};w.status='granted';persist();log('Réaction · accordée à '+id+' · '+q.optionId);send(id,'reaction:grant',{...context(w),optionId:q.optionId});for(const peer of w.eligible)if(peer!==id)send(peer,'reaction:closed',{...context(w),claimedBy:id});return true;
+    if(w.status!=='open'||w.declined.includes(id)||!w.offers[id]?.some(x=>x.id===q.optionId)||!deps.available(id,{...w,context:{...w.context,targetId:q.targetId||w.context.targetId}})||Object.values(ledger()).some(other=>other!==w&&other.status==='granted'&&other.claim?.characterId===id))return false;
+    if(q.targetId)w.context.targetId=q.targetId;w.claim={characterId:id,optionId:q.optionId};w.status='granted';Object.assign(w.context,deps.grant?.(id,w)||{});persist();log('Réaction · accordée à '+id+' · '+q.optionId);send(id,'reaction:grant',{...context(w),optionId:q.optionId});for(const peer of w.eligible)if(peer!==id)send(peer,'reaction:closed',{...context(w),claimedBy:id});return true;
    }
    if(event.type==='reaction:resolve'){if(w.claim?.characterId!==id||w.claim.optionId!==q.optionId)return false;close(w,{...q,characterId:id});return true}
    return false;

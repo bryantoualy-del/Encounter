@@ -87,7 +87,7 @@ const beforeMulti=await gm.evaluate(()=>Object.fromEntries(['mt-wolf','mt-goblin
 await sam.evaluate(()=>{RPGConnect.prepareTargets({targetMode:'multi'});RPGConnect.selectTargets(['mt-wolf','mt-goblin','mt-elemental'])});
 const selectedMulti=await sam.evaluate(()=>RPGConnect.getStatus().targets.map(t=>t.id));checks.push({name:'Samoth multi selector holds three explicit targets',pass:selectedMulti.join(',')==='mt-wolf,mt-goblin,mt-elemental',detail:selectedMulti});
 const iconState=await sam.locator('[data-target-id="mt-wolf"] img').evaluate(img=>({src:img.getAttribute('src'),naturalWidth:img.naturalWidth}));checks.push({name:'multi target keeps creature vignette',pass:!!iconState.src&&iconState.naturalWidth>0,detail:iconState});
-const beforeFrames=frames.length;
+const beforeFrames=frames.length;const sourceBeforeMulti=await sam.evaluate(()=>({slots:structuredClone(__CompanionBridge.read().slots),sp:__CompanionBridge.read().sp}));
 await sam.locator('#combatSpell').selectOption('vortex');await sam.locator('#combatCast').click();
 await gm.locator('#rpgSavePopup').waitFor({state:'visible',timeout:5000});
 const first=await resolveSave('Samoth',1);
@@ -106,8 +106,8 @@ const multiHpBeforeReplay=await gm.evaluate(()=>Object.fromEntries(['mt-wolf','m
 await sam.evaluate(payload=>CompanionAPI.emitLocal('save:request',payload,'multi-replay-new-event-id'),outboundMulti.payload);await gm.waitForTimeout(250);
 const multiHpAfterReplay=await gm.evaluate(()=>Object.fromEntries(['mt-wolf','mt-goblin','mt-elemental'].map(id=>[id,state.encounter.participants.find(x=>x.id===id)?.hp??0])));
 checks.push({name:'same action/save IDs with a new eventId are deduplicated',pass:JSON.stringify(multiHpBeforeReplay)===JSON.stringify(multiHpAfterReplay),detail:{hpBeforeReplay:multiHpBeforeReplay,hpAfterReplay:multiHpAfterReplay}});
-await sam.evaluate(()=>CompanionAPI.undo());await gm.waitForFunction(id=>EncounterJournal.entries().some(x=>x.id===id&&EncounterJournal.reason(x).includes('consommation locale')),outboundMulti.payload.actionId);
-checks.push({name:'unsafe multi-save undo refuses partial resource restoration',pass:JSON.stringify(multiHpAfterReplay)===JSON.stringify(await gm.evaluate(()=>Object.fromEntries(['mt-wolf','mt-goblin','mt-elemental'].map(id=>[id,state.encounter.participants.find(x=>x.id===id)?.hp??0]))))});
+await gm.evaluate(id=>EncounterJournal.request(id),outboundMulti.payload.actionId);await gm.locator('[data-confirm-undo]').click();await gm.waitForFunction(id=>EncounterJournal.entries().some(x=>x.id===id&&x.status==='cancelled'),outboundMulti.payload.actionId);
+checks.push({name:'certified multi-save undo restores all targets and native resources exactly once',pass:JSON.stringify(beforeMulti)===JSON.stringify(await gm.evaluate(()=>Object.fromEntries(['mt-wolf','mt-goblin','mt-elemental'].map(id=>{const p=state.encounter.participants.find(x=>x.id===id);return[id,{hp:p.hp,tempHp:p.tempHp||0,conditions:JSON.stringify(p.conditions||[])}]}))))&&JSON.stringify(sourceBeforeMulti)===JSON.stringify(await sam.evaluate(()=>({slots:structuredClone(__CompanionBridge.read().slots),sp:__CompanionBridge.read().sp}))) });
 await gm.evaluate(()=>actualAdvanceTurn());checks.push({name:'turn can advance after a multi-target kill',pass:true});
 // Advance five complete encounter rounds through the real turn engine to expose stale locks/freezes.
 const roundStart=await gm.evaluate(()=>state.encounter.round);for(let r=0;r<5;r++){const n=await gm.evaluate(()=>Math.max(1,sortedParticipants().length));for(let i=0;i<n;i++)await gm.evaluate(()=>actualAdvanceTurn())}
