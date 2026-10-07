@@ -1,30 +1,30 @@
 {
   "protocolVersion": 1,
-  "branch": "feature/multi-target-2026-10-05",
+  "branch": "feature/mj-ergonomie-journal-20261007-review",
   "repositories": {
     "Kentaro": {
-      "sha": "1c810cab7f604870a65f523e13ea0f04ccff3e2b",
-      "tree": "99c1ae0b257683638c9f914035c48f2cd14536f3"
+      "sha": "b2987c56b5d86698f6c36475c3e3093fa3f409ce",
+      "tree": "823363478e9222010f457016abd8d5f1437e6687"
     },
     "Brackmard": {
-      "sha": "180f0cdbe9b36194430d98b796b1c9323c2c3d80",
-      "tree": "2e5987a5e1b0242d5ab14e95a1a4746b7d487451"
+      "sha": "8db601711f51e0372d750ff503b48e6731167e9b",
+      "tree": "450d8b7bb9085ffbfc18a68ab9997ba6a98d51c2"
     },
     "Zephyr": {
-      "sha": "846f9bc58d799c07a19449979df60bd22d7cd719",
-      "tree": "c7bc784a434b0fc04e7fc4277a3991890de0d450"
+      "sha": "6d3ee6e67622fd94292731ef47e140e339fe24cf",
+      "tree": "fc9585e3cfd09c4ada9ecf35c6919ce15595478f"
     },
     "Rufus": {
-      "sha": "bc3e48d006a813dc8b3b4974ebb0a04913c6f090",
-      "tree": "e422271b379d74d242946a5126905c3486a6368d"
+      "sha": "1a8cc3ecfe3aa24d80d2a377e45aa2ca7d83c63e",
+      "tree": "368111abc76e3682aef5352a877d8dcb001e7ffa"
     },
     "Samoth": {
-      "sha": "cfe043c8eca23a1873b0de76ef682bfa4d46edee",
-      "tree": "82fa7af451c9ab4795d9c9ff2d07a9765d7fe3f3"
+      "sha": "74378cd3afe6f1ccdb6714717ec31056a42cb50e",
+      "tree": "f7a3ada9ad7fc7db8fcb3596911489873df54727"
     },
     "Nans": {
-      "sha": "43bba4d9c597f0a7f3c281840abdab081538f055",
-      "tree": "cccc4faaa0a1bfe01681d7fe5a79dc19fe48b597"
+      "sha": "7d0515e9d17e2294c1b9a0b441e4c897992d2e0c",
+      "tree": "d5436006b9f6cb91d3a8f7aa8c7875f71422340b"
     },
     "Encounter": {
       "sha": "70bc68540f092c2e90580b47ba811eb9e939f0c7",
@@ -34,5 +34,6 @@
       "sha": "c117b408816a0f52a08449d6fa5554d94794c0b4",
       "tree": "5819683b5b25ae8f7421948fe27ad5423ca1263b"
     }
-  }
+  },
+  "encounterCheckout": "current-workflow-commit"
 }

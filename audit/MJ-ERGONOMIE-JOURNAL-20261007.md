@@ -85,7 +85,7 @@ Anomalies corrigées puis rejouées : clic de préparation, boutons masqués par
 
 Les résultats compacts sont archivés dans `MJ-VALIDATION-20261007.json`. Les traces/captures volumineuses restent des preuves locales ignorées par Git, sans données de partie réelle.
 
-Pour reproduire : placer les huit repos comme répertoires frères, installer les dépendances Encounter/Playwright, pointer `CHROMIUM_PATH` vers Chromium. Les scénarios qui interceptent le CDN Three utilisent les fichiers `three.module.js` et `three.core.js` de Three 0.186.1 sous le répertoire frère `browser-deps`. Ils ouvrent leurs propres ports et salles de test ; aucun endpoint de partie n'est requis.
+Pour reproduire : placer les huit repos comme répertoires frères, installer les dépendances Encounter/Playwright, pointer `CHROMIUM_PATH` vers Chromium. Les scénarios de cette tranche qui interceptent le CDN Three utilisent les fichiers de la dépendance de développement Three 0.186.1, verrouillée dans package-lock.json. Ils ouvrent leurs propres ports et salles de test ; aucun endpoint de partie n'est requis.
 
 ## Livraison et fichiers
 
@@ -277,3 +277,7 @@ Encounter contient ensuite un commit de compte rendu uniquement, sur sa branche 
 - [Zephyr #5](https://github.com/bryantoualy-del/Zephyr/pull/5)
 - [Rufus #13](https://github.com/bryantoualy-del/Rufus/pull/13)
 - [Nans #4](https://github.com/bryantoualy-del/Nans/pull/4)
+
+## Vérification avant intégration sur main
+
+Le contrôle GitHub initial utilisait encore le manifest historique multicible : modules de santé/réaction absents dans les six clones CI. Le manifest est maintenant fixé sur les six commits de livraison testés. Les ressources Three du navigateur sont une dépendance npm figée, sans dossier manuel extérieur. Ces corrections concernent les tests et leur reproductibilité, sans modification des règles de combat.
