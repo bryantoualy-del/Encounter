@@ -1,5 +1,6 @@
-const CACHE='encounter-v4.2-mj-62';
+const CACHE='encounter-v4.2-mj-63-group';
 const ASSETS=[
+  './rpg-diversion-authority.js',
   './rpg-reaction-authority.js',
   './rpg-participant-profiles.js',
 
