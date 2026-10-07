@@ -2,6 +2,8 @@
 
 Version V4.1 de la console, conçue pour suivre le combat tout en gardant son attention sur la table réelle. Elle ajoute notamment les icônes automatiques des 14 types de créatures D&D 5e et leurs variantes BOSS.
 
+La Bibliothèque propose désormais un **Assistant de fiches** : texte collé ou fiche existante, vérification MJ, bilan des capacités et essai sur cibles fictives. Les limites manuelles restent affichées. En fight, la préparation se consulte sans redémarrer le combat ; les renforts jouent à partir du round suivant. Les tours du spectre et du dragon sont identifiés séparément. [Compte rendu et limites](audit/PREPARATION-SUMMONS-ASSISTANT-20261007.md).
+
 ## Utilisation rapide
 
 1. **Préparer** : ajoute les personnages/adversaires depuis la bibliothèque, règle leurs initiatives et utilise **Modifier** pour ajuster une instance. Les modèles de la bibliothèque restent modifiables séparément.

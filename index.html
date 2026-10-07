@@ -11,9 +11,9 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <meta name="apple-mobile-web-app-title" content="ENCOUNTER">
-  <link rel="stylesheet" href="styles.css?v=3">
+  <link rel="stylesheet" href="styles.css?v=4">
   <link rel="stylesheet" href="table.css?v=7">
-  <link rel="stylesheet" href="rpg-connect-mj.css?v=26">
+  <link rel="stylesheet" href="rpg-connect-mj.css?v=27">
 </head>
 <body>
   <div id="toast" class="toast" aria-live="polite"></div>
@@ -288,15 +288,19 @@
   <script src="builtins.js"></script>
   <script src="rpg-target-names.js?v=1"></script>
   <script src="rpg-condition-rolls.js?v=2"></script>
-  <script src="app.js?v=17"></script>
+  <script src="app.js?v=18"></script>
   <script src="table.js?v=2"></script>
   <script src="rpg-connect-icon-registry.js?v=5"></script>
-  <script src="rpg-save-authority.js?v=5"></script>
+  <script src="rpg-save-authority.js?v=6"></script>
   <script src="rpg-player-save-authority.js?v=1"></script>
   <script src="rpg-health-authority.js?v=2"></script><script src="rpg-summon-authority.js?v=1"></script>
 <script src="rpg-reaction-authority.js"></script>
 <script src="rpg-participant-profiles.js"></script>
-<script src="rpg-connect-mj.js?v=66"></script>
+<script src="rpg-connect-mj.js?v=67"></script>
+  <link rel="stylesheet" href="assistant-dice.css?v=1">
+  <script>window.CompanionDiceTheme={id:"encounter-assistant",primary:"#d5aa55",rim:"#eddca9",secondary:"#806128",floor:"#15111b",surface:["#d5aa55","#806128","#4b3924","#20182e"],edge:"#ded0ec"};</script>
+  <script type="module" src="assistant-dice-engine.js?v=1"></script>
+  <script src="monster-assistant.js?v=1"></script><script src="monster-assistant-ui.js?v=1"></script>
   <script src="creature-icons.js"></script>
   <script>if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js?v=52',{updateViaCache:'none'}).catch(console.warn));}</script>
 </body>

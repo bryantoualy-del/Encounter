@@ -179,3 +179,17 @@
 html,body{overflow-x:hidden}body{overflow-y:auto;-webkit-overflow-scrolling:touch}.combat-list,.detail-tab-body,.monster-library,.drawer-body{scrollbar-gutter:stable;touch-action:pan-y;-webkit-overflow-scrolling:touch}
 
 .combat-condition-icon{width:22px;height:22px;object-fit:contain;vertical-align:middle;margin-right:5px}
+
+/* Session authoring stays scrollable within a landscape tablet viewport. */
+#monsterAssistant {width:min(980px,94vw);max-height:90dvh;overflow:auto}
+.assistant-body {padding:20px}
+.assistant-body textarea {width:100%;resize:vertical;min-height:90px}
+.assistant-body label {display:flex;flex-direction:column;gap:5px;margin:8px 0}
+.assistant-ability {padding:14px;margin:12px 0;border:1px solid var(--border,#48505a);border-radius:12px}
+.assistant-ability summary {cursor:pointer;padding:8px;overflow-wrap:anywhere}
+.assistant-preview {padding:16px;border:1px solid var(--border,#48505a);border-radius:12px}
+.assistant-preview article {margin:10px 0;padding:12px;background:rgba(128,128,128,.1);border-radius:8px}
+.assistant-die {display:inline-grid;place-items:center;width:44px;height:44px;margin:8px;background:#d5aa55;color:#161c24;border-radius:8px;box-shadow:4px 4px 0 #806128;animation:assistant-roll .5s ease}
+@keyframes assistant-roll {from{transform:perspective(150px) rotateY(240deg) rotateX(180deg)}to{transform:perspective(150px) rotateY(0) rotateX(0)}}
+@media (max-height:850px) and (orientation:landscape) {#monsterAssistant .modal-actions {position:sticky;bottom:0;background:var(--panel,#17202b);padding:12px;z-index:2}}
+#monsterAssistant [hidden] {display:none !important}

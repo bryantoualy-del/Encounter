@@ -1,0 +1,1861 @@
+{
+  "date": "2026-10-07",
+  "protocol": "existing v1; no server modification",
+  "automated": {
+    "main": {
+      "pass": 151,
+      "fail": 0
+    },
+    "clients_and_bridges": {
+      "pass": 7,
+      "fail": 0
+    },
+    "icons": {
+      "pass": 4,
+      "fail": 0
+    }
+  },
+  "bases": {
+    "Encounter": "b6bd796de09d9d65b4907814650b4dd225b25758",
+    "RPG-Connect": "c117b408816a0f52a08449d6fa5554d94794c0b4",
+    "Kentaro": "4be7b6c9c45c08c7f11cb63c201c45cfcf60d87a",
+    "Samoth": "17f0530f729d222b6f3dc74c64aac163fd31944d",
+    "Brackmard": "07da172f56af105b40fabe9f9fa3350b9d4b84e0",
+    "Zephyr": "9ef7b8bf62e9f39bb024458f51c4977fe603955a",
+    "Rufus": "090d36a77a4a02214030426b2e1f3191b3464108",
+    "Nans": "e5e0a55db2abd2a1aa4ab3f0d13966ba1c238be2"
+  },
+  "browser": {
+    "baseline": {
+      "checks": [
+        {
+          "name": "baseline simple prep screen switch keeps round/turn/NPC initiatives",
+          "pass": true
+        },
+        {
+          "name": "baseline re-running Prep Fight resets round and cursor",
+          "pass": true,
+          "detail": {
+            "before": {
+              "round": 3,
+              "active": "cc-samoth",
+              "initiatives": [
+                [
+                  "Samoth",
+                  10
+                ],
+                [
+                  "Gobelin",
+                  20
+                ],
+                [
+                  "Orc",
+                  5
+                ]
+              ]
+            },
+            "after": {
+              "round": 1,
+              "active": "p_muy0b1aa_t8qw6l",
+              "initiatives": [
+                [
+                  "Samoth",
+                  10
+                ],
+                [
+                  "Gobelin",
+                  20
+                ],
+                [
+                  "Orc",
+                  5
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "name": "baseline Prep Fight does not zero NPC initiatives",
+          "pass": true
+        },
+        {
+          "name": "baseline adding high initiative reinforcement steals active turn",
+          "pass": true,
+          "detail": {
+            "before": {
+              "round": 3,
+              "active": "cc-samoth",
+              "initiatives": [
+                [
+                  "Samoth",
+                  10
+                ],
+                [
+                  "Gobelin",
+                  20
+                ],
+                [
+                  "Orc",
+                  5
+                ]
+              ]
+            },
+            "after": {
+              "round": 3,
+              "active": "p_muy0b1jn_phkjtu",
+              "initiatives": [
+                [
+                  "Samoth",
+                  10
+                ],
+                [
+                  "Gobelin",
+                  20
+                ],
+                [
+                  "Orc",
+                  5
+                ],
+                [
+                  "Ogre",
+                  25
+                ]
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    },
+    "mission": {
+      "checks": [
+        {
+          "name": "wolf proposal preserves real on-hit save and never marks mundane ability as spell",
+          "pass": true
+        },
+        {
+          "name": "confirmed wolf uses automatic save/state with manual end disclosed",
+          "pass": true
+        },
+        {
+          "name": "assistant uses native 3D engine overlay",
+          "pass": true
+        },
+        {
+          "name": "isolated preview has three fictional saves, no real combat mutation",
+          "pass": true
+        },
+        {
+          "name": "spell proposal has level and structured DEX save",
+          "pass": true
+        },
+        {
+          "name": "spell sandbox demonstrates counterspell without effects",
+          "pass": true
+        },
+        {
+          "name": "text-only save flagged as unconnected",
+          "pass": true
+        },
+        {
+          "name": "manual sandbox states missing structured save",
+          "pass": true
+        },
+        {
+          "name": "all assistant sheets stored with edition metadata",
+          "pass": true
+        },
+        {
+          "name": "saved sheets survive refresh",
+          "pass": true
+        },
+        {
+          "name": "initial summon order retained",
+          "pass": true
+        },
+        {
+          "name": "assistant wolf executes connected damage and on-hit state",
+          "pass": true
+        },
+        {
+          "name": "opening prep preserves fight snapshot",
+          "pass": true
+        },
+        {
+          "name": "connected preparation button does not restart live fight",
+          "pass": true
+        },
+        {
+          "name": "resume uses same active identity and initiatives",
+          "pass": true
+        },
+        {
+          "name": "approval identifies Samoth",
+          "pass": true
+        },
+        {
+          "name": "dragon HUD explicit",
+          "pass": true
+        },
+        {
+          "name": "dragon refresh restores entity label",
+          "pass": true
+        },
+        {
+          "name": "prep consultation preserves pending invocation request",
+          "pass": true
+        },
+        {
+          "name": "pending invocation request survives both refreshes",
+          "pass": true
+        },
+        {
+          "name": "rejection keeps dragon active",
+          "pass": true
+        },
+        {
+          "name": "approval identifies draconique",
+          "pass": true
+        },
+        {
+          "name": "approval identifies Kentaro",
+          "pass": true
+        },
+        {
+          "name": "spectre HUD explicit",
+          "pass": true
+        },
+        {
+          "name": "approval identifies Spectre",
+          "pass": true
+        },
+        {
+          "name": "reinforcement arrival rule shown",
+          "pass": true
+        },
+        {
+          "name": "high initiative reinforcement preserves active round/order",
+          "pass": true
+        },
+        {
+          "name": "initiative correction deferred without moving active turn",
+          "pass": true
+        },
+        {
+          "name": "next round applies explicit correction and admits reinforcement",
+          "pass": true
+        },
+        {
+          "name": "assistant real spell opens native Counterspell window",
+          "pass": true
+        },
+        {
+          "name": "assistant real spell executes native save and damage",
+          "pass": true
+        },
+        {
+          "name": "phase-two ally joins next round",
+          "pass": true
+        },
+        {
+          "name": "stale invocation request cannot change active participant",
+          "pass": true
+        },
+        {
+          "name": "approval identifies Kentaro",
+          "pass": true
+        },
+        {
+          "name": "eliminated invocation cancels pending approval",
+          "pass": true
+        },
+        {
+          "name": "approval identifies draconique",
+          "pass": true
+        },
+        {
+          "name": "owner immediately after pet has owner HUD and button",
+          "pass": true
+        },
+        {
+          "name": "late pet close cannot close owner following pet",
+          "pass": true
+        },
+        {
+          "name": "approval identifies Samoth",
+          "pass": true
+        },
+        {
+          "name": "manual removal of active pet cancels pending and grants correct owner",
+          "pass": true
+        },
+        {
+          "name": "landscape tablet modal fits and scrolls",
+          "pass": true,
+          "detail": {
+            "x": 150,
+            "y": 40,
+            "w": 980,
+            "h": 720,
+            "scroll": true
+          }
+        },
+        {
+          "name": "zero browser page errors",
+          "pass": true,
+          "detail": []
+        }
+      ],
+      "errors": []
+    },
+    "three_combats": {
+      "checks": [
+        {
+          "name": "fight 1 six initiatives validated",
+          "pass": true
+        },
+        {
+          "name": "Kentaro native advantage success",
+          "pass": true
+        },
+        {
+          "name": "synaptic penalty and real Voile cleanup",
+          "pass": true
+        },
+        {
+          "name": "Zephyr native concentration CON+6",
+          "pass": true
+        },
+        {
+          "name": "Samoth native CON+6 DC11",
+          "pass": true
+        },
+        {
+          "name": "fight 1 all enemies eliminated within ten rounds",
+          "pass": true
+        },
+        {
+          "name": "fight 1 ended cleanly",
+          "pass": true
+        },
+        {
+          "name": "fight 2 six initiatives validated",
+          "pass": true
+        },
+        {
+          "name": "native Agathys grants authoritative tempHP",
+          "pass": true
+        },
+        {
+          "name": "native enemy ranged 10 Agathys snapshot",
+          "pass": true
+        },
+        {
+          "name": "native enemy melee 10 Agathys snapshot",
+          "pass": true
+        },
+        {
+          "name": "native enemy melee 20 Agathys snapshot",
+          "pass": true
+        },
+        {
+          "name": "opportunity requires live hostile target",
+          "pass": true
+        },
+        {
+          "name": "Rufus second Sneak during enemy turn without movement",
+          "pass": true
+        },
+        {
+          "name": "Brack Sentinel until current enemy turn end",
+          "pass": true
+        },
+        {
+          "name": "second reaction unavailable",
+          "pass": true
+        },
+        {
+          "name": "Agathys and later concentration remain collision free",
+          "pass": true
+        },
+        {
+          "name": "Agathys and later concentration remain collision free",
+          "pass": true
+        },
+        {
+          "name": "Agathys and later concentration remain collision free",
+          "pass": true
+        },
+        {
+          "name": "fight 2 all enemies eliminated within ten rounds",
+          "pass": true
+        },
+        {
+          "name": "fight 2 ended cleanly",
+          "pass": true
+        },
+        {
+          "name": "fight 3 six initiatives validated",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "pending concentration survives both refreshes",
+          "pass": true
+        },
+        {
+          "name": "refresh concentration one result",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "Counterspell suspends enemy spell",
+          "pass": true
+        },
+        {
+          "name": "Counterspell after reconnect cancels spell before damage",
+          "pass": true
+        },
+        {
+          "name": "opportunity after reconnect consumes reaction on miss",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "boss phase modal usable",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "failed Counterspell resumes suspended spell",
+          "pass": true
+        },
+        {
+          "name": "failed Counterspell resumes into a Companion-owned PJ save",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "boss phase modal usable",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "fight 3 all enemies eliminated within ten rounds",
+          "pass": true
+        },
+        {
+          "name": "fight 3 ended cleanly",
+          "pass": true
+        },
+        {
+          "name": "all six companions remain connected",
+          "pass": true
+        }
+      ],
+      "errors": [],
+      "fights": [
+        {
+          "fight": 1,
+          "creatures": [
+            "Gobelin",
+            "Orc",
+            "Ogre"
+          ],
+          "rounds": 4,
+          "actions": [
+            {
+              "round": 1,
+              "name": "Rufus",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "name": "Kentaro",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "name": "Brackmard",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "name": "Nans",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "actorId": "p_muy0cwwk_2xa15e",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 1,
+              "actorId": "p_muy0cxal_qwkjrk",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 1,
+              "actorId": "p_muy0cx3p_vvbgpl",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 2,
+              "name": "Rufus",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Kentaro",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Brackmard",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Zephyr",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Samoth",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Nans",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "actorId": "p_muy0cwwk_2xa15e",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 2,
+              "actorId": "p_muy0cxal_qwkjrk",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 2,
+              "actorId": "p_muy0cx3p_vvbgpl",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 3,
+              "name": "Rufus",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Kentaro",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Brackmard",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Zephyr",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Samoth",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Nans",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "actorId": "p_muy0cxal_qwkjrk",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 4,
+              "name": "Rufus",
+              "kind": "native-attack"
+            }
+          ],
+          "victory": true
+        },
+        {
+          "fight": 2,
+          "creatures": [
+            "Loup sanguinaire",
+            "Ombre",
+            "Squelette"
+          ],
+          "rounds": 4,
+          "actions": [
+            {
+              "round": 1,
+              "name": "Rufus",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "name": "Brackmard",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "name": "Zephyr",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "name": "Samoth",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "name": "Nans",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "actorId": "p_muy0fcz9_xwfuxz",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 1,
+              "actorId": "p_muy0fd6p_77uon4",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 2,
+              "name": "Rufus",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Kentaro",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Brackmard",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Zephyr",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Samoth",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Nans",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "actorId": "p_muy0fcrw_11tdtz",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 2,
+              "actorId": "p_muy0fcz9_xwfuxz",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 2,
+              "actorId": "p_muy0fd6p_77uon4",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 3,
+              "name": "Rufus",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Kentaro",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Brackmard",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Zephyr",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Samoth",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Nans",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "actorId": "p_muy0fd6p_77uon4",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 4,
+              "name": "Rufus",
+              "kind": "native-attack"
+            }
+          ],
+          "victory": true
+        },
+        {
+          "fight": 3,
+          "creatures": [
+            "Fausse hydre — Démo",
+            "Sectateur",
+            "Vétéran"
+          ],
+          "rounds": 5,
+          "actions": [
+            {
+              "round": 1,
+              "name": "Rufus",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "name": "Kentaro",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "name": "Brackmard",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "name": "Zephyr",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "name": "Samoth",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "name": "Nans",
+              "kind": "native-attack"
+            },
+            {
+              "round": 1,
+              "actorId": "lair_muy0hv3n_sqhd4d",
+              "kind": "native-lair-window"
+            },
+            {
+              "round": 1,
+              "actorId": "p_muy0hvan_je5jpz",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 1,
+              "actorId": "p_muy0hvie_005sih",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 2,
+              "name": "Rufus",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Kentaro",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Brackmard",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Zephyr",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Samoth",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "name": "Nans",
+              "kind": "native-attack"
+            },
+            {
+              "round": 2,
+              "actorId": "lair_muy0hv3n_sqhd4d",
+              "kind": "native-lair-window"
+            },
+            {
+              "round": 2,
+              "actorId": "p_muy0hvan_je5jpz",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 2,
+              "actorId": "p_muy0hvie_005sih",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 3,
+              "name": "Rufus",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Kentaro",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Brackmard",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Zephyr",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Samoth",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "name": "Nans",
+              "kind": "native-attack"
+            },
+            {
+              "round": 3,
+              "actorId": "lair_muy0hv3n_sqhd4d",
+              "kind": "native-lair-window"
+            },
+            {
+              "round": 3,
+              "actorId": "p_muy0hv3n_wsh701",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 3,
+              "actorId": "p_muy0hvan_je5jpz",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 3,
+              "actorId": "p_muy0hvie_005sih",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 4,
+              "name": "Rufus",
+              "kind": "native-attack"
+            },
+            {
+              "round": 4,
+              "name": "Kentaro",
+              "kind": "native-attack"
+            },
+            {
+              "round": 4,
+              "name": "Brackmard",
+              "kind": "native-attack"
+            },
+            {
+              "round": 4,
+              "name": "Zephyr",
+              "kind": "native-attack"
+            },
+            {
+              "round": 4,
+              "name": "Samoth",
+              "kind": "native-attack"
+            },
+            {
+              "round": 4,
+              "name": "Nans",
+              "kind": "native-attack"
+            },
+            {
+              "round": 4,
+              "actorId": "lair_muy0hv3n_sqhd4d",
+              "kind": "native-lair-window"
+            },
+            {
+              "round": 4,
+              "actorId": "p_muy0hvie_005sih",
+              "kind": "native-enemy-attack"
+            },
+            {
+              "round": 5,
+              "name": "Rufus",
+              "kind": "native-attack"
+            },
+            {
+              "round": 5,
+              "name": "Kentaro",
+              "kind": "native-attack"
+            },
+            {
+              "round": 5,
+              "name": "Brackmard",
+              "kind": "native-attack"
+            }
+          ],
+          "victory": true
+        }
+      ]
+    },
+    "health": {
+      "checks": [
+        {
+          "name": "native Second souffle restores authoritative HP once",
+          "pass": true
+        },
+        {
+          "name": "native Lay on Hands heals Encounter ally without Companion",
+          "pass": true
+        },
+        {
+          "name": "native Cure Wounds heals ally and consumes one free use",
+          "pass": true
+        },
+        {
+          "name": "post-heal preparation consultation preserves round, active and HP",
+          "pass": true
+        },
+        {
+          "name": "health regression has no browser exceptions",
+          "pass": true,
+          "detail": []
+        }
+      ],
+      "errors": []
+    },
+    "multi_target": {
+      "checks": [
+        {
+          "name": "room and both companions online",
+          "pass": true
+        },
+        {
+          "name": "initiative validated and fight started",
+          "pass": true
+        },
+        {
+          "name": "three visual selections and count",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "first target dies without cancelling other saves",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "independent save modifiers",
+          "pass": true,
+          "detail": [
+            {
+              "saveId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "resolutionId": "3d1df007-fead-4567-a8ca-73216113f224:probe-a",
+              "requestId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "attackId": null,
+              "actionId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "parentActionId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "targetIndex": 0,
+              "targetCount": 3,
+              "targetId": "probe-a",
+              "targetName": "Loup sanguinaire",
+              "source": "Vortex de glace",
+              "ability": "DEX",
+              "dc": 18,
+              "dice": [
+                1
+              ],
+              "die": 1,
+              "modifier": 2,
+              "penalty": 0,
+              "penaltyDetail": "",
+              "total": 3,
+              "success": false,
+              "mode": "normal",
+              "automaticFailure": false,
+              "rollSource": "manual",
+              "rawDamage": 25,
+              "requestedDamage": 25,
+              "effectiveDamage": 3,
+              "damageRollMode": "shared",
+              "components": [
+                {
+                  "raw": 25,
+                  "requested": 25,
+                  "effective": 3,
+                  "type": "froid",
+                  "reason": "résistance"
+                }
+              ],
+              "conditionsApplied": [],
+              "conditionApplied": "",
+              "conditionImmune": false,
+              "conditionImmuneNames": [],
+              "failureEffect": "",
+              "dead": true
+            },
+            {
+              "saveId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "resolutionId": "3d1df007-fead-4567-a8ca-73216113f224:probe-b",
+              "requestId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "attackId": null,
+              "actionId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "parentActionId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "targetIndex": 1,
+              "targetCount": 3,
+              "targetId": "probe-b",
+              "targetName": "Gobelin",
+              "source": "Vortex de glace",
+              "ability": "DEX",
+              "dc": 18,
+              "dice": [
+                20
+              ],
+              "die": 20,
+              "modifier": 4,
+              "penalty": 0,
+              "penaltyDetail": "",
+              "total": 24,
+              "success": true,
+              "mode": "normal",
+              "automaticFailure": false,
+              "rollSource": "manual",
+              "rawDamage": 25,
+              "requestedDamage": 12,
+              "effectiveDamage": 12,
+              "damageRollMode": "shared",
+              "components": [
+                {
+                  "raw": 25,
+                  "requested": 12,
+                  "effective": 12,
+                  "type": "froid",
+                  "reason": ""
+                }
+              ],
+              "conditionsApplied": [],
+              "conditionApplied": "",
+              "conditionImmune": false,
+              "conditionImmuneNames": [],
+              "failureEffect": "",
+              "dead": false
+            },
+            {
+              "saveId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "resolutionId": "3d1df007-fead-4567-a8ca-73216113f224:probe-c",
+              "requestId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "attackId": null,
+              "actionId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "parentActionId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "targetIndex": 2,
+              "targetCount": 3,
+              "targetId": "probe-c",
+              "targetName": "Élémentaire de glace",
+              "source": "Vortex de glace",
+              "ability": "DEX",
+              "dc": 18,
+              "dice": [
+                1
+              ],
+              "die": 1,
+              "modifier": 1,
+              "penalty": 0,
+              "penaltyDetail": "",
+              "total": 2,
+              "success": false,
+              "mode": "normal",
+              "automaticFailure": false,
+              "rollSource": "manual",
+              "rawDamage": 25,
+              "requestedDamage": 25,
+              "effectiveDamage": 0,
+              "damageRollMode": "shared",
+              "components": [
+                {
+                  "raw": 25,
+                  "requested": 25,
+                  "effective": 0,
+                  "type": "froid",
+                  "reason": "immunité"
+                }
+              ],
+              "conditionsApplied": [],
+              "conditionApplied": "",
+              "conditionImmune": false,
+              "conditionImmuneNames": [],
+              "failureEffect": "",
+              "dead": false
+            }
+          ]
+        },
+        {
+          "name": "shared damage and independent RIV",
+          "pass": true,
+          "detail": [
+            {
+              "saveId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "resolutionId": "3d1df007-fead-4567-a8ca-73216113f224:probe-a",
+              "requestId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "attackId": null,
+              "actionId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "parentActionId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "targetIndex": 0,
+              "targetCount": 3,
+              "targetId": "probe-a",
+              "targetName": "Loup sanguinaire",
+              "source": "Vortex de glace",
+              "ability": "DEX",
+              "dc": 18,
+              "dice": [
+                1
+              ],
+              "die": 1,
+              "modifier": 2,
+              "penalty": 0,
+              "penaltyDetail": "",
+              "total": 3,
+              "success": false,
+              "mode": "normal",
+              "automaticFailure": false,
+              "rollSource": "manual",
+              "rawDamage": 25,
+              "requestedDamage": 25,
+              "effectiveDamage": 3,
+              "damageRollMode": "shared",
+              "components": [
+                {
+                  "raw": 25,
+                  "requested": 25,
+                  "effective": 3,
+                  "type": "froid",
+                  "reason": "résistance"
+                }
+              ],
+              "conditionsApplied": [],
+              "conditionApplied": "",
+              "conditionImmune": false,
+              "conditionImmuneNames": [],
+              "failureEffect": "",
+              "dead": true
+            },
+            {
+              "saveId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "resolutionId": "3d1df007-fead-4567-a8ca-73216113f224:probe-b",
+              "requestId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "attackId": null,
+              "actionId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "parentActionId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "targetIndex": 1,
+              "targetCount": 3,
+              "targetId": "probe-b",
+              "targetName": "Gobelin",
+              "source": "Vortex de glace",
+              "ability": "DEX",
+              "dc": 18,
+              "dice": [
+                20
+              ],
+              "die": 20,
+              "modifier": 4,
+              "penalty": 0,
+              "penaltyDetail": "",
+              "total": 24,
+              "success": true,
+              "mode": "normal",
+              "automaticFailure": false,
+              "rollSource": "manual",
+              "rawDamage": 25,
+              "requestedDamage": 12,
+              "effectiveDamage": 12,
+              "damageRollMode": "shared",
+              "components": [
+                {
+                  "raw": 25,
+                  "requested": 12,
+                  "effective": 12,
+                  "type": "froid",
+                  "reason": ""
+                }
+              ],
+              "conditionsApplied": [],
+              "conditionApplied": "",
+              "conditionImmune": false,
+              "conditionImmuneNames": [],
+              "failureEffect": "",
+              "dead": false
+            },
+            {
+              "saveId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "resolutionId": "3d1df007-fead-4567-a8ca-73216113f224:probe-c",
+              "requestId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "attackId": null,
+              "actionId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "parentActionId": "3d1df007-fead-4567-a8ca-73216113f224",
+              "targetIndex": 2,
+              "targetCount": 3,
+              "targetId": "probe-c",
+              "targetName": "Élémentaire de glace",
+              "source": "Vortex de glace",
+              "ability": "DEX",
+              "dc": 18,
+              "dice": [
+                1
+              ],
+              "die": 1,
+              "modifier": 1,
+              "penalty": 0,
+              "penaltyDetail": "",
+              "total": 2,
+              "success": false,
+              "mode": "normal",
+              "automaticFailure": false,
+              "rollSource": "manual",
+              "rawDamage": 25,
+              "requestedDamage": 25,
+              "effectiveDamage": 0,
+              "damageRollMode": "shared",
+              "components": [
+                {
+                  "raw": 25,
+                  "requested": 25,
+                  "effective": 0,
+                  "type": "froid",
+                  "reason": "immunité"
+                }
+              ],
+              "conditionsApplied": [],
+              "conditionApplied": "",
+              "conditionImmune": false,
+              "conditionImmuneNames": [],
+              "failureEffect": "",
+              "dead": false
+            }
+          ]
+        },
+        {
+          "name": "one action economy consumed",
+          "pass": true
+        },
+        {
+          "name": "one logical action with three target references",
+          "pass": true,
+          "detail": {
+            "ability": "DEX",
+            "dc": 18,
+            "source": "Vortex de glace",
+            "targetMode": "multi",
+            "damageRollMode": "shared",
+            "halfOnSuccess": true,
+            "damage": 25,
+            "damageType": "froid",
+            "components": [
+              {
+                "amount": 25,
+                "type": "froid"
+              }
+            ],
+            "condition": null,
+            "saveMode": "normal",
+            "saveId": "3d1df007-fead-4567-a8ca-73216113f224",
+            "actionId": "3d1df007-fead-4567-a8ca-73216113f224",
+            "parentActionId": "3d1df007-fead-4567-a8ca-73216113f224",
+            "maxTargets": null,
+            "targetId": "probe-a",
+            "target": {
+              "id": "probe-a",
+              "name": "Loup sanguinaire",
+              "creatureType": "humanoïde",
+              "boss": false,
+              "elite": false,
+              "ac": 14
+            },
+            "targets": [
+              {
+                "targetId": "probe-a",
+                "id": "probe-a",
+                "name": "Loup sanguinaire",
+                "creatureType": "humanoïde",
+                "boss": false,
+                "elite": false,
+                "ac": 14
+              },
+              {
+                "targetId": "probe-b",
+                "id": "probe-b",
+                "name": "Gobelin",
+                "creatureType": "humanoïde",
+                "boss": false,
+                "elite": false,
+                "ac": 14
+              },
+              {
+                "targetId": "probe-c",
+                "id": "probe-c",
+                "name": "Élémentaire de glace",
+                "creatureType": "humanoïde",
+                "boss": false,
+                "elite": false,
+                "ac": 14
+              }
+            ],
+            "combatId": "97356ae9-dac4-4eff-95a3-1c20b7c4cd6a"
+          }
+        },
+        {
+          "name": "save retransmit does not double damage",
+          "pass": true
+        },
+        {
+          "name": "save retransmit does not spend local resources or economy twice",
+          "pass": true
+        },
+        {
+          "name": "native undo restores all three targets",
+          "pass": true
+        },
+        {
+          "name": "Popup uses probe-a",
+          "pass": true
+        },
+        {
+          "name": "first attack target dies without blocking second attack",
+          "pass": true
+        },
+        {
+          "name": "Popup uses probe-b",
+          "pass": true
+        },
+        {
+          "name": "attack replay never damages another target",
+          "pass": true
+        },
+        {
+          "name": "one undo restores both independently validated attacks",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "per-target disadvantage and normal saves",
+          "pass": true
+        },
+        {
+          "name": "individual conditions and immunity",
+          "pass": true,
+          "detail": {
+            "ra": {
+              "saveId": "conditions-save",
+              "resolutionId": "conditions-save:probe-a",
+              "requestId": "conditions-start",
+              "attackId": null,
+              "actionId": "conditions-action",
+              "parentActionId": "conditions-action",
+              "targetIndex": 0,
+              "targetCount": 3,
+              "targetId": "probe-a",
+              "targetName": "Loup sanguinaire",
+              "ability": "DEX",
+              "dc": 18,
+              "dice": [
+                1,
+                20
+              ],
+              "die": 1,
+              "modifier": 2,
+              "penalty": 0,
+              "penaltyDetail": "",
+              "total": 3,
+              "success": false,
+              "mode": "dis",
+              "automaticFailure": false,
+              "rollSource": "manual",
+              "rawDamage": 16,
+              "requestedDamage": 16,
+              "effectiveDamage": 14,
+              "damageRollMode": "shared",
+              "components": [
+                {
+                  "raw": 12,
+                  "requested": 12,
+                  "effective": 6,
+                  "type": "froid",
+                  "reason": "résistance"
+                },
+                {
+                  "raw": 4,
+                  "requested": 4,
+                  "effective": 8,
+                  "type": "force",
+                  "reason": "vulnérabilité"
+                }
+              ],
+              "conditionsApplied": [
+                "Entravé"
+              ],
+              "conditionApplied": "Entravé",
+              "conditionImmune": false,
+              "conditionImmuneNames": [],
+              "failureEffect": "",
+              "dead": false
+            },
+            "rb": {
+              "saveId": "conditions-save",
+              "resolutionId": "conditions-save:probe-b",
+              "requestId": "conditions-start",
+              "attackId": null,
+              "actionId": "conditions-action",
+              "parentActionId": "conditions-action",
+              "targetIndex": 1,
+              "targetCount": 3,
+              "targetId": "probe-b",
+              "targetName": "Gobelin",
+              "ability": "DEX",
+              "dc": 18,
+              "dice": [
+                20
+              ],
+              "die": 20,
+              "modifier": 4,
+              "penalty": 0,
+              "penaltyDetail": "",
+              "total": 24,
+              "success": true,
+              "mode": "normal",
+              "automaticFailure": false,
+              "rollSource": "manual",
+              "rawDamage": 16,
+              "requestedDamage": 0,
+              "effectiveDamage": 0,
+              "damageRollMode": "shared",
+              "components": [
+                {
+                  "raw": 12,
+                  "requested": 0,
+                  "effective": 0,
+                  "type": "froid",
+                  "reason": ""
+                },
+                {
+                  "raw": 4,
+                  "requested": 0,
+                  "effective": 0,
+                  "type": "force",
+                  "reason": ""
+                }
+              ],
+              "conditionsApplied": [],
+              "conditionApplied": "",
+              "conditionImmune": false,
+              "conditionImmuneNames": [],
+              "failureEffect": "",
+              "dead": false
+            },
+            "rc": {
+              "saveId": "conditions-save",
+              "resolutionId": "conditions-save:probe-c",
+              "requestId": "conditions-start",
+              "attackId": null,
+              "actionId": "conditions-action",
+              "parentActionId": "conditions-action",
+              "targetIndex": 2,
+              "targetCount": 3,
+              "targetId": "probe-c",
+              "targetName": "Élémentaire de glace",
+              "ability": "DEX",
+              "dc": 18,
+              "dice": [
+                1
+              ],
+              "die": 1,
+              "modifier": 1,
+              "penalty": 0,
+              "penaltyDetail": "",
+              "total": 2,
+              "success": false,
+              "mode": "normal",
+              "automaticFailure": false,
+              "rollSource": "manual",
+              "rawDamage": 16,
+              "requestedDamage": 16,
+              "effectiveDamage": 4,
+              "damageRollMode": "shared",
+              "components": [
+                {
+                  "raw": 12,
+                  "requested": 12,
+                  "effective": 0,
+                  "type": "froid",
+                  "reason": "immunité"
+                },
+                {
+                  "raw": 4,
+                  "requested": 4,
+                  "effective": 4,
+                  "type": "force",
+                  "reason": ""
+                }
+              ],
+              "conditionsApplied": [],
+              "conditionApplied": "",
+              "conditionImmune": true,
+              "conditionImmuneNames": [
+                "Entravé"
+              ],
+              "failureEffect": "",
+              "dead": false
+            }
+          }
+        },
+        {
+          "name": "resistance vulnerability and temp HP composed",
+          "pass": true,
+          "detail": {
+            "saveId": "conditions-save",
+            "resolutionId": "conditions-save:probe-a",
+            "requestId": "conditions-start",
+            "attackId": null,
+            "actionId": "conditions-action",
+            "parentActionId": "conditions-action",
+            "targetIndex": 0,
+            "targetCount": 3,
+            "targetId": "probe-a",
+            "targetName": "Loup sanguinaire",
+            "ability": "DEX",
+            "dc": 18,
+            "dice": [
+              1,
+              20
+            ],
+            "die": 1,
+            "modifier": 2,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 3,
+            "success": false,
+            "mode": "dis",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 16,
+            "requestedDamage": 16,
+            "effectiveDamage": 14,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 12,
+                "requested": 12,
+                "effective": 6,
+                "type": "froid",
+                "reason": "résistance"
+              },
+              {
+                "raw": 4,
+                "requested": 4,
+                "effective": 8,
+                "type": "force",
+                "reason": "vulnérabilité"
+              }
+            ],
+            "conditionsApplied": [
+              "Entravé"
+            ],
+            "conditionApplied": "Entravé",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "",
+            "dead": false
+          }
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "target disadvantage cancels advantage independently",
+          "pass": true,
+          "detail": {
+            "advA": {
+              "saveId": "adv-save",
+              "resolutionId": "adv-save:probe-a",
+              "requestId": "adv-start",
+              "attackId": null,
+              "actionId": "adv-action",
+              "parentActionId": "adv-action",
+              "targetIndex": 0,
+              "targetCount": 2,
+              "targetId": "probe-a",
+              "targetName": "Loup sanguinaire",
+              "ability": "DEX",
+              "dc": 18,
+              "dice": [
+                1
+              ],
+              "die": 1,
+              "modifier": 2,
+              "penalty": 0,
+              "penaltyDetail": "",
+              "total": 3,
+              "success": false,
+              "mode": "normal",
+              "automaticFailure": false,
+              "rollSource": "manual",
+              "rawDamage": 0,
+              "requestedDamage": 0,
+              "effectiveDamage": 0,
+              "damageRollMode": "shared",
+              "components": [
+                {
+                  "raw": 0,
+                  "requested": 0,
+                  "effective": 0,
+                  "type": "",
+                  "reason": ""
+                }
+              ],
+              "conditionsApplied": [],
+              "conditionApplied": "",
+              "conditionImmune": false,
+              "conditionImmuneNames": [],
+              "failureEffect": "",
+              "dead": false
+            },
+            "advC": {
+              "saveId": "adv-save",
+              "resolutionId": "adv-save:probe-c",
+              "requestId": "adv-start",
+              "attackId": null,
+              "actionId": "adv-action",
+              "parentActionId": "adv-action",
+              "targetIndex": 1,
+              "targetCount": 2,
+              "targetId": "probe-c",
+              "targetName": "Élémentaire de glace",
+              "ability": "DEX",
+              "dc": 18,
+              "dice": [
+                20,
+                1
+              ],
+              "die": 20,
+              "modifier": 1,
+              "penalty": 0,
+              "penaltyDetail": "",
+              "total": 21,
+              "success": true,
+              "mode": "adv",
+              "automaticFailure": false,
+              "rollSource": "manual",
+              "rawDamage": 0,
+              "requestedDamage": 0,
+              "effectiveDamage": 0,
+              "damageRollMode": "shared",
+              "components": [
+                {
+                  "raw": 0,
+                  "requested": 0,
+                  "effective": 0,
+                  "type": "",
+                  "reason": ""
+                }
+              ],
+              "conditionsApplied": [],
+              "conditionApplied": "",
+              "conditionImmune": false,
+              "conditionImmuneNames": [],
+              "failureEffect": "",
+              "dead": false
+            }
+          }
+        },
+        {
+          "name": "invalid target produces no mutation or stuck popup",
+          "pass": true
+        },
+        {
+          "name": "deleted target is skipped and remaining target can resolve",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "removed-target action finishes without blocking",
+          "pass": true
+        },
+        {
+          "name": "cancelled explicit restart keeps combat and pending save",
+          "pass": true
+        },
+        {
+          "name": "reset during resolution clears the popup and combat",
+          "pass": true
+        },
+        {
+          "name": "reset clears Companion target selections",
+          "pass": true
+        },
+        {
+          "name": "Encounter tablet has no page overflow",
+          "pass": true,
+          "detail": {
+            "scroll": 768,
+            "viewport": 768
+          }
+        },
+        {
+          "name": "Samoth tablet has no page overflow",
+          "pass": true,
+          "detail": {
+            "scroll": 768,
+            "viewport": 768
+          }
+        }
+      ],
+      "errors": []
+    }
+  }
+}

@@ -173,3 +173,12 @@
 dialog.rpg-save-popup{position:fixed;inset:0;margin:auto;width:min(560px,calc(100vw - 24px));max-height:90dvh;overflow:auto;border:0;padding:0;background:transparent;color:#eef8ff}dialog.rpg-save-popup::backdrop{background:#02070dc9}dialog.rpg-save-popup[hidden]{display:none}dialog.rpg-save-popup input{display:block;width:100%;box-sizing:border-box;min-height:42px;background:#101923;color:#fff;border:1px solid #627482;border-radius:8px;margin:5px 0 10px;padding:7px}
 
 .rpg-participant-profile{display:flex;gap:12px;margin:12px 0;padding:12px;background:rgba(25,40,53,.7);border:1px solid #567184;border-radius:12px}.rpg-participant-profile>img{width:64px;height:64px;object-fit:contain;border-radius:9px}.rpg-participant-profile>div{min-width:0}.rpg-participant-profile small,.rpg-participant-profile span{display:block;font-size:12px;margin-top:4px}.rpg-participant-profile .pill{display:inline-flex}.rpg-participant-profile .condition-icon{width:22px;height:22px}
+
+/* Consultation must leave the preparation/resume controls accessible with a pending decision. */
+body:not(.combat-mode) .rpg-hit-popup {
+  inset:auto 18px 18px auto;
+  max-height:45dvh;
+}
+@media(max-width:650px) {
+  body:not(.combat-mode) .rpg-hit-popup {inset:auto 8px 8px 8px}
+}
