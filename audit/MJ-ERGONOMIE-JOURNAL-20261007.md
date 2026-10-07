@@ -91,7 +91,7 @@ Pour reproduire : placer les huit repos comme répertoires frères, installer le
 
 Branche coordonnée : `feature/mj-ergonomie-journal-20261007`, PR en brouillon dans Encounter et chaque Companion, destinées à main mais sans merge. Livraison coordonnée du serveur Encounter et des six modules clients nécessaire. Cache Encounter V4.2 et URL des scripts Companions avancés ; aucune donnée utilisateur effacée. RPG-Connect : aucune modification.
 
-Liste exacte des fichiers ci-dessous. Après commits, aucun changement de code non commité attendu dans les sept checkouts ; RPG-Connect reste propre. Les répertoires de preuves ignorés, dépendances et archives rattachées ne sont pas une livraison runtime. Le checkout concurrent n'a pas été touché.
+Liste exacte des fichiers ci-dessous. Les sept checkouts locaux conservent leurs modifications préparées dans l’index, correspondant au code des arbres Git publiés. Le terminal est devenu indisponible à la finalisation : aucun nettoyage ni changement de référence locale n’a été effectué. Le présent compte rendu de livraison est complété directement dans la branche GitHub. RPG-Connect reste inchangé. Les répertoires de preuves ignorés, dépendances et archives rattachées ne sont pas une livraison runtime. Le checkout concurrent n'a pas été touché.
 
 Preuves compactes : `audit/MJ-VALIDATION-20261007.json` (résultats, scénarios et trois combats).
 
