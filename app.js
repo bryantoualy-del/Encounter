@@ -53,7 +53,7 @@ function signed(n){ n=Number(n)||0; return n>=0?`+${n}`:`${n}`; }
 function normalizeAbility(a={}){
   return {
     id:a.id||uid('ab'),name:a.name||'Capacité',detail:a.detail||'',kind:a.kind||'text',economy:a.economy||'',
-    bonus:numOrNull(a.bonus),damage:a.damage||'',damageType:a.damageType||'',dc:numOrNull(a.dc),save:(a.save||'').toUpperCase(),
+    spellLevel:numOrNull(a.spellLevel),isSpell:!!a.isSpell,bonus:numOrNull(a.bonus),damage:a.damage||'',damageType:a.damageType||'',dc:numOrNull(a.dc),save:(a.save||'').toUpperCase(),
     cost:Number(a.cost)||1,recharge:a.recharge||'',sequence:a.sequence||'',timing:a.timing||'',target:a.target||'auto'
   };
 }
