@@ -89,7 +89,7 @@ Pour reproduire : placer les huit repos comme répertoires frères, installer le
 
 ## Livraison et fichiers
 
-Branche coordonnée : `feature/mj-ergonomie-journal-20261007`, PR en brouillon dans Encounter et chaque Companion, destinées à main mais sans merge. Livraison coordonnée du serveur Encounter et des six modules clients nécessaire. Cache Encounter V4.2 et URL des scripts Companions avancés ; aucune donnée utilisateur effacée. RPG-Connect : aucune modification.
+Branche coordonnée : `feature/mj-ergonomie-journal-20261007-review`, PR en brouillon dans Encounter et chaque Companion, destinées à main mais sans merge. Livraison coordonnée du serveur Encounter et des six modules clients nécessaire. Cache Encounter V4.2 et URL des scripts Companions avancés ; aucune donnée utilisateur effacée. RPG-Connect : aucune modification.
 
 Liste exacte des fichiers ci-dessous. Les sept checkouts locaux conservent leurs modifications préparées dans l’index, correspondant au code des arbres Git publiés. Le terminal est devenu indisponible à la finalisation : aucun nettoyage ni changement de référence locale n’a été effectué. Le présent compte rendu de livraison est complété directement dans la branche GitHub. RPG-Connect reste inchangé. Les répertoires de preuves ignorés, dépendances et archives rattachées ne sont pas une livraison runtime. Le checkout concurrent n'a pas été touché.
 
@@ -253,3 +253,5 @@ Preuves compactes : `audit/MJ-VALIDATION-20261007.json` (résultats, scénarios 
 - `rpg-triggered-effects.js`
 - `rpg-undo.js`
 
+
+Les branches de revue sont créées directement sur les commits validés. Deux branches initiales `feature/mj-ergonomie-journal-20261007` (Encounter et Kentaro), restées sur les commits de départ après l’erreur GitHub d’avancement de référence, ne constituent pas la livraison.
