@@ -149,6 +149,7 @@ Preuves compactes : `audit/MJ-VALIDATION-20261007.json` (résultats, scénarios 
 - `audit/mj-offline.mjs`
 - `audit/mj-panels-browser.mjs`
 - `audit/mj-touch-browser.mjs`
+- `audit/staging-manifest.json`
 - `builtins.js`
 - `index.html`
 - `mj-conditions.js`
@@ -162,6 +163,7 @@ Preuves compactes : `audit/MJ-VALIDATION-20261007.json` (résultats, scénarios 
 - `mj-local-concentration.js`
 - `mj-panels.js`
 - `package.json`
+- `package-lock.json`
 - `rpg-connect-mj.js`
 - `rpg-connect-mj.test.js`
 - `rpg-connect-server.js`
