@@ -1,0 +1,362 @@
+[
+  {
+    "file": "assets/mj/mini/action_bonus_mini.png",
+    "archive": "icones_actions_mini(3).zip",
+    "source": "icones_actions_mini/action_bonus_mini.png",
+    "sourceSHA256": "f65a0f18371a7fa47ae94e5b351545c754aeb3feb68e905371cc7a7237998a7b",
+    "size": [
+      40,
+      40
+    ]
+  },
+  {
+    "file": "assets/mj/mini/action_mini.png",
+    "archive": "icones_actions_mini(3).zip",
+    "source": "icones_actions_mini/action_mini.png",
+    "sourceSHA256": "edf3f30315d00cc4d671eb61ebbb95fd064e6803ee56fd242d6d64887affc07b",
+    "size": [
+      40,
+      39
+    ]
+  },
+  {
+    "file": "assets/mj/mini/concentration_mini.png",
+    "archive": "icones_actions_mini(3).zip",
+    "source": "icones_actions_mini/concentration_mini.png",
+    "sourceSHA256": "8e6d12612d44912bd437aa9e92b1805cecf8fba95aded469119ecbcb64936650",
+    "size": [
+      40,
+      40
+    ]
+  },
+  {
+    "file": "assets/mj/mini/reaction_mini.png",
+    "archive": "icones_actions_mini(3).zip",
+    "source": "icones_actions_mini/reaction_mini.png",
+    "sourceSHA256": "5456140308afc3cf685869798fdf3455dee7450f269996ca0d8dacc7280efdfd",
+    "size": [
+      40,
+      40
+    ]
+  },
+  {
+    "file": "assets/mj/states/Agrippe.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "Agrippe.png",
+    "sourceSHA256": "88d5942ef22fd814dee016d4b961723f52e3cb4eeda7b28124ac62dca0ddfba8",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/states/Effraye.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "Effraye.png",
+    "sourceSHA256": "c9b2e68314f7acd25e6ebd7ecb3fb515697a5c9407c57697c0519646b1942bc0",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/states/Empoisonne.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "Empoisonne.png",
+    "sourceSHA256": "8772d23d1c4ed78209a70b09a092719171f28a194ecc4d6f3733d1530ef71ef7",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/states/Aveugle.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "Aveugle.png",
+    "sourceSHA256": "2f2ddf372e65bd0c6e18e980be9722161688cb465f33d7fe9b68b0231b1888c0",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/states/Etourdi.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "Etourdi.png",
+    "sourceSHA256": "a6da877236f2214f2d61e55092a3a89add9e7af1be33c651a6c19cce8c090695",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/states/Paralyse.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "Paralyse.png",
+    "sourceSHA256": "a20ab3e264fc3894029295a408385496c91af0bc582352d5b154af4f510249a8",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/states/Incapacite.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "Incapacite.png",
+    "sourceSHA256": "478688ddd60480f95063f04ad4ae4c03adf91b42d47a342a1a985bfa7f154fb6",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/states/Petrifie.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "Petrifie.png",
+    "sourceSHA256": "1ba76af315e2b197593cc562bc917373fc3f80d55a47d69a434bd345f2a1a89b",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/states/Assourdi.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "Assourdi.png",
+    "sourceSHA256": "9475d072483fa52e3af471071ea0c9036796563d482877e63e96c2d4d711725b",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/states/Entrave.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "Entrave.png",
+    "sourceSHA256": "1f09bc469e1f925dc8b376aa4df4b7a8c127ee03855c603356f764cae0fe7425",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/states/Charme.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "Charme.png",
+    "sourceSHA256": "d56cb41c239b3a3f0ebc0c87b9dc63205e5844507f7583655fd570ed9288e407",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/states/Epuise.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "Epuise.png",
+    "sourceSHA256": "a6f0b78c2577c032ff2bdd168f229ce737c1f1d586e01c4e679fb794a8bb703c",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/states/Inconscient.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "Inconscient.png",
+    "sourceSHA256": "d79497f06a2e6eafae545b94e7fd09fbe28d860b6ddb27c8367a7ad459f8eec6",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/states/Invisible.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "Invisible.png",
+    "sourceSHA256": "96dd1e99381524b1b0c2a7bf45541cc428acd3754bea3da8d2e78047f7b732df",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/states/A_terre.png",
+    "archive": "Etats_DnD5e_Simplifies_800px(1).zip",
+    "source": "A_terre.png",
+    "sourceSHA256": "f93b2ab7d78ccd6eaf903f3cf95b4c5ad6dc7323ae589e966221fac7264749f7",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/actions/reaction.png",
+    "archive": "icones_actions_dnd5e(3).zip",
+    "source": "icones_actions_dnd5e/reaction.png",
+    "sourceSHA256": "ecbf608a816013391a17ae83a1a32702d5a6d34f2c03e02ad8e4b8ccb89cf990",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/actions/action.png",
+    "archive": "icones_actions_dnd5e(3).zip",
+    "source": "icones_actions_dnd5e/action.png",
+    "sourceSHA256": "caf96049c7a54e37b7d4244648cf0b01bd7ff73f3a9837894c7e92cfb3296c44",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/actions/concentration.png",
+    "archive": "icones_actions_dnd5e(3).zip",
+    "source": "icones_actions_dnd5e/concentration.png",
+    "sourceSHA256": "36ea263973d7112a50311d51f4dd73df939bdce32e4b1e0816cb1e7ae0597cb6",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/actions/action_bonus.png",
+    "archive": "icones_actions_dnd5e(3).zip",
+    "source": "icones_actions_dnd5e/action_bonus.png",
+    "sourceSHA256": "fb9b5a2e4ff2bbdb78837128d1557e5e3fc12b19386851735cefa04f0f24beec",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/classes/artificier.png",
+    "archive": "Classes_DnD5e_13_icones_800px(1).zip",
+    "source": "classes_personnage/artificier.png",
+    "sourceSHA256": "94c8b9f3fbe8653ad4e0d76d62c2a047a471b239950045695fc52b803c351a5c",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/classes/barbare.png",
+    "archive": "Classes_DnD5e_13_icones_800px(1).zip",
+    "source": "classes_personnage/barbare.png",
+    "sourceSHA256": "7c19bba8f54afa039830a1eeafeed8ba3e8bd3c471ec2df701e1dd351652794a",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/classes/barde.png",
+    "archive": "Classes_DnD5e_13_icones_800px(1).zip",
+    "source": "classes_personnage/barde.png",
+    "sourceSHA256": "8587bf01a9e6d387b6142c17d9ee10b518c6a102c4fb69755045c09df46e4c59",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/classes/clerc.png",
+    "archive": "Classes_DnD5e_13_icones_800px(1).zip",
+    "source": "classes_personnage/clerc.png",
+    "sourceSHA256": "33380288d8e32e6d7643bba003636fe6fdaade18f5db7bbaf558fcde5dd5e93f",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/classes/druide.png",
+    "archive": "Classes_DnD5e_13_icones_800px(1).zip",
+    "source": "classes_personnage/druide.png",
+    "sourceSHA256": "1daacfc4fd8cdcf912141e4e4c26b5e93764acc2c358e76d74f3e3666cf41a7a",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/classes/ensorceleur.png",
+    "archive": "Classes_DnD5e_13_icones_800px(1).zip",
+    "source": "classes_personnage/ensorceleur.png",
+    "sourceSHA256": "f3e4bdc1be32ffeb828218b88946802cedae76bbedfe2fdb89f4327b62247d1c",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/classes/guerrier.png",
+    "archive": "Classes_DnD5e_13_icones_800px(1).zip",
+    "source": "classes_personnage/guerrier.png",
+    "sourceSHA256": "11ba5910f1bc3bbc50028455691add199c2734c44285d4fb55c5a465c9f4d3f2",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/classes/magicien.png",
+    "archive": "Classes_DnD5e_13_icones_800px(1).zip",
+    "source": "classes_personnage/magicien.png",
+    "sourceSHA256": "cb8b456ce7fba0d4ebe0555819e050b49951253b57d04e4984ab9977dfded90c",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/classes/moine.png",
+    "archive": "Classes_DnD5e_13_icones_800px(1).zip",
+    "source": "classes_personnage/moine.png",
+    "sourceSHA256": "d84b77677af8f1d56a24b1721807219f26705511d8ec6ab3b2c325ab797f0026",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/classes/occultiste.png",
+    "archive": "Classes_DnD5e_13_icones_800px(1).zip",
+    "source": "classes_personnage/occultiste.png",
+    "sourceSHA256": "f1a1d79068c758b72032c986b346f09f27c593e9fa4923f633923cb8f55416b3",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/classes/paladin.png",
+    "archive": "Classes_DnD5e_13_icones_800px(1).zip",
+    "source": "classes_personnage/paladin.png",
+    "sourceSHA256": "e4bd9f9a2c32bc14e0df107e8d17f8f63bb59041b0c7a5233c3a5aacb926c7ad",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/classes/rodeur.png",
+    "archive": "Classes_DnD5e_13_icones_800px(1).zip",
+    "source": "classes_personnage/rodeur.png",
+    "sourceSHA256": "4c0f5e0f342e4e0ce6f8b953ef933e02b856adeb605872abe7f7d405be9644d3",
+    "size": [
+      96,
+      96
+    ]
+  },
+  {
+    "file": "assets/mj/classes/roublard.png",
+    "archive": "Classes_DnD5e_13_icones_800px(1).zip",
+    "source": "classes_personnage/roublard.png",
+    "sourceSHA256": "4a2243c8cb49400014e754e9a20fd8e9344e2f805597c262b5a6dcd8fdec236e",
+    "size": [
+      96,
+      96
+    ]
+  }
+]

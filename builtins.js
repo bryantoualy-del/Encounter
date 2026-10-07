@@ -316,7 +316,7 @@ window.ENCOUNTER_BUILTINS = [
   }
   ,
   {
-    id:'cc-kentaro-model', category:'character', source:'Companion Kentaro',
+    id:'cc-kentaro-model', mainClass:'occultiste', category:'character', source:'Companion Kentaro',
     name:'Kentaro', subtitle:'Compagnie Créole · Hexblade', type:'Dhampir · Occultiste Hexblade', size:'M', cr:'',
     ac:18,hp:103,initiative:2,speed:'9 m',
     damageResistances:['nécrotiques'], damageVulnerabilities:['radiants'], damageImmunities:[], conditionImmunities:[],
@@ -324,7 +324,7 @@ window.ENCOUNTER_BUILTINS = [
     actions:[],reactions:[],legendaryActions:[],lairActions:[],resources:[],phases:[],notes:'Profil défensif synchronisé avec le Companion.'
   },
   {
-    id:'cc-samoth-model', category:'character', source:'Companion Samoth',
+    id:'cc-samoth-model', mainClass:'ensorceleur', category:'character', source:'Companion Samoth',
     name:'Samoth', subtitle:'Compagnie Créole · Ensorceleur', type:'Ensorceleur draconique', size:'M', cr:'',
     ac:15,hp:72,initiative:1,speed:'9 m',
     damageResistances:[], damageVulnerabilities:[], damageImmunities:[], conditionImmunities:[],
@@ -332,7 +332,7 @@ window.ENCOUNTER_BUILTINS = [
     actions:[],reactions:[],legendaryActions:[],lairActions:[],resources:[],phases:[],notes:'Aucune résistance permanente enregistrée : les résistances de Samoth sont contextuelles.'
   },
   {
-    id:'cc-brackmard-model', category:'character', source:'Companion Brack Mard',
+    id:'cc-brackmard-model', mainClass:'guerrier', category:'character', source:'Companion Brack Mard',
     name:'Brack Mard', subtitle:'Compagnie Créole · Maître de Guerre', type:'Nain · Guerrier Maître de Guerre', size:'M', cr:'',
     ac:19,hp:104,initiative:1,speed:'7,5 m',
     damageResistances:['feu'], damageVulnerabilities:[], damageImmunities:[], conditionImmunities:[],
@@ -340,7 +340,7 @@ window.ENCOUNTER_BUILTINS = [
     actions:[],reactions:[],legendaryActions:[],lairActions:[],resources:[],phases:[],notes:'Profil défensif synchronisé avec le Companion.'
   },
   {
-    id:'cc-rufus-model', category:'character', source:'Companion Rufus',
+    id:'cc-rufus-model', mainClass:'roublard', category:'character', source:'Companion Rufus',
     name:'Rufus', subtitle:'Compagnie Créole · Roublard psionique', type:'Roublard · Âme acérée', size:'M', cr:'',
     ac:16,hp:53,initiative:3,speed:'9 m',
     damageResistances:['nécrotiques'], damageVulnerabilities:[], damageImmunities:[], conditionImmunities:[],
@@ -348,7 +348,7 @@ window.ENCOUNTER_BUILTINS = [
     actions:[],reactions:[],legendaryActions:[],lairActions:[],resources:[],phases:[],notes:'La résistance dépend du port du collier, actuellement considéré équipé sur le Companion.'
   },
   {
-    id:'cc-nans-model', category:'character', source:'Companion Nans',
+    id:'cc-nans-model', mainClass:'barbare', category:'character', source:'Companion Nans',
     name:'Nans', subtitle:'Compagnie Créole · Berserker', type:'Humain · Barbare Berserker', size:'M', cr:'',
     ac:18,hp:125,initiative:2,speed:'12 m',
     damageResistances:[], damageVulnerabilities:[], damageImmunities:[], conditionImmunities:[],
@@ -356,7 +356,7 @@ window.ENCOUNTER_BUILTINS = [
     actions:[],reactions:[],legendaryActions:[],lairActions:[],resources:[],phases:[],notes:'Les résistances de Nans doivent suivre son état de Rage / Écorce via RPG Connect.'
   },
   {
-    id:'cc-zephyr-model', category:'character', source:'Companion Zéphyr',
+    id:'cc-zephyr-model', mainClass:'paladin', category:'character', source:'Companion Zéphyr',
     name:'Zéphyr', subtitle:'Compagnie Créole · Paladin de la Conquête', type:'Tieffelin · Paladin', size:'M', cr:'',
     ac:20,hp:84,initiative:-1,speed:'9 m',
     damageResistances:['feu'], damageVulnerabilities:[], damageImmunities:[], conditionImmunities:[],

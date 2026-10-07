@@ -9,7 +9,7 @@ const url=`ws://127.0.0.1:${server.address().port}`;
 const until=fn=>new Promise((resolve,reject)=>{let origin=new Error('wait at').stack;let start=Date.now();const check=()=>fn()?resolve():Date.now()-start>2000?reject(Error('timeout '+origin)):setTimeout(check,10);check()});
 const wait=(ws,type)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>reject(Error('timeout '+type)),2000);let fn=data=>{let m=JSON.parse(String(data));if(m.type!==type)return;clearTimeout(timer);ws.off('message',fn);resolve(m)};ws.on('message',fn)});
 const waitCommand=(ws,eventType)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>reject(Error('timeout command '+eventType)),2000);let fn=data=>{let m=JSON.parse(String(data));if(m.type!=='command'||m.event?.type!==eventType)return;clearTimeout(timer);ws.off('message',fn);resolve(m.event)};ws.on('message',fn)});
-const waitUndo=ws=>new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('timeout undo reply')),2000);const fn=data=>{const m=JSON.parse(String(data));if(m.type!=='command'||m.event?.type!=='message:gm'||!m.event.payload?.text?.startsWith('Action multi-cible annulée'))return;clearTimeout(timer);ws.off('message',fn);resolve(m.event)};ws.on('message',fn)});
+const waitUndo=ws=>new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('timeout undo reply')),2000);const fn=data=>{const m=JSON.parse(String(data));if(m.type!=='command'||m.event?.type!=='message:gm'||!m.event.payload?.text?.startsWith('Annulation réseau ignorée'))return;clearTimeout(timer);ws.off('message',fn);resolve(m.event)};ws.on('message',fn)});
 const waitSession=(ws,phase)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>reject(Error('timeout session '+phase)),2000);let fn=data=>{let m=JSON.parse(String(data));if(m.type!=='command'||m.event?.type!=='message:gm'||m.event?.payload?.session?.phase!==phase)return;clearTimeout(timer);ws.off('message',fn);resolve(m.event.payload.session)};ws.on('message',fn)});
 const send=(ws,m)=>ws.send(JSON.stringify({v:1,protocolVersion:1,clientCapabilities:['event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions'],...m}));
 test('ENCOUNTER applique les dégâts autoritaires et synchronise les conséquences sans double mutation',async()=>{
@@ -70,7 +70,7 @@ test('ENCOUNTER applique les dégâts autoritaires et synchronise les conséquen
  await until(()=>dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp")===24);
  assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp"),17);
 
- // Two independently validated attacks can belong to one logical multi-target action and undo atomically.
+ // Two validated attacks share a logical action; unsafe legacy undo is rejected without the coordinator.
  dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp=20;state.encounter.participants.find(p=>p.id==='e2').hp=20");
  for(const [attackId,targetId,amount] of [['multi-atk-1','e1',3],['multi-atk-2','e2',4]]){
   send(player,{type:'event',event:{id:attackId+'-roll',type:'attack:rolled',characterId:'samoth',payload:{attackId,actionId:'multi-attack-action',targetId,roll:20,total:20}}});
@@ -80,8 +80,9 @@ test('ENCOUNTER applique les dégâts autoritaires et synchronise les conséquen
  }
  await until(()=>dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp")===17&&dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp")===16);
  await until(()=>dom.window.document.querySelector('#rpgHitPopup').hidden);
- {const undoWait=waitUndo(player);send(player,{type:'event',event:{id:'multi-attack-undo',type:'action:undo-request',characterId:'samoth',payload:{actionId:'multi-attack-action'}}});const undo=await undoWait;assert.match(undo.payload.text,/état Encounter restauré/);}
- assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp"),20);assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp"),20);
+ {const undoWait=waitUndo(player);send(player,{type:'event',event:{id:'multi-attack-undo',type:'action:undo-request',characterId:'samoth',payload:{actionId:'multi-attack-action'}}});const undo=await undoWait;assert.match(undo.payload.text,/ignorée/);}
+ assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp"),17);assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp"),16);
+ dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp=20;state.encounter.participants.find(p=>p.id==='e2').hp=20");
 
  // A repeated roll with a changed target cannot move an existing attack lock.
  send(player,{type:'event',event:{id:'immutable-roll',type:'attack:rolled',characterId:'samoth',payload:{attackId:'immutable',actionId:'immutable-action',targetId:'e1',roll:20,total:20}}});
@@ -115,7 +116,7 @@ test('ENCOUNTER applique les dégâts autoritaires et synchronise les conséquen
  await new Promise(resolve=>setTimeout(resolve,40));assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp"),19);
  dom.window.eval("RPGSummonAuthority.reconcile(state.encounter,'samoth',state.encounter.participants[0],[])");
 
- // Multi-target save: one action, independent target results, then atomic network undo.
+ // Multi-target save: one action, independent target results, then refusal of uncertified legacy network undo.
  dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').conditions=[];state.encounter.participants.find(p=>p.id==='e2').conditions=[];state.encounter.participants.find(p=>p.id==='e1').hp=20;state.encounter.participants.find(p=>p.id==='e2').hp=20");
  const beforeMulti=dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>({id:p.id,hp:p.hp,tempHp:p.tempHp,conditions:JSON.stringify(p.conditions)}))");
  send(player,{type:'event',event:{id:'multi-save-event',type:'save:request',characterId:'samoth',combatId:dom.window.RPGConnectMJ.getStatus().fight.requestId,timestamp:new Date().toISOString(),payload:{saveId:'multi-save',actionId:'multi-action',targetMode:'multi',targets:[{targetId:'e1'},{targetId:'e2'}],ability:'DEX',dc:15,source:'Vortex multi test',damageRollMode:'shared',components:[{amount:8,type:'froid'}],halfOnSuccess:true,condition:{name:'Entravé'}}}});
@@ -127,8 +128,8 @@ test('ENCOUNTER applique les dégâts autoritaires et synchronise les conséquen
  assert.deepEqual(dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>p.hp)"),afterMulti,'stale-combat undo cannot mutate a current action');
  const reused=waitCommand(player,'save:result');send(player,{type:'event',event:{id:'multi-reused-action',type:'save:request',characterId:'samoth',payload:{saveId:'new-save-id',actionId:'multi-action',targets:['e1','e2'],ability:'DEX',dc:15,damage:8}}});
  assert.equal((await reused).payload.cancelled,true);assert.equal(dom.window.document.querySelector('#rpgSavePopup').open,false);assert.deepEqual(dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>p.hp)"),afterMulti);
- const undoAck=waitUndo(player);send(player,{type:'event',event:{id:'multi-undo-event',type:'action:undo-request',characterId:'samoth',combatId:dom.window.RPGConnectMJ.getStatus().fight.requestId,payload:{actionId:'multi-action'}}});const undoMsg=await undoAck;assert.match(undoMsg.payload.text,/restauré/);
- const restored=dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>({id:p.id,hp:p.hp,tempHp:p.tempHp,conditions:JSON.stringify(p.conditions)}))");assert.deepEqual(restored,beforeMulti);
+ const undoAck=waitUndo(player);send(player,{type:'event',event:{id:'multi-undo-event',type:'action:undo-request',characterId:'samoth',combatId:dom.window.RPGConnectMJ.getStatus().fight.requestId,payload:{actionId:'multi-action'}}});const undoMsg=await undoAck;assert.match(undoMsg.payload.text,/ignorée/);
+ const restored=dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>({id:p.id,hp:p.hp,tempHp:p.tempHp,conditions:JSON.stringify(p.conditions)}))");assert.deepEqual(restored.map(p=>p.hp),afterMulti);
  assert.equal(dom.window.RPGConnectMJ.endFight(),true);assert.equal(dom.window.RPGConnectMJ.getStatus().machine.state,'END');assert.equal(dom.window.RPGConnectMJ.getStatus().fight.phase,'ended');
  assert.deepEqual(dom.window.eval("state.encounter.participants.filter(p=>['e1','e2'].includes(p.id)).map(p=>({id:p.id,hp:p.hp,tempHp:p.tempHp,conditions:JSON.stringify(p.conditions)}))"),restored);
  send(player,{type:'event',event:{id:'late-save-after-finish',type:'save:request',characterId:'samoth',payload:{saveId:'late-save',actionId:'late-action',targetId:'e1',ability:'DEX',dc:12,damage:10}}});

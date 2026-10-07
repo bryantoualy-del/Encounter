@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="styles.css?v=4">
   <link rel="stylesheet" href="table.css?v=7">
   <link rel="stylesheet" href="rpg-connect-mj.css?v=27">
-</head>
+<link rel="stylesheet" href="mj-ergonomics.css?v=1"></head>
 <body>
   <div id="toast" class="toast" aria-live="polite"></div>
   <div id="drawerScrim" class="drawer-scrim" data-close-drawers></div>
@@ -22,7 +22,7 @@
   <header class="topbar">
     <div class="brand">
       <img class="brand-mark" src="icon-192.png" alt="">
-      <div><h1>ENCOUNTER</h1><p>TABLE DE JEU · V4.1</p></div>
+      <div><h1>ENCOUNTER</h1><p>TABLE DE JEU · V4.2</p></div>
     </div>
     <div class="mode-switch" aria-label="Mode d'utilisation">
       <button id="btnModePrep" class="mode-btn active">⚙ Préparation</button>
@@ -285,23 +285,26 @@
   <template id="resourceRowTemplate"><div class="dynamic-row resource-edit-row"><input data-field="name" placeholder="Nom de la ressource"><input data-field="max" type="number" min="0" placeholder="Max"><input data-field="start" type="number" min="0" placeholder="Départ"><input data-field="reset" placeholder="Recharge / reset"><button type="button" class="danger ghost small remove-row">Suppr.</button></div></template>
   <template id="phaseRowTemplate"><div class="dynamic-row phase-row"><input data-field="name" placeholder="Phase II"><input data-field="threshold" type="number" min="0" placeholder="Seuil PV"><input data-field="ac" type="number" min="0" placeholder="CA"><input data-field="legendaryMax" type="number" min="0" placeholder="Légendaires"><input data-field="speed" placeholder="Vitesse"><input data-field="addResistances" placeholder="Résistances ajoutées"><input data-field="addImmunities" placeholder="Immunités ajoutées"><input data-field="note" placeholder="Effet / rappel de phase"><button type="button" class="danger ghost small remove-row">Suppr.</button></div></template>
 
-  <script src="builtins.js"></script>
+  <script src="builtins.js?v=4.2"></script>
   <script src="rpg-target-names.js?v=1"></script>
   <script src="rpg-condition-rolls.js?v=2"></script>
-  <script src="app.js?v=18"></script>
+  <script src="app.js?v=19"></script>
   <script src="table.js?v=2"></script>
   <script src="rpg-connect-icon-registry.js?v=5"></script>
-  <script src="rpg-save-authority.js?v=6"></script>
+  <script src="rpg-save-authority.js?v=7"></script>
   <script src="rpg-player-save-authority.js?v=1"></script>
   <script src="rpg-health-authority.js?v=2"></script><script src="rpg-summon-authority.js?v=1"></script>
 <script src="rpg-reaction-authority.js"></script>
 <script src="rpg-participant-profiles.js"></script>
-<script src="rpg-connect-mj.js?v=67"></script>
+<script src="rpg-connect-mj.js?v=68"></script>
   <link rel="stylesheet" href="assistant-dice.css?v=1">
   <script>window.CompanionDiceTheme={id:"encounter-assistant",primary:"#d5aa55",rim:"#eddca9",secondary:"#806128",floor:"#15111b",surface:["#d5aa55","#806128","#4b3924","#20182e"],edge:"#ded0ec"};</script>
   <script type="module" src="assistant-dice-engine.js?v=1"></script>
   <script src="monster-assistant.js?v=1"></script><script src="monster-assistant-ui.js?v=1"></script>
   <script src="creature-icons.js"></script>
-  <script>if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js?v=52',{updateViaCache:'none'}).catch(console.warn));}</script>
+  <script src="mj-library-model.js?v=1"></script><script src="mj-journal-model.js?v=1"></script>
+  <script src="mj-library-ui.js?v=1"></script><script src="mj-journal.js?v=1"></script>
+  <script src="mj-conditions.js?v=1"></script><script src="mj-icons.js?v=1"></script><script src="mj-panels.js?v=1"></script><script src="assistant-method.js?v=1"></script><script src="mj-local-concentration.js?v=1"></script>
+  <script>if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js?v=53',{updateViaCache:'none'}).catch(console.warn));}</script>
 </body>
 </html>
