@@ -252,7 +252,7 @@ window.ENCOUNTER_BUILTINS = [
     id:'srd-loup-sanguinaire',category:'enemy',source:'SRD 5.1 · CC-BY-4.0',name:'Loup sanguinaire',type:'Bête',size:'G',cr:'1',ac:14,hp:37,initiative:2,speed:'15 m',
     saves:'',resistances:'',immunities:'',senses:'Perception passive 13',
     traits:[{name:'Odorat et ouïe aiguisés',detail:'Avantage aux tests de Sagesse (Perception) basés sur l’ouïe ou l’odorat.',kind:'text'},{name:'Tactique de meute',detail:'Avantage à l’attaque si au moins un allié non neutralisé se trouve à 1,50 m de la cible.',kind:'text'}],
-    actions:[{name:'Morsure',detail:'Si la cible est une créature : JS FOR DD 13 ou elle tombe à terre.',kind:'attack',bonus:5,damage:'2d6+3',damageType:'perforants'}],reactions:[],legendaryActions:[],legendaryMax:0,phases:[],resources:[],notes:'Profil SRD 5.1 français.'
+    actions:[{name:'Morsure',detail:'Si la cible est une créature : JS FOR DD 13 ou elle tombe à terre.',kind:'attack',attackMode:'melee',bonus:5,damage:'2d6+3',damageType:'perforants',onHitSave:{ability:'FOR',dc:13,conditionOnFailure:'À terre'}}],reactions:[],legendaryActions:[],legendaryMax:0,phases:[],resources:[],notes:'Profil SRD 5.1 français.'
   },
   {
     id:'srd-ombre',category:'enemy',source:'SRD 5.1 · CC-BY-4.0',name:'Ombre',type:'Mort-vivant',size:'M',cr:'1/2',ac:12,hp:16,initiative:2,speed:'12 m',
@@ -477,3 +477,404 @@ window.ENCOUNTER_BUILTINS = [
   set('srd-veteran',{FOR:16,DEX:13,CON:14,INT:10,SAG:11,CHA:10},{athletisme:{mod:5,status:'Maîtrise'},perception:{mod:2,status:'Maîtrise'}});
   set('srd-loup',{FOR:12,DEX:15,CON:12,INT:3,SAG:12,CHA:6},{perception:{mod:3,status:'Maîtrise',note:'Avantage si fondé sur l’ouïe ou l’odorat'},discretion:{mod:4,status:'Maîtrise'}});
 })();
+
+// Profils 5e 2014 : fiches AideDD / SRD 5.1. Capacités structurées et rappels MJ.
+window.ENCOUNTER_BUILTINS.push(
+{
+  "id": "srd-acolyte",
+  "category": "enemy",
+  "source": "SRD 5.1 · CC-BY-4.0 · AideDD",
+  "name": "Acolyte",
+  "type": "Humanoïde (toute race)",
+  "size": "M",
+  "cr": "1/4",
+  "ac": 10,
+  "hp": 9,
+  "initiative": 0,
+  "speed": "9 m",
+  "abilities": {
+    "FOR": 10,
+    "DEX": 10,
+    "CON": 10,
+    "INT": 10,
+    "SAG": 14,
+    "CHA": 11
+  },
+  "saves": "",
+  "saveMods": {},
+  "skills": {},
+  "traits": [
+    {
+      "name": "Incantation",
+      "kind": "text",
+      "detail": "Clerc niveau 1 ; SAG, DD 12. Emplacements et effets de soutien à gérer par le MJ."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Gourdin",
+      "kind": "attack",
+      "attackMode": "melee",
+      "bonus": 2,
+      "damage": "1d4",
+      "damageType": "contondants"
+    },
+    {
+      "name": "Flamme sacrée",
+      "kind": "save",
+      "isSpell": true,
+      "spellLevel": 0,
+      "save": "DEX",
+      "dc": 12,
+      "damage": "1d8",
+      "damageType": "radiants",
+      "detail": "Dégâts seulement sur échec."
+    },
+    {
+      "name": "Soins",
+      "kind": "heal",
+      "isSpell": true,
+      "spellLevel": 1,
+      "damage": "1d8+2",
+      "detail": "Contact ; choisir une cible alliée."
+    },
+    {
+      "name": "Bénédiction",
+      "kind": "text",
+      "isSpell": true,
+      "spellLevel": 1,
+      "detail": "Concentration ; bonus 1d4 aux attaques et JdS de trois cibles à gérer à la table."
+    }
+  ],
+  "reactions": [],
+  "legendaryActions": [],
+  "legendaryMax": 0,
+  "phases": [],
+  "resources": [
+    {
+      "name": "Emplacements N1",
+      "max": 3,
+      "start": 3,
+      "reset": "repos long"
+    }
+  ],
+  "notes": "Sorts 5e 2014 : emplacements à cocher par le MJ ; portée et concentration à vérifier."
+},
+{
+  "id": "srd-fanatique",
+  "category": "enemy",
+  "source": "SRD 5.1 · CC-BY-4.0 · AideDD",
+  "name": "Fanatique",
+  "type": "Humanoïde (toute race)",
+  "size": "M",
+  "cr": "2",
+  "ac": 13,
+  "hp": 33,
+  "initiative": 2,
+  "speed": "9 m",
+  "abilities": {
+    "FOR": 11,
+    "DEX": 14,
+    "CON": 12,
+    "INT": 10,
+    "SAG": 13,
+    "CHA": 14
+  },
+  "saves": "",
+  "saveMods": {},
+  "skills": {},
+  "traits": [
+    {
+      "name": "Incantation",
+      "kind": "text",
+      "detail": "Clerc niveau 4 ; SAG, DD 11, attaque magique +3. Emplacements et effets de contrôle à gérer par le MJ."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Dague",
+      "kind": "attack",
+      "attackMode": "melee",
+      "bonus": 4,
+      "damage": "1d4+2",
+      "damageType": "perforants"
+    },
+    {
+      "name": "Flamme sacrée",
+      "kind": "save",
+      "isSpell": true,
+      "spellLevel": 0,
+      "save": "DEX",
+      "dc": 11,
+      "damage": "1d8",
+      "damageType": "radiants",
+      "detail": "Dégâts seulement sur échec."
+    },
+    {
+      "name": "Blessure",
+      "kind": "attack",
+      "isSpell": true,
+      "spellLevel": 1,
+      "attackMode": "melee",
+      "bonus": 3,
+      "damage": "3d10",
+      "damageType": "nécrotiques",
+      "detail": "Attaque de sort au contact."
+    },
+    {
+      "name": "Immobilisation de personne",
+      "kind": "text",
+      "isSpell": true,
+      "spellLevel": 2,
+      "detail": "Humanoïde uniquement ; JS SAG DD 11 à la table. Paralysé sur échec, concentration, nouveau JS en fin de tour ; état géré par le MJ."
+    }
+  ],
+  "reactions": [],
+  "legendaryActions": [],
+  "legendaryMax": 0,
+  "phases": [],
+  "resources": [
+    {
+      "name": "Emplacements N1",
+      "max": 4,
+      "start": 4,
+      "reset": "repos long"
+    },
+    {
+      "name": "Emplacements N2",
+      "max": 3,
+      "start": 3,
+      "reset": "repos long"
+    }
+  ],
+  "notes": "Le MJ applique et retire les états des sorts de contrôle ; pas de portée automatique."
+},
+{
+  "id": "srd-pretre",
+  "category": "enemy",
+  "source": "SRD 5.1 · CC-BY-4.0 · AideDD",
+  "name": "Prêtre",
+  "type": "Humanoïde (toute race)",
+  "size": "M",
+  "cr": "2",
+  "ac": 13,
+  "hp": 27,
+  "initiative": 0,
+  "speed": "9 m",
+  "abilities": {
+    "FOR": 10,
+    "DEX": 10,
+    "CON": 12,
+    "INT": 13,
+    "SAG": 16,
+    "CHA": 13
+  },
+  "saves": "",
+  "saveMods": {},
+  "skills": {},
+  "traits": [
+    {
+      "name": "Incantation",
+      "kind": "text",
+      "detail": "Clerc niveau 5 ; SAG, DD 13, attaque magique +5. Effets de zone persistants à gérer par le MJ."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Masse d’armes",
+      "kind": "attack",
+      "attackMode": "melee",
+      "bonus": 2,
+      "damage": "1d6",
+      "damageType": "contondants"
+    },
+    {
+      "name": "Flamme sacrée",
+      "kind": "save",
+      "isSpell": true,
+      "spellLevel": 0,
+      "save": "DEX",
+      "dc": 13,
+      "damage": "2d8",
+      "damageType": "radiants",
+      "detail": "Dégâts seulement sur échec."
+    },
+    {
+      "name": "Éclair traçant",
+      "kind": "attack",
+      "isSpell": true,
+      "spellLevel": 1,
+      "attackMode": "ranged",
+      "bonus": 5,
+      "damage": "4d6",
+      "damageType": "radiants",
+      "detail": "Sur touche, avantage à la prochaine attaque contre la cible à appliquer à la table."
+    },
+    {
+      "name": "Soins",
+      "kind": "heal",
+      "isSpell": true,
+      "spellLevel": 1,
+      "damage": "1d8+3",
+      "detail": "Contact ; choisir une cible alliée."
+    },
+    {
+      "name": "Esprits gardiens",
+      "kind": "text",
+      "isSpell": true,
+      "spellLevel": 3,
+      "detail": "Concentration ; zone et dégâts par tour à gérer par le MJ."
+    }
+  ],
+  "reactions": [],
+  "legendaryActions": [],
+  "legendaryMax": 0,
+  "phases": [],
+  "resources": [
+    {
+      "name": "Emplacements N1",
+      "max": 4,
+      "start": 4,
+      "reset": "repos long"
+    },
+    {
+      "name": "Emplacements N2",
+      "max": 3,
+      "start": 3,
+      "reset": "repos long"
+    },
+    {
+      "name": "Emplacements N3",
+      "max": 2,
+      "start": 2,
+      "reset": "repos long"
+    }
+  ],
+  "notes": "Les emplacements et effets persistants sont gérés par le MJ."
+},
+{
+  "id": "srd-mage",
+  "category": "enemy",
+  "source": "SRD 5.1 · CC-BY-4.0 · AideDD",
+  "name": "Mage",
+  "type": "Humanoïde (toute race)",
+  "size": "M",
+  "cr": "6",
+  "ac": 12,
+  "hp": 40,
+  "initiative": 2,
+  "speed": "9 m",
+  "abilities": {
+    "FOR": 9,
+    "DEX": 14,
+    "CON": 11,
+    "INT": 17,
+    "SAG": 12,
+    "CHA": 11
+  },
+  "saves": "INT +6, SAG +4",
+  "saveMods": {},
+  "skills": {},
+  "traits": [
+    {
+      "name": "Incantation",
+      "kind": "text",
+      "detail": "Magicien niveau 9 ; INT, DD 14, attaque magique +6. CA 15 si Armure de mage active (MJ)."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Dague",
+      "kind": "attack",
+      "attackMode": "melee",
+      "bonus": 5,
+      "damage": "1d4+2",
+      "damageType": "perforants"
+    },
+    {
+      "name": "Trait de feu",
+      "kind": "attack",
+      "isSpell": true,
+      "spellLevel": 0,
+      "attackMode": "ranged",
+      "bonus": 6,
+      "damage": "2d10",
+      "damageType": "feu",
+      "detail": "Tour de magie du lanceur de niveau 9."
+    },
+    {
+      "name": "Boule de feu",
+      "kind": "save",
+      "isSpell": true,
+      "spellLevel": 3,
+      "save": "DEX",
+      "dc": 14,
+      "damage": "8d6",
+      "damageType": "feu",
+      "detail": "Sphère 6 m ; moitié des dégâts en cas de réussite ; cibles de la zone choisies par le MJ."
+    },
+    {
+      "name": "Cône de froid",
+      "kind": "save",
+      "isSpell": true,
+      "spellLevel": 5,
+      "save": "CON",
+      "dc": 14,
+      "damage": "8d8",
+      "damageType": "froid",
+      "detail": "Cône 18 m ; moitié des dégâts en cas de réussite ; cibles choisies par le MJ."
+    },
+    {
+      "name": "Projectile magique",
+      "kind": "text",
+      "isSpell": true,
+      "spellLevel": 1,
+      "detail": "Trois projectiles à répartir ; dégâts de force sans attaque ni JdS à résoudre manuellement."
+    },
+    {
+      "name": "Vol",
+      "kind": "text",
+      "isSpell": true,
+      "spellLevel": 3,
+      "detail": "Concentration ; vitesse de vol à suivre à la table."
+    }
+  ],
+  "reactions": [],
+  "legendaryActions": [],
+  "legendaryMax": 0,
+  "phases": [],
+  "resources": [
+    {
+      "name": "Emplacements N1",
+      "max": 4,
+      "start": 4,
+      "reset": "repos long"
+    },
+    {
+      "name": "Emplacements N2",
+      "max": 3,
+      "start": 3,
+      "reset": "repos long"
+    },
+    {
+      "name": "Emplacements N3",
+      "max": 3,
+      "start": 3,
+      "reset": "repos long"
+    },
+    {
+      "name": "Emplacements N4",
+      "max": 3,
+      "start": 3,
+      "reset": "repos long"
+    },
+    {
+      "name": "Emplacements N5",
+      "max": 1,
+      "start": 1,
+      "reset": "repos long"
+    }
+  ],
+  "notes": "Contresort et Bouclier figurent sur la fiche AideDD ; les réactions ennemies et dépenses d’emplacements se valident manuellement dans Encounter."
+}
+);

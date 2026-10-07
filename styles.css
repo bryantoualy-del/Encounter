@@ -101,6 +101,9 @@
 
 /* Éditeur de capacité V2.5. */
 .dynamic-row.ability-row{grid-template-columns:1.05fr 1.9fr .82fr .85fr .55fr .8fr .78fr .52fr .58fr .48fr .62fr 1.1fr .75fr auto}
+.dynamic-row.ability-row .ability-inline-check{display:flex;align-items:center;gap:6px;min-width:70px;font:700 11px ui-sans-serif,system-ui;color:#d2b785}
+.dynamic-row.ability-row .ability-inline-check input{width:auto;margin:0}
+.dynamic-row.ability-row [data-field="onHitSaveCondition"]{min-width:120px}
 
 @media (max-width:1180px){
   .quickbar{grid-template-columns:minmax(135px,.6fr) auto auto minmax(330px,1.35fr)}
