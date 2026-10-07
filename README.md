@@ -1,8 +1,12 @@
 # ENCOUNTER V4.1 — Table de jeu
 
-Version V4.1 de la console, conçue pour suivre le combat tout en gardant son attention sur la table réelle. Elle ajoute notamment les icônes automatiques des 14 types de créatures D&D 5e et leurs variantes BOSS.
+Version V4.2 de la console, conçue pour suivre le combat tout en gardant son attention sur la table réelle. Elle ajoute notamment les icônes automatiques des 14 types de créatures D&D 5e et leurs variantes BOSS.
 
 La Bibliothèque propose désormais un **Assistant de fiches** : texte collé ou fiche existante, vérification MJ, bilan des capacités et essai sur cibles fictives. Les limites manuelles restent affichées. En fight, la préparation se consulte sans redémarrer le combat ; les renforts jouent à partir du round suivant. Les tours du spectre et du dragon sont identifiés séparément. [Compte rendu et limites](audit/PREPARATION-SUMMONS-ASSISTANT-20261007.md).
+
+La tranche **Ergonomie MJ / Journal** ajoute une composition en brouillon, des catégories indépendantes des rôles, les filtres avancés, les panneaux multicibles États/PV, les icônes fournies et le Guide / Méthode hors connexion. Le bouton Journal est visible en combat. Son annulation et le bouton global utilisent la même décision Encounter, avec vérification et acquittements des Companions. Les attaques/sorts/réactions sans capture complète de leurs coûts restent bloqués à l'annulation. [Rapport et tests](audit/MJ-ERGONOMIE-JOURNAL-20261007.md) · [Protocole et limites](audit/MJ-UNDO-PROTOCOL-20261007.md) · [Guide](audit/ASSISTANT-GUIDE-METHODE.md).
+
+Livraison coordonnée : Encounter (dont son serveur) et les six Companions. La capability serveur optionnelle `scoped-undo-v1` et la capability du Companion sont vérifiées avant une correction réseau. RPG-Connect ne nécessite pas de modification. Aucun effacement de sauvegarde n'est requis.
 
 ## Utilisation rapide
 

@@ -1,0 +1,2525 @@
+{
+  "date": "2026-10-07",
+  "environment": "isolated loopback WebSocket/server and real Chromium/native Companion pages; no current game contacted",
+  "unit": {
+    "total": 159,
+    "passed": 159
+  },
+  "companions": {
+    "total": 7,
+    "passed": 7
+  },
+  "icons": {
+    "total": 4,
+    "passed": 4
+  },
+  "layouts": [
+    "1180x820",
+    "1280x800",
+    "390px mobile",
+    "hasTouch Chromium"
+  ],
+  "not_tested": [
+    "Safari",
+    "physical tablet/mobile",
+    "hardware GPU"
+  ],
+  "runs": {
+    "architecture": {
+      "checks": [
+        {
+          "name": "fight 1 six initiatives validated",
+          "pass": true
+        },
+        {
+          "name": "Kentaro native advantage success",
+          "pass": true
+        },
+        {
+          "name": "synaptic penalty and real Voile cleanup",
+          "pass": true
+        },
+        {
+          "name": "Zephyr native concentration CON+6",
+          "pass": true
+        },
+        {
+          "name": "Samoth native CON+6 DC11",
+          "pass": true
+        },
+        {
+          "name": "fight 1 all enemies eliminated within ten rounds",
+          "pass": true
+        },
+        {
+          "name": "fight 1 ended cleanly",
+          "pass": true
+        },
+        {
+          "name": "fight 2 six initiatives validated",
+          "pass": true
+        },
+        {
+          "name": "native Agathys grants authoritative tempHP",
+          "pass": true
+        },
+        {
+          "name": "native enemy ranged 10 Agathys snapshot",
+          "pass": true
+        },
+        {
+          "name": "native enemy melee 10 Agathys snapshot",
+          "pass": true
+        },
+        {
+          "name": "native enemy melee 20 Agathys snapshot",
+          "pass": true
+        },
+        {
+          "name": "opportunity requires live hostile target",
+          "pass": true
+        },
+        {
+          "name": "Rufus second Sneak during enemy turn without movement",
+          "pass": true
+        },
+        {
+          "name": "Brack Sentinel until current enemy turn end",
+          "pass": true
+        },
+        {
+          "name": "second reaction unavailable",
+          "pass": true
+        },
+        {
+          "name": "Agathys and later concentration remain collision free",
+          "pass": true
+        },
+        {
+          "name": "Loup sanguinaire · Morsure · native PJ save in full combat",
+          "pass": true
+        },
+        {
+          "name": "Agathys and later concentration remain collision free",
+          "pass": true
+        },
+        {
+          "name": "Agathys and later concentration remain collision free",
+          "pass": true
+        },
+        {
+          "name": "fight 2 all enemies eliminated within ten rounds",
+          "pass": true
+        },
+        {
+          "name": "fight 2 ended cleanly",
+          "pass": true
+        },
+        {
+          "name": "fight 3 six initiatives validated",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "pending concentration survives both refreshes",
+          "pass": true
+        },
+        {
+          "name": "refresh concentration one result",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "Counterspell suspends enemy spell",
+          "pass": true
+        },
+        {
+          "name": "Counterspell after reconnect cancels spell before damage",
+          "pass": true
+        },
+        {
+          "name": "opportunity after reconnect consumes reaction on miss",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "boss phase modal usable",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "failed Counterspell resumes suspended spell",
+          "pass": true
+        },
+        {
+          "name": "failed Counterspell resumes into a Companion-owned PJ save",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "boss phase modal usable",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "native legendary window handled by MJ",
+          "pass": true
+        },
+        {
+          "name": "fight 3 all enemies eliminated within ten rounds",
+          "pass": true
+        },
+        {
+          "name": "fight 3 ended cleanly",
+          "pass": true
+        },
+        {
+          "name": "all six companions remain connected",
+          "pass": true
+        }
+      ],
+      "errors": [],
+      "failure": null,
+      "fights": [
+        {
+          "fight": 1,
+          "creatures": [
+            "Gobelin",
+            "Orc",
+            "Ogre"
+          ],
+          "rounds": 4,
+          "victory": true
+        },
+        {
+          "fight": 2,
+          "creatures": [
+            "Loup sanguinaire",
+            "Ombre",
+            "Squelette"
+          ],
+          "rounds": 3,
+          "victory": true
+        },
+        {
+          "fight": 3,
+          "creatures": [
+            "Fausse hydre — Démo",
+            "Sectateur",
+            "Vétéran"
+          ],
+          "rounds": 5,
+          "victory": true
+        }
+      ]
+    },
+    "continuity-assistant": {
+      "checks": [
+        {
+          "name": "wolf proposal preserves real on-hit save and never marks mundane ability as spell",
+          "pass": true
+        },
+        {
+          "name": "confirmed wolf uses automatic save/state with manual end disclosed",
+          "pass": true
+        },
+        {
+          "name": "assistant uses native 3D engine overlay",
+          "pass": true
+        },
+        {
+          "name": "isolated preview has three fictional saves, no real combat mutation",
+          "pass": true
+        },
+        {
+          "name": "spell proposal has level and structured DEX save",
+          "pass": true
+        },
+        {
+          "name": "spell sandbox demonstrates counterspell without effects",
+          "pass": true
+        },
+        {
+          "name": "text-only save flagged as unconnected",
+          "pass": true
+        },
+        {
+          "name": "manual sandbox states missing structured save",
+          "pass": true
+        },
+        {
+          "name": "all assistant sheets stored with edition metadata",
+          "pass": true
+        },
+        {
+          "name": "saved sheets survive refresh",
+          "pass": true
+        },
+        {
+          "name": "initial summon order retained",
+          "pass": true
+        },
+        {
+          "name": "assistant wolf executes connected damage and on-hit state",
+          "pass": true
+        },
+        {
+          "name": "opening prep preserves fight snapshot",
+          "pass": true
+        },
+        {
+          "name": "connected preparation button does not restart live fight",
+          "pass": true
+        },
+        {
+          "name": "resume uses same active identity and initiatives",
+          "pass": true
+        },
+        {
+          "name": "approval identifies Samoth",
+          "pass": true
+        },
+        {
+          "name": "dragon HUD explicit",
+          "pass": true
+        },
+        {
+          "name": "dragon refresh restores entity label",
+          "pass": true
+        },
+        {
+          "name": "prep consultation preserves pending invocation request",
+          "pass": true
+        },
+        {
+          "name": "pending invocation request survives both refreshes",
+          "pass": true
+        },
+        {
+          "name": "rejection keeps dragon active",
+          "pass": true
+        },
+        {
+          "name": "approval identifies draconique",
+          "pass": true
+        },
+        {
+          "name": "approval identifies Kentaro",
+          "pass": true
+        },
+        {
+          "name": "spectre HUD explicit",
+          "pass": true
+        },
+        {
+          "name": "approval identifies Spectre",
+          "pass": true
+        },
+        {
+          "name": "reinforcement arrival rule shown",
+          "pass": true
+        },
+        {
+          "name": "high initiative reinforcement preserves active round/order",
+          "pass": true
+        },
+        {
+          "name": "initiative correction deferred without moving active turn",
+          "pass": true
+        },
+        {
+          "name": "next round applies explicit correction and admits reinforcement",
+          "pass": true
+        },
+        {
+          "name": "assistant real spell opens native Counterspell window",
+          "pass": true
+        },
+        {
+          "name": "assistant real spell executes native save and damage",
+          "pass": true
+        },
+        {
+          "name": "phase-two ally joins next round",
+          "pass": true
+        },
+        {
+          "name": "stale invocation request cannot change active participant",
+          "pass": true
+        },
+        {
+          "name": "approval identifies Kentaro",
+          "pass": true
+        },
+        {
+          "name": "eliminated invocation cancels pending approval",
+          "pass": true
+        },
+        {
+          "name": "approval identifies draconique",
+          "pass": true
+        },
+        {
+          "name": "owner immediately after pet has owner HUD and button",
+          "pass": true
+        },
+        {
+          "name": "late pet close cannot close owner following pet",
+          "pass": true
+        },
+        {
+          "name": "approval identifies Samoth",
+          "pass": true
+        },
+        {
+          "name": "manual removal of active pet cancels pending and grants correct owner",
+          "pass": true
+        },
+        {
+          "name": "landscape tablet modal fits and scrolls",
+          "pass": true,
+          "detail": {
+            "x": 150,
+            "y": 40,
+            "w": 980,
+            "h": 720,
+            "scroll": true
+          }
+        },
+        {
+          "name": "zero browser page errors",
+          "pass": true,
+          "detail": []
+        }
+      ],
+      "errors": [],
+      "failure": null
+    },
+    "mission-mj": {
+      "checks": [
+        {
+          "name": "new ergonomics loaded without errors",
+          "pass": true,
+          "detail": []
+        },
+        {
+          "name": "double click selects once without participants or commands",
+          "pass": true
+        },
+        {
+          "name": "draft cancel leaves combat unchanged",
+          "pass": true
+        },
+        {
+          "name": "draft commits all three instances once",
+          "pass": true
+        },
+        {
+          "name": "category assignment preserves technical role",
+          "pass": true
+        },
+        {
+          "name": "advanced category and text filters combine",
+          "pass": true
+        },
+        {
+          "name": "advanced reset clears all filter fields",
+          "pass": true
+        },
+        {
+          "name": "category deletion retains profile and instances",
+          "pass": true
+        },
+        {
+          "name": "prep row selects requested preview",
+          "pass": true
+        },
+        {
+          "name": "prep blur does not swallow next row click",
+          "pass": true
+        },
+        {
+          "name": "panel applies a single defense correction per target",
+          "pass": true
+        },
+        {
+          "name": "one business entry covers both targets",
+          "pass": true
+        },
+        {
+          "name": "undo confirmation cancellation mutates nothing",
+          "pass": true
+        },
+        {
+          "name": "local scoped undo restores both targets",
+          "pass": true
+        },
+        {
+          "name": "layout fits width 1180",
+          "pass": true
+        },
+        {
+          "name": "layout fits width 1280",
+          "pass": true
+        },
+        {
+          "name": "layout fits width 390",
+          "pass": true
+        },
+        {
+          "name": "local mandatory save blocks undo until resolved",
+          "pass": true
+        },
+        {
+          "name": "local failed concentration is part of same action",
+          "pass": true
+        },
+        {
+          "name": "local concentration undo restores single active value",
+          "pass": true
+        },
+        {
+          "name": "real Companion registered",
+          "pass": true
+        },
+        {
+          "name": "connected damage undo restores authoritative HP and receives logical ACK",
+          "pass": true
+        },
+        {
+          "name": "native healing resource captured before authoritative application",
+          "pass": true
+        },
+        {
+          "name": "native healing undo restores Second souffle resource and HP",
+          "pass": true
+        },
+        {
+          "name": "missing native origin capture refuses undo without partial restoration",
+          "pass": true
+        },
+        {
+          "name": "undo restores temporary absorption without healing HP",
+          "pass": true
+        },
+        {
+          "name": "late damage command tombstoned after undo",
+          "pass": true
+        },
+        {
+          "name": "older dependent entry refused with explanation",
+          "pass": true
+        },
+        {
+          "name": "journal and cancellation survive Encounter reload",
+          "pass": true
+        },
+        {
+          "name": "correction messages never contain enemy participant HP",
+          "pass": true
+        },
+        {
+          "name": "disconnected Companion keeps correction pending without partial Encounter restore",
+          "pass": true
+        },
+        {
+          "name": "persisted distributed undo completes after Companion reconnect and Encounter reload",
+          "pass": true
+        },
+        {
+          "name": "connected pending concentration blocks undo",
+          "pass": true
+        },
+        {
+          "name": "failed concentration removes linked source effect",
+          "pass": true
+        },
+        {
+          "name": "connected undo restores damage, temp HP and failed concentration as one action",
+          "pass": true
+        },
+        {
+          "name": "undo restores linked source effect without new condition ID",
+          "pass": true
+        },
+        {
+          "name": "automatic concentration break at zero HP refuses incomplete undo",
+          "pass": true
+        },
+        {
+          "name": "all six pages free of exceptions",
+          "pass": true,
+          "detail": []
+        }
+      ],
+      "errors": [],
+      "failure": null
+    },
+    "panels": {
+      "checks": [
+        {
+          "name": "multi-state panel respects immunity and duration",
+          "pass": true
+        },
+        {
+          "name": "state result names immune target",
+          "pass": true
+        },
+        {
+          "name": "opening state editor neither duplicates nor resets duration",
+          "pass": true
+        },
+        {
+          "name": "closing state editor leaves state unchanged",
+          "pass": true
+        },
+        {
+          "name": "temporary HP follows replacement rather than sum",
+          "pass": true
+        },
+        {
+          "name": "second correction press restores automatic defenses",
+          "pass": true
+        },
+        {
+          "name": "damage consumes temporary HP once and preserves real HP",
+          "pass": true
+        },
+        {
+          "name": "panel selection never engages an attack",
+          "pass": true
+        },
+        {
+          "name": "cancelled skill confirmation rolls nothing",
+          "pass": true
+        },
+        {
+          "name": "manual skill mode combines with poisoned disadvantage",
+          "pass": true
+        },
+        {
+          "name": "skill roll is preserved in business journal",
+          "pass": true
+        },
+        {
+          "name": "panels have no browser exceptions",
+          "pass": true,
+          "detail": []
+        }
+      ],
+      "errors": [],
+      "failure": null
+    },
+    "offline": {
+      "checks": [
+        {
+          "name": "offline cache includes method and supplied icons",
+          "pass": true
+        },
+        {
+          "name": "offline reload preserves round, turn and participants",
+          "pass": true
+        },
+        {
+          "name": "guide opens offline and preserves combat",
+          "pass": true
+        },
+        {
+          "name": "offline browser has no exceptions",
+          "pass": true,
+          "detail": []
+        }
+      ],
+      "errors": [],
+      "failure": null
+    },
+    "touch": {
+      "checks": [
+        {
+          "name": "touch repeated selection keeps one draft row",
+          "pass": true
+        },
+        {
+          "name": "touch after initiative blur selects expected preview",
+          "pass": true
+        },
+        {
+          "name": "keyboard preparation selection opens the same preview",
+          "pass": true
+        },
+        {
+          "name": "closed drawers are removed from keyboard traversal",
+          "pass": true
+        },
+        {
+          "name": "mobile touch can cancel composition with filters visible",
+          "pass": true
+        },
+        {
+          "name": "touch browser has no exceptions",
+          "pass": true,
+          "detail": []
+        }
+      ],
+      "errors": [],
+      "failure": null
+    },
+    "health": {
+      "checks": [
+        {
+          "name": "native Second souffle restores authoritative HP once",
+          "pass": true
+        },
+        {
+          "name": "native Lay on Hands heals Encounter ally without Companion",
+          "pass": true
+        },
+        {
+          "name": "native Cure Wounds heals ally and consumes one free use",
+          "pass": true
+        },
+        {
+          "name": "post-heal preparation consultation preserves round, active and HP",
+          "pass": true
+        },
+        {
+          "name": "health regression has no browser exceptions",
+          "pass": true,
+          "detail": []
+        }
+      ],
+      "errors": [],
+      "failure": null
+    },
+    "e2e": {
+      "checks": [
+        {
+          "name": "both online",
+          "pass": true
+        },
+        {
+          "name": "Kentaro initiative visible and topmost",
+          "pass": true,
+          "detail": {
+            "hidden": false,
+            "display": "grid",
+            "visibility": "visible",
+            "opacity": "1",
+            "zIndex": "10050",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1180,
+              "height": 820
+            },
+            "topmost": true,
+            "top": "<label>Jet manuel d20 <input data-init-manual=\"\" type=\"number\" min=\"1\" max=\"20\" inputmode=\"numeric\" placeholder=\"optionnel\"></label>"
+          }
+        },
+        {
+          "name": "Brackmard initiative visible and topmost",
+          "pass": true,
+          "detail": {
+            "hidden": false,
+            "display": "grid",
+            "visibility": "visible",
+            "opacity": "1",
+            "zIndex": "10050",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1180,
+              "height": 820
+            },
+            "topmost": true,
+            "top": "<label>Jet manuel d20 <input data-init-manual=\"\" type=\"number\" min=\"1\" max=\"20\" inputmode=\"numeric\" placeholder=\"optionnel\"></label>"
+          }
+        },
+        {
+          "name": "initiative:rolled → MJ validation → FIGHT",
+          "pass": true
+        },
+        {
+          "name": "Brack attack → MJ → correlated damage",
+          "pass": true,
+          "attackId": "aafc4336-0acf-44d2-a799-7cfa56c2e15f",
+          "amount": 21
+        },
+        {
+          "name": "Brack attack counter uses effective damage after fire resistance",
+          "pass": true,
+          "detail": {
+            "raw": 21,
+            "effective": 18,
+            "counter": 18
+          }
+        },
+        {
+          "name": "Brack attack → MJ → correlated damage",
+          "pass": true,
+          "attackId": "d7a1c9f4-a4eb-402b-a8cf-274549ca9fef",
+          "amount": 19
+        },
+        {
+          "name": "Brack attack → MJ → correlated damage",
+          "pass": true,
+          "attackId": "5763e9bb-5f6a-4389-8849-673213579c17",
+          "amount": 15
+        },
+        {
+          "name": "Brack attack → MJ → correlated damage",
+          "pass": true,
+          "attackId": "ca4406ba-e95c-44a8-abec-868b1b64abe9",
+          "amount": 23
+        },
+        {
+          "name": "Brack attack → MJ → correlated damage",
+          "pass": true,
+          "attackId": "05e2bb12-ef5d-4e5c-bee1-578b1eb230d4",
+          "amount": 19
+        },
+        {
+          "name": "Brack attack → MJ → correlated damage",
+          "pass": true,
+          "attackId": "43c200a8-4a9d-4508-9a10-eea75d6a1083",
+          "amount": 36
+        },
+        {
+          "name": "Kentaro #solinar → MJ → correlated damage",
+          "pass": true,
+          "attackId": "kentaro-muy757fq-1o",
+          "amount": 8
+        },
+        {
+          "name": "Kentaro #selhane → MJ → correlated damage",
+          "pass": true,
+          "attackId": "kentaro-muy758h3-1w",
+          "amount": 21
+        },
+        {
+          "name": "Kentaro native save → MJ manual → full resolution",
+          "pass": true,
+          "detail": {
+            "saveId": "kentaro-muy758h3-1w:blade-save",
+            "resolutionId": "kentaro-muy758h3-1w:blade-save",
+            "requestId": "kentaro-muy758h3-1w:blade-save",
+            "attackId": "kentaro-muy758h3-1w",
+            "actionId": "kentaro-muy758h3-1w:blade-save",
+            "parentActionId": "kentaro-muy758h3-1w:blade-save",
+            "targetIndex": 0,
+            "targetCount": 1,
+            "targetId": "e2e-target",
+            "targetName": "Cible E2E",
+            "source": "Sélhane renforcée",
+            "ability": "SAG",
+            "dc": 15,
+            "dice": [
+              1
+            ],
+            "die": 1,
+            "modifier": 1,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 2,
+            "success": false,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 0,
+            "requestedDamage": 0,
+            "effectiveDamage": 0,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 0,
+                "requested": 0,
+                "effective": 0,
+                "type": "",
+                "reason": ""
+              }
+            ],
+            "conditionsApplied": [
+              "Halo lunaire — désavantage contre Kentaro"
+            ],
+            "conditionApplied": "Halo lunaire — désavantage contre Kentaro",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "",
+            "dead": false,
+            "correctionActionId": "kentaro-muy758h3-1w:blade-save",
+            "correctionRevision": 28
+          }
+        },
+        {
+          "name": "Kentaro turn damage reflects effective save damage",
+          "pass": true,
+          "detail": {
+            "counterBefore": 29,
+            "counterAfter": 29,
+            "effective": 0
+          }
+        },
+        {
+          "name": "Kentaro #thirdSun → MJ → correlated damage",
+          "pass": true,
+          "attackId": "kentaro-muy75ays-2c",
+          "amount": 13
+        },
+        {
+          "name": "Kentaro bonus consumed",
+          "pass": true
+        },
+        {
+          "name": "same attackId new eventId applied once",
+          "pass": true,
+          "detail": {
+            "hpBeforeReplay": 827,
+            "hpAfterReplay": 827
+          }
+        },
+        {
+          "name": "Brack attack → MJ → correlated damage",
+          "pass": true,
+          "attackId": "92a902ec-e984-49fd-a1e6-e2259b0431f1",
+          "amount": 19
+        },
+        {
+          "name": "Brackmard native save → MJ manual → full resolution",
+          "pass": true,
+          "detail": {
+            "saveId": "460e767a-2c70-456c-ad9f-cdcab804f19e",
+            "resolutionId": "460e767a-2c70-456c-ad9f-cdcab804f19e",
+            "requestId": "460e767a-2c70-456c-ad9f-cdcab804f19e",
+            "attackId": "92a902ec-e984-49fd-a1e6-e2259b0431f1",
+            "actionId": "460e767a-2c70-456c-ad9f-cdcab804f19e",
+            "parentActionId": "460e767a-2c70-456c-ad9f-cdcab804f19e",
+            "targetIndex": 0,
+            "targetCount": 1,
+            "targetId": "e2e-target",
+            "targetName": "Cible E2E",
+            "source": "Croc-en-jambe",
+            "ability": "FOR",
+            "dc": 17,
+            "dice": [
+              1
+            ],
+            "die": 1,
+            "modifier": 3,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 4,
+            "success": false,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 0,
+            "requestedDamage": 0,
+            "effectiveDamage": 0,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 0,
+                "requested": 0,
+                "effective": 0,
+                "type": "",
+                "reason": ""
+              }
+            ],
+            "conditionsApplied": [
+              "À terre"
+            ],
+            "conditionApplied": "À terre",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "",
+            "dead": false,
+            "correctionActionId": "460e767a-2c70-456c-ad9f-cdcab804f19e",
+            "correctionRevision": 36
+          }
+        },
+        {
+          "name": "Brackmard turn damage reflects effective save damage",
+          "pass": true,
+          "detail": {
+            "counterBefore": 18,
+            "counterAfter": 18,
+            "effective": 0
+          }
+        },
+        {
+          "name": "Brackmard native save → MJ manual → full resolution",
+          "pass": true,
+          "detail": {
+            "saveId": "589af4b8-607e-45ca-b268-102b44370a80",
+            "resolutionId": "589af4b8-607e-45ca-b268-102b44370a80",
+            "requestId": "589af4b8-607e-45ca-b268-102b44370a80",
+            "attackId": null,
+            "actionId": "589af4b8-607e-45ca-b268-102b44370a80",
+            "parentActionId": "589af4b8-607e-45ca-b268-102b44370a80",
+            "targetIndex": 0,
+            "targetCount": 1,
+            "targetId": "e2e-target",
+            "targetName": "Cible E2E",
+            "source": "Souffle de la forge",
+            "ability": "DEX",
+            "dc": 16,
+            "dice": [
+              20
+            ],
+            "die": 20,
+            "modifier": 4,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 24,
+            "success": true,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 16,
+            "requestedDamage": 8,
+            "effectiveDamage": 4,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 16,
+                "requested": 8,
+                "effective": 4,
+                "type": "feu",
+                "reason": "résistance"
+              }
+            ],
+            "conditionsApplied": [],
+            "conditionApplied": "",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "",
+            "dead": false,
+            "correctionActionId": "589af4b8-607e-45ca-b268-102b44370a80",
+            "correctionRevision": 39
+          }
+        },
+        {
+          "name": "Brackmard turn damage reflects effective save damage",
+          "pass": true,
+          "detail": {
+            "counterBefore": 0,
+            "counterAfter": 4,
+            "effective": 4
+          }
+        },
+        {
+          "name": "Kentaro native save → MJ manual → full resolution",
+          "pass": true,
+          "detail": {
+            "saveId": "f9ad5ef6-180b-4f34-943b-5ce067aa8051",
+            "resolutionId": "f9ad5ef6-180b-4f34-943b-5ce067aa8051",
+            "requestId": "f9ad5ef6-180b-4f34-943b-5ce067aa8051",
+            "attackId": null,
+            "actionId": "f9ad5ef6-180b-4f34-943b-5ce067aa8051",
+            "parentActionId": "f9ad5ef6-180b-4f34-943b-5ce067aa8051",
+            "targetIndex": 0,
+            "targetCount": 1,
+            "targetId": "e2e-target",
+            "targetName": "Cible E2E",
+            "source": "Perturbations synaptiques",
+            "ability": "INT",
+            "dc": 16,
+            "dice": [
+              1
+            ],
+            "die": 1,
+            "modifier": 2,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 3,
+            "success": false,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 27,
+            "requestedDamage": 27,
+            "effectiveDamage": 27,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 27,
+                "requested": 27,
+                "effective": 27,
+                "type": "psychiques",
+                "reason": ""
+              }
+            ],
+            "conditionsApplied": [
+              "Perturbations synaptiques"
+            ],
+            "conditionApplied": "Perturbations synaptiques",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "−1d6 aux jets d’attaque, tests de caractéristiques et JdS de concentration pendant 1 min",
+            "dead": false,
+            "correctionActionId": "f9ad5ef6-180b-4f34-943b-5ce067aa8051",
+            "correctionRevision": 42
+          }
+        },
+        {
+          "name": "Kentaro turn damage reflects effective save damage",
+          "pass": true,
+          "detail": {
+            "counterBefore": 0,
+            "counterAfter": 27,
+            "effective": 27
+          }
+        },
+        {
+          "name": "Samoth native save → MJ manual → full resolution",
+          "pass": true,
+          "detail": {
+            "saveId": "c80270c1-59f8-410a-a0e5-aefef4f3a816",
+            "resolutionId": "c80270c1-59f8-410a-a0e5-aefef4f3a816",
+            "requestId": "c80270c1-59f8-410a-a0e5-aefef4f3a816",
+            "attackId": null,
+            "actionId": "c80270c1-59f8-410a-a0e5-aefef4f3a816",
+            "parentActionId": "c80270c1-59f8-410a-a0e5-aefef4f3a816",
+            "targetIndex": 0,
+            "targetCount": 1,
+            "targetId": "e2e-target",
+            "targetName": "Cible E2E",
+            "source": "Vortex de glace",
+            "ability": "DEX",
+            "dc": 18,
+            "dice": [
+              20
+            ],
+            "die": 20,
+            "modifier": 4,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 24,
+            "success": true,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 35,
+            "requestedDamage": 17,
+            "effectiveDamage": 17,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 35,
+                "requested": 17,
+                "effective": 17,
+                "type": "froid",
+                "reason": ""
+              }
+            ],
+            "conditionsApplied": [],
+            "conditionApplied": "",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "",
+            "dead": false,
+            "correctionActionId": "c80270c1-59f8-410a-a0e5-aefef4f3a816",
+            "correctionRevision": 45
+          }
+        },
+        {
+          "name": "Samoth turn damage reflects effective save damage",
+          "pass": true,
+          "detail": {
+            "counterBefore": 0,
+            "counterAfter": 17,
+            "effective": 17
+          }
+        },
+        {
+          "name": "Zephyr native save → MJ manual → full resolution",
+          "pass": true,
+          "detail": {
+            "saveId": "7fd7a301-e92d-4fef-8021-620e172753b5",
+            "resolutionId": "7fd7a301-e92d-4fef-8021-620e172753b5",
+            "requestId": "7fd7a301-e92d-4fef-8021-620e172753b5",
+            "attackId": null,
+            "actionId": "7fd7a301-e92d-4fef-8021-620e172753b5",
+            "parentActionId": "7fd7a301-e92d-4fef-8021-620e172753b5",
+            "targetIndex": 0,
+            "targetCount": 1,
+            "targetId": "e2e-target",
+            "targetName": "Cible E2E",
+            "source": "Présence conquérante",
+            "ability": "SAG",
+            "dc": 16,
+            "dice": [
+              1
+            ],
+            "die": 1,
+            "modifier": 1,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 2,
+            "success": false,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 0,
+            "requestedDamage": 0,
+            "effectiveDamage": 0,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 0,
+                "requested": 0,
+                "effective": 0,
+                "type": "",
+                "reason": ""
+              }
+            ],
+            "conditionsApplied": [
+              "Effrayé"
+            ],
+            "conditionApplied": "Effrayé",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "",
+            "dead": false,
+            "correctionActionId": "7fd7a301-e92d-4fef-8021-620e172753b5",
+            "correctionRevision": 48
+          }
+        },
+        {
+          "name": "Zephyr turn damage reflects effective save damage",
+          "pass": true,
+          "detail": {
+            "counterBefore": 0,
+            "counterAfter": 0,
+            "effective": 0
+          }
+        },
+        {
+          "name": "Rufus native save → MJ manual → full resolution",
+          "pass": true,
+          "detail": {
+            "saveId": "bf6574d3-430f-425a-9812-cdfb9f6dcc94",
+            "resolutionId": "bf6574d3-430f-425a-9812-cdfb9f6dcc94",
+            "requestId": "bf6574d3-430f-425a-9812-cdfb9f6dcc94",
+            "attackId": null,
+            "actionId": "bf6574d3-430f-425a-9812-cdfb9f6dcc94",
+            "parentActionId": "bf6574d3-430f-425a-9812-cdfb9f6dcc94",
+            "targetIndex": 0,
+            "targetCount": 1,
+            "targetId": "e2e-target",
+            "targetName": "Cible E2E",
+            "source": "Motif hypnotique",
+            "ability": "SAG",
+            "dc": 15,
+            "dice": [
+              1
+            ],
+            "die": 1,
+            "modifier": 1,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 2,
+            "success": false,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 0,
+            "requestedDamage": 0,
+            "effectiveDamage": 0,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 0,
+                "requested": 0,
+                "effective": 0,
+                "type": "",
+                "reason": ""
+              }
+            ],
+            "conditionsApplied": [
+              "Charmé",
+              "Incapacité",
+              "Vitesse 0"
+            ],
+            "conditionApplied": "Charmé + Incapacité + Vitesse 0",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "L’effet cesse si la cible subit des dégâts ou si une créature utilise une action pour la secouer.",
+            "dead": false,
+            "correctionActionId": "bf6574d3-430f-425a-9812-cdfb9f6dcc94",
+            "correctionRevision": 51
+          }
+        },
+        {
+          "name": "Rufus turn damage reflects effective save damage",
+          "pass": true,
+          "detail": {
+            "counterBefore": 0,
+            "counterAfter": 0,
+            "effective": 0
+          }
+        },
+        {
+          "name": "Rufus object concentration normalized to actual spell name",
+          "pass": true
+        },
+        {
+          "name": "Nans native save → MJ manual → full resolution",
+          "pass": true,
+          "detail": {
+            "saveId": "01d91b80-70c0-4b3c-9e5f-3ce53f83af40",
+            "resolutionId": "01d91b80-70c0-4b3c-9e5f-3ce53f83af40",
+            "requestId": "01d91b80-70c0-4b3c-9e5f-3ce53f83af40",
+            "attackId": null,
+            "actionId": "01d91b80-70c0-4b3c-9e5f-3ce53f83af40",
+            "parentActionId": "01d91b80-70c0-4b3c-9e5f-3ce53f83af40",
+            "targetIndex": 0,
+            "targetCount": 1,
+            "targetId": "e2e-target",
+            "targetName": "Cible E2E",
+            "source": "Fracas de guerre",
+            "ability": "CON",
+            "dc": 12,
+            "dice": [
+              1
+            ],
+            "die": 1,
+            "modifier": 5,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 6,
+            "success": false,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 24,
+            "requestedDamage": 24,
+            "effectiveDamage": 24,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 24,
+                "requested": 24,
+                "effective": 24,
+                "type": "tonnerre",
+                "reason": ""
+              }
+            ],
+            "conditionsApplied": [],
+            "conditionApplied": "",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "Repoussée de 3 m",
+            "dead": false,
+            "correctionActionId": "01d91b80-70c0-4b3c-9e5f-3ce53f83af40",
+            "correctionRevision": 56
+          }
+        },
+        {
+          "name": "Nans turn damage reflects effective save damage",
+          "pass": true,
+          "detail": {
+            "counterBefore": 0,
+            "counterAfter": 24,
+            "effective": 24
+          }
+        },
+        {
+          "name": "Samoth multi selector holds three explicit targets",
+          "pass": true,
+          "detail": [
+            "mt-wolf",
+            "mt-goblin",
+            "mt-elemental"
+          ]
+        },
+        {
+          "name": "multi target keeps creature vignette",
+          "pass": true,
+          "detail": {
+            "src": "http://127.0.0.1:34743/RPG-Connect/assets/icons/creatures/standard/beast.png",
+            "naturalWidth": 384
+          }
+        },
+        {
+          "name": "Samoth native save → MJ manual → full resolution",
+          "pass": true,
+          "detail": {
+            "saveId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "resolutionId": "19e050a7-921f-4ec4-b4a2-43668b307148:mt-wolf",
+            "requestId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "attackId": null,
+            "actionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "parentActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "targetIndex": 0,
+            "targetCount": 3,
+            "targetId": "mt-wolf",
+            "targetName": "Loup sanguinaire",
+            "source": "Vortex de glace",
+            "ability": "DEX",
+            "dc": 18,
+            "dice": [
+              1
+            ],
+            "die": 1,
+            "modifier": 2,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 3,
+            "success": false,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 31,
+            "requestedDamage": 31,
+            "effectiveDamage": 1,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 31,
+                "requested": 31,
+                "effective": 1,
+                "type": "froid",
+                "reason": "résistance"
+              }
+            ],
+            "conditionsApplied": [],
+            "conditionApplied": "",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "",
+            "dead": true,
+            "correctionActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "correctionRevision": 59
+          }
+        },
+        {
+          "name": "Samoth turn damage reflects effective save damage",
+          "pass": true,
+          "detail": {
+            "counterBefore": 0,
+            "counterAfter": 1,
+            "effective": 1
+          }
+        },
+        {
+          "name": "target reaching zero does not close the logical multi action",
+          "pass": true,
+          "detail": {
+            "saveId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "resolutionId": "19e050a7-921f-4ec4-b4a2-43668b307148:mt-wolf",
+            "requestId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "attackId": null,
+            "actionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "parentActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "targetIndex": 0,
+            "targetCount": 3,
+            "targetId": "mt-wolf",
+            "targetName": "Loup sanguinaire",
+            "source": "Vortex de glace",
+            "ability": "DEX",
+            "dc": 18,
+            "dice": [
+              1
+            ],
+            "die": 1,
+            "modifier": 2,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 3,
+            "success": false,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 31,
+            "requestedDamage": 31,
+            "effectiveDamage": 1,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 31,
+                "requested": 31,
+                "effective": 1,
+                "type": "froid",
+                "reason": "résistance"
+              }
+            ],
+            "conditionsApplied": [],
+            "conditionApplied": "",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "",
+            "dead": true,
+            "correctionActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "correctionRevision": 59
+          }
+        },
+        {
+          "name": "multi action survives Companion reconnect and STATE_SYNC",
+          "pass": true
+        },
+        {
+          "name": "Samoth native save → MJ manual → full resolution",
+          "pass": true,
+          "detail": {
+            "saveId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "resolutionId": "19e050a7-921f-4ec4-b4a2-43668b307148:mt-goblin",
+            "requestId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "attackId": null,
+            "actionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "parentActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "targetIndex": 1,
+            "targetCount": 3,
+            "targetId": "mt-goblin",
+            "targetName": "Gobelin multi",
+            "source": "Vortex de glace",
+            "ability": "DEX",
+            "dc": 18,
+            "dice": [
+              20
+            ],
+            "die": 20,
+            "modifier": 4,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 24,
+            "success": true,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 31,
+            "requestedDamage": 15,
+            "effectiveDamage": 15,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 31,
+                "requested": 15,
+                "effective": 15,
+                "type": "froid",
+                "reason": ""
+              }
+            ],
+            "conditionsApplied": [],
+            "conditionApplied": "",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "",
+            "dead": false,
+            "correctionActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "correctionRevision": 60
+          }
+        },
+        {
+          "name": "Samoth turn damage reflects effective save damage",
+          "pass": true,
+          "detail": {
+            "counterBefore": 1,
+            "counterAfter": 16,
+            "effective": 15
+          }
+        },
+        {
+          "name": "Samoth native save → MJ manual → full resolution",
+          "pass": true,
+          "detail": {
+            "saveId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "resolutionId": "19e050a7-921f-4ec4-b4a2-43668b307148:mt-elemental",
+            "requestId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "attackId": null,
+            "actionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "parentActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "targetIndex": 2,
+            "targetCount": 3,
+            "targetId": "mt-elemental",
+            "targetName": "Élémentaire de glace",
+            "source": "Vortex de glace",
+            "ability": "DEX",
+            "dc": 18,
+            "dice": [
+              1
+            ],
+            "die": 1,
+            "modifier": 1,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 2,
+            "success": false,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 31,
+            "requestedDamage": 31,
+            "effectiveDamage": 0,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 31,
+                "requested": 31,
+                "effective": 0,
+                "type": "froid",
+                "reason": "immunité"
+              }
+            ],
+            "conditionsApplied": [],
+            "conditionApplied": "",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "",
+            "dead": false,
+            "correctionActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "correctionRevision": 61
+          }
+        },
+        {
+          "name": "Samoth turn damage reflects effective save damage",
+          "pass": true,
+          "detail": {
+            "counterBefore": 16,
+            "counterAfter": 16,
+            "effective": 0
+          }
+        },
+        {
+          "name": "three independent JdS resolved",
+          "pass": true,
+          "detail": [
+            {
+              "targetId": "mt-wolf",
+              "total": 3,
+              "success": false,
+              "effectiveDamage": 1
+            },
+            {
+              "targetId": "mt-goblin",
+              "total": 24,
+              "success": true,
+              "effectiveDamage": 15
+            },
+            {
+              "targetId": "mt-elemental",
+              "total": 2,
+              "success": false,
+              "effectiveDamage": 0
+            }
+          ]
+        },
+        {
+          "name": "one shared raw damage roll reused for all targets",
+          "pass": true,
+          "detail": [
+            31,
+            31,
+            31
+          ]
+        },
+        {
+          "name": "per-target defenses and save scaling applied",
+          "pass": true,
+          "detail": {
+            "wolf": {
+              "saveId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "resolutionId": "19e050a7-921f-4ec4-b4a2-43668b307148:mt-wolf",
+              "requestId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "attackId": null,
+              "actionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "parentActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "targetIndex": 0,
+              "targetCount": 3,
+              "targetId": "mt-wolf",
+              "targetName": "Loup sanguinaire",
+              "source": "Vortex de glace",
+              "ability": "DEX",
+              "dc": 18,
+              "dice": [
+                1
+              ],
+              "die": 1,
+              "modifier": 2,
+              "penalty": 0,
+              "penaltyDetail": "",
+              "total": 3,
+              "success": false,
+              "mode": "normal",
+              "automaticFailure": false,
+              "rollSource": "manual",
+              "rawDamage": 31,
+              "requestedDamage": 31,
+              "effectiveDamage": 1,
+              "damageRollMode": "shared",
+              "components": [
+                {
+                  "raw": 31,
+                  "requested": 31,
+                  "effective": 1,
+                  "type": "froid",
+                  "reason": "résistance"
+                }
+              ],
+              "conditionsApplied": [],
+              "conditionApplied": "",
+              "conditionImmune": false,
+              "conditionImmuneNames": [],
+              "failureEffect": "",
+              "dead": true,
+              "correctionActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "correctionRevision": 59
+            },
+            "goblin": {
+              "saveId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "resolutionId": "19e050a7-921f-4ec4-b4a2-43668b307148:mt-goblin",
+              "requestId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "attackId": null,
+              "actionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "parentActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "targetIndex": 1,
+              "targetCount": 3,
+              "targetId": "mt-goblin",
+              "targetName": "Gobelin multi",
+              "source": "Vortex de glace",
+              "ability": "DEX",
+              "dc": 18,
+              "dice": [
+                20
+              ],
+              "die": 20,
+              "modifier": 4,
+              "penalty": 0,
+              "penaltyDetail": "",
+              "total": 24,
+              "success": true,
+              "mode": "normal",
+              "automaticFailure": false,
+              "rollSource": "manual",
+              "rawDamage": 31,
+              "requestedDamage": 15,
+              "effectiveDamage": 15,
+              "damageRollMode": "shared",
+              "components": [
+                {
+                  "raw": 31,
+                  "requested": 15,
+                  "effective": 15,
+                  "type": "froid",
+                  "reason": ""
+                }
+              ],
+              "conditionsApplied": [],
+              "conditionApplied": "",
+              "conditionImmune": false,
+              "conditionImmuneNames": [],
+              "failureEffect": "",
+              "dead": false,
+              "correctionActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "correctionRevision": 60
+            },
+            "elemental": {
+              "saveId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "resolutionId": "19e050a7-921f-4ec4-b4a2-43668b307148:mt-elemental",
+              "requestId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "attackId": null,
+              "actionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "parentActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "targetIndex": 2,
+              "targetCount": 3,
+              "targetId": "mt-elemental",
+              "targetName": "Élémentaire de glace",
+              "source": "Vortex de glace",
+              "ability": "DEX",
+              "dc": 18,
+              "dice": [
+                1
+              ],
+              "die": 1,
+              "modifier": 1,
+              "penalty": 0,
+              "penaltyDetail": "",
+              "total": 2,
+              "success": false,
+              "mode": "normal",
+              "automaticFailure": false,
+              "rollSource": "manual",
+              "rawDamage": 31,
+              "requestedDamage": 31,
+              "effectiveDamage": 0,
+              "damageRollMode": "shared",
+              "components": [
+                {
+                  "raw": 31,
+                  "requested": 31,
+                  "effective": 0,
+                  "type": "froid",
+                  "reason": "immunité"
+                }
+              ],
+              "conditionsApplied": [],
+              "conditionApplied": "",
+              "conditionImmune": false,
+              "conditionImmuneNames": [],
+              "failureEffect": "",
+              "dead": false,
+              "correctionActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+              "correctionRevision": 61
+            }
+          }
+        },
+        {
+          "name": "multi action consumes one action economy only",
+          "pass": true
+        },
+        {
+          "name": "Companion emitted one multi save intention",
+          "pass": true,
+          "detail": {
+            "ability": "DEX",
+            "dc": 18,
+            "source": "Vortex de glace",
+            "targetMode": "multi",
+            "damageRollMode": "shared",
+            "halfOnSuccess": true,
+            "damage": 31,
+            "damageType": "froid",
+            "components": [
+              {
+                "amount": 31,
+                "type": "froid"
+              }
+            ],
+            "condition": null,
+            "saveMode": "normal",
+            "saveId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "actionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "parentActionId": "19e050a7-921f-4ec4-b4a2-43668b307148",
+            "maxTargets": null,
+            "targetId": "e2e-target",
+            "target": {
+              "id": "e2e-target",
+              "name": "Cible E2E",
+              "creatureType": "humanoïde",
+              "boss": false,
+              "elite": false,
+              "ac": 12
+            },
+            "targets": [
+              {
+                "targetId": "mt-wolf",
+                "id": "mt-wolf",
+                "name": "Loup sanguinaire",
+                "creatureType": "bête",
+                "boss": false,
+                "elite": false,
+                "ac": 14
+              },
+              {
+                "targetId": "mt-goblin",
+                "id": "mt-goblin",
+                "name": "Gobelin multi",
+                "creatureType": "humanoïde",
+                "boss": false,
+                "elite": false,
+                "ac": 15
+              },
+              {
+                "targetId": "mt-elemental",
+                "id": "mt-elemental",
+                "name": "Élémentaire de glace",
+                "creatureType": "élémentaire",
+                "boss": false,
+                "elite": false,
+                "ac": 14
+              }
+            ],
+            "combatId": "59306db0-2d60-4f83-9dcf-a77aa9f39202"
+          }
+        },
+        {
+          "name": "same action/save IDs with a new eventId are deduplicated",
+          "pass": true,
+          "detail": {
+            "hpBeforeReplay": {
+              "mt-wolf": 0,
+              "mt-goblin": 15,
+              "mt-elemental": 40
+            },
+            "hpAfterReplay": {
+              "mt-wolf": 0,
+              "mt-goblin": 15,
+              "mt-elemental": 40
+            }
+          }
+        },
+        {
+          "name": "unsafe multi-save undo refuses partial resource restoration",
+          "pass": true
+        },
+        {
+          "name": "turn can advance after a multi-target kill",
+          "pass": true
+        },
+        {
+          "name": "five-round post-multi combat simulation stays live",
+          "pass": true,
+          "detail": {
+            "roundStart": 1,
+            "roundEnd": 6
+          }
+        },
+        {
+          "name": "Zephyr native save → MJ manual → full resolution",
+          "pass": true,
+          "detail": {
+            "saveId": "a9f9dd5d-c9d7-4b7b-9251-b8d6f4795fc1",
+            "resolutionId": "a9f9dd5d-c9d7-4b7b-9251-b8d6f4795fc1",
+            "requestId": "a9f9dd5d-c9d7-4b7b-9251-b8d6f4795fc1",
+            "attackId": null,
+            "actionId": "a9f9dd5d-c9d7-4b7b-9251-b8d6f4795fc1",
+            "parentActionId": "a9f9dd5d-c9d7-4b7b-9251-b8d6f4795fc1",
+            "targetIndex": 0,
+            "targetCount": 1,
+            "targetId": "e2e-target",
+            "targetName": "Cible E2E",
+            "source": "Peur",
+            "ability": "SAG",
+            "dc": 16,
+            "dice": [
+              1
+            ],
+            "die": 1,
+            "modifier": 1,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 2,
+            "success": false,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 0,
+            "requestedDamage": 0,
+            "effectiveDamage": 0,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 0,
+                "requested": 0,
+                "effective": 0,
+                "type": "",
+                "reason": ""
+              }
+            ],
+            "conditionsApplied": [
+              "Effrayé"
+            ],
+            "conditionApplied": "Effrayé",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "",
+            "dead": false,
+            "correctionActionId": "a9f9dd5d-c9d7-4b7b-9251-b8d6f4795fc1",
+            "correctionRevision": 65
+          }
+        },
+        {
+          "name": "Zephyr turn damage reflects effective save damage",
+          "pass": true,
+          "detail": {
+            "counterBefore": 0,
+            "counterAfter": 0,
+            "effective": 0
+          }
+        },
+        {
+          "name": "Zephyr native save → MJ manual → full resolution",
+          "pass": true,
+          "detail": {
+            "saveId": "8dc25f88-f3f0-417f-8d5a-78f36c4769cd",
+            "resolutionId": "8dc25f88-f3f0-417f-8d5a-78f36c4769cd",
+            "requestId": "8dc25f88-f3f0-417f-8d5a-78f36c4769cd",
+            "attackId": "zephyr-muy76ti3-ao",
+            "actionId": "8dc25f88-f3f0-417f-8d5a-78f36c4769cd",
+            "parentActionId": "8dc25f88-f3f0-417f-8d5a-78f36c4769cd",
+            "targetIndex": 0,
+            "targetCount": 1,
+            "targetId": "e2e-target",
+            "targetName": "Cible E2E",
+            "source": "Châtiment tonitruant",
+            "ability": "FOR",
+            "dc": 16,
+            "dice": [
+              1
+            ],
+            "die": 1,
+            "modifier": 3,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 4,
+            "success": false,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 0,
+            "requestedDamage": 0,
+            "effectiveDamage": 0,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 0,
+                "requested": 0,
+                "effective": 0,
+                "type": "",
+                "reason": ""
+              }
+            ],
+            "conditionsApplied": [
+              "À terre"
+            ],
+            "conditionApplied": "À terre",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "Repoussée de 3 m",
+            "dead": false,
+            "correctionActionId": "8dc25f88-f3f0-417f-8d5a-78f36c4769cd",
+            "correctionRevision": 76
+          }
+        },
+        {
+          "name": "Zephyr turn damage reflects effective save damage",
+          "pass": true,
+          "detail": {
+            "counterBefore": 24,
+            "counterAfter": 24,
+            "effective": 0
+          }
+        },
+        {
+          "name": "Zephyr native smite save keeps attackId",
+          "pass": true
+        },
+        {
+          "name": "Nans native save → MJ manual → full resolution",
+          "pass": true,
+          "detail": {
+            "saveId": "14bcef0f-be66-4f8f-8edd-9e11e282b5a1",
+            "resolutionId": "14bcef0f-be66-4f8f-8edd-9e11e282b5a1",
+            "requestId": "14bcef0f-be66-4f8f-8edd-9e11e282b5a1",
+            "attackId": null,
+            "actionId": "14bcef0f-be66-4f8f-8edd-9e11e282b5a1",
+            "parentActionId": "14bcef0f-be66-4f8f-8edd-9e11e282b5a1",
+            "targetIndex": 0,
+            "targetCount": 1,
+            "targetId": "e2e-target",
+            "targetName": "Cible E2E",
+            "source": "Présence intimidante",
+            "ability": "SAG",
+            "dc": 12,
+            "dice": [
+              1
+            ],
+            "die": 1,
+            "modifier": 1,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 2,
+            "success": false,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "manual",
+            "rawDamage": 0,
+            "requestedDamage": 0,
+            "effectiveDamage": 0,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 0,
+                "requested": 0,
+                "effective": 0,
+                "type": "",
+                "reason": ""
+              }
+            ],
+            "conditionsApplied": [
+              "Effrayé"
+            ],
+            "conditionApplied": "Effrayé",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "",
+            "dead": false,
+            "correctionActionId": "14bcef0f-be66-4f8f-8edd-9e11e282b5a1",
+            "correctionRevision": 79
+          }
+        },
+        {
+          "name": "Nans turn damage reflects effective save damage",
+          "pass": true,
+          "detail": {
+            "counterBefore": 0,
+            "counterAfter": 0,
+            "effective": 0
+          }
+        },
+        {
+          "name": "automatic JdS composite R/I/V absorbs temp HP first",
+          "pass": true,
+          "detail": {
+            "saveId": "86ff3e40-93f8-42c6-8f50-b2816b21aca3",
+            "resolutionId": "86ff3e40-93f8-42c6-8f50-b2816b21aca3",
+            "requestId": "86ff3e40-93f8-42c6-8f50-b2816b21aca3",
+            "attackId": null,
+            "actionId": "86ff3e40-93f8-42c6-8f50-b2816b21aca3",
+            "parentActionId": "86ff3e40-93f8-42c6-8f50-b2816b21aca3",
+            "targetIndex": 0,
+            "targetCount": 1,
+            "targetId": "e2e-target",
+            "targetName": "Cible E2E",
+            "source": "Composite E2E",
+            "ability": "DEX",
+            "dc": 18,
+            "dice": [
+              1
+            ],
+            "die": 1,
+            "modifier": 4,
+            "penalty": 0,
+            "penaltyDetail": "",
+            "total": 5,
+            "success": false,
+            "mode": "normal",
+            "automaticFailure": false,
+            "rollSource": "auto",
+            "rawDamage": 26,
+            "requestedDamage": 26,
+            "effectiveDamage": 18,
+            "damageRollMode": "shared",
+            "components": [
+              {
+                "raw": 12,
+                "requested": 12,
+                "effective": 6,
+                "type": "froid",
+                "reason": "résistance"
+              },
+              {
+                "raw": 8,
+                "requested": 8,
+                "effective": 0,
+                "type": "feu",
+                "reason": "immunité"
+              },
+              {
+                "raw": 6,
+                "requested": 6,
+                "effective": 12,
+                "type": "radiants",
+                "reason": "vulnérabilité"
+              }
+            ],
+            "conditionsApplied": [],
+            "conditionApplied": "",
+            "conditionImmune": false,
+            "conditionImmuneNames": [],
+            "failureEffect": "",
+            "dead": false,
+            "correctionActionId": "86ff3e40-93f8-42c6-8f50-b2816b21aca3",
+            "correctionRevision": 82
+          }
+        },
+        {
+          "name": "two conditions visible in Encounter quick view",
+          "pass": true,
+          "detail": [
+            {
+              "text": "Aveuglé",
+              "width": 69.953125,
+              "height": 28
+            },
+            {
+              "text": "Empoisonné",
+              "width": 87.171875,
+              "height": 28
+            }
+          ]
+        },
+        {
+          "name": "stale Companion state cannot restore old HP",
+          "pass": true
+        },
+        {
+          "name": "stale condition command cannot restore removed state",
+          "pass": true
+        },
+        {
+          "name": "POINTS DE VIE temp HP UI",
+          "pass": true
+        },
+        {
+          "name": "local concentration reaches Encounter",
+          "pass": true
+        },
+        {
+          "name": "local concentration removal reaches Encounter",
+          "pass": true
+        },
+        {
+          "name": "Kentaro semantic damage/heal ribbons",
+          "pass": true,
+          "detail": {
+            "red": true,
+            "green": true
+          }
+        },
+        {
+          "name": "Kentaro short rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Kentaro cancelled short rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Kentaro long rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Kentaro cancelled long rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Brackmard semantic damage/heal ribbons",
+          "pass": true,
+          "detail": {
+            "red": true,
+            "green": true
+          }
+        },
+        {
+          "name": "Brackmard short rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Brackmard cancelled short rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Brackmard long rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Brackmard cancelled long rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Samoth semantic damage/heal ribbons",
+          "pass": true,
+          "detail": {
+            "red": true,
+            "green": true
+          }
+        },
+        {
+          "name": "Samoth short rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Samoth cancelled short rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Samoth long rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Samoth cancelled long rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Zephyr semantic damage/heal ribbons",
+          "pass": true,
+          "detail": {
+            "red": true,
+            "green": true
+          }
+        },
+        {
+          "name": "Zephyr short rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Zephyr cancelled short rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Zephyr long rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Zephyr cancelled long rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Rufus semantic damage/heal ribbons",
+          "pass": true,
+          "detail": {
+            "red": true,
+            "green": true
+          }
+        },
+        {
+          "name": "Rufus short rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Rufus cancelled short rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Rufus long rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Rufus cancelled long rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Nans semantic damage/heal ribbons",
+          "pass": true,
+          "detail": {
+            "red": true,
+            "green": true
+          }
+        },
+        {
+          "name": "Nans short rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Nans cancelled short rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Nans long rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Nans cancelled long rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Kentaro header 390px fits viewport",
+          "pass": true,
+          "detail": {
+            "width": 374,
+            "right": 382,
+            "font": "26.4px"
+          }
+        },
+        {
+          "name": "Kentaro header 768px fits viewport",
+          "pass": true,
+          "detail": {
+            "width": 732,
+            "right": 750,
+            "font": "36.864px"
+          }
+        },
+        {
+          "name": "Kentaro single RPG Connect HUD",
+          "pass": true
+        },
+        {
+          "name": "Brackmard single RPG Connect HUD",
+          "pass": true
+        },
+        {
+          "name": "Samoth single RPG Connect HUD",
+          "pass": true
+        },
+        {
+          "name": "Zephyr single RPG Connect HUD",
+          "pass": true
+        },
+        {
+          "name": "Rufus single RPG Connect HUD",
+          "pass": true
+        },
+        {
+          "name": "Nans single RPG Connect HUD",
+          "pass": true
+        },
+        {
+          "name": "incompatible application gets explicit persistent UI message",
+          "pass": true
+        },
+        {
+          "name": "synaptic penalty only on explicit concentration save in Chromium",
+          "pass": true,
+          "detail": {
+            "concentration": "Cible E2E — JS concentration CON DD 15 : 10 +5 − 1d6 (4) = 11 → ÉCHEC.",
+            "ordinary": "Cible E2E — JS CON DD 15 : 10 +5 = 15 → RÉUSSITE.",
+            "button": true
+          }
+        },
+        {
+          "name": "manual saves use restrained DEX disadvantage and stunned FOR automatic failure",
+          "pass": true,
+          "detail": {
+            "dex": "Cible E2E — JS DEX DD 15 : 10/2 +4 = 6 → ÉCHEC.",
+            "strength": "Cible E2E — JS FOR DD 15 : échec automatique → ÉCHEC."
+          }
+        },
+        {
+          "name": "local Encounter ability save respects target DEX disadvantage",
+          "pass": true,
+          "detail": "Kentaro — Contrôle DEX → Cible E2E : JS DEX 10/2 +4 = 6 vs DD 15 → ÉCHEC"
+        },
+        {
+          "name": "enemy attack applies synaptic penalty in Chromium",
+          "pass": true,
+          "detail": "Cible E2E — Attaque de contrôle → Kentaro : d20 10 +5 − 1d6 (4) = 11 vs CA 18 → RATÉ"
+        },
+        {
+          "name": "finish fight preserves participants and stops combat",
+          "pass": true,
+          "detail": {
+            "phase": "ended",
+            "machine": "END",
+            "hp": 92,
+            "round": 6,
+            "dialog": true
+          }
+        },
+        {
+          "name": "ended phase and conditions survive reload",
+          "pass": true,
+          "detail": {
+            "phase": "ended",
+            "machine": "END",
+            "round": 6,
+            "conditions": [
+              "Aveuglé",
+              "Empoisonné",
+              "Perturbations synaptiques"
+            ]
+          }
+        },
+        {
+          "name": "Kentaro initiative survives secondary faults and maximum-z HUD",
+          "pass": true,
+          "detail": {
+            "hidden": false,
+            "display": "grid",
+            "visibility": "visible",
+            "opacity": "1",
+            "zIndex": "10050",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1180,
+              "height": 820
+            },
+            "topmost": true,
+            "top": "<label>Jet manuel d20 <input data-init-manual=\"\" type=\"number\" min=\"1\" max=\"20\" inputmode=\"numeric\" placeholder=\"optionnel\" style=\"\"></label>"
+          }
+        },
+        {
+          "name": "Brackmard initiative survives secondary faults and maximum-z HUD",
+          "pass": true,
+          "detail": {
+            "hidden": false,
+            "display": "grid",
+            "visibility": "visible",
+            "opacity": "1",
+            "zIndex": "10050",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1180,
+              "height": 820
+            },
+            "topmost": true,
+            "top": "<label>Jet manuel d20 <input data-init-manual=\"\" type=\"number\" min=\"1\" max=\"20\" inputmode=\"numeric\" placeholder=\"optionnel\" style=\"\"></label>"
+          }
+        }
+      ],
+      "errors": [],
+      "failure": null
+    }
+  }
+}

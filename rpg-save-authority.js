@@ -32,7 +32,7 @@ window.createRPGSaveAuthority=deps=>{
  }
  function conditionSpecs(p,success){const all=Array.isArray(p.conditions)?p.conditions:p.condition?[p.condition]:[];return all.filter(spec=>{const mode=typeof spec==='object'&&spec?String(spec.applyOn||'failure'):'failure';return mode==='always'||(success&&mode==='success')||(!success&&mode!=='success')})}
  function requestedFor(c,p,success){const raw=Math.max(0,Math.trunc(Number(c.amount)||0));if(!success)return c.failureAmount!=null?Math.max(0,Math.trunc(Number(c.failureAmount)||0)):raw;if(c.successAmount!=null)return Math.max(0,Math.trunc(Number(c.successAmount)||0));if(c.halfOnSuccess??p.halfOnSuccess)return Math.floor(raw/2);return 0}
- function resolve(kind){
+ function resolveNative(kind){
   const item=[...queue.values()][0];if(!item)return;const p=item.event.payload||{},s=profile(item);
   if(!s.target){queue.delete(item.key);respond(item,{targetId:item.targetId,error:'Cible absente ou à 0 PV'});render();return}
   let modifier=s.modifier;if(modifier===null){const raw=popup.querySelector('[data-save-mod]')?.value;if(raw==null||raw.trim()===''||!Number.isFinite(Number(raw)))return error('Renseigne le modificateur réel de la fiche.');modifier=Number(raw)}
@@ -47,6 +47,7 @@ window.createRPGSaveAuthority=deps=>{
   const remaining=[...queue.values()].filter(x=>x.actionId===item.actionId).length;if(!remaining){const results=Object.values(deps.ledger()).filter(x=>x?.actionId===item.actionId),summary=results.map(x=>x.targetName+' : '+(x.success?'réussite':'échec')+' → '+(x.effectiveDamage||0)+' dégât'+((x.effectiveDamage||0)>1?'s':'')).join(' · ');deps.log(deps.name(item.characterId)+' · '+String(p.source||'capacité')+' · résolution terminée · '+summary)}
   render()
  }
+ function resolve(kind){const item=[...queue.values()][0];if(!item)return;if(deps.scope)return deps.scope(item,()=>resolveNative(kind));return resolveNative(kind)}
  function error(text){const el=popup.querySelector('[data-save-error]');if(el)el.textContent=text}
  popup.addEventListener('click',e=>{if(e.target.closest('[data-save-reset]')){deps.resetCombat?.();return}if(e.target.closest('[data-save-auto]'))resolve('auto');if(e.target.closest('[data-save-manual]'))resolve('manual')});
  return{enqueue,render,snapshot:()=>[...queue],restore(items){queue.clear();for(const [key,item] of items||[])if(item?.event&&item?.characterId)queue.set(key,item);render()},cancelAction(actionId){for(const [key,item]of queue)if(item.actionId===actionId){queue.delete(key);respond(item,{targetId:item.targetId,cancelled:true,error:'Action annulée'})}render()},reset(reason='Combat réinitialisé'){for(const item of queue.values())respond(item,{cancelled:true,error:reason});queue.clear();render()},pending:()=>queue.size};
