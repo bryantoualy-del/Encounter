@@ -50,10 +50,11 @@ function parseSaveString(str=''){
 function abilityMod(score){ return Math.floor((Number(score)-10)/2); }
 function signed(n){ n=Number(n)||0; return n>=0?`+${n}`:`${n}`; }
 
+function abilityAttackMode(a={}){if(['melee','ranged'].includes(a.attackMode))return a.attackMode;const detail=String(a.detail||'');const melee=/attaque(?: d[’']arme)? (?:au|de) corps[\s-]à[\s-]corps/i.test(detail),ranged=/attaque(?: d[’']arme)? (?:à|a) distance/i.test(detail);return melee!==ranged?(melee?'melee':'ranged'):null;}
 function normalizeAbility(a={}){
   return {
     id:a.id||uid('ab'),name:a.name||'Capacité',detail:a.detail||'',kind:a.kind||'text',economy:a.economy||'',
-    spellLevel:numOrNull(a.spellLevel),isSpell:!!a.isSpell,bonus:numOrNull(a.bonus),damage:a.damage||'',damageType:a.damageType||'',dc:numOrNull(a.dc),save:(a.save||'').toUpperCase(),
+    attackMode:abilityAttackMode(a),spellLevel:numOrNull(a.spellLevel),isSpell:!!a.isSpell,bonus:numOrNull(a.bonus),damage:a.damage||'',damageType:a.damageType||'',dc:numOrNull(a.dc),save:(a.save||'').toUpperCase(),
     cost:Number(a.cost)||1,recharge:a.recharge||'',sequence:a.sequence||'',timing:a.timing||'',target:a.target||'auto'
   };
 }
