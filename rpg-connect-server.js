@@ -2,7 +2,8 @@ import {createServer} from 'node:http';
 import {randomBytes, timingSafeEqual} from 'node:crypto';
 import {WebSocketServer, WebSocket} from 'ws';
 
-const protocol={protocolVersion:1,serverVersion:'audit-2026-10-04',capabilities:['event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions']};
+const protocol={protocolVersion:1,serverVersion:'audit-2026-10-04',capabilities:['event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions','companion-concentration-v1']};
+const coreCapabilities=protocol.capabilities.filter(c=>c!=='companion-concentration-v1');
 const characters=new Set(['kentaro','samoth','brackmard','rufus','nans','zephyr']);
 const key=process.env.RPG_CONNECT_GM_KEY;
 if(!key||key.length<24)throw Error('RPG_CONNECT_GM_KEY doit contenir au moins 24 caractères aléatoires.');
@@ -23,7 +24,7 @@ wss.on('connection',ws=>{
     const m=JSON.parse(String(raw));if(m.v!==1||typeof m.type!=='string'||!m.type||JSON.stringify(m).length>65000)throw Error('Message invalide');
     if(!role){
       if(m.type!=='hello')throw Error('Identification requise');
-      if((m.protocolVersion!==protocol.protocolVersion)||protocol.capabilities.some(c=>!m.clientCapabilities?.includes(c))||(m.requiredCapabilities||[]).some(c=>!protocol.capabilities.includes(c))){send(ws,{type:'error',code:'PROTOCOL_INCOMPATIBLE',message:'RPG Connect incompatible : protocole/capacités requis non disponibles',...protocol});ws.close(4002,'Protocole incompatible');return}
+      if((m.protocolVersion!==protocol.protocolVersion)||coreCapabilities.some(c=>!m.clientCapabilities?.includes(c))||(m.requiredCapabilities||[]).some(c=>!protocol.capabilities.includes(c))){send(ws,{type:'error',code:'PROTOCOL_INCOMPATIBLE',message:'RPG Connect incompatible : protocole/capacités requis non disponibles',...protocol});ws.close(4002,'Protocole incompatible');return}
       if(m.role==='gm'){
         if(!equal(m.key,key))throw Error('Clé MJ invalide');
         const requested=String(m.room||'').trim();const roomId=requested&&/^[A-Z0-9_-]{6,32}$/i.test(requested)?requested:random(8);room=rooms.get(roomId);
@@ -46,7 +47,7 @@ wss.on('connection',ws=>{
     if(m.type==='state'&&role==='player'){const value=m.state;if(!value||value.characterId!==characterId||!value.hp)throw Error('État invalide');if(acceptState(room,characterId,value))send(room.gm,{type:'state',room:room.id,characterId,state:value});return}
     if(m.type==='command'&&role==='gm'){
       const e=m.event,id=String(m.characterId||'').toLowerCase();if(!characters.has(id)||!e||typeof e.id!=='string'||e.id.length>120||!/^[A-Za-z][A-Za-z-]*:[A-Za-z][A-Za-z-]*$/.test(e.type)||e.characterId!==id)throw Error('Commande invalide');
-      const allowed=new Set(['hp:damage','hp:heal','hp:set','tempHp:set','resource:set','inventory:add','inventory:update','inventory:remove','turn:next','turn:close','turn:end-rejected','turn:grant','attack:decision','message:gm','reaction:requested','initiative:request','initiative:retry','targets:set','target:clear','state:sync','conditions:set','defense:turn-ended','enemy:attack-result','save:result']);if(!allowed.has(e.type))throw Error('Commande non autorisée');
+      const allowed=new Set(['hp:damage','hp:heal','hp:set','tempHp:set','resource:set','inventory:add','inventory:update','inventory:remove','turn:next','turn:close','turn:end-rejected','turn:grant','attack:decision','message:gm','reaction:requested','initiative:request','initiative:retry','targets:set','target:clear','state:sync','conditions:set','defense:turn-ended','enemy:attack-result','save:result','concentration:request','concentration:break','concentration:ack']);if(!allowed.has(e.type))throw Error('Commande non autorisée');
       if(!room.pending.has(e.id)){if(room.pending.size>=200)throw Error('File commandes pleine : commande non acceptée, aucune commande existante supprimée');room.pending.set(e.id,{type:'command',room:room.id,characterId:id,event:e})}
       send(room.players.get(id),room.pending.get(e.id));send(ws,{type:'queued',id:e.id,characterId:id,online:room.players.get(id)?.readyState===WebSocket.OPEN});return;
     }
