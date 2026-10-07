@@ -1,38 +1,38 @@
 {
   "protocolVersion": 1,
-  "branch": "feature/mj-ergonomie-journal-20261007-review",
+  "branch": "main",
   "repositories": {
-    "Kentaro": {
-      "sha": "b2987c56b5d86698f6c36475c3e3093fa3f409ce",
-      "tree": "823363478e9222010f457016abd8d5f1437e6687"
-    },
-    "Brackmard": {
-      "sha": "8db601711f51e0372d750ff503b48e6731167e9b",
-      "tree": "450d8b7bb9085ffbfc18a68ab9997ba6a98d51c2"
-    },
-    "Zephyr": {
-      "sha": "6d3ee6e67622fd94292731ef47e140e339fe24cf",
-      "tree": "fc9585e3cfd09c4ada9ecf35c6919ce15595478f"
-    },
-    "Rufus": {
-      "sha": "1a8cc3ecfe3aa24d80d2a377e45aa2ca7d83c63e",
-      "tree": "368111abc76e3682aef5352a877d8dcb001e7ffa"
-    },
-    "Samoth": {
-      "sha": "74378cd3afe6f1ccdb6714717ec31056a42cb50e",
-      "tree": "f7a3ada9ad7fc7db8fcb3596911489873df54727"
-    },
-    "Nans": {
-      "sha": "7d0515e9d17e2294c1b9a0b441e4c897992d2e0c",
-      "tree": "d5436006b9f6cb91d3a8f7aa8c7875f71422340b"
-    },
     "Encounter": {
-      "sha": "70bc68540f092c2e90580b47ba811eb9e939f0c7",
-      "tree": "1998e0359d708c7b90889cbc14052ca41178eed5"
+      "sha": "89ae9c57ade030964201829d91cc873df81ee4fb",
+      "tree": "e25061b0884be65155d0355c4680abbac7e4ece9"
     },
     "RPG-Connect": {
-      "sha": "c117b408816a0f52a08449d6fa5554d94794c0b4",
-      "tree": "5819683b5b25ae8f7421948fe27ad5423ca1263b"
+      "sha": "9f263ccf2b0a20f93c4e9ed9656b9b7045de9c85",
+      "tree": "86717aa7e6b1bc9827cb90463757607f8333eae7"
+    },
+    "Kentaro": {
+      "sha": "101872c5033510940a94537115910b0088d8f176",
+      "tree": "021b73912f7f71d900b3a43c6e292a8e4c2ee75f"
+    },
+    "Samoth": {
+      "sha": "247a73130722912999c824dcd23464d86797a0b3",
+      "tree": "125ad1ee22d6cad2a98dc2f26d0e845feeefc5ab"
+    },
+    "Brackmard": {
+      "sha": "adb209879bf0ef411ce5695700532a5058ac8e99",
+      "tree": "13bfdaf7b210d2cc2193332fa6f1eca902b845f9"
+    },
+    "Zephyr": {
+      "sha": "e1836fdcfb0d132ca32b2a1726c183c6db96cd63",
+      "tree": "961b6fe54049a9bb98c95bba188cdc3c6d310935"
+    },
+    "Rufus": {
+      "sha": "8dfcb02fad2f7dccb83edaf3d09900a4f44fc34e",
+      "tree": "34e774cf816c4902e926066c77791a9d6eebb8b3"
+    },
+    "Nans": {
+      "sha": "433fe2adfd086264194c7b22a29311d137dfd71a",
+      "tree": "b0b65f39122b74b85e51fe303b7eaa819e22452b"
     }
   },
   "encounterCheckout": "current-workflow-commit"
