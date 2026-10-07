@@ -87,4 +87,19 @@ Dernier retest : déconnexion/reconnexion WebSocket de Brack entre le jet d'oppo
 
 ## J — livraison
 
-Branche de travail : `feature/combat-architecture-20261006` dans les huit dépôts. Les commits A–H sont conservés, sans reset ni rollback. La publication finale est conditionnée aux derniers retests ; aucun push sur main n'avait été réalisé au moment de la rédaction de cette section. RPG-Connect n'a pas de modification : ses icônes existantes sont réutilisées, le serveur modifié appartient à Encounter.
+Publication réalisée le **7 octobre 2026** sur les branches `main` d'Encounter et des six Companions, après les 147 tests automatisés et les trois combats complets documentés ci-dessus. Les huit branches distantes ont été relues et vérifiées après publication. RPG-Connect reste inchangé : ses icônes sont réutilisées et le serveur modifié appartient à Encounter.
+
+Les tranches sont publiées dans leur ordre initial via l'API GitHub authentifiée. Chaque arbre Git créé a été comparé au SHA de l'arbre du commit local validé : contenu identique. Les mises à jour de main sont des fast-forwards avec contrôle de la tête attendue, sans force, reset ni suppression. Les commits distants ont de nouveaux SHA car l'API recrée leurs métadonnées ; les messages, l'ordre des tranches et les branches de travail originales sont conservés. La correspondance complète figure dans `architecture-delivery-20261007.json`.
+
+| Dépôt | Tête main du code validé |
+|---|---|
+| Encounter | `920c320a523c012573825ebcf7badc535b09e04b` |
+| Kentaro | `28e153187100569ab3696504a43b56826233c961` |
+| Brackmard | `50f0fa7bc3cc4a07e1b1668a501d65d95a00ad7f` |
+| Zephyr | `6d5ec6ac2f2a51aef0649546e6e77f6d1a77216a` |
+| Rufus | `9c69675b6f74f51de9c84407401e43138cd2cfd2` |
+| Samoth | `3bf06387c46c6276a3031c375bec99c426e6b239` |
+| Nans | `00cf8c24f6a0f4cdeac5e5ef2f6a89ad012318a8` |
+| RPG-Connect (inchangé) | `c117b408816a0f52a08449d6fa5554d94794c0b4` |
+
+Le commit de documentation de livraison suit la tête de code Encounter indiquée ici. La publication GitHub ne constitue pas une vérification du déploiement Render en production.

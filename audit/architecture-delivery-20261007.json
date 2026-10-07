@@ -1,0 +1,326 @@
+{
+  "date": "2026-10-07",
+  "method": "GitHub authenticated Git Data API; fast-forward updates with expected_sha; each tranche tree SHA checked against validated local commit",
+  "tests": {
+    "automated": 147,
+    "combats": 3,
+    "rounds": [
+      4,
+      3,
+      5
+    ]
+  },
+  "repositories": [
+    {
+      "repo": "bryantoualy-del/Encounter",
+      "base": "bc5431ee12b0746a5a82a56fd98d11b19e47ef0c",
+      "publishedCodeHead": "920c320a523c012573825ebcf7badc535b09e04b",
+      "parent": "920c320a523c012573825ebcf7badc535b09e04b",
+      "commits": [
+        {
+          "local": "6532a7b",
+          "remote": "31e9f45949bf476f49b992f445a06e217e14095d",
+          "message": "Harden combat conditions using reliable context and central icons"
+        },
+        {
+          "local": "27f23b8fe3341d9f7916d995f321ccaca2a7a0f4",
+          "remote": "d44a7296d57a5608d89c6c5bab537bce73fd94a0",
+          "message": "Add reliable companion-owned mandatory concentration checks"
+        },
+        {
+          "local": "cdcb9c93fad6e8d531a5ad3f2f00630a88a26bcc",
+          "remote": "38b3ebf8db2fb299d10f1287618f16b4f46e31ad",
+          "message": "Add durable generic reaction windows and single claimant grants"
+        },
+        {
+          "local": "e1ef1423ec56e96a662ac0addb8a6a9cf8307996",
+          "remote": "6ef204f60d2cebfd553a84383f51cba3d10dd34f",
+          "message": "Connect manual opportunity reactions and preserve per-turn native effects"
+        },
+        {
+          "local": "42d24ab8f1b1df8eeb32aa7d2dc51a95cad0ad3c",
+          "remote": "f0cf7187dfd966521b180623220a4d5f9f09db86",
+          "message": "Integrate native counterspell with suspended spell reaction windows"
+        },
+        {
+          "local": "1288e9c749db38af9695b7c0e1b54fa985a541c0",
+          "remote": "785b9e39687efb6790f83611e675d0a189c6a4ce",
+          "message": "Add durable native triggered damage effects and Agathys"
+        },
+        {
+          "local": "01207994e72a347e0ae16356a1281f264f57d9dc",
+          "remote": "d9e3eb304c6d3e6fe3fc043386c9d01e816cc9ef",
+          "message": "Add compact participant combat profiles with explicit health disclosure"
+        },
+        {
+          "local": "1adc073a12b3b34b1b9f9bc8325df752059d10d2",
+          "remote": "920c320a523c012573825ebcf7badc535b09e04b",
+          "message": "Stabilize combat architecture with native E2E validation"
+        }
+      ],
+      "lastLocal": "6532a7b"
+    },
+    {
+      "repo": "bryantoualy-del/Kentaro",
+      "base": "0f784e1e13593e52196126744ead0c820bfd36ec",
+      "publishedCodeHead": "28e153187100569ab3696504a43b56826233c961",
+      "parent": "28e153187100569ab3696504a43b56826233c961",
+      "commits": [
+        {
+          "local": "5df5c7c72b2f86283dc3dd9ff9d03338cdbc7392",
+          "remote": "679a52328fc99cd3dea15a177a1d0c2296a7d635",
+          "message": "Add companion-owned concentration rolls and durable recovery"
+        },
+        {
+          "local": "c91f21f54e685feb197c5321347477859d283763",
+          "remote": "499d0766810b7aa6da7677e06b40078e509dd582",
+          "message": "Add generic reaction transactions using native reaction economy"
+        },
+        {
+          "local": "47917a30993405ec1fc8e363980bac6ea2c2ada7",
+          "remote": "3460389fb7fe03adc16b9ebc31e2e9f34cdbf359",
+          "message": "Integrate manual reactions with native attacks and turn economy"
+        },
+        {
+          "local": "cb3a3e3758c3ff3c39e4e9df76b003632c109b69",
+          "remote": "b70e9b6f4c62cac66d6d8a557a9958bdf6b0f7bc",
+          "message": "Integrate native counterspell with suspended spell reaction windows"
+        },
+        {
+          "local": "2c84079fb1152c364a59f9736b490f2fb07c3101",
+          "remote": "47c0783199faac8f3a17c45c7800064166192111",
+          "message": "Add durable native triggered damage effects and Agathys"
+        },
+        {
+          "local": "ea37225dbbb76ec729d1ecb9e372046194d42698",
+          "remote": "af206b72467d32a30001744afc94e5b1a00acac8",
+          "message": "Add compact participant combat profiles with explicit health disclosure"
+        },
+        {
+          "local": "b3daff96c810685998531ff4a98601f5198a926a",
+          "remote": "28e153187100569ab3696504a43b56826233c961",
+          "message": "Stabilize reliable combat resolution and native dice verdicts"
+        }
+      ]
+    },
+    {
+      "repo": "bryantoualy-del/Brackmard",
+      "base": "2d9a75ce56a903f0dae39cf1a4a1b188e06be726",
+      "publishedCodeHead": "50f0fa7bc3cc4a07e1b1668a501d65d95a00ad7f",
+      "parent": "50f0fa7bc3cc4a07e1b1668a501d65d95a00ad7f",
+      "commits": [
+        {
+          "local": "0f5040291fb35a4e93b3991387178f4a51a0c8b2",
+          "remote": "b920b22ef4c5f4bc0f016929aea99f0472a9a973",
+          "message": "Add companion-owned concentration rolls and durable recovery"
+        },
+        {
+          "local": "d14a3cf429f2041658c022cab4413f9b5047c786",
+          "remote": "c9aa1f34b86e77b397745360e51a8b4b05224a94",
+          "message": "Add generic reaction transactions using native reaction economy"
+        },
+        {
+          "local": "32f4c24aea75a98db2605e25eabbaa7dd7b2b3de",
+          "remote": "639118d0dbf3a5bcdbc3380ada95ab92dcb3ef20",
+          "message": "Integrate manual reactions with native attacks and turn economy"
+        },
+        {
+          "local": "ec3bb9ed06c6a109d719a1fc2be52bfe6cafe1a7",
+          "remote": "12756a430147dbf0872c8b13cf214796eadb6c16",
+          "message": "Integrate native counterspell with suspended spell reaction windows"
+        },
+        {
+          "local": "9207ea35245de99f199b6be44296b1184e8c74f8",
+          "remote": "a230fcdb853485cacedda5335ba6d07752af45ad",
+          "message": "Add durable native triggered damage effects and Agathys"
+        },
+        {
+          "local": "a5d431ad4a7f509649041aaeb9cd8ed0b28a85bb",
+          "remote": "909d24a96b1663505e2815e6866138cbf398ccb4",
+          "message": "Add compact participant combat profiles with explicit health disclosure"
+        },
+        {
+          "local": "572ec7dddda83677d83f260ebfda253893e9c8be",
+          "remote": "50f0fa7bc3cc4a07e1b1668a501d65d95a00ad7f",
+          "message": "Stabilize reliable combat resolution and native dice verdicts"
+        }
+      ]
+    },
+    {
+      "repo": "bryantoualy-del/Zephyr",
+      "base": "37963d4e499c841af5aca740946de91f8c950145",
+      "publishedCodeHead": "6d5ec6ac2f2a51aef0649546e6e77f6d1a77216a",
+      "parent": "6d5ec6ac2f2a51aef0649546e6e77f6d1a77216a",
+      "commits": [
+        {
+          "local": "13bd96ad5074c762065b52eab652db03469e8b44",
+          "remote": "995633f36b11e47cfea2ec3fad7a09564fdfaef6",
+          "message": "Add companion-owned concentration rolls and durable recovery"
+        },
+        {
+          "local": "9da4cef8014d4252f3857e443eca851205087dd3",
+          "remote": "785c333aefd3290f9f468b3d09b9e08bcdc585a2",
+          "message": "Add generic reaction transactions using native reaction economy"
+        },
+        {
+          "local": "87abd4a36773871542a5e2a61132226f9879dbd0",
+          "remote": "5ef09e01db2feb1b90811226e1a08b45182094e3",
+          "message": "Integrate manual reactions with native attacks and turn economy"
+        },
+        {
+          "local": "50219639d55294ab7bafd3933c769b511f73498d",
+          "remote": "0a1fcd94ce70484f2640138a45295e1e60350310",
+          "message": "Integrate native counterspell with suspended spell reaction windows"
+        },
+        {
+          "local": "f6c53b9afebc07be810c1e3300bfe6e48ca7239d",
+          "remote": "530b2bd4b949ff67b0b41552eb5f3fbeeaf20051",
+          "message": "Add durable native triggered damage effects and Agathys"
+        },
+        {
+          "local": "d2b8c381f551f8f877109210e24fd7508589c44e",
+          "remote": "6a35637a03d81685e0b0f3dbd9da6073f2ea04fe",
+          "message": "Add compact participant combat profiles with explicit health disclosure"
+        },
+        {
+          "local": "19182f44588870fb955014b9e867e3d647c2809d",
+          "remote": "6d5ec6ac2f2a51aef0649546e6e77f6d1a77216a",
+          "message": "Stabilize reliable combat resolution and native dice verdicts"
+        }
+      ]
+    },
+    {
+      "repo": "bryantoualy-del/Rufus",
+      "base": "44f9b57dde38e1bd061424a2a4f1b23dcfb5494d",
+      "publishedCodeHead": "9c69675b6f74f51de9c84407401e43138cd2cfd2",
+      "parent": "9c69675b6f74f51de9c84407401e43138cd2cfd2",
+      "commits": [
+        {
+          "local": "9731d664434f6981360af2866bb46ceaa075fa91",
+          "remote": "ebcfc29a418c6d2d90d6eb68d7ea2078afc0598f",
+          "message": "Add companion-owned concentration rolls and durable recovery"
+        },
+        {
+          "local": "e04025ea0498d98229dc7932f2bbb071aead8276",
+          "remote": "21dfb42d5e4ff513fe8fecb67033a49aa9d4ccaa",
+          "message": "Add generic reaction transactions using native reaction economy"
+        },
+        {
+          "local": "ce1d64e139751dfa9c2cb26c941c301d1494d67d",
+          "remote": "62c6ed2f7123ccceb6bd17388e4493aedd3cfe39",
+          "message": "Integrate manual reactions with native attacks and turn economy"
+        },
+        {
+          "local": "b123e0e6ae6b10eea62bd928b0174d3ee8030be2",
+          "remote": "7a5fa070b74f1e6a0d13044ba4e008b21b306cd0",
+          "message": "Integrate native counterspell with suspended spell reaction windows"
+        },
+        {
+          "local": "718b9914c613d99239f1254b74189b903cf754f2",
+          "remote": "09726f66fcb66a8a5ed685d63fb7b23669d67ebd",
+          "message": "Add durable native triggered damage effects and Agathys"
+        },
+        {
+          "local": "4ed9540607822f8447ac40497abd89907bdfa003",
+          "remote": "ab1fb7e704eab58ec608c90907580de2c6f015e4",
+          "message": "Add compact participant combat profiles with explicit health disclosure"
+        },
+        {
+          "local": "708c8da5785bb4b567e293e7f27e61195be5e725",
+          "remote": "9c69675b6f74f51de9c84407401e43138cd2cfd2",
+          "message": "Stabilize reliable combat resolution and native dice verdicts"
+        }
+      ]
+    },
+    {
+      "repo": "bryantoualy-del/Samoth",
+      "base": "40c7835c04c850bf27b67c5e96ea7a4aad3a1fca",
+      "publishedCodeHead": "3bf06387c46c6276a3031c375bec99c426e6b239",
+      "parent": "3bf06387c46c6276a3031c375bec99c426e6b239",
+      "commits": [
+        {
+          "local": "eea448020a28429bf5e301cd03a9a19a6c1b9204",
+          "remote": "d67b91904812e4e0d8dbe0225fc1ccf927f365d8",
+          "message": "Add companion-owned concentration rolls and durable recovery"
+        },
+        {
+          "local": "0d24b75722f5cb492e3f2d98557bcb121953c26d",
+          "remote": "76df0e86c5260e7475a8ceb3e86ab0d350fe4507",
+          "message": "Add generic reaction transactions using native reaction economy"
+        },
+        {
+          "local": "184fa56b7f308cd4c59e12167e07fd6db7ce69c6",
+          "remote": "4ba619889a0876b259b4c5796e67ff4c6a720b49",
+          "message": "Integrate manual reactions with native attacks and turn economy"
+        },
+        {
+          "local": "0d48edb6934b68a95a76bfe9a0137360db2edc8a",
+          "remote": "dab9fa7d6f4d06207f6d8445bf2ac7ca0db556d3",
+          "message": "Integrate native counterspell with suspended spell reaction windows"
+        },
+        {
+          "local": "b0fa68be3fd2241dca9f787bc21a30e7e3b9e397",
+          "remote": "066a91795f2db5d940ffea3d0ec9aae7e3544f38",
+          "message": "Add durable native triggered damage effects and Agathys"
+        },
+        {
+          "local": "f4383bc513f9ad4de9b3aa6313dcdc3b280777ce",
+          "remote": "e47bac12eb76a8d28084e3b675d6af5559124792",
+          "message": "Add compact participant combat profiles with explicit health disclosure"
+        },
+        {
+          "local": "ffeba628f19606366275a91e5988aa45332e86ce",
+          "remote": "3bf06387c46c6276a3031c375bec99c426e6b239",
+          "message": "Stabilize reliable combat resolution and native dice verdicts"
+        }
+      ]
+    },
+    {
+      "repo": "bryantoualy-del/Nans",
+      "base": "2a7dc38443c1ecb4b4db539eb0f18f0b561a6647",
+      "publishedCodeHead": "00cf8c24f6a0f4cdeac5e5ef2f6a89ad012318a8",
+      "parent": "00cf8c24f6a0f4cdeac5e5ef2f6a89ad012318a8",
+      "commits": [
+        {
+          "local": "5de692f72ea233b27c9fc5569c61aa416ceae9d6",
+          "remote": "f75ecfa4ccc2ef07a15270765191cc66cf2fb90e",
+          "message": "Add companion-owned concentration rolls and durable recovery"
+        },
+        {
+          "local": "d26788ca3a5168d1c61ce2c5e869146ef7dfd7ed",
+          "remote": "d566540a4af5cd2214392ac8d87632071aaaa4fb",
+          "message": "Add generic reaction transactions using native reaction economy"
+        },
+        {
+          "local": "409fe3cf0d2e6b36ee4768f3363b42d647823193",
+          "remote": "8ceac3cf0fd5678fa4399257ea28b905869fe81b",
+          "message": "Integrate manual reactions with native attacks and turn economy"
+        },
+        {
+          "local": "264c48433173920582fb20c1ed740580870935bf",
+          "remote": "c4220d513d66eed23ecc70d0c53a2e0518c28b88",
+          "message": "Integrate native counterspell with suspended spell reaction windows"
+        },
+        {
+          "local": "d7dd6273b3167516723250084d429694a6f0cd94",
+          "remote": "0eae8ee9ec1f2e97bf38d64cb30d63f05c4721e3",
+          "message": "Add durable native triggered damage effects and Agathys"
+        },
+        {
+          "local": "b47c85105c8d537dd1b6a465c9975588aa681c73",
+          "remote": "ae84ccde1791d85d9e763a73ea460c52b2d0ebfb",
+          "message": "Add compact participant combat profiles with explicit health disclosure"
+        },
+        {
+          "local": "2807f642d7dc3f9d15b4a08e2c3396cfb6a1d6fe",
+          "remote": "00cf8c24f6a0f4cdeac5e5ef2f6a89ad012318a8",
+          "message": "Stabilize reliable combat resolution and native dice verdicts"
+        }
+      ]
+    }
+  ],
+  "unchanged": {
+    "repo": "bryantoualy-del/RPG-Connect",
+    "sha": "c117b408816a0f52a08449d6fa5554d94794c0b4"
+  }
+}
