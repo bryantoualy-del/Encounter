@@ -19,6 +19,9 @@ for(const name of ['Kentaro','Nans','Samoth','Brackmard','Zephyr','Rufus'])test(
   const apiIndex=scripts.findIndex(script=>/companion-api\.js/i.test(script.src));assert.ok(apiIndex>=0,'companion-api.js absent');
   w.eval(scripts.slice(0,apiIndex+1).map(script=>script.code).join('\n;\n'));
   const api=w.CompanionAPI,events=[];assert.ok(w.__CompanionBridge,'bridge local absent');assert.ok(api,'CompanionAPI absent');assert.equal(api.getState().characterId,name.toLowerCase());api.subscribe(event=>events.push(event));
+  const expected={Kentaro:8,Brackmard:0,Zephyr:12,Rufus:3,Samoth:7,Nans:0};
+  assert.equal(w.__CompanionBridge.saveProfile?.('CHA')?.modifier,expected[name],name+' · bonus JdS CHA natif');
+  if(name==='Brackmard')assert.equal(w.__CompanionBridge.saveProfile('CON',{damageType:'poison'}).advantage,true,'résistance naine : avantage JS poison');
   const before=api.getState().hp.current;api.damage(1);await new Promise(resolve=>setTimeout(resolve,0));assert.equal(api.getState().hp.current,before-1);assert.ok(events.some(e=>e.type==='hp:changed'));
   api.heal(1);await new Promise(resolve=>setTimeout(resolve,0));assert.equal(api.getState().hp.current,before);
   api.nextTurn();await new Promise(resolve=>setTimeout(resolve,0));assert.ok(api.getState().turn.number>=2);api.resetCombat();await new Promise(resolve=>setTimeout(resolve,0));assert.equal(api.getState().turn.number,1);assert.equal(api.getState().turn.round,1);
