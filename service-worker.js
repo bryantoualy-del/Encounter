@@ -1,6 +1,6 @@
-const CACHE='encounter-v4.2-session-reliability-6';
+const CACHE='encounter-v4.2-session-reliability-7';
 const ASSETS=[
-  './mj-connected-feedback.js?v=2',
+  './mj-connected-feedback.js?v=3',
   './mj-spell-slots.js?v=1',
   './encounter-persistence.js?v=1',
   './rpg-diversion-authority.js',
@@ -8,9 +8,9 @@ const ASSETS=[
   './rpg-participant-profiles.js',
 
   './mj-local-concentration.js?v=1',
-  './mj-ergonomics.css?v=4',
+  './mj-ergonomics.css?v=5',
   './mj-library-model.js?v=1',
-  './mj-library-ui.js?v=4',
+  './mj-library-ui.js?v=5',
   './mj-journal-model.js?v=2',
   './mj-journal.js?v=3',
   './mj-conditions.js?v=1',
@@ -61,12 +61,12 @@ const ASSETS=[
   './table.css?v=7',
   './table.js?v=2',
   './rpg-connect-mj.css?v=27',
-  './rpg-connect-mj.js?v=72',
+  './rpg-connect-mj.js?v=73',
   './rpg-condition-rolls.js?v=2',
   './rpg-health-authority.js?v=2',
   './rpg-summon-authority.js?v=1',
   './creature-icons.js',
-  './rpg-save-authority.js?v=7',
+  './rpg-save-authority.js?v=8',
   './rpg-player-save-authority.js?v=2',
   './rpg-connect-icon-registry.js?v=5',
   './rpg-target-names.js?v=1',

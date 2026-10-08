@@ -21,7 +21,8 @@
     "test:session:long": "node audit/session-long-combat.mjs",
     "test:session:horn": "node audit/session-horn-browser.mjs",
     "test:session:summons": "node audit/session-summon-undo-browser.mjs",
-    "test:session:slots": "node audit/session-spell-slots-browser.mjs"
+    "test:session:slots": "node audit/session-spell-slots-browser.mjs",
+    "test:session:eclipse": "node audit/session-eclipse-browser.mjs"
   },
   "dependencies": {
     "ws": "^8.18.3"

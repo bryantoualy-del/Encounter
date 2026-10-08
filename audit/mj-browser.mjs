@@ -24,7 +24,7 @@ try{
  await gm.locator('#btnPrepOpenLibrary').click();await gm.locator('#monsterSearch').fill('Loup');await gm.locator('[data-add-monster="'+mid+'"]').click();await gm.locator('[data-draft-field=count]').fill('3');await gm.locator('#mjFinishDraft').click();check('draft commits all three instances once',await gm.evaluate(()=>state.encounter.participants.length===3));
 
  await gm.locator('#btnPrepOpenLibrary').click();await gm.locator('#mjAdvanced').click();await gm.locator('#mjCategories').click();await gm.locator('#mjNewCategory').fill('Crypte');await gm.locator('#mjAddCategory').click();await gm.locator('#mjOrganizationDialog button[type=submit]').click();
- await gm.locator('[data-organize="'+mid+'"]').click();await gm.locator('#mjOrganizationDialog [name=org]').check();await gm.locator('#mjSaveOrganization').click();
+ await gm.locator('#mjCategories').click();await gm.locator('#mjOrganizeProfile').selectOption(mid);await gm.locator('#mjEditOrganization').click();await gm.locator('#mjOrganizationDialog [name=org]').check();await gm.locator('#mjSaveOrganization').click();
  check('category assignment preserves technical role',await gm.evaluate(id=>{const m=state.monsters.find(x=>x.id===id);return m.category==='enemy'&&m.organizationIds.length===1},mid));
  const category=await gm.evaluate(()=>state.organizationCategories[0].id);await gm.locator('[data-filter=category]').selectOption(category);check('advanced category and text filters combine',await gm.locator('#monsterLibrary .library-card:visible').count()===1);
  await gm.locator('#mjResetFilters').click();check('advanced reset clears all filter fields',await gm.evaluate(()=>Object.keys(MJLibrary.filters()).length===0&&document.querySelector('#monsterSearch').value===''));

@@ -31,3 +31,5 @@
 
 /* Keep search and categories ahead of secondary filters; fill the result column. */
 .library-filters{display:flex}.mj-library-columns .monster-library{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));align-content:start;gap:8px}.library-card{width:100%;min-width:0;box-sizing:border-box}.library-card[hidden]{display:none}.mj-search-tools{min-height:24px}.mj-search-tools output{margin-left:auto}
+
+@media(max-width:720px){.mj-library-columns{grid-template-rows:minmax(0,1fr)}.mj-library-columns .monster-library{grid-row:1}.mj-composition{grid-row:1;align-self:stretch;max-height:none;height:100%}.mj-library-columns:has(.mj-composition:not(.mj-collapsed)) .monster-library{display:none}}
