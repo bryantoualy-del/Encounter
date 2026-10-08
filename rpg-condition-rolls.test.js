@@ -48,3 +48,13 @@ test('Nans Reckless Attack exposes temporary incoming advantage only while activ
  assert.equal(mechanics([{name:'attaque téméraire',origin:'rpg-combat-effect'}]).attacksAgainstAdvantage,false,'only Nans native status may grant this effect');
  assert.equal(mechanics([]).attacksAgainstAdvantage,false,'expires when Companion clears the state');
 });
+
+test('Rage aveugle suspends existing fear and charm mechanics without deleting their conditions',()=>{
+ const mechanics=context.EncounterConditionRolls.mechanics;
+ const fear={name:'Effrayé',source:'Dragon'};
+ assert.equal(mechanics([fear],{fearSourceVisible:true}).attackDisadvantage,true);
+ assert.equal(mechanics([fear,{name:'rage',origin:'rpg-local'}],{fearSourceVisible:true}).attackDisadvantage,false);
+ assert.equal(mechanics([fear,{name:'rage',origin:'rpg-local'}],{fearSourceVisible:true}).abilityDisadvantage,false);
+ assert.equal(mechanics([fear],{fearSourceVisible:true}).abilityDisadvantage,true,'fear returns if Rage ends');
+ assert.equal(mechanics([fear,{name:'rage',origin:'rpg-combat-effect'}],{fearSourceVisible:true}).attackDisadvantage,true,'only native Rage suppresses fear');
+});
