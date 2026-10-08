@@ -40,3 +40,11 @@ test('condition hardening uses only known context',()=>{
 test('central registry includes all fifteen standard icons',()=>{const data=JSON.parse(readFileSync(new URL('../RPG-Connect/assets/icon-data/condition-icons.json',import.meta.url),'utf8'));for(const name of ['aveugle','charme','assourdi','effraye','empoisonne','entrave','etourdi','inconscient','invisible','paralyse','petrifie','a_terre','agrippe','incapacite','epuisement'])assert.ok(data.icons['conditions/'+name],name)});
 
 test('petrified is incapacitating and fails STR/DEX automatically',()=>{const r=context.EncounterConditionRolls;assert.equal(r.mechanics([{name:'Pétrifié'}]).incapacitated,true);assert.equal(r.mechanics([{name:'Pétrifié'}]).attacksAgainstAdvantage,true);assert.equal(r.saveRules([{name:'Pétrifié'}],'DEX').autoFail,true)});
+
+test('Nans Reckless Attack exposes temporary incoming advantage only while active',()=>{
+ const mechanics=context.EncounterConditionRolls.mechanics;
+ assert.equal(mechanics([{name:'attaque téméraire',origin:'rpg-local'}]).attacksAgainstAdvantage,true);
+ assert.equal(mechanics([{name:'attaque téméraire',origin:'rpg-local'}, {name:'À terre'}]).attacksAgainstAdvantage,true);
+ assert.equal(mechanics([{name:'attaque téméraire',origin:'rpg-combat-effect'}]).attacksAgainstAdvantage,false,'only Nans native status may grant this effect');
+ assert.equal(mechanics([]).attacksAgainstAdvantage,false,'expires when Companion clears the state');
+});
