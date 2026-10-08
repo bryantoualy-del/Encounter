@@ -14,3 +14,5 @@ test('legacy custom sheets and pending combat survive additive migration with an
  const migrated=c.loadState();assert.equal(migrated.assistantSchemaVersion,1);assert.match(migrated.monsters[0].actions[0].id,/^legacy-ability-/);const sheet=JSON.parse(JSON.stringify(migrated.monsters));delete sheet[0].actions[0].id;assert.deepEqual(sheet,raw.monsters);assert.equal(migrated.encounter.round,4);assert.equal(migrated.encounter.participants[0].hp,11);assert.equal(migrated.encounter.rpgPlayerSaves.save1.applied,false);assert.deepEqual(JSON.parse(saved.get('encounter-console-backups-v3'))[0].state,raw);
  saved.set('encounter-console-v1',JSON.stringify(migrated));c.loadState();assert.equal(JSON.parse(saved.get('encounter-console-backups-v3')).length,1);
 });
+
+test('eliminated enemies are skipped while unconscious heroes retain death-save turns',()=>{const c=fixture();c.state.encounter.participants[1].kind='enemy';c.state.encounter.participants[1].hp=0;c.state.encounter.participants[2].kind='player';c.state.encounter.participants[2].hp=0;c.state.encounter.currentTurn=0;c.actualAdvanceTurn();assert.equal(c.activeParticipant().id,'c')});

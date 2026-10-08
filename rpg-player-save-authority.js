@@ -7,6 +7,7 @@
   const dis=ability==='DEX'&&keys.has('entrave');
   return {autoFail,mode:autoFail?'auto-fail':dis?(requested==='adv'?'normal':'dis'):requested};
  }
- function damage(raw,success,half){return success?(half?Math.floor(raw/2):0):raw}
- globalThis.RPGPlayerSaveAuthority={rules,damage};
+ function evasion(characterId,ability,half){return characterId==='rufus'&&ability==='DEX'&&half===true}
+ function damage(raw,success,half,context={}){return evasion(context.characterId,context.ability,half)?(success?0:Math.floor(raw/2)):success?(half?Math.floor(raw/2):0):raw}
+ globalThis.RPGPlayerSaveAuthority={rules,damage,evasion};
 })();
