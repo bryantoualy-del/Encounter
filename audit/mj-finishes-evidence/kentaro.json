@@ -1,0 +1,196 @@
+{
+  "checks": [
+    {
+      "name": "miss no smite, no slot",
+      "pass": true
+    },
+    {
+      "name": "smite decision is contextual",
+      "pass": true
+    },
+    {
+      "name": "refusal keeps slot",
+      "pass": true
+    },
+    {
+      "name": "normal smite 6d8 force and single slot",
+      "pass": true
+    },
+    {
+      "name": "smite decision survives reload",
+      "pass": true
+    },
+    {
+      "name": "critical smite 12d8",
+      "pass": true
+    },
+    {
+      "name": "duplicate never damages twice",
+      "pass": true
+    },
+    {
+      "name": "mark alone has typed d6",
+      "pass": true
+    },
+    {
+      "name": "seal replaces all mark d6 and keeps 2d8",
+      "pass": true
+    },
+    {
+      "name": "critical seal doubles only its two d8",
+      "pass": true
+    },
+    {
+      "name": "curse visible on Encounter target",
+      "pass": true
+    },
+    {
+      "name": "curse critical on 19 and damage bonus applied once",
+      "pass": true
+    },
+    {
+      "name": "hex concentration and real ID",
+      "pass": true
+    },
+    {
+      "name": "hex necrotic damage",
+      "pass": true
+    },
+    {
+      "name": "authority applies resistance immunity vulnerability per component",
+      "pass": true
+    },
+    {
+      "name": "shroud explicitly typed 2d8 cold",
+      "pass": true
+    },
+    {
+      "name": "shadow advantage and disadvantage synchronized",
+      "pass": true
+    },
+    {
+      "name": "concentration interruption removes shadow",
+      "pass": true
+    },
+    {
+      "name": "invisibility is a real shared condition",
+      "pass": true
+    },
+    {
+      "name": "attack interrupts ordinary invisibility",
+      "pass": true
+    },
+    {
+      "name": "Vision next attack really rolls two d20",
+      "pass": true
+    },
+    {
+      "name": "Vision consumed in authority",
+      "pass": true
+    },
+    {
+      "name": "free misty step no slot",
+      "pass": true
+    },
+    {
+      "name": "normal misty consumes pact slot",
+      "pass": true
+    },
+    {
+      "name": "ring uses spell engine no pact slot",
+      "pass": true
+    },
+    {
+      "name": "Lazarus 100 temp, reaction and incapacity",
+      "pass": true,
+      "detail": {
+        "player": {
+          "temp": 100,
+          "reaction": true,
+          "mirror": {
+            "effects": [
+              {
+                "id": "66b5204d-1f3a-4e7a-aabd-cbe219c28ed6",
+                "kind": "lazarus",
+                "combatId": "3dcd05be-82ce-4d16-87f3-63ba04726ef1",
+                "sourceId": "kentaro",
+                "sourceParticipantId": "cc-kentaro",
+                "endAfterTurn": 2
+              }
+            ],
+            "eclipse": {},
+            "eclipseHits": {},
+            "ownTurn": true,
+            "now": 1791486640837,
+            "casterTurnStamp": 1,
+            "turnStamp": "3dcd05be-82ce-4d16-87f3-63ba04726ef1:cc-kentaro:1:1",
+            "smiteUsed": false
+          }
+        },
+        "results": []
+      }
+    },
+    {
+      "name": "Lazarus ends on next turn end",
+      "pass": true
+    },
+    {
+      "name": "bite grants nothing before GM decision",
+      "pass": true
+    },
+    {
+      "name": "validated bite grants temp HP",
+      "pass": true
+    },
+    {
+      "name": "smite transaction can be cancelled from journal",
+      "pass": true,
+      "detail": {
+        "id": "da5ded83-f26d-4ad0-a553-5f8490a7f2d3",
+        "reason": ""
+      }
+    },
+    {
+      "name": "undo restores slot and enemy health atomically",
+      "pass": true
+    },
+    {
+      "name": "spectre attack uses shared authority without smite",
+      "pass": true
+    },
+    {
+      "name": "opportunity native blade preserves reaction damage flow",
+      "pass": true
+    },
+    {
+      "name": "offline seal replaces mark and preserves slots",
+      "pass": true
+    },
+    {
+      "name": "offline free teleport preserves slots",
+      "pass": true
+    },
+    {
+      "name": "short rest restores free teleport",
+      "pass": true
+    },
+    {
+      "name": "iPhone smite fits",
+      "pass": true
+    },
+    {
+      "name": "iPad smite fits",
+      "pass": true
+    },
+    {
+      "name": "target eliminated during smite decision refunds slot and closes transaction",
+      "pass": true
+    },
+    {
+      "name": "no browser exceptions",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": []
+}

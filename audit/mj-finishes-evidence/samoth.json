@@ -1,0 +1,360 @@
+{
+  "checks": [
+    {
+      "name": "Native fight starts with six connected Companions",
+      "pass": true
+    },
+    {
+      "name": "Hâte applies +2 effective AC and DEX advantage to Brack",
+      "pass": true
+    },
+    {
+      "name": "Reconnection keeps Hâte without cumulative AC",
+      "pass": true
+    },
+    {
+      "name": "Encounter reload restores the active effect authority",
+      "pass": true
+    },
+    {
+      "name": "Hâte has a journal action",
+      "pass": true,
+      "detail": {
+        "id": "d7a8a1b8-5ed9-4383-8b19-923cb11b43dd",
+        "combatId": "a93511f1-a7b4-4e3e-8760-d6c8ac8b255a",
+        "revision": 9,
+        "round": 1,
+        "turnId": "cc-samoth",
+        "turn": "Samoth",
+        "actor": "samoth",
+        "title": "Hâte",
+        "kind": "effect:request",
+        "targetIds": [
+          "cc-samoth",
+          "cc-brackmard"
+        ],
+        "patches": [
+          {
+            "path": [
+              "participants",
+              "cc-samoth",
+              "conditions"
+            ],
+            "before": [],
+            "after": [
+              {
+                "id": "rpg-concentration-samoth",
+                "name": "Concentration · Hâte",
+                "origin": "rpg-concentration",
+                "source": "Companion local",
+                "durationType": "indefinite"
+              }
+            ],
+            "beforeExists": true,
+            "afterExists": true
+          },
+          {
+            "path": [
+              "participants",
+              "cc-samoth",
+              "actionUsed"
+            ],
+            "before": false,
+            "after": true,
+            "beforeExists": true,
+            "afterExists": true
+          },
+          {
+            "path": [
+              "participants",
+              "cc-samoth",
+              "rpgEffectReceipts"
+            ],
+            "after": {
+              "d7a8a1b8-5ed9-4383-8b19-923cb11b43dd": {
+                "actionId": "d7a8a1b8-5ed9-4383-8b19-923cb11b43dd",
+                "ok": true
+              }
+            },
+            "beforeExists": false,
+            "afterExists": true
+          },
+          {
+            "path": [
+              "participants",
+              "cc-brackmard",
+              "conditions"
+            ],
+            "before": [],
+            "after": [
+              {
+                "id": "d7a8a1b8-5ed9-4383-8b19-923cb11b43dd:cc-brackmard",
+                "name": "Hâte",
+                "source": "Hâte",
+                "origin": "rpg-combat-effect",
+                "durationType": "indefinite",
+                "effectKind": "haste",
+                "sourceCharacterId": "samoth",
+                "sourceParticipantId": "cc-samoth"
+              }
+            ],
+            "beforeExists": true,
+            "afterExists": true
+          },
+          {
+            "path": [
+              "participants",
+              "cc-brackmard",
+              "rpgEffects"
+            ],
+            "after": [
+              {
+                "id": "d7a8a1b8-5ed9-4383-8b19-923cb11b43dd:cc-brackmard",
+                "kind": "haste",
+                "combatId": "a93511f1-a7b4-4e3e-8760-d6c8ac8b255a",
+                "sourceId": "samoth",
+                "sourceParticipantId": "cc-samoth",
+                "concentrationInstance": "a62b0695-ff62-43fb-a909-ca8deb6183b1",
+                "expiresRound": 11
+              }
+            ],
+            "beforeExists": false,
+            "afterExists": true
+          },
+          {
+            "path": [
+              "participants",
+              "cc-brackmard",
+              "rpgHasteUsed"
+            ],
+            "after": false,
+            "beforeExists": false,
+            "afterExists": true
+          },
+          {
+            "path": [
+              "participants",
+              "cc-brackmard",
+              "rpgHasteDash"
+            ],
+            "after": false,
+            "beforeExists": false,
+            "afterExists": true
+          },
+          {
+            "path": [
+              "participants",
+              "cc-brackmard",
+              "rpgHasteDisengaged"
+            ],
+            "after": false,
+            "beforeExists": false,
+            "afterExists": true
+          }
+        ],
+        "details": [
+          {
+            "type": "resources",
+            "changes": [
+              {
+                "field": "eco.action",
+                "before": false,
+                "after": true
+              },
+              {
+                "field": "slots.3",
+                "before": 3,
+                "after": 2
+              },
+              {
+                "field": "concentration",
+                "before": "",
+                "after": "Hâte"
+              },
+              {
+                "field": "leveledAction",
+                "before": false,
+                "after": true
+              },
+              {
+                "field": "rpgConcentrationName",
+                "before": "",
+                "after": "Hâte"
+              },
+              {
+                "field": "rpgConcentrationInstance",
+                "before": null,
+                "after": "a62b0695-ff62-43fb-a909-ca8deb6183b1"
+              }
+            ]
+          },
+          {
+            "type": "resources",
+            "changes": [
+              {
+                "field": "eco.action",
+                "before": false,
+                "after": true
+              },
+              {
+                "field": "slots.3",
+                "before": 3,
+                "after": 2
+              },
+              {
+                "field": "concentration",
+                "before": "",
+                "after": "Hâte"
+              },
+              {
+                "field": "leveledAction",
+                "before": false,
+                "after": true
+              },
+              {
+                "field": "rpgConcentrationName",
+                "before": "",
+                "after": "Hâte"
+              },
+              {
+                "field": "rpgConcentrationInstance",
+                "before": null,
+                "after": "a62b0695-ff62-43fb-a909-ca8deb6183b1"
+              }
+            ]
+          },
+          {
+            "type": "resources",
+            "changes": [
+              {
+                "field": "eco.action",
+                "before": false,
+                "after": true
+              },
+              {
+                "field": "slots.3",
+                "before": 3,
+                "after": 2
+              },
+              {
+                "field": "concentration",
+                "before": "",
+                "after": "Hâte"
+              },
+              {
+                "field": "leveledAction",
+                "before": false,
+                "after": true
+              },
+              {
+                "field": "rpgConcentrationName",
+                "before": "",
+                "after": "Hâte"
+              },
+              {
+                "field": "rpgConcentrationInstance",
+                "before": null,
+                "after": "a62b0695-ff62-43fb-a909-ca8deb6183b1"
+              }
+            ]
+          }
+        ],
+        "diagnostics": [
+          "RPG · Samoth · ressource slots · {\"1\":4,\"2\":3,\"3\":3,\"4\":3,\"5\":2} → {\"1\":4,\"2\":3,\"3\":2,\"4\":3,\"5\":2}"
+        ],
+        "clients": {
+          "samoth": {
+            "prepared": false,
+            "ack": false
+          },
+          "kentaro": {
+            "prepared": false,
+            "ack": false
+          },
+          "brackmard": {
+            "prepared": false,
+            "ack": false
+          },
+          "rufus": {
+            "prepared": false,
+            "ack": false
+          },
+          "nans": {
+            "prepared": false,
+            "ack": false
+          },
+          "zephyr": {
+            "prepared": false,
+            "ack": false
+          }
+        },
+        "status": "applied",
+        "createdAt": "2026-10-08T19:09:05.385Z",
+        "remoteOrigin": true,
+        "complete": true
+      }
+    },
+    {
+      "name": "Undo is available",
+      "pass": true,
+      "detail": {
+        "reason": "",
+        "mismatches": []
+      }
+    },
+    {
+      "name": "Connected undo removes Hâte and restores its resource reservation",
+      "pass": true
+    },
+    {
+      "name": "Concentration break removes Hâte and synchronizes lethargy",
+      "pass": true
+    },
+    {
+      "name": "Hâte grants a restricted extra action without consuming normal action",
+      "pass": true
+    },
+    {
+      "name": "Hâte executes one native weapon attack after the normal action is exhausted",
+      "pass": true
+    },
+    {
+      "name": "Bouclier changes a hit into a miss, spends one slot and reaction",
+      "pass": true
+    },
+    {
+      "name": "Ailes protectrices save an ally before damage",
+      "pass": true
+    },
+    {
+      "name": "Greater invisibility is visible on another Companion",
+      "pass": true
+    },
+    {
+      "name": "Greater invisibility survives a native weapon attack",
+      "pass": true
+    },
+    {
+      "name": "Greater invisibility expires automatically",
+      "pass": true
+    },
+    {
+      "name": "Animation d’objets creates ten independent health records",
+      "pass": true
+    },
+    {
+      "name": "Animated objects resolve a collective attack across multiple targets",
+      "pass": true
+    },
+    {
+      "name": "Reconnection restores all animated objects",
+      "pass": true
+    },
+    {
+      "name": "No browser JavaScript errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": []
+}

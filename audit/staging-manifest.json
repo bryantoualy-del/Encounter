@@ -1,37 +1,37 @@
 {
   "protocolVersion": 1,
-  "branch": "feature/mj-session-reliability",
+  "branch": "feature/mj-ergonomics-20261008",
   "repositories": {
     "Encounter": {
       "checkout": "current-workflow-commit"
     },
     "RPG-Connect": {
-      "sha": "7922cff8a145ca81ab47f287a3acf62ba576e235",
-      "tree": "945ebd2f5dadb9d470acf271ef93063ff47005d2"
+      "sha": "6bc804b63ca1c62ed68169415b4fbd68fda154ae",
+      "tree": "325d98e4fe92b33895be96cb4fe643509b4214f4"
     },
     "Kentaro": {
-      "sha": "1b3eac689e19345d76f7d36b1c12d6ed5ed18dbf",
-      "tree": "a85285ae13313199e86c6edb4525d4c09112c937"
+      "sha": "db7e72201a1138cde2722059cb51f9cf34f3b4ff",
+      "tree": "5b1c6e69b465b47cf6427579f46862f54aa4c610"
     },
     "Samoth": {
-      "sha": "a794ce4e00766a30cf58df335fa2a3c2843a2527",
-      "tree": "dfa84382b881869bf1a5d235a6eab04596041e25"
+      "sha": "ba4fd7fda93a152c66e59e60d4578737c91783d0",
+      "tree": "35ae6adabd9070a998ea821422bcbd1f23dd1b8e"
     },
     "Brackmard": {
-      "sha": "c0c2e62cb1caf92b4211de6f740af5993a9a16c1",
-      "tree": "7dfde21d538c95623792989f3e54ae831187b3d3"
+      "sha": "2e6dc69ff668a56ecaa0eced42f935f7e50430ec",
+      "tree": "a77777f838f1e1702b84c7c29a71fc48e5aa7fd6"
     },
     "Zephyr": {
-      "sha": "35c26958d6e3f2865dacb54f66050cbe2817f157",
-      "tree": "072b80c9909ef9f0459045999edacd6d72823d51"
+      "sha": "909e90f3dda08a0a291cb42a92398523300c183c",
+      "tree": "789579de6e6a1b4982b29fe3655725c31ea0df8b"
     },
     "Rufus": {
-      "sha": "d08deea362c17525a7182cbf5fc5ba4c2812e1c6",
-      "tree": "957f1f06a92b4612e5e085177087d8e38061fd28"
+      "sha": "c0481435c46da0b8e3e9580a4cb65f8501a89616",
+      "tree": "c83d2e0281d0de9e8f6b77022a72ec0de566c853"
     },
     "Nans": {
-      "sha": "a49e3b085d19de214b663066378d453935416a11",
-      "tree": "fa8038cf701a3204aa9538d41c6c932c29bc9c1c"
+      "sha": "548c6e13b9270145f6c4005b8291b00c7dc0661d",
+      "tree": "468697a3160ba32596eb047a79b0f7be68f68c02"
     }
   },
   "encounterCheckout": "current-workflow-commit"

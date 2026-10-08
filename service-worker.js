@@ -1,15 +1,18 @@
-const CACHE='kentaro-effects-20261008-1';
+const CACHE='mj-finishes-20261008-1';
 const ASSETS=[
- './rpg-kentaro-authority.js?v=1',
- './rpg-zephyr-authority.js?v=1',
+ './mj-decisions.js?v=1',
+ './mj-finishes.css?v=1',
+ './mj-portraits.js?v=1',
+ './rpg-kentaro-authority.js?v=mj-finishes-1',
+ './rpg-zephyr-authority.js?v=mj-finishes-1',
   './rpg-samoth-perception.js?v=1',
   './rpg-combat-effects.js?v=kentaro-20261008',
-  './rpg-samoth-authority.js?v=1',
-  './mj-connected-feedback.js?v=3',
+  './rpg-samoth-authority.js?v=mj-finishes-1',
+  './mj-connected-feedback.js?v=4',
   './mj-spell-slots.js?v=1',
   './encounter-persistence.js?v=1',
   './rpg-diversion-authority.js',
-  './rpg-reaction-authority.js',
+  './rpg-reaction-authority.js?v=mj-finishes-1',
   './rpg-participant-profiles.js',
 
   './mj-local-concentration.js?v=1',
@@ -20,7 +23,7 @@ const ASSETS=[
   './mj-journal.js?v=samoth-effects-1',
   './mj-conditions.js?v=1',
   './mj-icons.js?v=3',
-  './mj-panels.js?v=1',
+  './mj-panels.js?v=mj-finishes-1',
   './assistant-method.js?v=1',
   './assistant-method.html',
   './assets/mj/states/Assourdi.png',
@@ -66,16 +69,16 @@ const ASSETS=[
   './table.css?v=7',
   './table.js?v=2',
   './rpg-connect-mj.css?v=27',
-  './rpg-connect-mj.js?v=kentaro-20261008',
+  './rpg-connect-mj.js?v=mj-finishes-20261008',
   './rpg-condition-rolls.js?v=kentaro-20261008',
   './rpg-health-authority.js?v=kentaro-20261008',
   './rpg-summon-authority.js?v=samoth-effects-1',
   './creature-icons.js',
-  './rpg-save-authority.js?v=9',
+  './rpg-save-authority.js?v=mj-finishes-1',
   './rpg-player-save-authority.js?v=2',
   './rpg-connect-icon-registry.js?v=5',
   './rpg-target-names.js?v=1',
-  './app.js?v=kentaro-20261008',
+  './app.js?v=mj-finishes-20261008',
   './builtins.js?v=4.2',
   './assistant-dice-engine.js?v=1',
   './assistant-dice.css?v=1',
@@ -144,3 +147,4 @@ self.addEventListener('fetch',event=>{
     return response;
   })));
 });
+

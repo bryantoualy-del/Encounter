@@ -1,0 +1,183 @@
+{
+  "checks": [
+    {
+      "name": "Library 1920",
+      "pass": true
+    },
+    {
+      "name": "Library 1366",
+      "pass": true
+    },
+    {
+      "name": "Library 1180",
+      "pass": true
+    },
+    {
+      "name": "Library 900",
+      "pass": true
+    },
+    {
+      "name": "Goblins and Kobolds quantities and shared initiative",
+      "pass": true
+    },
+    {
+      "name": "Six native Companions start fight",
+      "pass": true
+    },
+    {
+      "name": "Homogeneous portraits 1920",
+      "pass": true,
+      "detail": [
+        [
+          52,
+          52
+        ],
+        [
+          52,
+          52
+        ],
+        [
+          52,
+          52
+        ]
+      ]
+    },
+    {
+      "name": "Homogeneous portraits 1366",
+      "pass": true,
+      "detail": [
+        [
+          52,
+          52
+        ],
+        [
+          52,
+          52
+        ],
+        [
+          52,
+          52
+        ]
+      ]
+    },
+    {
+      "name": "Homogeneous portraits 1180",
+      "pass": true,
+      "detail": [
+        [
+          52,
+          52
+        ],
+        [
+          52,
+          52
+        ],
+        [
+          52,
+          52
+        ]
+      ]
+    },
+    {
+      "name": "Homogeneous portraits 900",
+      "pass": true,
+      "detail": [
+        [
+          52,
+          52
+        ],
+        [
+          52,
+          52
+        ],
+        [
+          52,
+          52
+        ]
+      ]
+    },
+    {
+      "name": "No request sent before MJ selection",
+      "pass": true
+    },
+    {
+      "name": "Decision fits 1920",
+      "pass": true
+    },
+    {
+      "name": "Decision fits 1366",
+      "pass": true
+    },
+    {
+      "name": "Decision fits 1180",
+      "pass": true
+    },
+    {
+      "name": "Decision fits 900",
+      "pass": true
+    },
+    {
+      "name": "Only selected Companions receive independent opportunities",
+      "pass": true
+    },
+    {
+      "name": "Passing consumes no reactions",
+      "pass": true
+    },
+    {
+      "name": "Spent reaction is disabled in picker",
+      "pass": true
+    },
+    {
+      "name": "Opportunity applies damage and consumes exactly one reaction",
+      "pass": true
+    },
+    {
+      "name": "Miss applies no damage and uses the native reaction once",
+      "pass": true
+    },
+    {
+      "name": "Closing preserves pending authorization",
+      "pass": true
+    },
+    {
+      "name": "Rufus dodge survives both reloads and halves damage once",
+      "pass": true
+    },
+    {
+      "name": "MJ refusal preserves reaction and resumes full damage",
+      "pass": true
+    },
+    {
+      "name": "Protection exposes four explicit conditions",
+      "pass": true
+    },
+    {
+      "name": "Declining Protection preserves Zephyr reaction",
+      "pass": true
+    },
+    {
+      "name": "Protection accepted uses reaction and logs disadvantage",
+      "pass": true
+    },
+    {
+      "name": "Save resolved in shared modal",
+      "pass": true
+    },
+    {
+      "name": "Maintain turn keeps active participant",
+      "pass": true
+    },
+    {
+      "name": "Validate turn advances exactly once",
+      "pass": true
+    },
+    {
+      "name": "No browser errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "stage": "turn"
+}

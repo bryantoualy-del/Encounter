@@ -1,0 +1,6 @@
+/* A single identity slot for every combat faction, including local characters. */
+(()=>{'use strict';
+ const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const base=tableRow;tableRow=function(p,...args){const html=base(p,...args);if(isLair(p))return html;const m=modelFor(p),src=window.EncounterMJControl?.portrait(p.id)||m?.image||globalThis.ENCOUNTER_CREATURE_ICONS?.iconPath?.(m,!!p.bossOverride)||'',portrait=src?'<img class="mj-fighter-portrait" src="'+esc(src)+'" alt="Portrait de '+esc(p.name)+'">':'<span class="mj-fighter-portrait mj-fighter-fallback" role="img" aria-label="Portrait absent : '+esc(p.name)+'">'+esc(p.name?.[0]||'◆')+'</span>';return html.replace('<div class="table-name">','<div class="table-name">'+portrait)};
+ document.addEventListener('error',e=>{const img=e.target;if(!img.matches?.('.mj-fighter-portrait,.mj-decision-person img'))return;const fallback=document.createElement('span');fallback.className=img.className+' mj-fighter-fallback';fallback.setAttribute('role','img');fallback.setAttribute('aria-label',img.alt||'Portrait absent');fallback.textContent='◆';img.replaceWith(fallback)},true);renderCombat();
+})();
