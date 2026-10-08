@@ -70,6 +70,12 @@ test('ENCOUNTER applique les dégâts autoritaires et synchronise les conséquen
  await until(()=>dom.window.eval("state.encounter.participants.find(p=>p.id==='e2').hp")===24);
  assert.equal(dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp"),17);
 
+ // A native on-hit save joins the validated attack transaction instead of colliding with its damage.
+ const riderEvent={id:'on-hit-save',type:'save:request',characterId:'samoth',payload:{actionId:'attack-b',attackId:'attack-b',saveId:'on-hit-save',targetId:'e1',ability:'DEX',dc:1,source:'Native on-hit',damage:0}};
+ send(player,{type:'event',event:riderEvent});await until(()=>dom.window.document.querySelector('#rpgSavePopup').open);
+ const riderResult=waitCommand(player,'save:result');dom.window.document.querySelector('[data-save-die]').value='20';dom.window.document.querySelector('[data-save-manual]').click();const resolvedRider=await riderResult;
+ assert.equal(resolvedRider.payload.targetId,'e2');assert.equal(resolvedRider.payload.error,undefined);assert.equal(dom.window.eval("state.encounter.rpgActionTransactions['attack-b'].targets.e2.hp"),30);
+ const replayRider=waitCommand(player,'save:result');send(player,{type:'event',event:{...riderEvent,id:'on-hit-save-replay'}});assert.equal((await replayRider).payload.resolutionId,resolvedRider.payload.resolutionId);assert.equal(dom.window.document.querySelector('#rpgSavePopup').open,false);
  // Two validated attacks share a logical action; unsafe legacy undo is rejected without the coordinator.
  dom.window.eval("state.encounter.participants.find(p=>p.id==='e1').hp=20;state.encounter.participants.find(p=>p.id==='e2').hp=20");
  for(const [attackId,targetId,amount] of [['multi-atk-1','e1',3],['multi-atk-2','e2',4]]){

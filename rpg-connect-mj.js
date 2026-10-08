@@ -192,7 +192,10 @@
   actionId=String(actionId||'');if(!actionId)return null;const ledger=actionLedger();let tx=ledger[actionId];const existed=!!tx;
   if(!tx){tx=ledger[actionId]={actionId,characterId,combatId:fight.requestId,createdAt:new Date().toISOString(),meta:{...meta},targets:{},rolledBack:false};const keys=Object.keys(ledger);if(keys.length>80)for(const k of keys.slice(0,keys.length-80))delete ledger[k]}
   if(tx.rolledBack||tx.characterId!==characterId||tx.combatId!==fight.requestId)return false;
-  if(existed&&(tx.meta?.kind!==meta.kind||(meta.kind==='savingThrow'&&(tx.meta.saveId!==meta.saveId||JSON.stringify(Object.keys(tx.targets).sort())!==JSON.stringify([...new Set(targetIds.map(String))].filter(id=>state.encounter.participants.some(p=>p.id===id)).sort())))))return false;
+  const lock=meta.attackId&&attackTargets.get(String(meta.attackId)),rider=existed&&tx.meta?.kind==='attack'&&meta.kind==='savingThrow'&&(tx.attackIds||[tx.meta.attackId]).includes(meta.attackId)&&lock?.characterId===characterId&&lock.decision===true&&targetIds.length===1&&String(targetIds[0])===lock.targetId&&!!tx.targets[lock.targetId];
+  if(rider){const signature=JSON.stringify({attackId:meta.attackId,targetIds:targetIds.map(String)});tx.saveRequests??={};if(tx.saveRequests[meta.saveId]&&tx.saveRequests[meta.saveId]!==signature)return false;tx.saveRequests[meta.saveId]=signature}
+  else if(existed&&(tx.meta?.kind!==meta.kind||(meta.kind==='savingThrow'&&(tx.meta.saveId!==meta.saveId||JSON.stringify(Object.keys(tx.targets).sort())!==JSON.stringify([...new Set(targetIds.map(String))].filter(id=>state.encounter.participants.some(p=>p.id===id)).sort())))))return false;
+  if(meta.kind==='attack'&&meta.attackId){tx.attackIds??=[tx.meta.attackId].filter(Boolean);if(!tx.attackIds.includes(meta.attackId))tx.attackIds.push(meta.attackId)}
   for(const targetId of targetIds){const p=state.encounter.participants.find(x=>x.id===String(targetId));if(!p||tx.targets[p.id])continue;tx.targets[p.id]={hp:p.hp,tempHp:p.tempHp||0,conditions:JSON.parse(JSON.stringify(p.conditions||[]))}}
   saveState();return tx
  }
