@@ -1,0 +1,80 @@
+{
+  "Encounter": [
+    "app.js",
+    "audit/group-browser.mjs",
+    "audit/mj-browser.mjs",
+    "audit/mj-offline.mjs",
+    "audit/mj-touch-browser.mjs",
+    "audit/session-defenses-browser.mjs",
+    "audit/session-long-combat.mjs",
+    "encounter-persistence.js",
+    "fight-continuity.test.js",
+    "index.html",
+    "mj-connected-feedback.js",
+    "mj-ergonomics.css",
+    "mj-icons.js",
+    "mj-journal.js",
+    "mj-library-ui.js",
+    "mj-spell-slots.js",
+    "mj-spell-slots.test.js",
+    "package.json",
+    "rpg-connect-mj.js",
+    "rpg-monster-spells.test.js",
+    "rpg-player-save-authority.js",
+    "rpg-player-save-authority.test.js",
+    "rpg-turn-start.test.js",
+    "service-worker.js",
+    "session-reliability.test.js"
+  ],
+  "RPG-Connect": [
+    "rpg-instruction.js",
+    "rpg-turn-start.js"
+  ],
+  "Rufus": [
+    "companion-v3.css",
+    "companion-v3.js",
+    "index.html",
+    "rpg-connect-client.js",
+    "rpg-instruction.js",
+    "rpg-opportunities.js",
+    "rpg-reactions.js",
+    "rpg-rufus-defenses.js",
+    "rpg-turn-start.js"
+  ],
+  "Brackmard": [
+    "index.html",
+    "rpg-connect-client.js",
+    "rpg-instruction.js",
+    "rpg-opportunities.js",
+    "rpg-turn-start.js"
+  ],
+  "Kentaro": [
+    "index.html",
+    "rpg-connect-client.js",
+    "rpg-instruction.js",
+    "rpg-opportunities.js",
+    "rpg-turn-start.js"
+  ],
+  "Samoth": [
+    "companion.js",
+    "index.html",
+    "rpg-connect-client.js",
+    "rpg-instruction.js",
+    "rpg-opportunities.js",
+    "rpg-turn-start.js"
+  ],
+  "Zephyr": [
+    "index.html",
+    "rpg-connect-client.js",
+    "rpg-instruction.js",
+    "rpg-opportunities.js",
+    "rpg-turn-start.js"
+  ],
+  "Nans": [
+    "index.html",
+    "rpg-connect-client.js",
+    "rpg-instruction.js",
+    "rpg-opportunities.js",
+    "rpg-turn-start.js"
+  ]
+}

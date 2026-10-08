@@ -15,7 +15,10 @@
     "test:mj:panels": "node audit/mj-panels-browser.mjs",
     "test:mj:offline": "node audit/mj-offline.mjs",
     "test:mj:touch": "node audit/mj-touch-browser.mjs",
-    "test:group": "node audit/group-browser.mjs"
+    "test:group": "node audit/group-browser.mjs",
+    "test:session:persistence": "node audit/session-persistence-browser.mjs",
+    "test:session:defenses": "node audit/session-defenses-browser.mjs",
+    "test:session:long": "node audit/session-long-combat.mjs"
   },
   "dependencies": {
     "ws": "^8.18.3"
