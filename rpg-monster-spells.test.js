@@ -37,7 +37,7 @@ test('an on-hit save is requested once, applies prone only on failure, and repla
  const dom=new JSDOM('',{runScripts:'outside-only'});const w=dom.window;const wolf={id:'wolf',name:'Loup sanguinaire'},kentaro={id:'cc-kentaro',name:'Kentaro',kind:'player',hp:93,conditions:[]};
  const ledger={},commands=[],logs=[];Object.defineProperty(w.crypto,'randomUUID',{value:()=>String(Object.keys(ledger).length+1)});
  Object.assign(w,{state:{encounter:{participants:[wolf,kentaro],round:2}},fight:{requestId:'fight'},manualQueue:[],playerSaveLedger:()=>ledger,characterIdForParticipant:id=>id==='cc-kentaro'?'kentaro':null,conditionPayload:p=>p.conditions,command:(id,type,q)=>commands.push({id,type,q}),saveState:()=>{},render:()=>{},nextManual:()=>{},log:x=>logs.push(x),broadcastTargets:()=>{},RPGPlayerSaveAuthority:{damage:(n,success,half)=>success?(half?Math.floor(n/2):0):n},applyDamageDirect:()=>{throw Error('bite save must not inflict its damage twice')},conditionImmune:()=>false,addConditionMany:(ids,data)=>{kentaro.conditions.push(data)}});
- w.eval(request+'\n'+apply);
+ w.eval(read('rpg-player-save-authority.js'));w.eval(request+'\n'+apply);
  const bite={name:'Morsure',onHitSave:{ability:'FOR',dc:13,conditionOnFailure:'À terre'}};
  w.requestEnemyHitSave(wolf,kentaro,bite);assert.equal(commands.length,1);const q=commands[0].q;assert.equal(q.damage,0);assert.equal(q.conditionOnFailure,'À terre');assert.equal(q.ability,'FOR');
  const item=ledger[q.requestId];w.applyPlayerSave(item,{rolls:[1],modifier:0,total:1,success:false});assert.equal(kentaro.conditions.length,1);assert.equal(kentaro.conditions[0].name,'À terre');assert.equal(kentaro.hp,93);

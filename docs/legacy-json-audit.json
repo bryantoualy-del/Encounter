@@ -1,0 +1,27 @@
+[
+  {
+    "file": "monsters.json",
+    "migrable": true,
+    "sheets": 19,
+    "warnings": [
+      "Squelette : champs de défenses obsolètes normalisés.",
+      "Zombi : champs de défenses obsolètes normalisés.",
+      "Goule : champs de défenses obsolètes normalisés.",
+      "Ombre : champs de défenses obsolètes normalisés."
+    ]
+  },
+  {
+    "file": "bibliotheque-integree.json",
+    "migrable": true,
+    "sheets": 27,
+    "warnings": [
+      "Tuskhan Sand d’Ivoire : champs de défenses obsolètes normalisés.",
+      "C.R.A.S.S.E.U.S.E. : champs de défenses obsolètes normalisés.",
+      "Squelette : champs de défenses obsolètes normalisés.",
+      "Zombi : champs de défenses obsolètes normalisés.",
+      "Goule : champs de défenses obsolètes normalisés.",
+      "Ombre : champs de défenses obsolètes normalisés.",
+      "Fausse hydre — Démo : champs de défenses obsolètes normalisés."
+    ]
+  }
+]
