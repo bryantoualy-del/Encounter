@@ -449,7 +449,7 @@
   if(receipt&&receipt.fingerprint!==fingerprint)receipt={result:{ok:false,error:'Identifiant réutilisé avec paramètres différents',actionId:q.actionId,combatId:q.combatId}};
   if(!receipt){
    let result={actionId:q.actionId,combatId:q.combatId,ok:false};
-   if(event.characterId!=='nans'||!validId||q.combatId!==fight.requestId||fight.phase!=='fight'||!p||p.hp<=0||!Number.isInteger(q.amount)||q.amount<1||q.amount>4||lock?.characterId!=='nans'||lock.decision!==true){
+   if(event.characterId!=='nans'||!validId||q.combatId!==fight.requestId||fight.phase!=='fight'||!p||p.hp<=0||!Number.isInteger(q.amount)||q.amount<1||q.amount>4||lock?.characterId!=='nans'||lock.decision!==true||!state.encounter.rpgAppliedAttacks?.[q.attackId]?.result){
     result.error='Contrecoup refusé : combat, attaque validée ou montant indisponible';
    }else{
     const apply=()=>{
