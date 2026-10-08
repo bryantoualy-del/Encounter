@@ -18,7 +18,10 @@
     "test:group": "node audit/group-browser.mjs",
     "test:session:persistence": "node audit/session-persistence-browser.mjs",
     "test:session:defenses": "node audit/session-defenses-browser.mjs",
-    "test:session:long": "node audit/session-long-combat.mjs"
+    "test:session:long": "node audit/session-long-combat.mjs",
+    "test:session:horn": "node audit/session-horn-browser.mjs",
+    "test:session:summons": "node audit/session-summon-undo-browser.mjs",
+    "test:session:slots": "node audit/session-spell-slots-browser.mjs"
   },
   "dependencies": {
     "ws": "^8.18.3"

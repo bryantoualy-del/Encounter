@@ -28,3 +28,6 @@
 
 @media(min-width:721px){.mj-library-columns .monster-library{grid-row:1;grid-column:1}.mj-composition{grid-row:1;grid-column:2;align-self:stretch}}
 @media(max-width:720px){.mj-library-columns .monster-library{grid-column:1;grid-row:2}.mj-composition{grid-column:1;grid-row:1;align-self:start}}
+
+/* Keep search and categories ahead of secondary filters; fill the result column. */
+.library-filters{display:flex}.mj-library-columns .monster-library{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));align-content:start;gap:8px}.library-card{width:100%;min-width:0;box-sizing:border-box}.library-card[hidden]{display:none}.mj-search-tools{min-height:24px}.mj-search-tools output{margin-left:auto}

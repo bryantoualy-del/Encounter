@@ -521,7 +521,7 @@ addEventListener('change',e=>{
   if(e.target.id==='conditionDuration')updateConditionOptionVisibility();if(e.target.id==='checkDc')ui.checkDc=Math.max(1,Number(e.target.value)||15);
 });
 
-$('#monsterSearch').addEventListener('input',renderLibrary);
+$('#monsterSearch').addEventListener('input',()=>renderLibrary());
 $('#encounterName').addEventListener('change',e=>{state.encounter.name=e.target.value.trim()||'Rencontre sans titre';saveState();render();});
 $('#btnNextTurn').addEventListener('click',requestNextTurn);
 $('#btnModePrep').addEventListener('click',()=>setMode('prep'));$('#btnModeCombat').addEventListener('click',()=>setMode('combat'));$('#btnStartCombat').addEventListener('click',()=>{if(window.RPGConnectMJ?.requestFightStart?.())return;setMode('combat')});
