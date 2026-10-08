@@ -1,0 +1,35 @@
+/* Shared MJ surface and responsive preparation, without changing combat mechanics. */
+#libraryDrawer{width:min(1640px,calc(100vw - 24px));max-width:none}
+.mj-library-columns{grid-template-columns:minmax(0,1fr) minmax(350px,30%);gap:16px}
+.mj-library-columns .monster-library{grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:12px;padding:4px;align-content:start}
+.library-card{padding:14px}.library-title h3{font-size:16px;overflow-wrap:anywhere}.library-card .library-meta{font-size:13px;line-height:1.5}
+.library-actions{flex-wrap:wrap}.library-actions button{min-height:44px;flex:1;white-space:normal}
+.mj-composition{padding:16px}.mj-cart-list>h3{font-size:19px;color:#e7c778;margin:0 0 8px}.mj-cart-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;padding:14px 0}
+.mj-cart-row>strong{grid-column:1;align-self:center}.mj-cart-row>button{grid-column:2;min-width:44px;min-height:44px}.mj-cart-row input:not([type=checkbox]){min-height:44px}.mj-cart-row input[type=checkbox]{width:20px;height:20px}.mj-cart-row .check-label{align-items:center;gap:8px;font-size:13px;min-height:44px}
+.mj-cart-footer{padding-top:12px}.mj-cart-footer p{margin:0 0 10px;line-height:1.5}.mj-cart-buttons button{min-height:44px}
+.table-name{position:relative;padding-left:64px!important;min-height:56px;display:flex;flex-direction:column;justify-content:center}
+.table-name>.mj-fighter-portrait{position:absolute;left:0;top:50%;transform:translateY(-50%);width:52px;height:52px;min-width:52px;max-width:52px;border:1px solid var(--role,#ba9651);border-radius:10px;object-fit:cover;background:#111623}
+.mj-fighter-fallback{display:grid;place-items:center;color:#e7c778;font-size:22px;font-weight:700}
+.table-name>.creature-icon,.table-name>.combat-creature-icon,.table-name>.rpg-companion-avatar{display:none!important}
+.table-name.has-creature-icon{display:flex;grid-template-columns:none;gap:0}.table-name .table-meta{gap:3px;flex-wrap:nowrap}.table-name .table-eco{min-width:20px;width:20px;flex-shrink:0}.table-name .table-eco .mj-icon{width:20px;height:20px}.table-name .playing-tag{position:absolute;left:0;bottom:0;width:52px;box-sizing:border-box;text-align:center;font-size:8px;padding:1px;line-height:1.2;background:#151a25e8}
+dialog.modal,dialog.mj-form{background:#151a25;color:#f2eadb;border:1px solid #a18340;border-radius:16px}
+.mj-decision-dialog{width:min(680px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 32px);padding:0;overflow:auto;background:#131825;color:#f2eadb;border:1px solid #b69a54;border-radius:16px;box-shadow:0 24px 80px #0009;color-scheme:dark;animation:mjDecisionEnter .16s ease-out}
+.mj-decision-dialog::backdrop{background:#050811b8;backdrop-filter:blur(3px)}
+.mj-decision-heading{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 20px;background:#171d2b;border-bottom:1px solid #a1834055}
+.mj-decision-heading h2{margin:5px 0 0;font-size:21px;color:#ebcd89}.mj-decision-heading .eyebrow{color:#c2a26a}.mj-decision-heading button{min-width:44px;min-height:44px}
+#mjDecisionBody{padding:18px 20px}.mj-decision-dialog>footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:12px 20px;border-top:1px solid #a1834055;background:#171d2b;font-size:12px;color:#c9bea6}
+.mj-decision-dialog button{min-height:44px;white-space:normal}.mj-decision-dialog button:focus-visible{outline:3px solid #f3d489;outline-offset:3px}
+.mj-decision-source{position:static!important;inset:auto!important;width:100%!important;max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;transform:none!important;box-shadow:none!important;border:0!important;background:transparent!important;color:inherit!important}
+.mj-queued-source{display:none!important}.mj-decision-source[hidden]{display:none!important}.mj-decision-source .rpg-hit-card,.mj-decision-source .rpg-hit-popup-card{padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+.mj-decision-source .rpg-hit-actions{display:flex;flex-wrap:wrap;gap:12px}.mj-decision-source .rpg-hit-actions>button{flex:1;min-width:130px}.mj-decision-source .rpg-hit-actions>div{width:100%;display:flex;flex-wrap:wrap;align-items:end;gap:10px}.mj-decision-source input{min-height:44px;max-width:140px}
+.mj-decision-source .rpg-hit-head strong{font-size:18px}.mj-decision-source .rpg-hit-head small{font-size:14px}.mj-decision-source .rpg-hit-question{font-size:16px;line-height:1.5;margin:18px 0}
+.mj-decision-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}.mj-decision-actions button{flex:1}.mj-decision-actions .primary{border-color:#d6b260;background:#594625;color:#fff1ca}
+.mj-decision-person{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid #a1834055;border-radius:12px;margin:8px 0;background:#202636}.mj-decision-person img,.mj-decision-person .mj-portrait-placeholder{width:52px;height:52px;object-fit:cover;border-radius:10px;background:#131825;flex-shrink:0}.mj-decision-person small{display:block;color:#c2c9da;line-height:1.5}.mj-decision-person input{width:22px;height:22px;margin-left:auto;flex-shrink:0}
+.mj-decision-description{line-height:1.6;color:#d2d4df}.mj-decision-dock{position:fixed;right:20px;bottom:90px;z-index:90;background:#292438;color:#efce89;border:1px solid #b69a54;border-radius:12px;padding:12px 18px;min-height:48px;box-shadow:0 5px 25px #0008}
+.mj-decision-dialog[open]{display:flex;flex-direction:column;overflow:hidden}.mj-decision-heading,.mj-decision-dialog>footer{flex-shrink:0}#mjDecisionBody{overflow:auto;min-height:0}.mj-decision-actions{position:sticky;bottom:-18px;z-index:1;background:#131825;padding:12px 0;margin-bottom:-18px;border-top:1px solid #a1834055}
+.mj-decision-person{padding:9px;margin:6px 0}.mj-decision-person img,.mj-decision-person .mj-portrait-placeholder{width:44px;height:44px}.mj-decision-description{margin:10px 0}
+@keyframes mjDecisionEnter{from{opacity:0;translate:0 6px}to{opacity:1;translate:0 0}}
+@media(min-width:1600px){.mj-library-columns{grid-template-columns:minmax(0,1fr) 430px}}
+@media(min-width:721px) and (max-width:1100px){#libraryDrawer{width:calc(100vw - 16px)}.mj-library-columns{grid-template-columns:minmax(0,1fr) 340px;gap:10px}.mj-library-columns .monster-library{grid-template-columns:repeat(auto-fill,minmax(225px,1fr))}.mj-composition{padding:12px}}
+@media(max-width:720px){#libraryDrawer{width:100vw}.mj-library-columns{grid-template-columns:1fr;gap:8px}.mj-composition{padding:12px}.mj-library-columns .monster-library{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}.mj-decision-dialog{width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}.mj-decision-heading,#mjDecisionBody{padding:14px}.table-name{padding-left:52px!important}.table-name>.mj-fighter-portrait{width:44px;height:44px;min-width:44px;max-width:44px}}
+@media(prefers-reduced-motion:reduce){.mj-decision-dialog{animation:none}}
