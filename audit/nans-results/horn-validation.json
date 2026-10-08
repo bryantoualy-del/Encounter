@@ -1,0 +1,62 @@
+{
+  "checks": [
+    {
+      "name": "harmful horn requests canonical SAG dormant",
+      "pass": true
+    },
+    {
+      "name": "horn leaves reaction available",
+      "pass": true
+    },
+    {
+      "name": "horn undo restores charges, economy, targets and self damage",
+      "pass": true
+    },
+    {
+      "name": "harmful horn requests canonical SAG awakened",
+      "pass": true
+    },
+    {
+      "name": "horn pending save survives reconnect",
+      "pass": true
+    },
+    {
+      "name": "horn pending choice survives both reloads",
+      "pass": true
+    },
+    {
+      "name": "refusal applies exactly native 2d6 once",
+      "pass": true
+    },
+    {
+      "name": "horn leaves reaction available",
+      "pass": true
+    },
+    {
+      "name": "horn undo restores charges, economy, targets and self damage",
+      "pass": true
+    },
+    {
+      "name": "harmful horn requests canonical SAG dormant",
+      "pass": true
+    },
+    {
+      "name": "yield is authoritative state without invented attack economy",
+      "pass": true
+    },
+    {
+      "name": "horn leaves reaction available",
+      "pass": true
+    },
+    {
+      "name": "horn undo restores charges, economy, targets and self damage",
+      "pass": true
+    },
+    {
+      "name": "horn has no JavaScript errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": []
+}

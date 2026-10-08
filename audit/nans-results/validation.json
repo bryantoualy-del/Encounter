@@ -1,0 +1,190 @@
+{
+  "checks": [
+    {
+      "name": "CA axe 16 displayed and authoritative",
+      "pass": true
+    },
+    {
+      "name": "CA sword 18 restored",
+      "pass": true
+    },
+    {
+      "name": "transfer and axe switch spend only bonus",
+      "pass": true
+    },
+    {
+      "name": "Rage suppresses fear and grants immunity",
+      "pass": true
+    },
+    {
+      "name": "Rage physical resistance is applied by Encounter",
+      "pass": true
+    },
+    {
+      "name": "Reckless visible to Encounter",
+      "pass": true
+    },
+    {
+      "name": "Rage and Reckless survive Nans reload",
+      "pass": true
+    },
+    {
+      "name": "Encounter reload preserves persistent Rage",
+      "pass": true
+    },
+    {
+      "name": "Rage end restores fear",
+      "pass": true
+    },
+    {
+      "name": "Écorce conditional resistance preserves real HP",
+      "pass": true
+    },
+    {
+      "name": "Écorce retaliation damages attacker",
+      "pass": true
+    },
+    {
+      "name": "Wind changes a hit to miss without base AC change",
+      "pass": true
+    },
+    {
+      "name": "Surcharge recoil applied once using temp HP",
+      "pass": true
+    },
+    {
+      "name": "Duplicate attack envelope does not repeat recoil",
+      "pass": true
+    },
+    {
+      "name": "Charged Impact requests two DEX saves and applies prone without extra damage",
+      "pass": true
+    },
+    {
+      "name": "Atomic Impact undo restores both targets, energy and action",
+      "pass": true
+    },
+    {
+      "name": "Grapple replaces one attack and applies shared condition",
+      "pass": true
+    },
+    {
+      "name": "Ancestors activated without concentration and cost three charges",
+      "pass": true
+    },
+    {
+      "name": "Ancestors undo restores charges, action and selected persistent area atomically",
+      "pass": true
+    },
+    {
+      "name": "Ancestors can be activated again after atomic undo",
+      "pass": true
+    },
+    {
+      "name": "Pending Wind survives disconnect/reload; refusal applies original damage without consumption",
+      "pass": true
+    },
+    {
+      "name": "Refused opposed control restores attack and action",
+      "pass": true
+    },
+    {
+      "name": "Bousculer consumes one attack and records validated movement",
+      "pass": true
+    },
+    {
+      "name": "Presence maintenance spends action without repeating save",
+      "pass": true
+    },
+    {
+      "name": "Danger Sense is conditional, not all DEX; strength Rage and exhaustion cancel",
+      "pass": true
+    },
+    {
+      "name": "Ancestors entry resolves shared damage, one temptation and duplicate entry is ignored",
+      "pass": true
+    },
+    {
+      "name": "Ancestors automatically expire and synchronize",
+      "pass": true
+    },
+    {
+      "name": "Encounter elimination grants heavy hitter bonus automatically",
+      "pass": true
+    },
+    {
+      "name": "Rage journal undo restores charge, economy and authoritative immunity",
+      "pass": true
+    },
+    {
+      "name": "Weapon mode journal undo restores displayed and enemy-facing AC 16",
+      "pass": true
+    },
+    {
+      "name": "Native enemy attack total 17 uses axe AC 16",
+      "pass": true,
+      "detail": {
+        "before": 127,
+        "after": 124,
+        "hit": true,
+        "total": 17
+      }
+    },
+    {
+      "name": "Same native enemy attack misses sword/shield AC 18",
+      "pass": true,
+      "detail": {
+        "before": 124,
+        "after": 124,
+        "hit": false
+      }
+    },
+    {
+      "name": "Standard opportunity uses native axe damage and exactly one shared reaction",
+      "pass": true
+    },
+    {
+      "name": "Nans executes Brack instruction through native engine and shared reaction",
+      "pass": true
+    },
+    {
+      "name": "Fracas failure records 3 m movement and one connected temptation",
+      "pass": true
+    },
+    {
+      "name": "Howl failure applies fear and validates forced flee using target reaction",
+      "pass": true
+    },
+    {
+      "name": "Manual Wind declares nonmagical attack and MJ confirms miss before damage",
+      "pass": true
+    },
+    {
+      "name": "Kentaro boot, bridge, target/save/reaction interfaces preserved",
+      "pass": true
+    },
+    {
+      "name": "Samoth boot, bridge, target/save/reaction interfaces preserved",
+      "pass": true
+    },
+    {
+      "name": "Brackmard boot, bridge, target/save/reaction interfaces preserved",
+      "pass": true
+    },
+    {
+      "name": "Zephyr boot, bridge, target/save/reaction interfaces preserved",
+      "pass": true
+    },
+    {
+      "name": "Rufus boot, bridge, target/save/reaction interfaces preserved",
+      "pass": true
+    },
+    {
+      "name": "No browser execution error",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "failure": null
+}
