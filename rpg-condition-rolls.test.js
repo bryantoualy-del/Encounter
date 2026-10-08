@@ -40,3 +40,21 @@ test('condition hardening uses only known context',()=>{
 test('central registry includes all fifteen standard icons',()=>{const data=JSON.parse(readFileSync(new URL('../RPG-Connect/assets/icon-data/condition-icons.json',import.meta.url),'utf8'));for(const name of ['aveugle','charme','assourdi','effraye','empoisonne','entrave','etourdi','inconscient','invisible','paralyse','petrifie','a_terre','agrippe','incapacite','epuisement'])assert.ok(data.icons['conditions/'+name],name)});
 
 test('petrified is incapacitating and fails STR/DEX automatically',()=>{const r=context.EncounterConditionRolls;assert.equal(r.mechanics([{name:'Pétrifié'}]).incapacitated,true);assert.equal(r.mechanics([{name:'Pétrifié'}]).attacksAgainstAdvantage,true);assert.equal(r.saveRules([{name:'Pétrifié'}],'DEX').autoFail,true)});
+
+test('Nans Reckless Attack exposes temporary incoming advantage only while active',()=>{
+ const mechanics=context.EncounterConditionRolls.mechanics;
+ assert.equal(mechanics([{name:'attaque téméraire',origin:'rpg-local'}]).attacksAgainstAdvantage,true);
+ assert.equal(mechanics([{name:'attaque téméraire',origin:'rpg-local'}, {name:'À terre'}]).attacksAgainstAdvantage,true);
+ assert.equal(mechanics([{name:'attaque téméraire',origin:'rpg-combat-effect'}]).attacksAgainstAdvantage,false,'only Nans native status may grant this effect');
+ assert.equal(mechanics([]).attacksAgainstAdvantage,false,'expires when Companion clears the state');
+});
+
+test('Rage aveugle suspends existing fear and charm mechanics without deleting their conditions',()=>{
+ const mechanics=context.EncounterConditionRolls.mechanics;
+ const fear={name:'Effrayé',source:'Dragon'};
+ assert.equal(mechanics([fear],{fearSourceVisible:true}).attackDisadvantage,true);
+ assert.equal(mechanics([fear,{name:'rage',origin:'rpg-local'}],{fearSourceVisible:true}).attackDisadvantage,false);
+ assert.equal(mechanics([fear,{name:'rage',origin:'rpg-local'}],{fearSourceVisible:true}).abilityDisadvantage,false);
+ assert.equal(mechanics([fear],{fearSourceVisible:true}).abilityDisadvantage,true,'fear returns if Rage ends');
+ assert.equal(mechanics([fear,{name:'rage',origin:'rpg-combat-effect'}],{fearSourceVisible:true}).attackDisadvantage,true,'only native Rage suppresses fear');
+});
