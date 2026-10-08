@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-08",
+  "encounterTests": {
+    "passed": 205,
+    "failed": 0
+  },
+  "companionTests": {
+    "passed": 7,
+    "failed": 0
+  },
+  "browser": {
+    "checks": [
+      {
+        "name": "Native fight starts with six connected Companions",
+        "pass": true
+      },
+      {
+        "name": "Hâte applies +2 effective AC and DEX advantage to Brack",
+        "pass": true
+      },
+      {
+        "name": "Reconnection keeps Hâte without cumulative AC",
+        "pass": true
+      },
+      {
+        "name": "Encounter reload restores the active effect authority",
+        "pass": true
+      },
+      {
+        "name": "Hâte has a journal action",
+        "pass": true
+      },
+      {
+        "name": "Undo is available",
+        "pass": true
+      },
+      {
+        "name": "Connected undo removes Hâte and restores its resource reservation",
+        "pass": true
+      },
+      {
+        "name": "Concentration break removes Hâte and synchronizes lethargy",
+        "pass": true
+      },
+      {
+        "name": "Hâte grants a restricted extra action without consuming normal action",
+        "pass": true
+      },
+      {
+        "name": "Hâte executes one native weapon attack after the normal action is exhausted",
+        "pass": true
+      },
+      {
+        "name": "Bouclier changes a hit into a miss, spends one slot and reaction",
+        "pass": true
+      },
+      {
+        "name": "Ailes protectrices save an ally before damage",
+        "pass": true
+      },
+      {
+        "name": "Greater invisibility is visible on another Companion",
+        "pass": true
+      },
+      {
+        "name": "Greater invisibility survives a native weapon attack",
+        "pass": true
+      },
+      {
+        "name": "Greater invisibility expires automatically",
+        "pass": true
+      },
+      {
+        "name": "Animation d’objets creates ten independent health records",
+        "pass": true
+      },
+      {
+        "name": "Animated objects resolve a collective attack across multiple targets",
+        "pass": true
+      },
+      {
+        "name": "Reconnection restores all animated objects",
+        "pass": true
+      },
+      {
+        "name": "No browser JavaScript errors",
+        "pass": true
+      }
+    ],
+    "errors": [],
+    "viewport": "1180x820",
+    "physicalIpadTested": false
+  }
+}
