@@ -48,6 +48,6 @@ test('shared module and page loader exist on six Companions',()=>{
  for(const name of ['Kentaro','Brackmard','Zephyr','Rufus','Samoth','Nans']){
   assert.equal(readFileSync(resolve('../'+name+'/rpg-effective-damage.js'),'utf8'),source,name);
   const html=readFileSync(resolve('../'+name+'/index.html'),'utf8');
-  assert.match(html,/rpg-effective-damage\.js\?v=mj-20261007-1/);
+  assert.match(html,/rpg-effective-damage\.js\?v=zephyr20261008/);
  }
 });
