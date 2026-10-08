@@ -22,6 +22,7 @@
   if(!String(q.source||'').trim())return fail('Source requise');
   if(event.type!=='maxHp:request'||q.operation!=='expire')if(!integer(q.amount))return fail('Montant entier positif requis');
   if(event.type!=='revive:request'&&targets.some(dead))return fail('Un soin ordinaire ne ramène pas un mort');
+  if(event.type==='heal:request'&&targets.some(p=>p.conditions?.some(c=>c.effectKind==='shroudHealingBlock')))return fail('Voile spirituel : soins empêchés');
   if(event.type==='heal:request'&&q.source==='Imposition des mains'&&targets.some(p=>/mort.?vivant|undead|artificiel|construct/i.test(context.targetTypes?.[p.id]||p.entityType||'')))return fail('Imposition sans effet sur morts-vivants ou artificiels');
   if(event.type==='revive:request'){
    if(q.amount!==1||targets.some(p=>p.hp!==0))return fail('Récupération exige 0 PV et retour à 1 PV');

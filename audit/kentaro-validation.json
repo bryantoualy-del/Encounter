@@ -1,0 +1,496 @@
+{
+  "validatedAt": "2026-10-08T16:25:02.786846+00:00",
+  "unitTests": 244,
+  "companionTests": 7,
+  "browser": {
+    "kentaro": {
+      "count": 40,
+      "checks": [
+        {
+          "name": "miss no smite, no slot",
+          "pass": true
+        },
+        {
+          "name": "smite decision is contextual",
+          "pass": true
+        },
+        {
+          "name": "refusal keeps slot",
+          "pass": true
+        },
+        {
+          "name": "normal smite 6d8 force and single slot",
+          "pass": true
+        },
+        {
+          "name": "smite decision survives reload",
+          "pass": true
+        },
+        {
+          "name": "critical smite 12d8",
+          "pass": true
+        },
+        {
+          "name": "duplicate never damages twice",
+          "pass": true
+        },
+        {
+          "name": "mark alone has typed d6",
+          "pass": true
+        },
+        {
+          "name": "seal replaces all mark d6 and keeps 2d8",
+          "pass": true
+        },
+        {
+          "name": "critical seal doubles only its two d8",
+          "pass": true
+        },
+        {
+          "name": "curse visible on Encounter target",
+          "pass": true
+        },
+        {
+          "name": "curse critical on 19 and damage bonus applied once",
+          "pass": true
+        },
+        {
+          "name": "hex concentration and real ID",
+          "pass": true
+        },
+        {
+          "name": "hex necrotic damage",
+          "pass": true
+        },
+        {
+          "name": "authority applies resistance immunity vulnerability per component",
+          "pass": true
+        },
+        {
+          "name": "shroud explicitly typed 2d8 cold",
+          "pass": true
+        },
+        {
+          "name": "shadow advantage and disadvantage synchronized",
+          "pass": true
+        },
+        {
+          "name": "concentration interruption removes shadow",
+          "pass": true
+        },
+        {
+          "name": "invisibility is a real shared condition",
+          "pass": true
+        },
+        {
+          "name": "attack interrupts ordinary invisibility",
+          "pass": true
+        },
+        {
+          "name": "Vision next attack really rolls two d20",
+          "pass": true
+        },
+        {
+          "name": "Vision consumed in authority",
+          "pass": true
+        },
+        {
+          "name": "free misty step no slot",
+          "pass": true
+        },
+        {
+          "name": "normal misty consumes pact slot",
+          "pass": true
+        },
+        {
+          "name": "ring uses spell engine no pact slot",
+          "pass": true
+        },
+        {
+          "name": "Lazarus 100 temp, reaction and incapacity",
+          "pass": true
+        },
+        {
+          "name": "Lazarus ends on next turn end",
+          "pass": true
+        },
+        {
+          "name": "bite grants nothing before GM decision",
+          "pass": true
+        },
+        {
+          "name": "validated bite grants temp HP",
+          "pass": true
+        },
+        {
+          "name": "smite transaction can be cancelled from journal",
+          "pass": true
+        },
+        {
+          "name": "undo restores slot and enemy health atomically",
+          "pass": true
+        },
+        {
+          "name": "spectre attack uses shared authority without smite",
+          "pass": true
+        },
+        {
+          "name": "opportunity native blade preserves reaction damage flow",
+          "pass": true
+        },
+        {
+          "name": "offline seal replaces mark and preserves slots",
+          "pass": true
+        },
+        {
+          "name": "offline free teleport preserves slots",
+          "pass": true
+        },
+        {
+          "name": "short rest restores free teleport",
+          "pass": true
+        },
+        {
+          "name": "iPhone smite fits",
+          "pass": true
+        },
+        {
+          "name": "iPad smite fits",
+          "pass": true
+        },
+        {
+          "name": "target eliminated during smite decision refunds slot and closes transaction",
+          "pass": true
+        },
+        {
+          "name": "no browser exceptions",
+          "pass": true
+        }
+      ]
+    },
+    "group": {
+      "count": 63,
+      "checks": [
+        {
+          "name": "health share starts with explicit empty selection",
+          "pass": true
+        },
+        {
+          "name": "selective health share 1",
+          "pass": true
+        },
+        {
+          "name": "health share starts with explicit empty selection",
+          "pass": true
+        },
+        {
+          "name": "selective health share 2",
+          "pass": true
+        },
+        {
+          "name": "health share starts with explicit empty selection",
+          "pass": true
+        },
+        {
+          "name": "selective health share 6",
+          "pass": true
+        },
+        {
+          "name": "MJ message visible Kentaro",
+          "pass": true
+        },
+        {
+          "name": "MJ message visible Samoth",
+          "pass": true
+        },
+        {
+          "name": "MJ message visible Brackmard",
+          "pass": true
+        },
+        {
+          "name": "MJ message visible Zephyr",
+          "pass": true
+        },
+        {
+          "name": "MJ message visible Rufus",
+          "pass": true
+        },
+        {
+          "name": "MJ message visible Nans",
+          "pass": true
+        },
+        {
+          "name": "six tactical allies Kentaro - Compagnon",
+          "pass": true
+        },
+        {
+          "name": "six tactical allies Samoth - Compagnon",
+          "pass": true
+        },
+        {
+          "name": "six tactical allies Brackmard - Compagnon",
+          "pass": true
+        },
+        {
+          "name": "six tactical allies Zéphyr - Compagnon",
+          "pass": true
+        },
+        {
+          "name": "six tactical allies Rufus - Compagnon",
+          "pass": true
+        },
+        {
+          "name": "six tactical allies Nans - Compagnon",
+          "pass": true
+        },
+        {
+          "name": "tactical card has health AC and reaction",
+          "pass": true
+        },
+        {
+          "name": "group unconscious updates",
+          "pass": true
+        },
+        {
+          "name": "group revival updates",
+          "pass": true
+        },
+        {
+          "name": "native opportunity Rufus",
+          "pass": true
+        },
+        {
+          "name": "native opportunity Brackmard",
+          "pass": true
+        },
+        {
+          "name": "native opportunity Kentaro",
+          "pass": true
+        },
+        {
+          "name": "native opportunity Zephyr",
+          "pass": true
+        },
+        {
+          "name": "native opportunity Nans",
+          "pass": true
+        },
+        {
+          "name": "Brack native opportunity maneuver precise",
+          "pass": true
+        },
+        {
+          "name": "Brack native opportunity maneuver trip",
+          "pass": true
+        },
+        {
+          "name": "Brack maneuver save really resolved trip",
+          "pass": true
+        },
+        {
+          "name": "Brack native opportunity maneuver menace",
+          "pass": true
+        },
+        {
+          "name": "Brack maneuver save really resolved menace",
+          "pass": true
+        },
+        {
+          "name": "Brack native opportunity maneuver push",
+          "pass": true
+        },
+        {
+          "name": "Brack maneuver save really resolved push",
+          "pass": true
+        },
+        {
+          "name": "Brack native opportunity maneuver distract",
+          "pass": true
+        },
+        {
+          "name": "Samoth exposes missing native melee without invented attack",
+          "pass": true
+        },
+        {
+          "name": "Instruction pass preserves ally reaction and native Brack costs",
+          "pass": true
+        },
+        {
+          "name": "Rufus native critical and eligible off-turn sneak",
+          "pass": true
+        },
+        {
+          "name": "Instruction bonus is one typed component linked to source sequence",
+          "pass": true
+        },
+        {
+          "name": "Critical doubles supplied superiority dice without recipient reroll",
+          "pass": true
+        },
+        {
+          "name": "Rufus native off-turn sneak is preserved",
+          "pass": true
+        },
+        {
+          "name": "enemy save popup has no global reset",
+          "pass": true
+        },
+        {
+          "name": "forced next turn waits for the canonical enemy save queue",
+          "pass": true
+        },
+        {
+          "name": "Instruction undo waits for Rufus native rider save",
+          "pass": true
+        },
+        {
+          "name": "Instruction can use existing certified undo",
+          "pass": true
+        },
+        {
+          "name": "Instruction undo restores one superiority die and ally reaction",
+          "pass": true
+        },
+        {
+          "name": "Instruction Kentaro executes native Solinar miss and consumes one reaction",
+          "pass": true
+        },
+        {
+          "name": "Invalid attacker after grant closes native attack without damage",
+          "pass": true
+        },
+        {
+          "name": "Native Diversion applies shared target effect on hit",
+          "pass": true
+        },
+        {
+          "name": "Diversion grants native advantage before die",
+          "pass": true
+        },
+        {
+          "name": "Diversion consumed once even on a miss",
+          "pass": true
+        },
+        {
+          "name": "Second attack receives no Diversion advantage",
+          "pass": true
+        },
+        {
+          "name": "Samoth pays slot and metamagic at launch",
+          "pass": true
+        },
+        {
+          "name": "Miss does not refund launched slot or sorcery points",
+          "pass": true
+        },
+        {
+          "name": "replayed grant cannot cause a second roll",
+          "pass": true
+        },
+        {
+          "name": "Group STATE_SYNC restores six allies",
+          "pass": true
+        },
+        {
+          "name": "PNJ and allied invocation present without enemies",
+          "pass": true
+        },
+        {
+          "name": "native Group heal cc-kentaro",
+          "pass": true
+        },
+        {
+          "name": "native Group heal group-npc",
+          "pass": true
+        },
+        {
+          "name": "native multi-ally Ancre uses Group",
+          "pass": true
+        },
+        {
+          "name": "Group temporary HP update",
+          "pass": true
+        },
+        {
+          "name": "Group fits 1180",
+          "pass": true
+        },
+        {
+          "name": "Group fits 390",
+          "pass": true
+        },
+        {
+          "name": "No browser script errors",
+          "pass": true
+        }
+      ]
+    },
+    "tenRoundCombat": {
+      "count": 14,
+      "checks": [
+        {
+          "name": "dragon canonically created",
+          "pass": true
+        },
+        {
+          "name": "native concentration resolved during long battle",
+          "pass": true
+        },
+        {
+          "name": "mid-battle atomic undo completes",
+          "pass": true
+        },
+        {
+          "name": "temporary HP absorb damage during long battle",
+          "pass": true
+        },
+        {
+          "name": "dragon concentration maintained after owner damage",
+          "pass": true
+        },
+        {
+          "name": "multi-ally healing includes the dragon",
+          "pass": true
+        },
+        {
+          "name": "mid-combat reload retains turn and dragon",
+          "pass": true
+        },
+        {
+          "name": "MJ opportunity request executes one native Rufus reaction",
+          "pass": true
+        },
+        {
+          "name": "multi-target enemy cast consumes one slot",
+          "pass": true
+        },
+        {
+          "name": "ten rounds reached",
+          "pass": true
+        },
+        {
+          "name": "six native heroes acted repeatedly",
+          "pass": true,
+          "detail": {
+            "actions": 70
+          }
+        },
+        {
+          "name": "dragon played own rounds",
+          "pass": true,
+          "detail": {
+            "dragonTurns": 10
+          }
+        },
+        {
+          "name": "eliminated goblin never takes another turn",
+          "pass": true
+        },
+        {
+          "name": "long battle has no JavaScript exceptions",
+          "pass": true
+        }
+      ]
+    }
+  }
+}
