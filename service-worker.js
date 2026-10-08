@@ -1,17 +1,18 @@
-const CACHE='encounter-v4.2-mj-63-group';
+const CACHE='encounter-v4.2-session-reliability-1';
 const ASSETS=[
+  './encounter-persistence.js?v=1',
   './rpg-diversion-authority.js',
   './rpg-reaction-authority.js',
   './rpg-participant-profiles.js',
 
   './mj-local-concentration.js?v=1',
-  './mj-ergonomics.css?v=1',
+  './mj-ergonomics.css?v=2',
   './mj-library-model.js?v=1',
-  './mj-library-ui.js?v=1',
+  './mj-library-ui.js?v=2',
   './mj-journal-model.js?v=1',
   './mj-journal.js?v=1',
   './mj-conditions.js?v=1',
-  './mj-icons.js?v=1',
+  './mj-icons.js?v=2',
   './mj-panels.js?v=1',
   './assistant-method.js?v=1',
   './assistant-method.html',
@@ -67,7 +68,7 @@ const ASSETS=[
   './rpg-player-save-authority.js?v=1',
   './rpg-connect-icon-registry.js?v=5',
   './rpg-target-names.js?v=1',
-  './app.js?v=19',
+  './app.js?v=20',
   './builtins.js?v=4.2',
   './assistant-dice-engine.js?v=1',
   './assistant-dice.css?v=1',
