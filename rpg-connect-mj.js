@@ -437,6 +437,41 @@
  decisions.handler('revive',{render:q=>person(participant(q.event.characterId),'Revivifier')+person(state.encounter.participants.find(p=>p.id===q.event.payload.targetIds[0]),'Cible morte')+'<p class="mj-decision-description">Confirmez : mort depuis moins d’une minute, contact, diamant de 300 po consommé, absence de mort de vieillesse et de partie vitale manquante. Autoriser ramène la cible à 1 PV ; refuser laisse la cible inchangée et répond au Companion.</p>'+buttons('Autoriser Revivifier'),resolve:(q,choice)=>{resolveHealth(q.event,choice==='yes');return true}});
  decisions.handler('reset-fight',{render:q=>'<p class="mj-decision-description">Recommencer le fight réinitialise le round, le tour et les demandes en attente. Les PV sont conservés.</p>'+buttons('Recommencer le fight','Conserver le combat'),resolve:(q,choice)=>{if(choice==='yes')resetRpgFight(true);return true}});
 
+ // Nans ring recoil: Encounter owns HP/temp HP, with combat/attack validation and durable receipts.
+ const nansBeforeRecoil=onEvent;
+ onEvent=function(event){
+  if(event?.type!=='damage:self-request')return nansBeforeRecoil(event);
+  const q=event.payload||{},p=participant('nans'),lock=attackTargets.get(String(q.attackId||'')),
+    validId=typeof q.attackId==='string'&&!!q.attackId&&q.actionId===q.attackId+':ring-recoil',
+    ledger=state.encounter.rpgNansRecoil||(state.encounter.rpgNansRecoil={}),
+    fingerprint=JSON.stringify([q.combatId,q.attackId,q.amount]);
+  let receipt=validId&&ledger[q.actionId];
+  if(receipt&&receipt.fingerprint!==fingerprint)receipt={result:{ok:false,error:'Identifiant réutilisé avec paramètres différents',actionId:q.actionId,combatId:q.combatId}};
+  if(!receipt){
+   let result={actionId:q.actionId,combatId:q.combatId,ok:false};
+   if(event.characterId!=='nans'||!validId||q.combatId!==fight.requestId||fight.phase!=='fight'||!p||p.hp<=0||!Number.isInteger(q.amount)||q.amount<1||q.amount>4||lock?.characterId!=='nans'||lock.decision!==true){
+    result.error='Contrecoup refusé : combat, attaque validée ou montant indisponible';
+   }else{
+    const apply=()=>{
+     const priorHp=p.hp,priorTemp=p.tempHp||0;
+     const detail=applyDamageDirect(p,q.amount,'force',{triggered:true,source:'Anneau de la Surcharge Furieuse'});
+     const actual=Math.max(0,priorHp-p.hp)+Math.max(0,priorTemp-(p.tempHp||0));
+     RPGHealthAuthority.bump(p);
+     result={...result,ok:true,amount:q.amount,effective:actual,reason:detail?.reason||''};
+     ledger[q.actionId]={fingerprint,result};
+     saveState();publishHealth(p);render();broadcastTargets();
+     log('Nans · Anneau de Surcharge Furieuse · '+q.amount+' force → '+actual+' effectifs · PV temporaires prioritaires');
+    };
+    if(window.EncounterJournal)EncounterJournal.run({actor:'nans',title:'Anneau de la Surcharge Furieuse',kind:'damage:self-request',remoteOrigin:true},apply,q.attackId);
+    else apply();
+   }
+   if(!ledger[q.actionId]){ledger[q.actionId]={fingerprint,result};saveState()}
+   receipt=ledger[q.actionId];
+  }
+  command('nans','message:gm',{recoilResult:receipt.result,text:receipt.result.ok?'Contrecoup de Surcharge : dégâts appliqués par Encounter.':'Contrecoup refusé · '+receipt.result.error});
+  return true;
+ };
+
  queueMicrotask(()=>{for(const w of Object.values(state.encounter.rpgReactions||{}))if(w.combatId===fight.requestId&&w.status==='awaiting-mj')queueReactionApproval(w)});
 
  window.EncounterMJControl={provokeOpportunity:targetId=>queueOpportunity(targetId),portrait:pid=>portrait(state.encounter.participants.find(p=>p.id===pid)),hasPendingAction:actionId=>saveAuthority.snapshot().some(([,item])=>item.actionId===actionId),cancelActionRequests:actionId=>saveAuthority.cancelAction(actionId),send:command,state:stateSyncPayload,controller:characterIdForParticipant,publish:publishHealth,sync:()=>{syncAllConditions();syncOnlineState('mj-correction');broadcastTargets()},breakConcentration:pid=>{const id=characterIdForParticipant(pid);if(id)command(id,'concentration:break',{combatId:fight.requestId,reason:'Décision MJ'})}};
