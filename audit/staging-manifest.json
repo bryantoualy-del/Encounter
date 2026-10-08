@@ -1,38 +1,37 @@
 {
   "protocolVersion": 1,
-  "branch": "main",
+  "branch": "feature/mj-session-reliability",
   "repositories": {
     "Encounter": {
-      "sha": "89ae9c57ade030964201829d91cc873df81ee4fb",
-      "tree": "e25061b0884be65155d0355c4680abbac7e4ece9"
+      "checkout": "current-workflow-commit"
     },
     "RPG-Connect": {
-      "sha": "9f263ccf2b0a20f93c4e9ed9656b9b7045de9c85",
-      "tree": "86717aa7e6b1bc9827cb90463757607f8333eae7"
+      "sha": "7922cff8a145ca81ab47f287a3acf62ba576e235",
+      "tree": "945ebd2f5dadb9d470acf271ef93063ff47005d2"
     },
     "Kentaro": {
-      "sha": "101872c5033510940a94537115910b0088d8f176",
-      "tree": "021b73912f7f71d900b3a43c6e292a8e4c2ee75f"
+      "sha": "1b3eac689e19345d76f7d36b1c12d6ed5ed18dbf",
+      "tree": "a85285ae13313199e86c6edb4525d4c09112c937"
     },
     "Samoth": {
-      "sha": "247a73130722912999c824dcd23464d86797a0b3",
-      "tree": "125ad1ee22d6cad2a98dc2f26d0e845feeefc5ab"
+      "sha": "a794ce4e00766a30cf58df335fa2a3c2843a2527",
+      "tree": "dfa84382b881869bf1a5d235a6eab04596041e25"
     },
     "Brackmard": {
-      "sha": "adb209879bf0ef411ce5695700532a5058ac8e99",
-      "tree": "13bfdaf7b210d2cc2193332fa6f1eca902b845f9"
+      "sha": "c0c2e62cb1caf92b4211de6f740af5993a9a16c1",
+      "tree": "7dfde21d538c95623792989f3e54ae831187b3d3"
     },
     "Zephyr": {
-      "sha": "e1836fdcfb0d132ca32b2a1726c183c6db96cd63",
-      "tree": "961b6fe54049a9bb98c95bba188cdc3c6d310935"
+      "sha": "35c26958d6e3f2865dacb54f66050cbe2817f157",
+      "tree": "072b80c9909ef9f0459045999edacd6d72823d51"
     },
     "Rufus": {
-      "sha": "8dfcb02fad2f7dccb83edaf3d09900a4f44fc34e",
-      "tree": "34e774cf816c4902e926066c77791a9d6eebb8b3"
+      "sha": "d08deea362c17525a7182cbf5fc5ba4c2812e1c6",
+      "tree": "957f1f06a92b4612e5e085177087d8e38061fd28"
     },
     "Nans": {
-      "sha": "433fe2adfd086264194c7b22a29311d137dfd71a",
-      "tree": "b0b65f39122b74b85e51fe303b7eaa819e22452b"
+      "sha": "a49e3b085d19de214b663066378d453935416a11",
+      "tree": "fa8038cf701a3204aa9538d41c6c932c29bc9c1c"
     }
   },
   "encounterCheckout": "current-workflow-commit"

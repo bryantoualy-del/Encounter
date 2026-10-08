@@ -1,0 +1,1686 @@
+{
+  "date": "2026-10-08",
+  "branch": "feature/mj-session-reliability",
+  "runtime": "Node 24.19 / Chromium 143 / real isolated WebSocket server",
+  "unit": {
+    "protocolCombatPersistence": {
+      "pass": 191,
+      "fail": 0
+    },
+    "companionBridges": {
+      "pass": 7,
+      "fail": 0
+    },
+    "creatureIcons": {
+      "pass": 4,
+      "fail": 0
+    }
+  },
+  "browser": {
+    "mj": {
+      "pass": 38,
+      "fail": 0,
+      "checks": [
+        {
+          "name": "new ergonomics loaded without errors",
+          "pass": true
+        },
+        {
+          "name": "double click selects once without participants or commands",
+          "pass": true
+        },
+        {
+          "name": "draft cancel leaves combat unchanged",
+          "pass": true
+        },
+        {
+          "name": "draft commits all three instances once",
+          "pass": true
+        },
+        {
+          "name": "category assignment preserves technical role",
+          "pass": true
+        },
+        {
+          "name": "advanced category and text filters combine",
+          "pass": true
+        },
+        {
+          "name": "advanced reset clears all filter fields",
+          "pass": true
+        },
+        {
+          "name": "category deletion retains profile and instances",
+          "pass": true
+        },
+        {
+          "name": "prep row selects requested preview",
+          "pass": true
+        },
+        {
+          "name": "prep blur does not swallow next row click",
+          "pass": true
+        },
+        {
+          "name": "panel applies a single defense correction per target",
+          "pass": true
+        },
+        {
+          "name": "one business entry covers both targets",
+          "pass": true
+        },
+        {
+          "name": "undo confirmation cancellation mutates nothing",
+          "pass": true
+        },
+        {
+          "name": "local scoped undo restores both targets",
+          "pass": true
+        },
+        {
+          "name": "layout fits width 1180",
+          "pass": true
+        },
+        {
+          "name": "layout fits width 1280",
+          "pass": true
+        },
+        {
+          "name": "layout fits width 390",
+          "pass": true
+        },
+        {
+          "name": "local mandatory save blocks undo until resolved",
+          "pass": true
+        },
+        {
+          "name": "local failed concentration is part of same action",
+          "pass": true
+        },
+        {
+          "name": "local concentration undo restores single active value",
+          "pass": true
+        },
+        {
+          "name": "real Companion registered",
+          "pass": true
+        },
+        {
+          "name": "connected damage undo restores authoritative HP and receives logical ACK",
+          "pass": true
+        },
+        {
+          "name": "native healing resource captured before authoritative application",
+          "pass": true
+        },
+        {
+          "name": "native healing undo restores Second souffle resource and HP",
+          "pass": true
+        },
+        {
+          "name": "missing native origin capture refuses undo without partial restoration",
+          "pass": true
+        },
+        {
+          "name": "undo restores temporary absorption without healing HP",
+          "pass": true
+        },
+        {
+          "name": "late damage command tombstoned after undo",
+          "pass": true
+        },
+        {
+          "name": "older dependent entry refused with explanation",
+          "pass": true
+        },
+        {
+          "name": "journal and cancellation survive Encounter reload",
+          "pass": true
+        },
+        {
+          "name": "correction messages never contain enemy participant HP",
+          "pass": true
+        },
+        {
+          "name": "disconnected Companion keeps correction pending without partial Encounter restore",
+          "pass": true
+        },
+        {
+          "name": "persisted distributed undo completes after Companion reconnect and Encounter reload",
+          "pass": true
+        },
+        {
+          "name": "connected pending concentration blocks undo",
+          "pass": true
+        },
+        {
+          "name": "failed concentration removes linked source effect",
+          "pass": true
+        },
+        {
+          "name": "connected undo restores damage, temp HP and failed concentration as one action",
+          "pass": true
+        },
+        {
+          "name": "undo restores linked source effect without new condition ID",
+          "pass": true
+        },
+        {
+          "name": "automatic concentration break at zero HP refuses incomplete undo",
+          "pass": true
+        },
+        {
+          "name": "all six pages free of exceptions",
+          "pass": true
+        }
+      ]
+    },
+    "persistence": {
+      "pass": 17,
+      "fail": 0,
+      "checks": [
+        {
+          "name": "dangerous reset and wizard absent",
+          "pass": true
+        },
+        {
+          "name": "empty encounter saved",
+          "pass": true
+        },
+        {
+          "name": "unvalidated cart survives reload",
+          "pass": true
+        },
+        {
+          "name": "instance edit preserves library source",
+          "pass": true
+        },
+        {
+          "name": "save as creates independent records",
+          "pass": true
+        },
+        {
+          "name": "changes autosaved without overwriting saved preparation",
+          "pass": true
+        },
+        {
+          "name": "preparation restores instance and frozen model",
+          "pass": true
+        },
+        {
+          "name": "browser shutdown and reopen retains preparation",
+          "pass": true
+        },
+        {
+          "name": "saved preparation launches fight",
+          "pass": true
+        },
+        {
+          "name": "active snapshot preserves source identity and journal",
+          "pass": true
+        },
+        {
+          "name": "active reload retains exact participants and turn",
+          "pass": true
+        },
+        {
+          "name": "manual and automatic backups exist",
+          "pass": true
+        },
+        {
+          "name": "backup restore preserves preparation overrides",
+          "pass": true
+        },
+        {
+          "name": "future JSON rejected with readable error and no state loss",
+          "pass": true
+        },
+        {
+          "name": "old and partly incompatible sheet imports without discarding extensions",
+          "pass": true
+        },
+        {
+          "name": "current export includes schema snapshots and combat context",
+          "pass": true
+        },
+        {
+          "name": "persistence browser has no JS exceptions",
+          "pass": true
+        }
+      ]
+    },
+    "defenses": {
+      "pass": 28,
+      "fail": 0,
+      "checks": [
+        {
+          "name": "enemy AC absent from transport and client cache",
+          "pass": true
+        },
+        {
+          "name": "outside tap closes Connect",
+          "pass": true
+        },
+        {
+          "name": "damage suspended before native choice",
+          "pass": true
+        },
+        {
+          "name": "uncanny choice true",
+          "pass": true
+        },
+        {
+          "name": "duplicate grant cannot spend or apply again",
+          "pass": true
+        },
+        {
+          "name": "atomic dodge undo true",
+          "pass": true
+        },
+        {
+          "name": "damage suspended before native choice",
+          "pass": true
+        },
+        {
+          "name": "uncanny choice false",
+          "pass": true
+        },
+        {
+          "name": "atomic dodge undo false",
+          "pass": true
+        },
+        {
+          "name": "pending reaction restored across both reloads",
+          "pass": true
+        },
+        {
+          "name": "damage suspended before native choice",
+          "pass": true
+        },
+        {
+          "name": "uncanny choice true",
+          "pass": true
+        },
+        {
+          "name": "duplicate grant cannot spend or apply again",
+          "pass": true
+        },
+        {
+          "name": "atomic dodge undo true",
+          "pass": true
+        },
+        {
+          "name": "dodge before resistances",
+          "pass": true
+        },
+        {
+          "name": "dodge before immunities",
+          "pass": true
+        },
+        {
+          "name": "dodge before vulnerabilities",
+          "pass": true
+        },
+        {
+          "name": "spent reaction cannot open dodge",
+          "pass": true
+        },
+        {
+          "name": "unconfirmed hit never offers dodge",
+          "pass": true
+        },
+        {
+          "name": "native evasion {\"ability\":\"DEX\",\"half\":true,\"success\":true,\"hp\":53}",
+          "pass": true
+        },
+        {
+          "name": "native save receipt is idempotent",
+          "pass": true
+        },
+        {
+          "name": "native evasion {\"ability\":\"DEX\",\"half\":true,\"success\":false,\"hp\":45}",
+          "pass": true
+        },
+        {
+          "name": "native save receipt is idempotent",
+          "pass": true
+        },
+        {
+          "name": "native evasion {\"ability\":\"DEX\",\"half\":false,\"success\":false,\"hp\":36}",
+          "pass": true
+        },
+        {
+          "name": "native save receipt is idempotent",
+          "pass": true
+        },
+        {
+          "name": "native evasion {\"ability\":\"CON\",\"half\":true,\"success\":true,\"hp\":45}",
+          "pass": true
+        },
+        {
+          "name": "native save receipt is idempotent",
+          "pass": true
+        },
+        {
+          "name": "new defense pages have no JS exceptions",
+          "pass": true
+        }
+      ]
+    },
+    "horn": {
+      "pass": 14,
+      "fail": 0,
+      "checks": [
+        {
+          "name": "harmful horn requests canonical SAG dormant",
+          "pass": true
+        },
+        {
+          "name": "horn leaves reaction available",
+          "pass": true
+        },
+        {
+          "name": "horn undo restores charges, economy, targets and self damage",
+          "pass": true
+        },
+        {
+          "name": "harmful horn requests canonical SAG awakened",
+          "pass": true
+        },
+        {
+          "name": "horn pending save survives reconnect",
+          "pass": true
+        },
+        {
+          "name": "horn pending choice survives both reloads",
+          "pass": true
+        },
+        {
+          "name": "refusal applies exactly native 2d6 once",
+          "pass": true
+        },
+        {
+          "name": "horn leaves reaction available",
+          "pass": true
+        },
+        {
+          "name": "horn undo restores charges, economy, targets and self damage",
+          "pass": true
+        },
+        {
+          "name": "harmful horn requests canonical SAG dormant",
+          "pass": true
+        },
+        {
+          "name": "yield is authoritative state without invented attack economy",
+          "pass": true
+        },
+        {
+          "name": "horn leaves reaction available",
+          "pass": true
+        },
+        {
+          "name": "horn undo restores charges, economy, targets and self damage",
+          "pass": true
+        },
+        {
+          "name": "horn has no JavaScript errors",
+          "pass": true
+        }
+      ]
+    },
+    "spellSlots": {
+      "pass": 9,
+      "fail": 0,
+      "checks": [
+        {
+          "name": "two-target fireball spends one slot",
+          "pass": true
+        },
+        {
+          "name": "spell transaction certified",
+          "pass": true
+        },
+        {
+          "name": "undo restores the enemy slot",
+          "pass": true
+        },
+        {
+          "name": "countered enemy spell still spends its one slot",
+          "pass": true
+        },
+        {
+          "name": "native counterspell spends one companion slot",
+          "pass": true
+        },
+        {
+          "name": "spell transaction certified",
+          "pass": true
+        },
+        {
+          "name": "counterspell undo restores both casters and reaction",
+          "pass": true
+        },
+        {
+          "name": "zero slot cannot open targeting or counterspell",
+          "pass": true
+        },
+        {
+          "name": "spell pipeline has no JS errors",
+          "pass": true
+        }
+      ]
+    },
+    "eclipse": {
+      "pass": 21,
+      "fail": 0,
+      "checks": [
+        {
+          "name": "connected attack feedback visible",
+          "pass": true
+        },
+        {
+          "name": "miss cannot trigger eclipse or blade save",
+          "pass": true
+        },
+        {
+          "name": "connected attack feedback visible",
+          "pass": true
+        },
+        {
+          "name": "native blade save uses correct target ability and DC sun",
+          "pass": true
+        },
+        {
+          "name": "save remains canonical on Encounter",
+          "pass": true
+        },
+        {
+          "name": "Solinar critical hit is confirmed before native CON save",
+          "pass": true
+        },
+        {
+          "name": "connected attack feedback visible",
+          "pass": true
+        },
+        {
+          "name": "connected attack feedback visible",
+          "pass": true
+        },
+        {
+          "name": "native blade save uses correct target ability and DC moon",
+          "pass": true
+        },
+        {
+          "name": "save remains canonical on Encounter",
+          "pass": true
+        },
+        {
+          "name": "two confirmed blades on same target trigger native eclipse",
+          "pass": true
+        },
+        {
+          "name": "eclipse transports native radiant and psychic components",
+          "pass": true
+        },
+        {
+          "name": "eclipse action can undo after both reloads",
+          "pass": true
+        },
+        {
+          "name": "eclipse undo restores HP and native marks atomically",
+          "pass": true
+        },
+        {
+          "name": "connected attack feedback visible",
+          "pass": true
+        },
+        {
+          "name": "connected attack feedback visible",
+          "pass": true
+        },
+        {
+          "name": "native blade save uses correct target ability and DC moon",
+          "pass": true
+        },
+        {
+          "name": "save remains canonical on Encounter",
+          "pass": true
+        },
+        {
+          "name": "different targets never trigger eclipse",
+          "pass": true
+        },
+        {
+          "name": "Kentaro hostile targets never contain AC",
+          "pass": true
+        },
+        {
+          "name": "eclipse browser has no JS errors",
+          "pass": true
+        }
+      ]
+    },
+    "summons": {
+      "pass": 13,
+      "fail": 0,
+      "checks": [
+        {
+          "name": "native dragon appears canonically",
+          "pass": true
+        },
+        {
+          "name": "dragon damaged or eliminated 7",
+          "pass": true
+        },
+        {
+          "name": "transaction has certified undo action_muz4thol_90ck76",
+          "pass": true
+        },
+        {
+          "name": "dragon concentration restored 7",
+          "pass": true
+        },
+        {
+          "name": "dragon health and identity restored 7",
+          "pass": true
+        },
+        {
+          "name": "dragon damaged or eliminated 100",
+          "pass": true
+        },
+        {
+          "name": "transaction has certified undo action_muz4tik6_3f4uqa",
+          "pass": true
+        },
+        {
+          "name": "dragon concentration restored 100",
+          "pass": true
+        },
+        {
+          "name": "dragon health and identity restored 100",
+          "pass": true
+        },
+        {
+          "name": "transaction has certified undo action_muz4tj9n_bsgw6i",
+          "pass": true
+        },
+        {
+          "name": "spectre lifecycle undo also restored",
+          "pass": true
+        },
+        {
+          "name": "active summon removal resets next participant canonically",
+          "pass": true
+        },
+        {
+          "name": "summon undo has no JS errors",
+          "pass": true
+        }
+      ]
+    },
+    "group": {
+      "pass": 63,
+      "fail": 0,
+      "checks": [
+        {
+          "name": "health share starts with explicit empty selection",
+          "pass": true
+        },
+        {
+          "name": "selective health share 1",
+          "pass": true
+        },
+        {
+          "name": "health share starts with explicit empty selection",
+          "pass": true
+        },
+        {
+          "name": "selective health share 2",
+          "pass": true
+        },
+        {
+          "name": "health share starts with explicit empty selection",
+          "pass": true
+        },
+        {
+          "name": "selective health share 6",
+          "pass": true
+        },
+        {
+          "name": "MJ message visible Kentaro",
+          "pass": true
+        },
+        {
+          "name": "MJ message visible Samoth",
+          "pass": true
+        },
+        {
+          "name": "MJ message visible Brackmard",
+          "pass": true
+        },
+        {
+          "name": "MJ message visible Zephyr",
+          "pass": true
+        },
+        {
+          "name": "MJ message visible Rufus",
+          "pass": true
+        },
+        {
+          "name": "MJ message visible Nans",
+          "pass": true
+        },
+        {
+          "name": "six tactical allies Kentaro - Compagnon",
+          "pass": true
+        },
+        {
+          "name": "six tactical allies Samoth - Compagnon",
+          "pass": true
+        },
+        {
+          "name": "six tactical allies Brackmard - Compagnon",
+          "pass": true
+        },
+        {
+          "name": "six tactical allies Zéphyr - Compagnon",
+          "pass": true
+        },
+        {
+          "name": "six tactical allies Rufus - Compagnon",
+          "pass": true
+        },
+        {
+          "name": "six tactical allies Nans - Compagnon",
+          "pass": true
+        },
+        {
+          "name": "tactical card has health AC and reaction",
+          "pass": true
+        },
+        {
+          "name": "group unconscious updates",
+          "pass": true
+        },
+        {
+          "name": "group revival updates",
+          "pass": true
+        },
+        {
+          "name": "native opportunity Rufus",
+          "pass": true
+        },
+        {
+          "name": "native opportunity Brackmard",
+          "pass": true
+        },
+        {
+          "name": "native opportunity Kentaro",
+          "pass": true
+        },
+        {
+          "name": "native opportunity Zephyr",
+          "pass": true
+        },
+        {
+          "name": "native opportunity Nans",
+          "pass": true
+        },
+        {
+          "name": "Brack native opportunity maneuver precise",
+          "pass": true
+        },
+        {
+          "name": "Brack native opportunity maneuver trip",
+          "pass": true
+        },
+        {
+          "name": "Brack maneuver save really resolved trip",
+          "pass": true
+        },
+        {
+          "name": "Brack native opportunity maneuver menace",
+          "pass": true
+        },
+        {
+          "name": "Brack maneuver save really resolved menace",
+          "pass": true
+        },
+        {
+          "name": "Brack native opportunity maneuver push",
+          "pass": true
+        },
+        {
+          "name": "Brack maneuver save really resolved push",
+          "pass": true
+        },
+        {
+          "name": "Brack native opportunity maneuver distract",
+          "pass": true
+        },
+        {
+          "name": "Samoth exposes missing native melee without invented attack",
+          "pass": true
+        },
+        {
+          "name": "Instruction pass preserves ally reaction and native Brack costs",
+          "pass": true
+        },
+        {
+          "name": "Rufus native critical and eligible off-turn sneak",
+          "pass": true
+        },
+        {
+          "name": "Instruction bonus is one typed component linked to source sequence",
+          "pass": true
+        },
+        {
+          "name": "Critical doubles supplied superiority dice without recipient reroll",
+          "pass": true
+        },
+        {
+          "name": "Rufus native off-turn sneak is preserved",
+          "pass": true
+        },
+        {
+          "name": "enemy save popup has no global reset",
+          "pass": true
+        },
+        {
+          "name": "forced next turn waits for the canonical enemy save queue",
+          "pass": true
+        },
+        {
+          "name": "Instruction undo waits for Rufus native rider save",
+          "pass": true
+        },
+        {
+          "name": "Instruction can use existing certified undo",
+          "pass": true
+        },
+        {
+          "name": "Instruction undo restores one superiority die and ally reaction",
+          "pass": true
+        },
+        {
+          "name": "Instruction Kentaro executes native Solinar miss and consumes one reaction",
+          "pass": true
+        },
+        {
+          "name": "Invalid attacker after grant closes native attack without damage",
+          "pass": true
+        },
+        {
+          "name": "Native Diversion applies shared target effect on hit",
+          "pass": true
+        },
+        {
+          "name": "Diversion grants native advantage before die",
+          "pass": true
+        },
+        {
+          "name": "Diversion consumed once even on a miss",
+          "pass": true
+        },
+        {
+          "name": "Second attack receives no Diversion advantage",
+          "pass": true
+        },
+        {
+          "name": "Samoth pays slot and metamagic at launch",
+          "pass": true
+        },
+        {
+          "name": "Miss does not refund launched slot or sorcery points",
+          "pass": true
+        },
+        {
+          "name": "replayed grant cannot cause a second roll",
+          "pass": true
+        },
+        {
+          "name": "Group STATE_SYNC restores six allies",
+          "pass": true
+        },
+        {
+          "name": "PNJ and allied invocation present without enemies",
+          "pass": true
+        },
+        {
+          "name": "native Group heal cc-kentaro",
+          "pass": true
+        },
+        {
+          "name": "native Group heal group-npc",
+          "pass": true
+        },
+        {
+          "name": "native multi-ally Ancre uses Group",
+          "pass": true
+        },
+        {
+          "name": "Group temporary HP update",
+          "pass": true
+        },
+        {
+          "name": "Group fits 1180",
+          "pass": true
+        },
+        {
+          "name": "Group fits 390",
+          "pass": true
+        },
+        {
+          "name": "No browser script errors",
+          "pass": true
+        }
+      ]
+    },
+    "longCombat": {
+      "pass": 14,
+      "fail": 0,
+      "checks": [
+        {
+          "name": "dragon canonically created",
+          "pass": true
+        },
+        {
+          "name": "native concentration resolved during long battle",
+          "pass": true
+        },
+        {
+          "name": "mid-battle atomic undo completes",
+          "pass": true
+        },
+        {
+          "name": "temporary HP absorb damage during long battle",
+          "pass": true
+        },
+        {
+          "name": "dragon concentration maintained after owner damage",
+          "pass": true
+        },
+        {
+          "name": "multi-ally healing includes the dragon",
+          "pass": true
+        },
+        {
+          "name": "mid-combat reload retains turn and dragon",
+          "pass": true
+        },
+        {
+          "name": "MJ opportunity request executes one native Rufus reaction",
+          "pass": true
+        },
+        {
+          "name": "multi-target enemy cast consumes one slot",
+          "pass": true
+        },
+        {
+          "name": "ten rounds reached",
+          "pass": true
+        },
+        {
+          "name": "six native heroes acted repeatedly",
+          "pass": true
+        },
+        {
+          "name": "dragon played own rounds",
+          "pass": true
+        },
+        {
+          "name": "eliminated goblin never takes another turn",
+          "pass": true
+        },
+        {
+          "name": "long battle has no JavaScript exceptions",
+          "pass": true
+        }
+      ],
+      "actions": 70,
+      "dragonTurns": 10
+    },
+    "layoutsAndTouch": {
+      "pass": 16,
+      "fail": 0,
+      "checks": [
+        {
+          "name": "global reset is absent from normal MJ controls",
+          "pass": true
+        },
+        {
+          "name": "touch repeated selection keeps one draft row",
+          "pass": true
+        },
+        {
+          "name": "search retains selection state and compact controls",
+          "pass": true
+        },
+        {
+          "name": "touch after initiative blur selects expected preview",
+          "pass": true
+        },
+        {
+          "name": "keyboard preparation selection opens the same preview",
+          "pass": true
+        },
+        {
+          "name": "closed drawers are removed from keyboard traversal",
+          "pass": true
+        },
+        {
+          "name": "mobile touch can cancel composition with filters visible",
+          "pass": true
+        },
+        {
+          "name": "Fight stays within viewport 1280",
+          "pass": true
+        },
+        {
+          "name": "composition and validation fit 1280",
+          "pass": true
+        },
+        {
+          "name": "Fight stays within viewport 1180",
+          "pass": true
+        },
+        {
+          "name": "composition and validation fit 1180",
+          "pass": true
+        },
+        {
+          "name": "Fight stays within viewport 820",
+          "pass": true
+        },
+        {
+          "name": "composition and validation fit 820",
+          "pass": true
+        },
+        {
+          "name": "Fight stays within viewport 390",
+          "pass": true
+        },
+        {
+          "name": "composition and validation fit 390",
+          "pass": true
+        },
+        {
+          "name": "touch browser has no exceptions",
+          "pass": true
+        }
+      ]
+    },
+    "offline": {
+      "pass": 4,
+      "fail": 0,
+      "checks": [
+        {
+          "name": "offline cache includes persistence, free editor and supplied icons",
+          "pass": true
+        },
+        {
+          "name": "offline reload preserves round, turn and participants",
+          "pass": true
+        },
+        {
+          "name": "free editor compatibility opens offline and preserves combat",
+          "pass": true
+        },
+        {
+          "name": "offline browser has no exceptions",
+          "pass": true
+        }
+      ]
+    },
+    "legacyMultiTarget": {
+      "pass": 43,
+      "fail": 0,
+      "checks": [
+        {
+          "name": "room and both companions online",
+          "pass": true
+        },
+        {
+          "name": "initiative validated and fight started",
+          "pass": true
+        },
+        {
+          "name": "three visual selections and count",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "first target dies without cancelling other saves",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "independent save modifiers",
+          "pass": true
+        },
+        {
+          "name": "shared damage and independent RIV",
+          "pass": true
+        },
+        {
+          "name": "one action economy consumed",
+          "pass": true
+        },
+        {
+          "name": "one logical action with three target references",
+          "pass": true
+        },
+        {
+          "name": "save retransmit does not double damage",
+          "pass": true
+        },
+        {
+          "name": "save retransmit does not spend local resources or economy twice",
+          "pass": true
+        },
+        {
+          "name": "native undo restores all three targets",
+          "pass": true
+        },
+        {
+          "name": "Popup uses probe-a",
+          "pass": true
+        },
+        {
+          "name": "first attack target dies without blocking second attack",
+          "pass": true
+        },
+        {
+          "name": "Popup uses probe-b",
+          "pass": true
+        },
+        {
+          "name": "attack replay never damages another target",
+          "pass": true
+        },
+        {
+          "name": "uncertified protocol peer undo is refused without partial rollback",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "pending save undo is explicitly refused before any partial rollback",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "pending save can finish canonically after refused undo",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "per-target disadvantage and normal saves",
+          "pass": true
+        },
+        {
+          "name": "individual conditions and immunity",
+          "pass": true
+        },
+        {
+          "name": "resistance vulnerability and temp HP composed",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "target disadvantage cancels advantage independently",
+          "pass": true
+        },
+        {
+          "name": "invalid target produces no mutation or stuck popup",
+          "pass": true
+        },
+        {
+          "name": "deleted target is skipped and remaining target can resolve",
+          "pass": true
+        },
+        {
+          "name": "JDS popup topmost",
+          "pass": true
+        },
+        {
+          "name": "removed-target action finishes without blocking",
+          "pass": true
+        },
+        {
+          "name": "cancelled explicit restart keeps combat and pending save",
+          "pass": true
+        },
+        {
+          "name": "debug reset during resolution clears the popup and combat",
+          "pass": true
+        },
+        {
+          "name": "reset clears Companion target selections",
+          "pass": true
+        },
+        {
+          "name": "Encounter tablet has no page overflow",
+          "pass": true
+        },
+        {
+          "name": "Samoth tablet has no page overflow",
+          "pass": true
+        }
+      ]
+    },
+    "ciE2E": {
+      "pass": 115,
+      "fail": 0,
+      "checks": [
+        {
+          "name": "both online",
+          "pass": true
+        },
+        {
+          "name": "Kentaro initiative visible and topmost",
+          "pass": true
+        },
+        {
+          "name": "Brackmard initiative visible and topmost",
+          "pass": true
+        },
+        {
+          "name": "initiative:rolled → MJ validation → FIGHT",
+          "pass": true
+        },
+        {
+          "name": "Brack attack → MJ → correlated damage",
+          "pass": true
+        },
+        {
+          "name": "Brack attack counter uses effective damage after fire resistance",
+          "pass": true
+        },
+        {
+          "name": "Brack attack → MJ → correlated damage",
+          "pass": true
+        },
+        {
+          "name": "Brack attack → MJ → correlated damage",
+          "pass": true
+        },
+        {
+          "name": "Brack attack → MJ → correlated damage",
+          "pass": true
+        },
+        {
+          "name": "Brack attack → MJ → correlated damage",
+          "pass": true
+        },
+        {
+          "name": "Brack attack → MJ → correlated damage",
+          "pass": true
+        },
+        {
+          "name": "Kentaro #solinar → MJ → correlated damage",
+          "pass": true
+        },
+        {
+          "name": "Kentaro #selhane → MJ → correlated damage",
+          "pass": true
+        },
+        {
+          "name": "Kentaro native save → MJ manual → full resolution",
+          "pass": true
+        },
+        {
+          "name": "Kentaro turn damage reflects effective save damage",
+          "pass": true
+        },
+        {
+          "name": "Kentaro #thirdSun → MJ → correlated damage",
+          "pass": true
+        },
+        {
+          "name": "Kentaro bonus consumed",
+          "pass": true
+        },
+        {
+          "name": "same attackId new eventId applied once",
+          "pass": true
+        },
+        {
+          "name": "Brack attack → MJ → correlated damage",
+          "pass": true
+        },
+        {
+          "name": "Brackmard native save → MJ manual → full resolution",
+          "pass": true
+        },
+        {
+          "name": "Brackmard turn damage reflects effective save damage",
+          "pass": true
+        },
+        {
+          "name": "Brackmard native save → MJ manual → full resolution",
+          "pass": true
+        },
+        {
+          "name": "Brackmard turn damage reflects effective save damage",
+          "pass": true
+        },
+        {
+          "name": "Kentaro native save → MJ manual → full resolution",
+          "pass": true
+        },
+        {
+          "name": "Kentaro turn damage reflects effective save damage",
+          "pass": true
+        },
+        {
+          "name": "Samoth native save → MJ manual → full resolution",
+          "pass": true
+        },
+        {
+          "name": "Samoth turn damage reflects effective save damage",
+          "pass": true
+        },
+        {
+          "name": "Zephyr native save → MJ manual → full resolution",
+          "pass": true
+        },
+        {
+          "name": "Zephyr turn damage reflects effective save damage",
+          "pass": true
+        },
+        {
+          "name": "Rufus native save → MJ manual → full resolution",
+          "pass": true
+        },
+        {
+          "name": "Rufus turn damage reflects effective save damage",
+          "pass": true
+        },
+        {
+          "name": "Rufus object concentration normalized to actual spell name",
+          "pass": true
+        },
+        {
+          "name": "Nans native save → MJ manual → full resolution",
+          "pass": true
+        },
+        {
+          "name": "Nans turn damage reflects effective save damage",
+          "pass": true
+        },
+        {
+          "name": "Nans native horn temptation resolves before later turns and MJ panels",
+          "pass": true
+        },
+        {
+          "name": "Samoth multi selector holds three explicit targets",
+          "pass": true
+        },
+        {
+          "name": "multi target keeps creature vignette",
+          "pass": true
+        },
+        {
+          "name": "Samoth native save → MJ manual → full resolution",
+          "pass": true
+        },
+        {
+          "name": "Samoth turn damage reflects effective save damage",
+          "pass": true
+        },
+        {
+          "name": "target reaching zero does not close the logical multi action",
+          "pass": true
+        },
+        {
+          "name": "multi action survives Companion reconnect and STATE_SYNC",
+          "pass": true
+        },
+        {
+          "name": "Samoth native save → MJ manual → full resolution",
+          "pass": true
+        },
+        {
+          "name": "Samoth turn damage reflects effective save damage",
+          "pass": true
+        },
+        {
+          "name": "Samoth native save → MJ manual → full resolution",
+          "pass": true
+        },
+        {
+          "name": "Samoth turn damage reflects effective save damage",
+          "pass": true
+        },
+        {
+          "name": "three independent JdS resolved",
+          "pass": true
+        },
+        {
+          "name": "one shared raw damage roll reused for all targets",
+          "pass": true
+        },
+        {
+          "name": "per-target defenses and save scaling applied",
+          "pass": true
+        },
+        {
+          "name": "multi action consumes one action economy only",
+          "pass": true
+        },
+        {
+          "name": "Companion emitted one multi save intention",
+          "pass": true
+        },
+        {
+          "name": "same action/save IDs with a new eventId are deduplicated",
+          "pass": true
+        },
+        {
+          "name": "certified multi-save undo restores all targets and native resources exactly once",
+          "pass": true
+        },
+        {
+          "name": "turn can advance after a multi-target kill",
+          "pass": true
+        },
+        {
+          "name": "five-round post-multi combat simulation stays live",
+          "pass": true
+        },
+        {
+          "name": "Zephyr native save → MJ manual → full resolution",
+          "pass": true
+        },
+        {
+          "name": "Zephyr turn damage reflects effective save damage",
+          "pass": true
+        },
+        {
+          "name": "Zephyr native save → MJ manual → full resolution",
+          "pass": true
+        },
+        {
+          "name": "Zephyr turn damage reflects effective save damage",
+          "pass": true
+        },
+        {
+          "name": "Zephyr native smite save keeps attackId",
+          "pass": true
+        },
+        {
+          "name": "Nans native save → MJ manual → full resolution",
+          "pass": true
+        },
+        {
+          "name": "Nans turn damage reflects effective save damage",
+          "pass": true
+        },
+        {
+          "name": "automatic JdS composite R/I/V absorbs temp HP first",
+          "pass": true
+        },
+        {
+          "name": "two conditions visible in Encounter quick view",
+          "pass": true
+        },
+        {
+          "name": "stale Companion state cannot restore old HP",
+          "pass": true
+        },
+        {
+          "name": "stale condition command cannot restore removed state",
+          "pass": true
+        },
+        {
+          "name": "POINTS DE VIE temp HP UI",
+          "pass": true
+        },
+        {
+          "name": "local concentration reaches Encounter",
+          "pass": true
+        },
+        {
+          "name": "local concentration removal reaches Encounter",
+          "pass": true
+        },
+        {
+          "name": "Kentaro semantic damage/heal ribbons",
+          "pass": true
+        },
+        {
+          "name": "Kentaro short rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Kentaro cancelled short rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Kentaro long rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Kentaro cancelled long rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Brackmard semantic damage/heal ribbons",
+          "pass": true
+        },
+        {
+          "name": "Brackmard short rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Brackmard cancelled short rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Brackmard long rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Brackmard cancelled long rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Samoth semantic damage/heal ribbons",
+          "pass": true
+        },
+        {
+          "name": "Samoth short rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Samoth cancelled short rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Samoth long rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Samoth cancelled long rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Zephyr semantic damage/heal ribbons",
+          "pass": true
+        },
+        {
+          "name": "Zephyr short rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Zephyr cancelled short rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Zephyr long rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Zephyr cancelled long rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Rufus semantic damage/heal ribbons",
+          "pass": true
+        },
+        {
+          "name": "Rufus short rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Rufus cancelled short rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Rufus long rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Rufus cancelled long rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Nans semantic damage/heal ribbons",
+          "pass": true
+        },
+        {
+          "name": "Nans short rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Nans cancelled short rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Nans long rest modal topmost",
+          "pass": true
+        },
+        {
+          "name": "Nans cancelled long rest preserves HP",
+          "pass": true
+        },
+        {
+          "name": "Kentaro header 390px fits viewport",
+          "pass": true
+        },
+        {
+          "name": "Kentaro header 768px fits viewport",
+          "pass": true
+        },
+        {
+          "name": "Kentaro single RPG Connect HUD",
+          "pass": true
+        },
+        {
+          "name": "Brackmard single RPG Connect HUD",
+          "pass": true
+        },
+        {
+          "name": "Samoth single RPG Connect HUD",
+          "pass": true
+        },
+        {
+          "name": "Zephyr single RPG Connect HUD",
+          "pass": true
+        },
+        {
+          "name": "Rufus single RPG Connect HUD",
+          "pass": true
+        },
+        {
+          "name": "Nans single RPG Connect HUD",
+          "pass": true
+        },
+        {
+          "name": "incompatible application gets explicit persistent UI message",
+          "pass": true
+        },
+        {
+          "name": "synaptic penalty only on explicit concentration save in Chromium",
+          "pass": true
+        },
+        {
+          "name": "manual saves use restrained DEX disadvantage and stunned FOR automatic failure",
+          "pass": true
+        },
+        {
+          "name": "local Encounter ability save respects target DEX disadvantage",
+          "pass": true
+        },
+        {
+          "name": "enemy attack applies synaptic penalty in Chromium",
+          "pass": true
+        },
+        {
+          "name": "finish fight preserves participants and stops combat",
+          "pass": true
+        },
+        {
+          "name": "ended phase and conditions survive reload",
+          "pass": true
+        },
+        {
+          "name": "Kentaro initiative survives secondary faults and maximum-z HUD",
+          "pass": true
+        },
+        {
+          "name": "Brackmard initiative survives secondary faults and maximum-z HUD",
+          "pass": true
+        }
+      ]
+    }
+  },
+  "totals": {
+    "automaticProtocolAndUnitTests": 202,
+    "browserChecks": 395,
+    "failures": 0
+  }
+}
