@@ -94,3 +94,11 @@ body.combat-mode:has(#mjDecisionDock:not([hidden])){--rpg-live-height:50px}
 .mj-cart-buttons{justify-content:space-between}
 .mj-cart-buttons .primary{flex:0 1 auto;min-width:100px}
 @media(max-width:720px){.mj-cart-columns,.mj-cart-row{grid-template-columns:minmax(0,1fr) 62px 70px 36px}.mj-cart-buttons .primary{flex:0 1 auto}}
+
+/* Keep the cart actions together, as in the MJ sketch. */
+.mj-cart-buttons{justify-content:flex-start;gap:10px}
+.mj-cart-buttons .primary{flex:0 1 48%;min-width:110px;max-width:180px}
+@media(max-width:720px){.mj-cart-buttons .primary{flex:0 1 48%}}
+.rpg-health-share-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+#rpgHealthSharePicker .mj-form>.check-label{align-items:center;min-height:42px;margin:3px 0}
+#rpgHealthSharePicker .mj-form>.check-label input{width:20px;height:20px;flex:none}
