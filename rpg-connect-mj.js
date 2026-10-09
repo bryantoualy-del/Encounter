@@ -74,7 +74,7 @@
  function currentTurnSession(){const p=activeParticipant();if(!p)return null;const activeCharacterId=controllerFor(p);const activeKind=activeCharacterId?(online(activeCharacterId)?'autre PJ connecté':'PJ hors ligne'):(p.kind==='player'||p.kind==='ally'?'PJ / allié':'adversaire / PNJ');return{phase:'fight',activeCharacterId,activeName:p.name,activeKind,round:state.encounter.round,activeParticipantId:p.id,turnStartRevision:p.turnStartRevision||0,summonActor:p.rpgSummon?.kind||'owner'}}
  function combatSession(){if(combatMachine.state==='LOBBY'||combatMachine.state==='END')return{phase:'lobby',text:combatMachine.state==='END'?'Combat terminé · attente du MJ':'Attente du MJ / des autres joueurs'};if(combatMachine.state==='PREP')return{phase:'preparation',text:'Prépa Fight · round 1'};if(combatMachine.state==='INITIATIVE')return{phase:'initiative-validated',ready:fightReady(),text:fightReady()?'Toutes les initiatives sont validées · attente du FIGHT':'Initiatives en cours'};return currentTurnSession()||{phase:'fight',round:state.encounter.round||1}}
  const diversion=globalThis.createRPGDiversionAuthority({participants:()=>state.encounter.participants,persist:()=>saveState(),log:text=>log('RPG · '+text)});
- const reactions=globalThis.createRPGReactionAuthority({ledger:()=>state.encounter.rpgReactions||(state.encounter.rpgReactions={}),combatId:()=>fight.requestId,available:(id,w)=>!(['manual-table','instruction'].includes(w.triggerMode)&&!state.encounter.participants.some(p=>p.id===w.context.targetId&&p.kind==='enemy'&&p.hp>0))&&!!participant(id)&&participant(id).hp>0&&!participant(id).reactionUsed&&!conditionMechanics(conditionPayload(participant(id))).incapacitated&&!RPGCombatEffects.mechanics(participant(id)).actionsBlocked,requestApproval:w=>queueReactionApproval(w),grant:(id,w)=>({attackAdvantage:!!(w.context.targetId&&diversion.reserve(state.encounter.participants.find(p=>p.id===w.context.targetId),participant(id),w.reactionId))}),send:command,persist:()=>saveState(),log:text=>log('RPG · '+text),resume:(window,result)=>window.dispatchResume?window.dispatchResume(result):resumeReaction(window,result)});
+ const reactions=globalThis.createRPGReactionAuthority({ledger:()=>state.encounter.rpgReactions||(state.encounter.rpgReactions={}),combatId:()=>fight.requestId,available:(id,w)=>!(['manual-table','instruction'].includes(w.triggerMode)&&!state.encounter.participants.some(p=>p.id===w.context.targetId&&p.kind==='enemy'&&p.hp>0))&&!!participant(id)&&participant(id).hp>0&&!participant(id).reactionUsed&&!conditionMechanics(conditionPayload(participant(id))).incapacitated&&!RPGCombatEffects.mechanics(participant(id)).actionsBlocked,requestApproval:w=>queueReactionApproval(w),grant:(id,w)=>({attackAdvantage:!!(w.context.targetId&&diversion.reserve(state.encounter.participants.find(p=>p.id===w.context.targetId),participant(id),w.reactionId))}),validateResolution:(w,q,id)=>globalThis.RPGKentaroArmorRules?.isValid(w,q)!==false,send:command,persist:()=>saveState(),log:text=>log('RPG · '+text),resume:(window,result)=>window.dispatchResume?window.dispatchResume(result):resumeReaction(window,result)});
  function resumeReaction(window,result){if(window.context.kind==='uncanny-dodge'){const item=state.encounter.rpgSuspendedDamages?.[window.reactionId];if(!item||item.applied||item.combatId!==fight.requestId)return;const target=state.encounter.participants.find(p=>p.id===item.targetId);if(!target)return;const accept=result.success===true&&result.consumed===true&&result.optionId==='uncanny-dodge';const apply=()=>{item.applied=true;item.result=result;if(accept)target.reactionUsed=true;const raw=accept?Math.floor(item.amount/2):item.amount;const damage=applyDamageDirect(target,raw,item.type,{attack:item.attack,source:item.source,resuming:true});log('Rufus · Esquive instinctive · '+(accept?'acceptée · réaction consommée':'passée')+' · '+item.amount+' bruts → '+raw+' avant défenses → '+damage.amount+' dégâts effectifs.');saveState();render()};return globalThis.EncounterJournal?EncounterJournal.run({actor:'Rufus',title:item.source,kind:'damage'},apply,item.parentActionId):apply();}if(result.cancelled||result.declined)diversion.release(window.reactionId);if(['manual-table','instruction'].includes(window.triggerMode)){broadcastTargets();return;}const action=state.encounter.rpgSuspendedActions?.[window.parentActionId];if(action&&!action.resumed&&action.combatId===fight.requestId){action.resumed=true;action.result=result;saveState();if(result.success&&result.cancelSpell){log('RPG · '+action.source+' · interrompu par Contresort.');ui.targeting=null;const actor=state.encounter.participants.find(p=>p.id===action.actorId),ability=actor&&modelFor(actor)?.[({action:'actions',reaction:'reactions',legendary:'legendaryActions',lair:'lairActions'})[action.section]||action.section]?.find(a=>a.id===action.abilityId);if(actor&&ability){consumeEconomyAfterResolution(actor,ability,action.section);if(ability.kind==='recharge'){actor.abilityState[ability.id]={ready:false}}}saveState();render();return}if(action.method==='useAbility'){baseSpellUseAbility(action.actorId,action.abilityId,action.section,action.mode);if(ui.targeting)ui.targeting.mjActionId=action.parentActionId;return}ui.targeting=action.targeting;resolveTargetSelection(action.targetId);}}
  function triggerLedger(){return state.encounter.rpgTriggers||(state.encounter.rpgTriggers={})}
  setInterval(()=>{for(const window of Object.values(state.encounter.rpgReactions||{}))if(window.context?.kind==='uncanny-dodge'&&window.status==='closed'&&window.combatId===fight.requestId&&!state.encounter.rpgSuspendedDamages?.[window.reactionId]?.applied)resumeReaction(window,window.result||{})},3000);
@@ -337,9 +337,9 @@
    const line=String(state.encounter.log?.[0]?.text||''),resolution=ui.lastTargetResolution;
    if(!resolution||resolution.actorId!==actor.id||resolution.targetId!==target.id||resolution.abilityId!==ability.id)return result;
    const payload={attackerId:actor.id,attackerName:actor.name,actionName:ability.name||'Attaque',targetName:target.name,hit:resolution.hit,miss:!resolution.hit,attackTotal:resolution.attackTotal,rollText:resolution.rollText,damage:resolution.damage,damageType:resolution.damageType,critical:resolution.critical,text:line};
-   if(ccId&&online(ccId))command(ccId,'enemy:attack-result',payload);
+   if(ccId&&online(ccId)&&!Object.values(target.rpgKentaroArmorPending||{}).some(x=>x.combatId===fight.requestId&&!x.applied))command(ccId,'enemy:attack-result',payload);
    netlog(actor.name+' → '+target.name+' · '+(payload.hit?'TOUCHÉ':'RATÉ'),'info');
-   if(payload.hit&&target.hp>0&&ability.onHitSave&&!Object.values(target.rpgDefensivePending||{}).some(x=>!x.applied)&&!Object.values(target.rpgNansDefensivePending||{}).some(x=>!x.applied))requestEnemyHitSave(actor,target,ability);
+   if(payload.hit&&!Object.values(target.rpgKentaroArmorPending||{}).some(x=>x.combatId===fight.requestId&&!x.applied)&&target.hp>0&&ability.onHitSave&&!Object.values(target.rpgDefensivePending||{}).some(x=>!x.applied)&&!Object.values(target.rpgNansDefensivePending||{}).some(x=>!x.applied))requestEnemyHitSave(actor,target,ability);
   }
   return result;
  }}
@@ -587,6 +587,48 @@
  window.EncounterRufusMirror={redirect:(actor,target,ability,actionId,step)=>rufusEffects.mirror(actor,target,ability,[actionId||crypto.randomUUID(),target.id,ability.id,step||0].join(':')),resolve:(target,result,natural,total)=>rufusEffects.resolveMirror(target,result,natural,total)};
  const rufusCancel=EncounterMJControl.cancelActionRequests;EncounterMJControl.cancelActionRequests=id=>{rufusCancel(id);for(const item of [...pending.values()])if(item.characterId==='rufus'&&(item.roll?.actionId===id||item.event?.payload?.actionId===id)){cancelInvalidAttack('rufus',{...item.roll,attackId:item.attackId},'Action annulée');delete participant('rufus').rpgRufusGuidedOffer;}};
  EncounterMJControl.rufusEffects=rufusEffects;queueMicrotask(()=>rufusEffects.recover());setInterval(()=>{if(fight.phase!=='fight')return;const before=JSON.stringify(state.encounter.participants.map(p=>p.rpgEffects));rufusEffects.expire();if(before!==JSON.stringify(state.encounter.participants.map(p=>p.rpgEffects))){saveState();render();syncOnlineState('rufus-expiration');syncAllConditions();}},1000);
+ // Armure de Maléfice : l'attaque est suspendue AVANT PV / Agathys / concentration / effet sur touche.
+ const hexArmorRules=globalThis.RPGKentaroArmorRules,armorBeforeDamage=applyDamageDirect;
+ const armorPending=()=>Object.values(participant('kentaro')?.rpgKentaroArmorPending||{}).some(x=>x.combatId===fight.requestId&&!x.applied);
+ applyDamageDirect=(target,amount,type='',ctx={})=>{
+  const curse=kentaroEffects.get('hexbladeCurse'),attack=ctx.attack,attacker=attack&&state.encounter.participants.find(p=>p.id===attack.attackerId);
+  if(!(hexArmorRules&&target===participant('kentaro')&&fight.phase==='fight'&&
+   !ctx.triggered&&!ctx.resuming&&!ctx.hexArmorResuming&&attack?.hit===true&&
+   attacker?.kind==='enemy'&&curse?.targetId===attacker.id&&curse.combatId===fight.requestId&&
+   !(curse.expiresRound!=null&&curse.expiresRound<=state.encounter.round)&&canReact('kentaro')))
+    return armorBeforeDamage(target,amount,type,ctx);
+  target.rpgKentaroArmorPending??={};
+  if(armorPending())return{amount:0,pending:true,reason:'Armure de Maléfice en attente'};
+  const reactionId=crypto.randomUUID(),parentActionId=ui.targeting?.mjActionId||window.EncounterJournal?.current()?.id||crypto.randomUUID(),ability=currentTargetingAbility?.();
+  const item=target.rpgKentaroArmorPending[reactionId]={reactionId,parentActionId,combatId:fight.requestId,targetId:target.id,attackerId:attacker.id,attackerName:attacker.name,actionName:ability?.name||ctx.source||'Attaque',attackTotal:attack.total,rollText:String(attack.natural??''),critical:!!attack.critical,amount,type,context:JSON.parse(JSON.stringify(ctx)),onHitSave:ability?.onHitSave?JSON.parse(JSON.stringify(ability)):null,applied:false};
+  saveState();
+  const opened=reactions.open({reactionId,parentActionId,combatId:fight.requestId,eligible:['kentaro'],context:{kind:hexArmorRules.OPTION,source:'Armure de Maléfice',attackerId:attacker.id,attackerName:attacker.name,targetId:target.id,damage:amount,round:state.encounter.round,undoCertified:true}});
+  if(!opened){delete target.rpgKentaroArmorPending[reactionId];saveState();return armorBeforeDamage(target,amount,type,ctx)}
+  log('Kentaro · Armure de Maléfice · attaque de '+attacker.name+' suspendue avant dégâts.');
+  return{amount:0,pending:true,reason:'Armure de Maléfice en attente'};
+ };
+ function finishHexArmor(w,r){
+  const p=participant('kentaro'),item=p?.rpgKentaroArmorPending?.[w.reactionId];
+  if(!item||item.applied||item.combatId!==fight.requestId)return true;
+  if(!hexArmorRules.isValid({...w,status:'granted',context:{kind:hexArmorRules.OPTION}},r)){log('Armure de Maléfice · résultat rejeté');return true}
+  const dice=hexArmorRules.interpret(r);
+  const run=()=>{
+   if(item.applied)return true;
+   item.applied=true;item.result=JSON.parse(JSON.stringify(r));if(dice.spent)p.reactionUsed=true;
+   const applied=dice.avoided?{amount:0}:applyDamageDirect(p,item.amount,item.type,{...item.context,hexArmorResuming:true,resuming:true});
+   const enemy=state.encounter.participants.find(x=>x.id===item.attackerId);
+   log('Kentaro · Armure de Maléfice · '+(dice.rolled?'1d6='+dice.die+(dice.mode==='manual'?' (MANUEL)':' (automatique)'):'passée')+' · '+(dice.avoided?'attaque RATÉE, aucune conséquence sur touche':'touche maintenue, '+(applied.amount||0)+' dégâts')+' · réaction '+(dice.spent?'consommée':'conservée'));
+   command('kentaro','enemy:attack-result',{attackerId:item.attackerId,attackerName:item.attackerName,actionName:item.actionName,targetName:p.name,hit:!dice.avoided,miss:dice.avoided,attackTotal:item.attackTotal,rollText:item.rollText,critical:item.critical,damage:dice.avoided?0:applied.amount,damageType:item.type,text:dice.avoided?'🛡 Armure de Maléfice : l’attaque rate':'🛡 Armure de Maléfice : la touche reste effective'});
+   if(!dice.avoided&&p.hp>0&&item.onHitSave&&enemy)requestEnemyHitSave(enemy,p,item.onHitSave);
+   saveState();render();syncOnlineState('kentaro-armor-of-hexes');broadcastTargets();return true;
+  };
+  return globalThis.EncounterJournal?EncounterJournal.run({actor:'Kentaro',title:'Armure de Maléfice',kind:'reaction'},run,item.parentActionId):run();
+ }
+ const oldHexResume=resumeReaction;resumeReaction=(w,r)=>w.context.kind===hexArmorRules?.OPTION?finishHexArmor(w,r):oldHexResume(w,r);
+ const oldHexCritical=criticalPending;criticalPending=()=>oldHexCritical()||armorPending();
+ function restoreHexArmor(){for(const item of Object.values(participant('kentaro')?.rpgKentaroArmorPending||{})){const w=state.encounter.rpgReactions?.[item.reactionId];if(!item.applied&&item.combatId===fight.requestId&&w?.status==='closed')finishHexArmor(w,w.result||{})}}
+ queueMicrotask(restoreHexArmor);setInterval(()=>{if(fight.phase==='fight')restoreHexArmor()},3000);
+
  }
 })();
 
