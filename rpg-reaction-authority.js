@@ -15,7 +15,7 @@
     if(!deps.available(id,{...w,context:{...w.context,targetId:q.targetId||w.context.targetId}})){decline(w,id);if(w.status!=='closed')send(id,'reaction:closed',{...context(w),result:{cancelled:true,consumed:false,reason:'État partagé devenu invalide avant accord'}});return false}
     if(q.targetId)w.context.targetId=q.targetId;w.claim={characterId:id,optionId:q.optionId};if(deps.requestApproval&&!w.context.mjAuthorized){w.status='awaiting-mj';persist();deps.requestApproval(w);return true}w.status='granted';Object.assign(w.context,deps.grant?.(id,w)||{});persist();log('Réaction · accordée à '+id+' · '+q.optionId);send(id,'reaction:grant',{...context(w),optionId:q.optionId});for(const peer of w.eligible)if(peer!==id)send(peer,'reaction:closed',{...context(w),claimedBy:id});return true;
    }
-   if(event.type==='reaction:resolve'){if(w.claim?.characterId!==id||w.claim.optionId!==q.optionId)return false;close(w,{...q,characterId:id});return true}
+   if(event.type==='reaction:resolve'){if(w.claim?.characterId!==id||w.claim.optionId!==q.optionId||deps.validateResolution&&!deps.validateResolution(w,q,id))return false;close(w,{...q,characterId:id});return true}
    return false;
   }
   function decline(w,id){if(!w.declined.includes(id))w.declined.push(id);persist();log('Réaction · '+id+' passe');if(w.eligible.every(id=>w.declined.includes(id)))close(w,{declined:true})}
