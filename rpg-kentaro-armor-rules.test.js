@@ -1,6 +1,11 @@
 /* Validation et transaction de réaction avec un bus local simulé. */
-const {test}=require('node:test'),assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs');
-const path=require('node:path'),ctx={};
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const __dirname=path.dirname(fileURLToPath(import.meta.url)),ctx={};
 for(const file of ['rpg-kentaro-armor-rules.js','rpg-reaction-authority.js'])vm.runInNewContext(fs.readFileSync(path.join(__dirname,file),'utf8'),ctx);
 const R=ctx.RPGKentaroArmorRules;
 const window={status:'granted',context:{kind:R.OPTION}};
