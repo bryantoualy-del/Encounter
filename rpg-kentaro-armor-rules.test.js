@@ -8,6 +8,7 @@ function result(mode,die){return{optionId:R.OPTION,success:die>=4,consumed:true,
 for(const mode of ['automatic','manual'])for(let die=1;die<=6;die++)test(mode+' '+die+' : même arbitrage pour le dé virtuel et physique',()=>{const p=result(mode,die);assert.equal(R.isValid(window,p),true);assert.equal(R.interpret(p).avoided,die>=4);assert.equal(R.interpret(p).spent,true);assert.equal(R.isValid(window,{...p,success:die<4}),false)});
 test('Passer conserve la réaction',()=>{const p={optionId:R.OPTION,success:false,declined:true,consumed:false};assert.equal(R.isValid(window,p),true);assert.equal(R.interpret(p).spent,false)});
 for(const die of [null,undefined,'',0,-1,7,1.5,'4','5.0',NaN])test('d6 invalide : '+String(die),()=>assert.equal(R.isValid(window,result('manual',die)),false));
+test('Passer dans la fenêtre générique conserve la réaction et débloque les dégâts',()=>{assert.equal(R.isValid({...window,status:'closed'},{declined:true}),true);assert.equal(R.interpret({declined:true}).spent,false)});
 test('Aucun résultat accepté avant autorisation MJ',()=>assert.equal(R.isValid({...window,status:'awaiting-mj'},result('manual',5)),false));
 function simulate(mode,die){
  const ledger={},sent=[],resumed=[];let saves=0;
