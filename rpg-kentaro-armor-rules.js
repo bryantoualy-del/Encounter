@@ -3,8 +3,8 @@
  const OPTION='kentaro-armor-of-hexes';
  function isValid(w,q){
   if(w?.context?.kind!==OPTION)return true;
+  if(q?.declined===true||q?.cancelled===true)return q.consumed!==true&&q.hexArmorRoll==null&&q.success!==true&&(!q.optionId||q.optionId===OPTION);
   if(q?.optionId!==OPTION||w.status!=='granted')return false;
-  if(q.declined===true||q.cancelled===true)return q.consumed===false&&q.hexArmorRoll==null&&q.success===false;
   return (q.hexArmorMode==='automatic'||q.hexArmorMode==='manual')&&
    Number.isInteger(q.hexArmorRoll)&&q.hexArmorRoll>=1&&q.hexArmorRoll<=6&&
    q.consumed===true&&q.success===(q.hexArmorRoll>=4)&&
