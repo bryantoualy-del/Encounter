@@ -1,13 +1,13 @@
 {
   "protocolVersion": 1,
-  "branch": "feature/mj-ergonomics-20261008",
+  "branch": "main",
   "repositories": {
     "Encounter": {
       "checkout": "current-workflow-commit"
     },
     "RPG-Connect": {
-      "sha": "6bc804b63ca1c62ed68169415b4fbd68fda154ae",
-      "tree": "325d98e4fe92b33895be96cb4fe643509b4214f4"
+      "sha": "6b06193d09d0f06914dc9b0bd61bf30e659f761d",
+      "tree": "c474ddd74153f68d414f6848751f2e0418ee3113"
     },
     "Kentaro": {
       "sha": "db7e72201a1138cde2722059cb51f9cf34f3b4ff",
@@ -18,8 +18,8 @@
       "tree": "35ae6adabd9070a998ea821422bcbd1f23dd1b8e"
     },
     "Brackmard": {
-      "sha": "2e6dc69ff668a56ecaa0eced42f935f7e50430ec",
-      "tree": "a77777f838f1e1702b84c7c29a71fc48e5aa7fd6"
+      "sha": "7c67b410f1a3649359a84f9c7413d3e3c11fb33c",
+      "tree": "c22d6966759d6cf65dcd70bc7a386c662da42baf"
     },
     "Zephyr": {
       "sha": "909e90f3dda08a0a291cb42a92398523300c183c",
@@ -30,8 +30,8 @@
       "tree": "c83d2e0281d0de9e8f6b77022a72ec0de566c853"
     },
     "Nans": {
-      "sha": "548c6e13b9270145f6c4005b8291b00c7dc0661d",
-      "tree": "468697a3160ba32596eb047a79b0f7be68f68c02"
+      "sha": "273ece5807c9da43f8b030a1ba365be0afeed3aa",
+      "tree": "073e884544de138c880ae34ee95544053c8a955b"
     }
   },
   "encounterCheckout": "current-workflow-commit"

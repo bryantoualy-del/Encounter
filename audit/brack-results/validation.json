@@ -1,0 +1,122 @@
+{
+  "checks": [
+    {
+      "name": "Esquiver consumes one action and creates visible authoritative defense",
+      "pass": true
+    },
+    {
+      "name": "Dodge atomic undo restores action and removes authoritative defense",
+      "pass": true
+    },
+    {
+      "name": "Vigueur naine combines heal, one action, one hit die and Dodge",
+      "pass": true
+    },
+    {
+      "name": "Vigueur atomic undo restores heal, hit die, action and Dodge",
+      "pass": true
+    },
+    {
+      "name": "Aura resolves independently for two enemies in one round",
+      "pass": true
+    },
+    {
+      "name": "Brack and Encounter reload preserve resolved Aura receipts without duplication",
+      "pass": true
+    },
+    {
+      "name": "Offline Aura waits without applying damage",
+      "pass": true
+    },
+    {
+      "name": "Pending Aura reconnect applies once with the original trigger ID",
+      "pass": true
+    },
+    {
+      "name": "Aura atomic undo restores damage and retains the idempotence tombstone",
+      "pass": true
+    },
+    {
+      "name": "First failed save leaves consequences suspended",
+      "pass": true
+    },
+    {
+      "name": "Inflexible choice survives reload, consumes once and final failure deals damage once",
+      "pass": true
+    },
+    {
+      "name": "Inflexible atomic undo restores resource and save consequences together",
+      "pass": true
+    },
+    {
+      "name": "Inflexible decline keeps its resource and applies initial failure once",
+      "pass": true
+    },
+    {
+      "name": "Critical hit preserves existing GWM bonus trigger",
+      "pass": true
+    },
+    {
+      "name": "Official eligible weapon kill grants GWM without revealing exact hostile HP",
+      "pass": true
+    },
+    {
+      "name": "Confirmed GWM bonus survives reconnect",
+      "pass": true
+    },
+    {
+      "name": "Official kill atomic undo restores enemy HP and removes the granted bonus",
+      "pass": true
+    },
+    {
+      "name": "Manual kill button cannot bypass connected authority",
+      "pass": true
+    },
+    {
+      "name": "Opportunity retains maneuver, superiority cost and Sentinel speed-zero",
+      "pass": true
+    },
+    {
+      "name": "Sentinel speed-zero expires at end of triggering enemy turn",
+      "pass": true
+    },
+    {
+      "name": "Native failed enemy melee attack proposes Riposte and survives reload without consuming resources",
+      "pass": true
+    },
+    {
+      "name": "Riposte acceptance reuses native attack and spends reaction plus one die once",
+      "pass": true
+    },
+    {
+      "name": "Sentinel ally-defense offer consumes nothing until the player accepts",
+      "pass": true
+    },
+    {
+      "name": "Declining Sentinel preserves the reaction",
+      "pass": true
+    },
+    {
+      "name": "Native push failed save records explicit 4.5 m consequence",
+      "pass": true
+    },
+    {
+      "name": "Push movement confirmation is persisted without invented coordinates",
+      "pass": true
+    },
+    {
+      "name": "iPad 1180 has no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "iPad 820 has no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "No browser script errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": []
+}

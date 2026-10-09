@@ -4,10 +4,11 @@
  function rules(conditions,ability,requested='normal'){
   const keys=new Set((conditions||[]).map(c=>norm(c.name)));
   const autoFail=['FOR','DEX'].includes(ability)&&['etourdi','paralyse','inconscient','petrifie'].some(k=>keys.has(k));
-  const dis=ability==='DEX'&&keys.has('entrave');
-  return {autoFail,mode:autoFail?'auto-fail':dis?(requested==='adv'?'normal':'dis'):requested};
+  const adv=requested==='adv'||ability==='DEX'&&globalThis.EncounterConditionRolls?.mechanics(conditions).dexSaveAdvantage,dis=requested==='dis'||ability==='DEX'&&keys.has('entrave');
+  return {autoFail,mode:autoFail?'auto-fail':adv===dis?'normal':adv?'adv':'dis'};
  }
  function evasion(characterId,ability,half){return characterId==='rufus'&&ability==='DEX'&&half===true}
  function damage(raw,success,half,context={}){return evasion(context.characterId,context.ability,half)?(success?0:Math.floor(raw/2)):success?(half?Math.floor(raw/2):0):raw}
  globalThis.RPGPlayerSaveAuthority={rules,damage,evasion};
 })();
+

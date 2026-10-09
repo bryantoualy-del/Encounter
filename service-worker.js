@@ -1,4 +1,4 @@
-const CACHE='mj-finishes-20261008-1';
+const CACHE='encounter-brack-20261009-1';
 const ASSETS=[
  './mj-decisions.js?v=1',
  './mj-finishes.css?v=1',
@@ -20,7 +20,7 @@ const ASSETS=[
   './mj-library-model.js?v=1',
   './mj-library-ui.js?v=5',
   './mj-journal-model.js?v=2',
-  './mj-journal.js?v=samoth-effects-1',
+  './mj-journal.js?v=brack-20261009-1',
   './mj-conditions.js?v=1',
   './mj-icons.js?v=3',
   './mj-panels.js?v=mj-finishes-1',
@@ -69,16 +69,17 @@ const ASSETS=[
   './table.css?v=7',
   './table.js?v=2',
   './rpg-connect-mj.css?v=27',
-  './rpg-connect-mj.js?v=mj-finishes-20261008',
-  './rpg-condition-rolls.js?v=kentaro-20261008',
+  './rpg-brack-authority.js?v=brack-20261009-1',
+  './rpg-connect-mj.js?v=brack-20261009-1',
+  './rpg-condition-rolls.js?v=brack-20261009-1',
   './rpg-health-authority.js?v=kentaro-20261008',
   './rpg-summon-authority.js?v=samoth-effects-1',
   './creature-icons.js',
-  './rpg-save-authority.js?v=mj-finishes-1',
-  './rpg-player-save-authority.js?v=2',
+  './rpg-save-authority.js?v=brack-20261009-1',
+  './rpg-player-save-authority.js?v=brack-20261009-1',
   './rpg-connect-icon-registry.js?v=5',
   './rpg-target-names.js?v=1',
-  './app.js?v=mj-finishes-20261008',
+  './app.js?v=brack-20261009-1',
   './builtins.js?v=4.2',
   './assistant-dice-engine.js?v=1',
   './assistant-dice.css?v=1',
@@ -147,4 +148,5 @@ self.addEventListener('fetch',event=>{
     return response;
   })));
 });
+
 

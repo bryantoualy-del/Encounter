@@ -34,9 +34,13 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Isolated WebSocket and browser E2E
         run: npm run test:e2e
+      - name: Brack combat integration E2E
+        run: npm run test:brack:browser
       - name: E2E evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: isolated-rpg-e2e
-          path: audit/results/
+          path: |
+            audit/results/
+            audit/brack-results/

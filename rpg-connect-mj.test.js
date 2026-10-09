@@ -30,6 +30,7 @@ test('ENCOUNTER applique les dégâts autoritaires et synchronise les conséquen
  dom.window.eval(readFileSync(new URL('./rpg-participant-profiles.js',import.meta.url),'utf8'));dom.window.eval(readFileSync(new URL('./rpg-diversion-authority.js',import.meta.url),'utf8'));dom.window.eval(readFileSync(new URL('./rpg-reaction-authority.js',import.meta.url),'utf8'));
  dom.window.eval(readFileSync(new URL('./rpg-combat-effects.js',import.meta.url),'utf8'));dom.window.eval(readFileSync(new URL('./rpg-samoth-authority.js',import.meta.url),'utf8'));
  dom.window.eval(readFileSync(new URL('./rpg-zephyr-authority.js',import.meta.url),'utf8'));
+ dom.window.eval(readFileSync(new URL('./rpg-brack-authority.js',import.meta.url),'utf8'));
  dom.window.eval(readFileSync(new URL('./rpg-nans-authority.js',import.meta.url),'utf8'));
  dom.window.eval(readFileSync(new URL('./rpg-kentaro-authority.js',import.meta.url),'utf8'));
  dom.window.eval(readFileSync(new URL('./rpg-connect-mj.js',import.meta.url),'utf8'));
@@ -153,4 +154,5 @@ test('ENCOUNTER applique les dégâts autoritaires et synchronise les conséquen
  }
 });
 test.after(async()=>{for(const ws of wss.clients)ws.terminate();await new Promise(r=>server.close(r))});
+
 

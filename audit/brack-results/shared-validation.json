@@ -1,0 +1,470 @@
+{
+  "checks": [
+    {
+      "name": "both online",
+      "pass": true
+    },
+    {
+      "name": "Kentaro initiative visible and topmost",
+      "pass": true
+    },
+    {
+      "name": "Brackmard initiative visible and topmost",
+      "pass": true
+    },
+    {
+      "name": "initiative:rolled → MJ validation → FIGHT",
+      "pass": true
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true
+    },
+    {
+      "name": "Brack attack counter uses effective damage after fire resistance",
+      "pass": true
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true
+    },
+    {
+      "name": "Kentaro #solinar → MJ → correlated damage",
+      "pass": true
+    },
+    {
+      "name": "Kentaro #selhane → MJ → correlated damage",
+      "pass": true
+    },
+    {
+      "name": "Kentaro native save → MJ manual → full resolution",
+      "pass": true
+    },
+    {
+      "name": "Kentaro turn damage reflects effective save damage",
+      "pass": true
+    },
+    {
+      "name": "Kentaro #thirdSun → MJ → correlated damage",
+      "pass": true
+    },
+    {
+      "name": "Kentaro bonus consumed",
+      "pass": true
+    },
+    {
+      "name": "same attackId new eventId applied once",
+      "pass": true
+    },
+    {
+      "name": "Brack attack → MJ → correlated damage",
+      "pass": true
+    },
+    {
+      "name": "Brackmard native save → MJ manual → full resolution",
+      "pass": true
+    },
+    {
+      "name": "Brackmard turn damage reflects effective save damage",
+      "pass": true
+    },
+    {
+      "name": "Brackmard native save → MJ manual → full resolution",
+      "pass": true
+    },
+    {
+      "name": "Brackmard turn damage reflects effective save damage",
+      "pass": true
+    },
+    {
+      "name": "Kentaro native save → MJ manual → full resolution",
+      "pass": true
+    },
+    {
+      "name": "Kentaro turn damage reflects effective save damage",
+      "pass": true
+    },
+    {
+      "name": "Samoth native save → MJ manual → full resolution",
+      "pass": true
+    },
+    {
+      "name": "Samoth turn damage reflects effective save damage",
+      "pass": true
+    },
+    {
+      "name": "Zephyr native save → MJ manual → full resolution",
+      "pass": true
+    },
+    {
+      "name": "Zephyr turn damage reflects effective save damage",
+      "pass": true
+    },
+    {
+      "name": "Rufus native save → MJ manual → full resolution",
+      "pass": true
+    },
+    {
+      "name": "Rufus turn damage reflects effective save damage",
+      "pass": true
+    },
+    {
+      "name": "Rufus object concentration normalized to actual spell name",
+      "pass": true
+    },
+    {
+      "name": "Nans native save → MJ manual → full resolution",
+      "pass": true
+    },
+    {
+      "name": "Nans turn damage reflects effective save damage",
+      "pass": true
+    },
+    {
+      "name": "Nans native horn temptation resolves before later turns and MJ panels",
+      "pass": true
+    },
+    {
+      "name": "Nans native horn movement explicitly confirmed at the table",
+      "pass": true
+    },
+    {
+      "name": "Samoth multi selector holds three explicit targets",
+      "pass": true
+    },
+    {
+      "name": "multi target keeps creature vignette",
+      "pass": true
+    },
+    {
+      "name": "Samoth native save → MJ manual → full resolution",
+      "pass": true
+    },
+    {
+      "name": "Samoth turn damage reflects effective save damage",
+      "pass": true
+    },
+    {
+      "name": "target reaching zero does not close the logical multi action",
+      "pass": true
+    },
+    {
+      "name": "multi action survives Companion reconnect and STATE_SYNC",
+      "pass": true
+    },
+    {
+      "name": "Samoth native save → MJ manual → full resolution",
+      "pass": true
+    },
+    {
+      "name": "Samoth turn damage reflects effective save damage",
+      "pass": true
+    },
+    {
+      "name": "Samoth native save → MJ manual → full resolution",
+      "pass": true
+    },
+    {
+      "name": "Samoth turn damage reflects effective save damage",
+      "pass": true
+    },
+    {
+      "name": "three independent JdS resolved",
+      "pass": true
+    },
+    {
+      "name": "one shared raw damage roll reused for all targets",
+      "pass": true
+    },
+    {
+      "name": "per-target defenses and save scaling applied",
+      "pass": true
+    },
+    {
+      "name": "multi action consumes one action economy only",
+      "pass": true
+    },
+    {
+      "name": "Companion emitted one multi save intention",
+      "pass": true
+    },
+    {
+      "name": "same action/save IDs with a new eventId are deduplicated",
+      "pass": true
+    },
+    {
+      "name": "certified multi-save undo restores all targets and native resources exactly once",
+      "pass": true
+    },
+    {
+      "name": "turn can advance after a multi-target kill",
+      "pass": true
+    },
+    {
+      "name": "five-round post-multi combat simulation stays live",
+      "pass": true
+    },
+    {
+      "name": "Zephyr native save → MJ manual → full resolution",
+      "pass": true
+    },
+    {
+      "name": "Zephyr turn damage reflects effective save damage",
+      "pass": true
+    },
+    {
+      "name": "Zephyr native save → MJ manual → full resolution",
+      "pass": true
+    },
+    {
+      "name": "Zephyr turn damage reflects effective save damage",
+      "pass": true
+    },
+    {
+      "name": "Zephyr native smite save keeps attackId",
+      "pass": true
+    },
+    {
+      "name": "Nans native save → MJ manual → full resolution",
+      "pass": true
+    },
+    {
+      "name": "Nans turn damage reflects effective save damage",
+      "pass": true
+    },
+    {
+      "name": "automatic JdS composite R/I/V absorbs temp HP first",
+      "pass": true
+    },
+    {
+      "name": "two conditions visible in Encounter quick view",
+      "pass": true
+    },
+    {
+      "name": "stale Companion state cannot restore old HP",
+      "pass": true
+    },
+    {
+      "name": "stale condition command cannot restore removed state",
+      "pass": true
+    },
+    {
+      "name": "POINTS DE VIE temp HP UI",
+      "pass": true
+    },
+    {
+      "name": "local concentration reaches Encounter",
+      "pass": true
+    },
+    {
+      "name": "local concentration removal reaches Encounter",
+      "pass": true
+    },
+    {
+      "name": "Kentaro semantic damage/heal ribbons",
+      "pass": true
+    },
+    {
+      "name": "Kentaro short rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Kentaro cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Kentaro long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Kentaro cancelled long rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Brackmard semantic damage/heal ribbons",
+      "pass": true
+    },
+    {
+      "name": "Brackmard short rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Brackmard cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Brackmard long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Brackmard cancelled long rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Samoth semantic damage/heal ribbons",
+      "pass": true
+    },
+    {
+      "name": "Samoth short rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Samoth cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Samoth long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Samoth cancelled long rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Zephyr semantic damage/heal ribbons",
+      "pass": true
+    },
+    {
+      "name": "Zephyr short rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Zephyr cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Zephyr long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Zephyr cancelled long rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Rufus semantic damage/heal ribbons",
+      "pass": true
+    },
+    {
+      "name": "Rufus short rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Rufus cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Rufus long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Rufus cancelled long rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Nans semantic damage/heal ribbons",
+      "pass": true
+    },
+    {
+      "name": "Nans short rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Nans cancelled short rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Nans long rest modal topmost",
+      "pass": true
+    },
+    {
+      "name": "Nans cancelled long rest preserves HP",
+      "pass": true
+    },
+    {
+      "name": "Kentaro header 390px fits viewport",
+      "pass": true
+    },
+    {
+      "name": "Kentaro header 768px fits viewport",
+      "pass": true
+    },
+    {
+      "name": "Kentaro single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Brackmard single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Samoth single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Zephyr single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Rufus single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "Nans single RPG Connect HUD",
+      "pass": true
+    },
+    {
+      "name": "incompatible application gets explicit persistent UI message",
+      "pass": true
+    },
+    {
+      "name": "synaptic penalty only on explicit concentration save in Chromium",
+      "pass": true
+    },
+    {
+      "name": "manual saves use restrained DEX disadvantage and stunned FOR automatic failure",
+      "pass": true
+    },
+    {
+      "name": "local Encounter ability save respects target DEX disadvantage",
+      "pass": true
+    },
+    {
+      "name": "enemy attack applies synaptic penalty in Chromium",
+      "pass": true
+    },
+    {
+      "name": "finish fight preserves participants and stops combat",
+      "pass": true
+    },
+    {
+      "name": "ended phase and conditions survive reload",
+      "pass": true
+    },
+    {
+      "name": "Kentaro initiative survives secondary faults and maximum-z HUD",
+      "pass": true
+    },
+    {
+      "name": "Brackmard initiative survives secondary faults and maximum-z HUD",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "failure": null
+}
