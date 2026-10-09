@@ -1,12 +1,13 @@
-const CACHE='encounter-brack-20261009-1';
+const CACHE='encounter-rufus-20261009-1';
 const ASSETS=[
+ './rpg-rufus-authority.js?v=rufus-20261009-1',
  './mj-decisions.js?v=1',
  './mj-finishes.css?v=1',
  './mj-portraits.js?v=1',
  './rpg-kentaro-authority.js?v=mj-finishes-1',
  './rpg-zephyr-authority.js?v=mj-finishes-1',
   './rpg-samoth-perception.js?v=1',
-  './rpg-combat-effects.js?v=kentaro-20261008',
+  './rpg-combat-effects.js?v=rufus-20261009-1',
   './rpg-samoth-authority.js?v=mj-finishes-1',
   './mj-connected-feedback.js?v=4',
   './mj-spell-slots.js?v=1',
@@ -20,7 +21,7 @@ const ASSETS=[
   './mj-library-model.js?v=1',
   './mj-library-ui.js?v=5',
   './mj-journal-model.js?v=2',
-  './mj-journal.js?v=brack-20261009-1',
+  './mj-journal.js?v=rufus-20261009-1',
   './mj-conditions.js?v=1',
   './mj-icons.js?v=3',
   './mj-panels.js?v=mj-finishes-1',
@@ -70,7 +71,7 @@ const ASSETS=[
   './table.js?v=2',
   './rpg-connect-mj.css?v=27',
   './rpg-brack-authority.js?v=brack-20261009-1',
-  './rpg-connect-mj.js?v=brack-20261009-1',
+  './rpg-connect-mj.js?v=rufus-20261009-1',
   './rpg-condition-rolls.js?v=brack-20261009-1',
   './rpg-health-authority.js?v=kentaro-20261008',
   './rpg-summon-authority.js?v=samoth-effects-1',
@@ -79,7 +80,7 @@ const ASSETS=[
   './rpg-player-save-authority.js?v=brack-20261009-1',
   './rpg-connect-icon-registry.js?v=5',
   './rpg-target-names.js?v=1',
-  './app.js?v=brack-20261009-1',
+  './app.js?v=rufus-20261009-1',
   './builtins.js?v=4.2',
   './assistant-dice-engine.js?v=1',
   './assistant-dice.css?v=1',
@@ -148,5 +149,6 @@ self.addEventListener('fetch',event=>{
     return response;
   })));
 });
+
 
 

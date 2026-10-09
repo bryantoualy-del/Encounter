@@ -6,8 +6,8 @@
       "checkout": "current-workflow-commit"
     },
     "RPG-Connect": {
-      "sha": "6b06193d09d0f06914dc9b0bd61bf30e659f761d",
-      "tree": "c474ddd74153f68d414f6848751f2e0418ee3113"
+      "sha": "1c632029528b286627873d98615f4bf7aabfaabd",
+      "tree": "ab5a2d3ba7730aa5b5fffc9a71f29240c9bb94c9"
     },
     "Kentaro": {
       "sha": "db7e72201a1138cde2722059cb51f9cf34f3b4ff",
@@ -26,8 +26,8 @@
       "tree": "789579de6e6a1b4982b29fe3655725c31ea0df8b"
     },
     "Rufus": {
-      "sha": "c0481435c46da0b8e3e9580a4cb65f8501a89616",
-      "tree": "c83d2e0281d0de9e8f6b77022a72ec0de566c853"
+      "sha": "9a99fcf25af39b7d9384d19f4542fb34655be6ec",
+      "tree": "48d7f4b2b62da02504b76f98e4f46f4c1c12d7f7"
     },
     "Nans": {
       "sha": "273ece5807c9da43f8b030a1ba365be0afeed3aa",
@@ -36,3 +36,4 @@
   },
   "encounterCheckout": "current-workflow-commit"
 }
+
