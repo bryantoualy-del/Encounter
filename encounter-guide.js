@@ -36,13 +36,21 @@
  const $=s=>document.querySelector(s);let root,card,ring,previous,original,opened=null,health=false,active=false,index=0,raf=0;
  function snapshot(){let selectors=['#prepView','#combatView','#quickBar','#btnModePrep','#btnModeCombat','#libraryDrawer','#journalDrawer','#drawerScrim','#mjSidePanel','.detail-panel'];return {classes:selectors.map(s=>[s,$(s)?.className]),aria:['#libraryDrawer','#journalDrawer'].map(s=>[s,$(s)?.getAttribute('aria-hidden')]),body:document.body.className,detail:typeof tableDetailOpen!=='undefined'?tableDetailOpen:null,x:window.scrollX,y:window.scrollY}}
  function restore(){if(!original)return;for(const [s,v] of original.classes){let el=$(s);if(el&&v!=null)el.className=v}for(const [s,v] of original.aria){let el=$(s);if(el&&v!=null)el.setAttribute('aria-hidden',v)}document.body.className=original.body;if(original.detail!==null)tableDetailOpen=original.detail;window.scrollTo(original.x,original.y);original=null}
- function closeOpened(){if(opened?.open)opened.close();opened=null;if(health){$('#mjSidePanel [data-panel-close]')?.click();health=false}}
+ // A modal makes every element outside its subtree inert, including a popover
+ // above it in the top layer. Keep the tour within the open dialog's DOM tree.
+ function dock(parent,show=true){if(root?.matches(':popover-open'))root.hidePopover();parent.append(root);if(show)root.showPopover()}
+ function closeOpened(){if(opened?.open){dock(document.body);opened.close()}opened=null;if(health){$('#mjSidePanel [data-panel-close]')?.click();health=false}}
  function preview(opt={}){
   const wanted=opt.dialog||null;if(opened?.id!==wanted)closeOpened();
   for(const s of ['#libraryDrawer','#journalDrawer','#drawerScrim'])$(s)?.classList.remove('open');for(const s of ['#libraryDrawer','#journalDrawer'])$(s)?.setAttribute('aria-hidden','true');
   if(opt.mode){let prep=opt.mode==='prep';$('#prepView')?.classList.toggle('hidden',!prep);$('#combatView')?.classList.toggle('hidden',prep);$('#btnModePrep')?.classList.toggle('active',prep);$('#btnModeCombat')?.classList.toggle('active',!prep);document.body.classList.toggle('combat-mode',!prep);if(prep&&typeof renderPrep==='function')renderPrep();if(!prep&&typeof renderCombat==='function'){renderCombat();if(typeof renderDetail==='function')renderDetail()}}
   if(opt.drawer){if(opt.drawer==='library'&&typeof renderLibrary==='function')renderLibrary();let d=$('#'+opt.drawer+'Drawer');d?.classList.add('open');d?.setAttribute('aria-hidden','false');$('#drawerScrim')?.classList.add('open')}
-  if(wanted&&!opened){let d=$('#'+wanted);if(d&&!d.open){if(wanted==='monsterEditor'&&typeof openMonsterEditor==='function')openMonsterEditor();else d.showModal()}opened=d?.open?d:null;if(opened&&root.matches(':popover-open')){root.hidePopover();root.showPopover()}}
+  if(wanted&&!opened){let d=$('#'+wanted);if(d){
+   dock(d,false);
+   try{if(!d.open){if(wanted==='monsterEditor'&&typeof openMonsterEditor==='function')openMonsterEditor();else d.showModal()}}catch(error){console.warn('Guide : fenêtre indisponible',error)}
+   opened=d.open?d:null;
+   if(opened)root.showPopover();else dock(document.body);
+  }}
   if(opt.health&&!health){$('#mjOpenHealth')?.click();health=!$('#mjSidePanel')?.classList.contains('hidden')}
  }
  function position(){if(!active)return;let t=$(steps[index][0]);if(!t)return;let b=t.getBoundingClientRect(),vw=innerWidth,vh=innerHeight;ring.style.top=Math.max(2,b.top-5)+'px';ring.style.left=Math.max(2,b.left-5)+'px';ring.style.width=Math.max(4,Math.min(vw-b.left-3,b.width+10))+'px';ring.style.height=Math.max(4,Math.min(vh-b.top-3,b.height+10))+'px';if(vw>700){card.style.top=Math.min(Math.max(10,b.top),Math.max(10,vh-card.offsetHeight-10))+'px';let left=b.right>vw-350;card.style.left=left?'14px':'';card.style.right=left?'auto':'14px'}}

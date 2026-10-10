@@ -11,7 +11,7 @@ const elements=new Map();let created=0;
 class Node{
  constructor(tag='div'){this.tagName=tag.toUpperCase();this.style={};this.className='';this.hidden=false;this.open=false;this.children=[];this.attributes={};this.textContent='';this.dataset={};this.focused=false;this.offsetHeight=180;this.classList={add:x=>this._set(x,true),remove:x=>this._set(x,false),toggle:(x,v)=>this._set(x,v),contains:x=>this.className.split(' ').includes(x)};}
  _set(x,v){this.className=this.className.split(' ').filter(k=>k&&k!==x).concat(v?[x]:[]).join(' ')}
- setAttribute(k,v){this.attributes[k]=v}getAttribute(k){return this.attributes[k]??null}append(...a){this.children.push(...a);for(const c of a)c.parent=this}
+ setAttribute(k,v){this.attributes[k]=v}getAttribute(k){return this.attributes[k]??null}append(...a){for(const c of a){if(c.parent)c.parent.children=c.parent.children.filter(x=>x!==c);c.parent=this;this.children.push(c)}}
  addEventListener(k,fn){this['on'+k]=fn}querySelector(s){if(!this._children)this._children={};return this._children[s]??=new Node('button')}
  closest(s){if(s!=='dialog')return null;return this.ownerDialog||null}
  scrollIntoView(){}getBoundingClientRect(){return {top:100,left:50,right:450,width:400,height:80}}
@@ -24,10 +24,18 @@ for(const s of steps.filter(x=>x.startsWith('#rpgMj')))elements.get(s).ownerDial
 elements.get('#mjSidePanel').className='hidden';elements.get('#prepView').className='prep-view';elements.get('#combatView').className='combat-view hidden';
 elements.get('#mjOpenHealth').onclick=()=>elements.get('#mjSidePanel').classList.remove('hidden');elements.get('#mjSidePanel [data-panel-close]').onclick=()=>elements.get('#mjSidePanel').classList.add('hidden');
 let button;const host=new Node();host.append=x=>{button=x;created++};const body=new Node();body.className='original';let tour;
-body.append=x=>{tour=x};const doc={body,head:new Node(),activeElement:new Node(),createElement:tag=>new Node(tag),getElementById:id=>id==='btnEncounterGuide'?null:elements.get('#'+id),querySelector:s=>s==='.top-actions'?host:s==='dialog[open]'?null:elements.get(s)||null,addEventListener(){},removeEventListener(){}};
+body.append=x=>{tour=x;Node.prototype.append.call(body,x)};const doc={body,head:new Node(),activeElement:new Node(),createElement:tag=>new Node(tag),getElementById:id=>id==='btnEncounterGuide'?null:elements.get('#'+id),querySelector:s=>s==='.top-actions'?host:s==='dialog[open]'?null:elements.get(s)||null,addEventListener(){},removeEventListener(){}};
 const win={scrollX:7,scrollY:11,scrollTo(x,y){this.scrollX=x;this.scrollY=y},addEventListener(){},removeEventListener(){}};
 const ctx={document:doc,window:win,HTMLElement:Node,innerWidth:1200,innerHeight:900,requestAnimationFrame:fn=>{fn();return 1},cancelAnimationFrame(){},renderPrep(){},renderLibrary(){},renderCombat(){},renderDetail(){},openMonsterEditor(){elements.get('#monsterEditor').showModal()},tableDetailOpen:false};
 vm.runInNewContext(source,ctx);assert.equal(created,1);button.onclick();assert.equal(win.EncounterGuide.active,true);
-for(let n=1;n<19;n++){assert.equal(win.EncounterGuide.step,n);tour.children[1].querySelector('[data-next]').onclick()}
-assert.equal(win.EncounterGuide.step,19);tour.children[1].querySelector('[data-next]').onclick();assert.equal(win.EncounterGuide.active,false);assert.equal(elements.get('#prepView').className,'prep-view');assert.equal(elements.get('#combatView').className,'combat-view hidden');assert.equal(body.className,'original');assert.equal(win.scrollX,7);assert.equal(win.scrollY,11);assert.equal(elements.get('#monsterEditor').open,false);assert.equal(elements.get('#rpgMjDialog').open,false);
+for(let n=1;n<19;n++){
+ assert.equal(win.EncounterGuide.step,n);
+ if(elements.get('#monsterEditor').open)assert.equal(tour.parent,elements.get('#monsterEditor'),'tour must be inside the real monster modal');
+ else if(elements.get('#rpgMjDialog').open)assert.equal(tour.parent,elements.get('#rpgMjDialog'),'tour must be inside the real RPG modal');
+ else assert.equal(tour.parent,body);
+ tour.children[1].querySelector('[data-next]').onclick();
+}
+assert.equal(win.EncounterGuide.step,19);tour.children[1].querySelector('[data-next]').onclick();assert.equal(win.EncounterGuide.active,false);assert.equal(tour.parent,body);assert.equal(elements.get('#prepView').className,'prep-view');assert.equal(elements.get('#combatView').className,'combat-view hidden');assert.equal(body.className,'original');assert.equal(win.scrollX,7);assert.equal(win.scrollY,11);assert.equal(elements.get('#monsterEditor').open,false);assert.equal(elements.get('#rpgMjDialog').open,false);
+button.onclick();for(let n=1;n<6;n++)tour.children[1].querySelector('[data-next]').onclick();assert.equal(win.EncounterGuide.step,6);assert.equal(tour.parent,elements.get('#monsterEditor'));win.EncounterGuide.stop();assert.equal(elements.get('#monsterEditor').open,false);assert.equal(tour.parent,body);assert.equal(body.className,'original');
+button.onclick();for(let n=1;n<9;n++)tour.children[1].querySelector('[data-next]').onclick();assert.equal(tour.parent,elements.get('#rpgMjDialog'));tour.children[1].querySelector('[data-back]').onclick();assert.equal(tour.parent,elements.get('#monsterEditor'));assert.equal(elements.get('#rpgMjDialog').open,false);win.EncounterGuide.stop();
 console.log('OK : 19 étapes sur DOM réel, aucune commande, panneaux et vue restaurés.');

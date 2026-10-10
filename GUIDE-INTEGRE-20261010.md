@@ -7,3 +7,5 @@ La visite n’enregistre aucun monstre, ne change aucun PV/tour/round, ne crée 
 Les boutons de progression, Précédent, Suivant et Quitter, ainsi que les flèches et Échap sont disponibles. Sur iPad, le panneau se place en bas ; sur bureau, sur le côté. L’overlay utilise l’API Popover du navigateur. Une fenêtre de décision déjà ouverte bloque le lancement de la visite pour que le MJ puisse d’abord la traiter.
 
 Aucun aperçu fictif dans une iframe n’est utilisé. Les anciennes pages de démo sont retirées de cette version. Le PDF « Fonctionnement général » se trouve dans docs/ de l’archive.
+
+Correctif éditeur de fiche : le panneau de visite est placé dans le vrai dialogue modal pendant son ouverture, puis remis dans la page à la fermeture. Ceci conserve les commandes Précédent / Suivant / Quitter actives lors de la présentation du profil et de RPG Connect.
