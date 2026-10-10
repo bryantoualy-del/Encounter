@@ -19,7 +19,7 @@ test('wolf bite carries a hit-gated STR save; neither bite nor nonspells can dec
 });
 test('library editor retains spell metadata and on-hit saves when normalizing',()=>{
  const source=read('app.js');const start=source.indexOf('function abilityAttackMode('),end=source.indexOf('function normalizeResource(',start);assert.ok(start>0&&end>start);
- const sandbox={ABILITIES:['FOR','DEX','CON','INT','SAG','CHA'],numOrNull:v=>v===''||v==null?null:Number(v),uid:()=> 'id'};vm.runInNewContext(source.slice(start,end),sandbox);
+ const sandbox={ABILITIES:['FOR','DEX','CON','INT','SAG','CHA'],numOrNull:v=>v===''||v==null?null:Number(v),uid:()=> 'id',EncounterTypedDamage:{forAbility:()=>({parts:[],errors:[]})}};vm.runInNewContext(source.slice(start,end),sandbox);
  const spell=sandbox.normalizeAbility({name:'Boule de feu',isSpell:true,spellLevel:3,kind:'save',save:'DEX',dc:14});assert.equal(spell.isSpell,true);assert.equal(spell.spellLevel,3);
  const cantrip=sandbox.normalizeAbility({name:'Flamme sacrée',isSpell:true,spellLevel:0});assert.equal(cantrip.spellLevel,0);
  const wolf=sandbox.normalizeAbility({name:'Morsure',onHitSaveAbility:'FOR',onHitSaveDc:13,onHitSaveCondition:'À terre'});assert.equal(wolf.onHitSave.conditionOnFailure,'À terre');
