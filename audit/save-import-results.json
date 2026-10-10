@@ -1,0 +1,18 @@
+{
+  "checks": [
+    "Bouton sauvegarder et dialogue HTML",
+    "Sauvegarde présente après rechargement",
+    "Sélection réelle de fichier JSON ancien avec BOM et trait textuel",
+    "Bouton exporter inclut rencontres sauvegardées et PV en cours",
+    "Session distincte vide avant restauration",
+    "Import complet rétablit PV, round, bibliothèque et sauvegardes",
+    "Ancien export sans marqueur app accepté",
+    "Quota de copie de récupération ne bloque pas écriture principale",
+    "Backups trop volumineux réduits sans supprimer la dernière copie",
+    "Backup additionnel défaillant ne fait pas échouer partie déjà écrite",
+    "Sauvegarde du combat actif avec PV et round",
+    "Combat actif et sauvegarde conservés après rechargement",
+    "Aucune exception JavaScript"
+  ],
+  "errors": []
+}

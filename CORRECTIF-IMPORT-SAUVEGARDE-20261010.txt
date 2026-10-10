@@ -1,0 +1,20 @@
+ENCOUNTER — Correctif import et sauvegarde — 10 octobre 2026
+
+Remplacer le contenu du déploiement Cloudflare par le contenu complet de ce ZIP, index.html à la racine, puis recharger Encounter. Fermer et rouvrir les autres onglets Encounter pour éviter une ancienne version encore ouverte.
+Ne pas effacer les données du navigateur : les sauvegardes locales y sont conservées.
+
+Correctifs :
+- Le bouton Exporter JSON appelle la fonction complète actuelle et inclut les rencontres sauvegardées et la corbeille.
+- Les anciens exports structurés avec monsters n'exigent plus le marqueur app ENCOUNTER.
+- Les anciens backups contenant state et les rencontres contenant models peuvent être restaurés.
+- Les fichiers avec BOM sont lisibles ; les capacités textuelles sont conservées comme descriptions à résoudre par le MJ.
+- La saisie du nom de sauvegarde utilise un dialogue HTML avec erreur visible.
+- L'historique de backups est réduit si le quota impose moins de 12 copies, en conservant les copies les plus récentes.
+- Une copie additionnelle impossible ne fait plus échouer une écriture principale réussie. Une écriture principale impossible reste signalée comme telle.
+- Révision du cache de l'application.
+
+Validation exécutée :
+14 tests unitaires de persistance réussis ; 13 contrôles Chromium réussis : sélection réelle d'un JSON ancien, sauvegarde, téléchargement export, restauration dans une session vide, PV/round/bibliothèque/rencontres, quotas simulés, combat actif, rechargement, absence d'exception JavaScript.
+Script : audit/save-import-browser.mjs ; résultats : audit/save-import-results.json.
+
+Validation supplémentaire : le fichier exact fourni par le MJ passe 9 contrôles Chromium (import, normalisation complète, sauvegarde, rechargement, 20 backups successifs, export, réimport, participants/round et absence d’exception JavaScript). Le JSON et son contenu ne sont pas inclus dans ce ZIP ni dans le dépôt. Le navigateur du MJ et son déploiement Cloudflare restent à vérifier.

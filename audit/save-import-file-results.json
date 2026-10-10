@@ -1,0 +1,14 @@
+{
+  "checks": [
+    "Fichier fourni importé par le sélecteur réel",
+    "Toutes les fiches correspondent à leur normalisation complète",
+    "Sauvegarde des fiches et de la préparation",
+    "Rechargement de la préparation conservé",
+    "Historique saturé réduit et backups continuent",
+    "Export contient la préparation et ses sauvegardes",
+    "Réimport identique de toutes les fiches",
+    "Réimport conserve les participants et le round",
+    "Aucune exception JavaScript"
+  ],
+  "errors": []
+}
