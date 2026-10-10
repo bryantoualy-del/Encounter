@@ -1,0 +1,15 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const source=fs.readFileSync(__dirname+'/../app.js','utf8'),segment=(start,end)=>source.slice(source.indexOf(start),source.indexOf(end,source.indexOf(start)));
+const ctx={Math:Object.create(Math),globalThis:null,ABILITIES:['FOR','DEX','CON','INT','SAG','CHA'],uid:()=> 'id',abilityAttackMode:()=>null,numOrNull:v=>v===''||v==null?null:Number(v),checkPhaseTransition:()=>{},effectiveDamageImmunities:()=>[],effectiveDamageResistances:p=>p.resistances||[],effectiveDamageVulnerabilities:()=>[],normKey:v=>String(v||'').toLowerCase()};ctx.Math.random=()=>0.25;ctx.globalThis=ctx;
+vm.runInNewContext(fs.readFileSync(__dirname+'/../encounter-typed-damage.js','utf8'),ctx);
+vm.runInNewContext(segment('function normalizeAbility(', 'function normalizeResource(')+segment('function rollDie(', 'function setMode(')+segment('function resolveDamageAmount(', 'function applyDamageMany(')+segment('function rollDamageCrit(', 'function applyHealDirect('),ctx);
+const a=ctx.normalizeAbility({name:'Épée enflammée',kind:'attack',bonus:6,damagePartsText:'1d8+3 | tranchants\n1d6 | feu'});
+assert.equal(a.damageParts.length,2);assert.equal(a.damageParts[1].type,'feu');
+const rolled=ctx.rollAbilityDamage(a);assert.equal(rolled.total,8);assert.equal(rolled.components[0].amount,6);assert.equal(rolled.components[1].amount,2);
+const target={hp:30,tempHp:0,resistances:['feu']},result=ctx.applyDamageDirect(target,rolled.total,'tranchants',{components:rolled.components});
+assert.equal(result.amount,7);assert.equal(target.hp,23);assert.equal(result.components[0].effective,6);assert.equal(result.components[1].effective,1);
+const crit=ctx.rollAbilityDamage(a,true);assert.equal(crit.components[0].amount,9);assert.equal(crit.components[1].amount,4);
+const half=ctx.rollAbilityDamage(a,false,true);assert.equal(half.total,4);assert.equal(half.components[0].amount,3);assert.equal(half.components[1].amount,1);
+const reduced={hp:30,tempHp:0,resistances:['feu']},reaction=ctx.applyDamageDirect(reduced,4,'tranchants',{components:rolled.components});assert.equal(reaction.components.reduce((n,p)=>n+p.raw,0),4);assert.equal(reaction.amount,3);
+const imported=ctx.normalizeAbility({name:'Souffle',kind:'save',damageParts:[{formula:'2d6',type:'froid'},{formula:'1d6',type:'feu'}]});assert.equal(imported.damageParts.length,2);assert.match(imported.damagePartsText,/froid/);
+console.log('OK : saisie, sauvegarde, jets, critique, moitié et résistance par composante.');

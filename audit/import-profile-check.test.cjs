@@ -3,6 +3,7 @@ class El{constructor(){this.children=[];this.nodes=new Map();this.open=false;thi
  append(...nodes){this.children.push(...nodes)}replaceChildren(){this.children=[]}setAttribute(k,v){this.attributes[k]=v}addEventListener(k,f){this['on'+k]=f}querySelector(k){if(!this.nodes.has(k))this.nodes.set(k,new El());return this.nodes.get(k)}showModal(){this.open=true}close(){this.open=false}}
 const body=new El(),head=new El(),tasks=[],memory=new Map();let saved=0;
 const ctx={document:{body,head,createElement:()=>new El()},console,setTimeout:f=>tasks.push(f),sessionStorage:{getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v),removeItem:k=>memory.delete(k)},EncounterPersistence:{migrate:x=>({data:x})},importData:()=>{saved++}};ctx.window=ctx;
+vm.runInNewContext(fs.readFileSync(__dirname+'/../encounter-typed-damage.js','utf8'),ctx);
 vm.runInNewContext(fs.readFileSync(__dirname+'/../monster-assistant.js','utf8'),ctx);
 vm.runInNewContext(fs.readFileSync(__dirname+'/../mj-import-compatibility.js','utf8'),ctx);
 const enemy={name:'Loup',ac:13,hp:27,actions:[{name:'Morsure',kind:'attack',bonus:5,damage:'2d6+3',damageType:'perforants'}]};

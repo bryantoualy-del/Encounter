@@ -27,7 +27,16 @@ Une fiche classée **Personnage**, **Compagnon** ou **PNJ allié** est importée
 
 ## Dégâts de plusieurs types
 
-L’éditeur d’adversaire possède une formule de dégâts et **un seul type** par capacité. Par exemple, `1d8+3` tranchants fonctionne. Une attaque `1d8+3` tranchants **plus** `1d6` feu ne peut pas encore être résolue automatiquement avec deux types dans cette fiche : écrire « tranchants et feu » dans le champ Type ne répartit pas les dégâts. Le verdict de conformité affiche NON pour ce mélange explicite. Résoudre chaque composante séparément à la table et appliquer chaque type une fois dans le panneau de points de vie. En revanche, les attaques connectées émises par les applications Companion disposent déjà de composantes typées distinctes ; Encounter y applique les résistances et immunités pour chacune.
+Dans chaque capacité, le champ **Dégâts par type** accepte une ligne par composante, au format `formule | type`. Exemple :
+
+```text
+1d8+3 | tranchants
+1d6 | feu
+```
+
+Ce champ remplace les deux anciens champs Dégâts et Type pour cette capacité. Encounter lance les deux formules lors d’une même attaque, applique résistances, immunités et vulnérabilités par type, puis met à jour les PV de la cible, y compris si c’est un compagnon connecté. Les critiques doublent les dés de chaque ligne ; un JdS avec demi-dégâts réduit chaque composante avant les défenses. Le résultat et ses types figurent dans le journal de combat. Les anciens adversaires avec un seul type continuent de fonctionner.
+
+Une ligne incomplète ou un type inconnu donne un verdict NON et empêche d’exécuter cette capacité tant qu’elle n’est pas corrigée. Écrire « tranchants et feu » dans le seul champ Type historique ne répartit toujours pas les dégâts. Les événements d’attaque émis par les applications Companion utilisent leurs propres composantes typées, également traitées séparément par Encounter.
 
 L’essai fictif vérifie les champs et calculs simulés, sans toucher à la partie ni communiquer avec les joueurs. Il ne prouve pas les déclencheurs complexes ni la reprise réseau.
 

@@ -1,13 +1,13 @@
-const CACHE='encounter-mixed-damage-check-20261010-1';
+const CACHE='encounter-typed-damage-20261010-1';
 const ASSETS=[
  './rpg-reaction-authority.js?v=hex-armor-20261009-1',
  './rpg-nans-authority.js?v=nans-20261008-1',
  './rpg-kentaro-armor-rules.js?v=20261009-1',
- './rpg-connect-mj.js?v=concentration-turn-20261009-1',
+ './rpg-connect-mj.js?v=typed-damage-20261010-1',
  './mj-panels.js?v=concentration-turn-20261009-1',
  './rpg-samoth-perception.js?v=perception-20261009-1',
 
- './encounter-guide.js?v=20261010-real-5',
+ './encounter-guide.js?v=20261010-typed-1',
  './mj-interactions.js?v=context-journal-20261009',
  './mj-presentation.css?v=select-health-20261009',
  './rpg-rufus-authority.js?v=rufus-20261009-1',
@@ -79,7 +79,7 @@ const ASSETS=[
 
   './',
   './index.html',
-  './styles.css?v=4',
+  './styles.css?v=typed-damage-20261010-1',
   './table.css?v=7',
   './table.js?v=2',
   './rpg-connect-mj.css?v=27',
@@ -93,11 +93,12 @@ const ASSETS=[
   './rpg-player-save-authority.js?v=brack-20261009-1',
   './rpg-connect-icon-registry.js?v=cloudflare-20261009',
   './rpg-target-names.js?v=1',
-  './app.js?v=select-health-20261009',
+  './encounter-typed-damage.js?v=typed-damage-20261010-1',
+ './app.js?v=typed-damage-20261010-1',
   './builtins.js?v=4.2',
   './assistant-dice-engine.js?v=1',
   './assistant-dice.css?v=1',
-  './monster-assistant.js?v=mixed-damage-check-20261010-1',
+  './monster-assistant.js?v=typed-damage-20261010-1',
   './monster-assistant-ui.js?v=1',
   './manifest.webmanifest',
   './icon-192.png',

@@ -25,10 +25,13 @@
   if(['save','hitSave'].includes(type)||a.kind==='save'){
    const q=type==='hitSave'?a.onHitSave:a;if(!abilities.includes(q?.ability||q?.save)||!Number.isInteger(number(q?.dc))||number(q.dc)<1)missing.push('JdS structuré et DD');
   }
-  if(a.damage&&!/^\d+d\d+(?:[+-]\d+)?$|^\d+$/.test(a.damage.replace(/\s/g,'')))missing.push('formule de dégâts');
-  if(a.damage&&!a.damageType)missing.push('type de dégâts');
-  if(a.damage&&a.kind!=='heal'&&a.damageType&&!['acide','contondants','feu','force','foudre','froid','nécrotiques','perforants','poison','psychiques','radiants','tonnerre','tranchants'].some(t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'')===String(a.damageType).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim()))missing.push('type de dégâts composite ou non reconnu : résolution séparée par le MJ');
-  if([a.damageComponents,a.components].some(parts=>Array.isArray(parts)&&parts.length>1))missing.push('plusieurs composantes de dégâts non exécutées dans cette fiche');
+  const typed=globalThis.EncounterTypedDamage?.forAbility(a),multi=!!String(a.damagePartsText||'').trim()||Array.isArray(a.damageParts)&&a.damageParts.length>0;
+  if(a.damage&&!multi&&!/^\d+d\d+(?:[+-]\d+)?$|^\d+$/.test(a.damage.replace(/\s/g,'')))missing.push('formule de dégâts');
+  if(a.damage&&!multi&&!a.damageType)missing.push('type de dégâts');
+  if(multi){for(const issue of typed?.errors||['Format des dégâts typés indisponible'])missing.push(issue)}
+  if(multi&&a.kind==='heal')missing.push('les soins utilisent le champ Soins, pas les dégâts typés');
+  else if(a.damage&&a.kind!=='heal'&&a.damageType&&!['acide','contondants','feu','force','foudre','froid','nécrotiques','perforants','poison','psychiques','radiants','tonnerre','tranchants'].some(t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'')===String(a.damageType).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim()))missing.push('type de dégâts composite ou non reconnu');
+  if([a.damageComponents,a.components].some(parts=>Array.isArray(parts)&&parts.length>1))missing.push('format de composantes importé non pris en charge : utiliser dégâts par type');
   if(/sauvegarde|\bJdS\b|\bJS\b/i.test(a.detail||'')&&!a.onHitSave&&!(abilities.includes(a.save)&&number(a.dc)>0))missing.push('JdS en texte seulement : non connecté');
   if(a.isSpell&&type!=='spell')manual.push('Classification magique à corriger');
   if(['text','reaction','resource','legendary','recharge'].includes(type))manual.push('Déclenchement, coût ou effet à vérifier à la table');
@@ -53,17 +56,16 @@
   const actions=Array.isArray(model.actions)?model.actions:[];
   if(!actions.length)reasons.push('Aucune action renseignée pour le combat connecté.');
   for(const [key,label] of [['actions','Action'],['reactions','Réaction'],['legendaryActions','Action légendaire'],['lairActions','Action de repaire']]){
-   for(const a of model[key]||[]){const where=label+' « '+(a.name||'sans nom')+' » : ',kind=a.kind||'text';let supported=false;
+   for(const a of model[key]||[]){const where=label+' « '+(a.name||'sans nom')+' » : ',kind=a.kind||'text',multi=!!String(a.damagePartsText||'').trim()||Array.isArray(a.damageParts)&&a.damageParts.length>0,typed=multi?globalThis.EncounterTypedDamage?.forAbility(a):null;let supported=false;
     if(a.isSpell&&(!Number.isInteger(Number(a.spellLevel))||a.spellLevel==null||a.spellLevel===''||Number(a.spellLevel)<0||Number(a.spellLevel)>9))reasons.push(where+'niveau réel du sort manquant (0 à 9).');
     if(a.isSpell&&kind==='text')reasons.push(where+'sort décrit sans résolution attaque ou JdS.');
-    if(a.damage&&!dice(a.damage))reasons.push(where+'formule de dégâts invalide.');
-    if(a.damage&&kind!=='heal'&&!String(a.damageType||'').trim())reasons.push(where+'type de dégâts manquant.');
-    else if(a.damage&&kind!=='heal'&&!damageTypes.some(type=>damageKey(type)===damageKey(a.damageType)))reasons.push(where+'type de dégâts non reconnu : renseigner un seul type par capacité. Les dégâts mixtes sont à résoudre séparément par le MJ.');
-    if([a.damageComponents,a.components].some(parts=>Array.isArray(parts)&&parts.length>1))reasons.push(where+'plusieurs composantes de dégâts dans le JSON : l’éditeur de fiches ne les exécute pas séparément.');
+    if(multi){for(const issue of typed?.errors||['Format des dégâts typés indisponible.'])reasons.push(where+issue);if(!typed?.parts.length)reasons.push(where+'aucune ligne de dégâts typés valide.');if(kind==='heal')reasons.push(where+'les soins utilisent le champ Soins, pas les dégâts typés.');}
+    else{if(a.damage&&!dice(a.damage))reasons.push(where+'formule de dégâts invalide.');if(a.damage&&kind!=='heal'&&!String(a.damageType||'').trim())reasons.push(where+'type de dégâts manquant.');else if(a.damage&&kind!=='heal'&&!damageTypes.some(type=>damageKey(type)===damageKey(a.damageType)))reasons.push(where+'type de dégâts non reconnu : utiliser le champ « Dégâts par type » pour plusieurs composantes.');}
+    if([a.damageComponents,a.components].some(parts=>Array.isArray(parts)&&parts.length>1))reasons.push(where+'format de composantes importé non pris en charge : utiliser « Dégâts par type ».');
     const hit=a.onHitSave||((a.onHitSaveAbility||a.onHitSaveDc||a.onHitSaveCondition)?{ability:a.onHitSaveAbility,dc:a.onHitSaveDc,conditionOnFailure:a.onHitSaveCondition}:null);
     if(hit&&(!abilities.includes(String(hit.ability||'').toUpperCase())||!positive(hit.dc)))reasons.push(where+'JdS sur touche incomplet : caractéristique et DD requis.');
-    if(kind==='attack'||kind==='recharge'&&a.bonus!=null){supported=true;if(a.bonus==null||a.bonus===''||!Number.isFinite(Number(a.bonus)))reasons.push(where+'bonus de toucher manquant.');if(!a.damage&&!hit)manual.push(where+'effet après touche à résoudre par le MJ.');}
-    else if(kind==='save'||kind==='recharge'&&a.dc!=null){supported=true;if(!abilities.includes(String(a.save||'').toUpperCase())||!positive(a.dc))reasons.push(where+'JdS incomplet : caractéristique et DD requis.');if(!a.damage)manual.push(where+'effet du JdS sans dégâts à résoudre par le MJ.');}
+    if(kind==='attack'||kind==='recharge'&&a.bonus!=null){supported=true;if(a.bonus==null||a.bonus===''||!Number.isFinite(Number(a.bonus)))reasons.push(where+'bonus de toucher manquant.');if(!a.damage&&!typed?.parts.length&&!hit)manual.push(where+'effet après touche à résoudre par le MJ.');}
+    else if(kind==='save'||kind==='recharge'&&a.dc!=null){supported=true;if(!abilities.includes(String(a.save||'').toUpperCase())||!positive(a.dc))reasons.push(where+'JdS incomplet : caractéristique et DD requis.');if(!a.damage&&!typed?.parts.length)manual.push(where+'effet du JdS sans dégâts à résoudre par le MJ.');}
     else if(kind==='heal'){supported=true;if(!a.damage)reasons.push(where+'montant des soins manquant.');}
     else if(kind==='multiattack'){supported=true;if(!String(a.sequence||'').trim())reasons.push(where+'séquence des attaques manquante.');else for(const part of String(a.sequence).split(';')){const name=part.trim().replace(/(?:\*|x)\d+$/i,'').trim();if(name&&!actions.some(x=>x.name===name&&x.kind==='attack'))reasons.push(where+'attaque « '+name+' » introuvable dans la séquence.');}}
     else manual.push(where+'effet descriptif à résoudre par le MJ.');

@@ -104,6 +104,8 @@
 .dynamic-row.ability-row .ability-inline-check{display:flex;align-items:center;gap:6px;min-width:70px;font:700 11px ui-sans-serif,system-ui;color:#d2b785}
 .dynamic-row.ability-row .ability-inline-check input{width:auto;margin:0}
 .dynamic-row.ability-row [data-field="onHitSaveCondition"]{min-width:120px}
+.dynamic-row.ability-row .typed-damage-field{grid-column:1/-1;display:block;color:#d2b785;font:700 11px ui-sans-serif,system-ui}
+.dynamic-row.ability-row .typed-damage-field textarea{display:block;width:100%;min-height:52px;margin-top:4px;padding:7px;font:12px ui-monospace,SFMono-Regular,monospace;resize:vertical}
 
 @media (max-width:1180px){
   .quickbar{grid-template-columns:minmax(135px,.6fr) auto auto minmax(330px,1.35fr)}

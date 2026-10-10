@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
-const ctx={};vm.runInNewContext(readFileSync(new URL('./monster-assistant.js',import.meta.url),'utf8'),ctx);const api=ctx.MonsterAssistant;
+const ctx={};vm.runInNewContext(readFileSync(new URL('./encounter-typed-damage.js',import.meta.url),'utf8'),ctx);vm.runInNewContext(readFileSync(new URL('./monster-assistant.js',import.meta.url),'utf8'),ctx);const api=ctx.MonsterAssistant;
 test('wolf proposal is untrusted, nonmagical, and carries a hit-gated structured save',()=>{
  const m=api.propose('Loup\nCA 14\nPV 37\nMorsure. Attaque au corps à corps : +5 au toucher. 2d6+3 dégâts perforants. JdS de Force DD 13 : à terre.','2014'),a=m.actions[0];
  assert.equal(m.rulesEdition,'2014');assert.equal(a.isSpell,false);assert.equal(a.onHitSave.dc,13);assert.equal(api.assess(a).status,'information manquante');
@@ -34,5 +34,12 @@ test('mixed damage in one custom-sheet field cannot receive a false connected ve
  const base={name:'Élémentaire',ac:15,hp:50,actions:[{name:'Lame ardente',kind:'attack',bonus:6,damage:'1d8+3+1d6',damageType:'tranchants et feu'}]};
  let report=api.profile(base);assert.equal(report.conformant,false);assert.ok(report.reasons.some(x=>x.includes('type de dégâts non reconnu')));
  base.actions[0].damageType='tranchants';base.actions[0].damageComponents=[{amount:8,type:'tranchants'},{amount:5,type:'feu'}];report=api.profile(base);
- assert.equal(report.conformant,false);assert.ok(report.reasons.some(x=>x.includes('plusieurs composantes')));
+ assert.equal(report.conformant,false);assert.ok(report.reasons.some(x=>x.includes('format de composantes')));
+});
+test('separately typed formulas are accepted and scaled as one hit',()=>{
+ const a={name:'Épée flamboyante',kind:'attack',bonus:6,damagePartsText:'1d8+3 | tranchants\n1d6 | feu'};
+ const report=api.profile({name:'Chevalier',ac:17,hp:58,actions:[a]});assert.equal(report.conformant,true);
+ const parsed=ctx.EncounterTypedDamage.forAbility(a);assert.equal(parsed.parts.length,2);assert.equal(parsed.parts[0].type,'tranchants');assert.equal(parsed.parts[1].type,'feu');
+ const scaled=ctx.EncounterTypedDamage.scale([{amount:7,type:'tranchants'},{amount:5,type:'feu'}],6);assert.equal(scaled.reduce((n,p)=>n+p.amount,0),6);
+ a.damagePartsText='1d8 | tranchants\n1d6 | flammes';assert.equal(api.profile({name:'Chevalier',ac:17,hp:58,actions:[a]}).conformant,false);
 });

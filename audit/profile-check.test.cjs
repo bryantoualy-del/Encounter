@@ -11,6 +11,7 @@ let rows=[{name:'Morsure',kind:'attack',bonus:5,damage:'2d6+3',damageType:'perfo
 const state={monsters:[]};
 let deferred=false;
 const ctx={document,state,console,window:null,collectRows:(selector)=>selector==='#actionsRows'?rows:[],openMonsterEditor:()=>editor.showModal(),saveMonsterFromForm:()=>{if(!deferred){state.monsters.splice(0,state.monsters.length,{id:'guardian',name:'Gardien',category:'enemy',ac:15,hp:42,actions:rows})}editor.close()}};ctx.window=ctx;
+vm.runInNewContext(fs.readFileSync(__dirname+'/../encounter-typed-damage.js','utf8'),ctx);
 vm.runInNewContext(fs.readFileSync(__dirname+'/../monster-assistant.js','utf8'),ctx);
 vm.runInNewContext(fs.readFileSync(__dirname+'/../mj-compatibility-ui.js','utf8'),ctx);
 ctx.openMonsterEditor();assert.equal(editor.open,true);assert.ok(ctx.EncounterProfileCheck);

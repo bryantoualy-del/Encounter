@@ -19,7 +19,7 @@
   ['#monsterLibrary','Adversaires','Choisir une fiche et la quantité à ajouter. Le guide ne valide aucune composition.',{drawer:'library'}],
   ['#btnCreateMonster','Créer une fiche','Le MJ renseigne une fiche de catégorie Adversaire : CA, PV et défenses.',{drawer:'library'}],
   ['#monsterForm .editor-grid','Profil','Ce sont les champs du véritable éditeur. Le guide ouvre un brouillon sans l’enregistrer.',{dialog:'monsterEditor'}],
-  ['#actionsRows','Actions','Renseigner bonus, dégâts, type, DD et JdS sur touche dans les champs prévus.',{dialog:'monsterEditor'}],
+  ['#actionsRows','Actions','Renseigner bonus, DD et JdS sur touche. Pour des dégâts mixtes, saisir une ligne par type : « 1d8+3 | tranchants », puis « 1d6 | feu ». Chaque ligne est résolue séparément dans la même attaque.',{dialog:'monsterEditor'}],
   ['#mjProfileVerdict','Verdict sur la fiche','L’éditeur annonce OUI ou NON pour le combat connecté. Si NON, lire les champs à corriger. Après Enregistrer, le résultat est récapitulé ; les effets manuels restent signalés.',{dialog:'monsterEditor'}],
   ['#rpgMjEndpoint','Connexion RPG','Renseigner serveur et clé MJ pendant la partie. La visite ne se connecte pas.',{dialog:'rpgMjDialog'}],
   ['#rpgMjPlayers','Invitations','Associer chaque compagnon à son participant et transmettre son invitation personnelle.',{dialog:'rpgMjDialog'}],
