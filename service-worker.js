@@ -1,9 +1,9 @@
-const CACHE='encounter-fix-mixed-damage-20261010-2';
+const CACHE='encounter-connected-save-types-20261010-3';
 const ASSETS=[
  './rpg-reaction-authority.js?v=hex-armor-20261009-1',
  './rpg-nans-authority.js?v=nans-20261008-1',
  './rpg-kentaro-armor-rules.js?v=20261009-1',
- './rpg-connect-mj.js?v=fix-mixed-damage-20261010-2',
+ './rpg-connect-mj.js?v=connected-save-types-20261010-3',
  './mj-panels.js?v=concentration-turn-20261009-1',
  './rpg-samoth-perception.js?v=perception-20261009-1',
 
