@@ -1,5 +1,13 @@
-const CACHE='encounter-select-health-20261009';
+const CACHE='encounter-guide-20261010-2';
 const ASSETS=[
+ './rpg-reaction-authority.js?v=hex-armor-20261009-1',
+ './rpg-nans-authority.js?v=nans-20261008-1',
+ './rpg-kentaro-armor-rules.js?v=20261009-1',
+ './rpg-connect-mj.js?v=concentration-turn-20261009-1',
+ './mj-panels.js?v=concentration-turn-20261009-1',
+ './rpg-samoth-perception.js?v=perception-20261009-1',
+
+ './encounter-guide.js?v=20261010-demo-2',
  './mj-interactions.js?v=context-journal-20261009',
  './mj-presentation.css?v=select-health-20261009',
  './rpg-rufus-authority.js?v=rufus-20261009-1',
@@ -29,6 +37,7 @@ const ASSETS=[
   './mj-panels.js?v=mj-finishes-1',
   './assistant-method.js?v=1',
   './assistant-method.html',
+ './assistant-method.html?v=guide-20261010-2',
   './assets/mj/states/Assourdi.png',
   './assets/mj/states/Incapacite.png',
   './assets/mj/states/Petrifie.png',
