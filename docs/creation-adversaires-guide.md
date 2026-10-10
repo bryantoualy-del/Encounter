@@ -25,6 +25,10 @@ Dans **••• → Importer JSON**, choisir un fichier JSON Encounter ou colle
 
 Une fiche classée **Personnage**, **Compagnon** ou **PNJ allié** est importée dans la bibliothèque locale. Le bilan affiche NON pour sa connexion RPG Connect : importer son JSON ne connecte pas son application Companion ni ne garantit ses sorts ou capacités. Vérifier la connexion et les capacités dans le Companion concerné.
 
+## Dégâts de plusieurs types
+
+L’éditeur d’adversaire possède une formule de dégâts et **un seul type** par capacité. Par exemple, `1d8+3` tranchants fonctionne. Une attaque `1d8+3` tranchants **plus** `1d6` feu ne peut pas encore être résolue automatiquement avec deux types dans cette fiche : écrire « tranchants et feu » dans le champ Type ne répartit pas les dégâts. Le verdict de conformité affiche NON pour ce mélange explicite. Résoudre chaque composante séparément à la table et appliquer chaque type une fois dans le panneau de points de vie. En revanche, les attaques connectées émises par les applications Companion disposent déjà de composantes typées distinctes ; Encounter y applique les résistances et immunités pour chacune.
+
 L’essai fictif vérifie les champs et calculs simulés, sans toucher à la partie ni communiquer avec les joueurs. Il ne prouve pas les déclencheurs complexes ni la reprise réseau.
 
 Ce chapitre figure dans le PDF Fonctionnement général, annexes F et G, et dans les étapes de l’éditeur de fiches dans la visite des écrans réels.

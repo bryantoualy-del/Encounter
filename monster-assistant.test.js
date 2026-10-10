@@ -30,3 +30,9 @@ test('a sheet with only descriptive powers is not presented as connected',()=>{
  const report=api.profile({name:'Spectre',ac:13,hp:30,actions:[{name:'Malédiction',kind:'text',detail:'Effet magique'}]});
  assert.equal(report.conformant,false);assert.ok(report.reasons.some(x=>x.includes('Aucune action structurée')));assert.ok(report.manual.some(x=>x.includes('Malédiction')));
 });
+test('mixed damage in one custom-sheet field cannot receive a false connected verdict',()=>{
+ const base={name:'Élémentaire',ac:15,hp:50,actions:[{name:'Lame ardente',kind:'attack',bonus:6,damage:'1d8+3+1d6',damageType:'tranchants et feu'}]};
+ let report=api.profile(base);assert.equal(report.conformant,false);assert.ok(report.reasons.some(x=>x.includes('type de dégâts non reconnu')));
+ base.actions[0].damageType='tranchants';base.actions[0].damageComponents=[{amount:8,type:'tranchants'},{amount:5,type:'feu'}];report=api.profile(base);
+ assert.equal(report.conformant,false);assert.ok(report.reasons.some(x=>x.includes('plusieurs composantes')));
+});

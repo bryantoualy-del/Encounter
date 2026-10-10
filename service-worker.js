@@ -1,4 +1,4 @@
-const CACHE='encounter-profile-import-20261010-1';
+const CACHE='encounter-mixed-damage-check-20261010-1';
 const ASSETS=[
  './rpg-reaction-authority.js?v=hex-armor-20261009-1',
  './rpg-nans-authority.js?v=nans-20261008-1',
@@ -97,7 +97,7 @@ const ASSETS=[
   './builtins.js?v=4.2',
   './assistant-dice-engine.js?v=1',
   './assistant-dice.css?v=1',
-  './monster-assistant.js?v=profile-check-20261010-1',
+  './monster-assistant.js?v=mixed-damage-check-20261010-1',
   './monster-assistant-ui.js?v=1',
   './manifest.webmanifest',
   './icon-192.png',
