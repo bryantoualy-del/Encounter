@@ -1,23 +1,9 @@
-# Encounter — guide interactif intégré
+# Visite guidée Encounter — écrans réels
 
-Archive complète basée sur Encounter_Concentration_Tour_Corrige_Cloudflare_2026-10-09.zip.
-Déposer cette archive à la place du précédent ZIP Encounter dans le même processus Cloudflare.
-Les fichiers de l’application sont à la racine du ZIP.
+Le bouton « ✦ Guide » suit 19 étapes sur les vrais éléments d’Encounter. Le visiteur voit la Préparation, la Bibliothèque, le vrai éditeur de fiches, la fenêtre RPG Connect, la vue Combat, le panneau Points de vie et le Journal.
 
-Le bouton « ✦ Guide » dans la barre supérieure ouvre un parcours de 17 étapes avec numéros,
-encadrés en surbrillance et indications. Précédent, Suivant, Quitter et Rejouer sont disponibles.
-« Retour à Encounter » ferme le guide.
+La visite n’enregistre aucun monstre, ne change aucun PV/tour/round, ne crée pas de salle et n’envoie aucune commande aux compagnons. Les vues sont présentées temporairement ; Quitter remet la présentation et le défilement précédents. Une rencontre vide reste vide. Si l’éditeur de monstres est verrouillé pendant un fight, les étapes correspondantes sont passées.
 
-Le parcours utilise une rencontre fictive dans une fenêtre isolée : il ne modifie pas la partie,
-ne communique pas avec RPG Connect et n’envoie pas de messages au MG.
-Cette première version explique les écrans sur une console de démonstration ; elle ne surligne
-pas encore les composants de la rencontre réelle.
+Les boutons de progression, Précédent, Suivant et Quitter, ainsi que les flèches et Échap sont disponibles. Sur iPad, le panneau se place en bas ; sur bureau, sur le côté. L’overlay utilise l’API Popover du navigateur. Une fenêtre de décision déjà ouverte bloque le lancement de la visite pour que le MJ puisse d’abord la traiter.
 
-Intégration : ajout de encounter-guide.js, chargement dans index.html et nouveau cache
-encounter-guide-20261010-2. Les scripts actuels sont inclus dans le cache hors ligne.
-Les autres fichiers de la version de base sont conservés.
-
-Vérification : syntaxe JavaScript, test du parcours et contrôle de l’intégrité de l’archive.
-Le rendu sur iPad/Safari et dans le site déployé reste à vérifier.
-
-Ajout : création des adversaires, attaques, sorts, bilan de compatibilité et essais fictifs.
+Aucun aperçu fictif dans une iframe n’est utilisé. Les anciennes pages de démo sont retirées de cette version. Le PDF « Fonctionnement général » se trouve dans docs/ de l’archive.

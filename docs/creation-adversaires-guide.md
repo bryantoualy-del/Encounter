@@ -19,4 +19,4 @@ Un texte décrivant un JdS ne crée pas une demande connectée. Cocher Sort ne p
 
 L’essai fictif vérifie les champs et calculs simulés, sans toucher à la partie ni communiquer avec les joueurs. Il ne prouve pas les déclencheurs complexes ni la reprise réseau.
 
-Ce chapitre figure dans le PDF Fonctionnement général, annexes F et G, et dans les étapes 3 à 6 du guide interactif.
+Ce chapitre figure dans le PDF Fonctionnement général, annexes F et G, et dans les étapes de l’éditeur de fiches dans la visite des écrans réels.
