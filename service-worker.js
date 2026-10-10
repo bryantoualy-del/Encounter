@@ -1,4 +1,4 @@
-const CACHE='encounter-profile-check-20261010-1';
+const CACHE='encounter-profile-import-20261010-1';
 const ASSETS=[
  './rpg-reaction-authority.js?v=hex-armor-20261009-1',
  './rpg-nans-authority.js?v=nans-20261008-1',
@@ -31,6 +31,7 @@ const ASSETS=[
   './mj-library-model.js?v=1',
   './mj-library-ui.js?v=profile-check-20261010-1',
  './mj-compatibility-ui.js?v=profile-check-20261010-1',
+ './mj-import-compatibility.js?v=profile-import-20261010-1',
   './mj-journal-model.js?v=2',
   './mj-journal.js?v=context-journal-20261009',
   './mj-conditions.js?v=1',

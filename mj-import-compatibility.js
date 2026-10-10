@@ -1,0 +1,16 @@
+/* Show a per-sheet RPG Connect verdict after an Encounter JSON import. */
+(()=>{'use strict';
+ if(!globalThis.MonsterAssistant?.profile||typeof importData!=='function')return;
+ const KEY='encounter:import-verdict:v1',dialog=document.createElement('dialog');dialog.id='mjImportProfileDialog';dialog.className='modal';dialog.setAttribute('aria-label','Bilan des fiches importées');
+ dialog.innerHTML='<div class="modal-shell"><div class="modal-head"><div><span class="eyebrow">IMPORT TERMINÉ</span><h2>Conformité RPG Connect</h2></div><button type="button" class="icon-btn" data-close aria-label="Fermer">×</button></div><p>Le JSON est importé. Voici ce que ses fiches permettent côté RPG Connect :</p><div data-results></div><div class="modal-actions"><button type="button" class="primary" data-close>Terminer</button></div></div>';
+ document.body.append(dialog);
+ const style=document.createElement('style');style.textContent='#mjImportProfileDialog{width:min(670px,calc(100vw - 24px))}#mjImportProfileDialog [data-results]{max-height:55vh;overflow:auto}#mjImportProfileDialog article{padding:10px;margin:8px 0;border:1px solid #735b3e;border-radius:8px}#mjImportProfileDialog h3{margin:0 0 5px}#mjImportProfileDialog ul{margin:4px 0 7px;padding-left:22px}';document.head.append(style);
+ dialog.addEventListener('click',e=>{if(e.target.closest('[data-close]'))dialog.close()});
+ const models=data=>Array.isArray(data)?data:data?.app==='ENCOUNTER'&&Array.isArray(data.monsters)?data.monsters:data?.name?[data]:[];
+ function verdict(model){if(model?.category&&model.category!=='enemy')return {conformant:false,reasons:['Cette fiche de personnage ou de compagnon est locale : son import ne connecte pas un Companion à RPG Connect. La connexion et les capacités du Companion doivent être vérifiées dans son application.'],manual:[]};return MonsterAssistant.profile(model)}
+ function show(items){if(!items.length)return;const root=dialog.querySelector('[data-results]');root.replaceChildren();for(const item of items){const article=document.createElement('article'),title=document.createElement('h3');title.textContent=(item.conformant?'OUI — conforme : ':'NON — non conforme : ')+item.name;article.append(title);for(const [heading,lines] of [['À corriger',item.reasons],['À gérer par le MJ',item.manual]]){if(!lines.length)continue;const p=document.createElement('p');p.textContent=heading+' :';article.append(p);const ul=document.createElement('ul');for(const line of lines){const li=document.createElement('li');li.textContent=line;ul.append(li)}article.append(ul)}root.append(article)}dialog.showModal()}
+ function report(raw){const data=EncounterPersistence.migrate(JSON.parse(raw)).data;return {items:models(data).map(model=>({name:String(model?.name||'Fiche sans nom'),...verdict(model)})),restore:!!data.encounter}}
+ const original=importData;importData=function(raw){const summary=report(raw);const result=original(raw);if(summary.items.length){if(summary.restore)sessionStorage.setItem(KEY,JSON.stringify(summary.items));else setTimeout(()=>show(summary.items),0)}return result};
+ try{const saved=sessionStorage.getItem(KEY);if(saved){sessionStorage.removeItem(KEY);setTimeout(()=>show(JSON.parse(saved)),0)}}catch(error){console.warn('Bilan d’import indisponible',error)}
+ window.EncounterImportCompatibility={report,show};
+})();

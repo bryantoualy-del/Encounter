@@ -19,6 +19,12 @@ Un texte décrivant un JdS ne crée pas une demande connectée. Cocher Sort ne p
 
 Le verdict OUI certifie que la fiche possède les champs nécessaires pour **au moins une action structurée** et qu’aucun champ bloquant n’a été détecté dans les capacités renseignées. Il ne promet pas que chaque effet narratif sera exécuté automatiquement : la fenêtre signale séparément les interventions du MJ. Un résultat NON n’empêche pas d’enregistrer la fiche ; il explique ce qu’il faut compléter pour la résolution connectée.
 
+## Importer une fiche personnelle
+
+Dans **••• → Importer JSON**, choisir un fichier JSON Encounter ou coller son contenu puis confirmer. Après l’import, le bilan affiche OUI ou NON pour chaque adversaire du fichier, avec les champs à corriger et les interventions manuelles. Pour une sauvegarde complète, il s’affiche après le rechargement. Un PDF, une image ou un format de fiche tiers n’est pas interprété par cet import JSON.
+
+Une fiche classée **Personnage**, **Compagnon** ou **PNJ allié** est importée dans la bibliothèque locale. Le bilan affiche NON pour sa connexion RPG Connect : importer son JSON ne connecte pas son application Companion ni ne garantit ses sorts ou capacités. Vérifier la connexion et les capacités dans le Companion concerné.
+
 L’essai fictif vérifie les champs et calculs simulés, sans toucher à la partie ni communiquer avec les joueurs. Il ne prouve pas les déclencheurs complexes ni la reprise réseau.
 
 Ce chapitre figure dans le PDF Fonctionnement général, annexes F et G, et dans les étapes de l’éditeur de fiches dans la visite des écrans réels.

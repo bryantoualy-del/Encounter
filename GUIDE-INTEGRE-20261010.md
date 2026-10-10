@@ -11,3 +11,5 @@ Aucun aperçu fictif dans une iframe n’est utilisé. Les anciennes pages de d�
 Correctif éditeur de fiche : le panneau de visite est placé dans le vrai dialogue modal pendant son ouverture, puis remis dans la page à la fermeture. Ceci conserve les commandes Précédent / Suivant / Quitter actives lors de la présentation du profil et de RPG Connect.
 
 Verdict de fiche : le nouvel encadré affiche OUI / NON dans le vrai éditeur, avec les raisons. Après l’enregistrement d’un adversaire, une fenêtre récapitule le résultat. Un OUI signifie qu’au moins une action est structurée et que les champs requis sont présents ; les interventions manuelles sont indiquées à part. NON signale les informations à compléter, même si la fiche a été enregistrée.
+
+À l’import JSON, Encounter affiche aussi un bilan pour chaque fiche du fichier. Un adversaire reçoit le même contrôle technique OUI / NON. Une fiche de personnage ou de compagnon importée reste locale : son JSON n’établit pas de connexion avec l’application Companion, ce qui est indiqué clairement dans le bilan. Les sauvegardes complètes présentent le bilan après le rechargement.
