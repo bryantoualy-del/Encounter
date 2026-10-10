@@ -5,8 +5,8 @@
 1. Bibliothèque → Créer : catégorie Adversaire, nom, source et édition, CA, PV, bonus de JdS et défenses.
 2. Une capacité par ligne. Attaque : mêlée/distance, bonus, formule et type de dégâts. Sauvegarde : caractéristique, DD, dégâts et moitié si réussite.
 3. Pour un véritable sort : cocher Sort, renseigner son niveau réel et sa résolution. Le MJ choisit zone et cibles.
-4. Relire Compatibilité RPG Connect : Automatisée / Décision MJ nécessaire / Information manquante.
-5. Essayer sur cibles fictives, enregistrer, puis ajouter la quantité voulue à la composition. Prépa Fight / FIGHT restent les étapes de combat connecté.
+4. Lire le verdict de la fiche dans l’éditeur : **OUI — fiche conforme** si CA, PV et les champs des actions connectées sont renseignés ; **NON — fiche non conforme** avec les raisons précises si un champ manque ou si aucune action structurée n’est disponible. Le contrôle éditorial détaillé, facultatif, sert à relire chaque capacité et les décisions du MJ.
+5. Essayer sur cibles fictives, enregistrer, puis lire le récapitulatif de conformité affiché après l’enregistrement. Si le résultat est NON, choisir « Corriger la fiche ». Ajouter ensuite la quantité voulue à la composition. Prépa Fight / FIGHT restent les étapes de combat connecté.
 
 ## Exemples
 
@@ -16,6 +16,8 @@
 ## Limites
 
 Un texte décrivant un JdS ne crée pas une demande connectée. Cocher Sort ne programme pas tous ses effets. Téléportations, zones persistantes, réactions originales, coûts, durées et conditions de fin peuvent demander une décision ou un suivi manuel. Après résolution à la table, appliquer PV et états dans Encounter sur adversaires et compagnons, une seule fois, en vérifiant le Journal.
+
+Le verdict OUI certifie que la fiche possède les champs nécessaires pour **au moins une action structurée** et qu’aucun champ bloquant n’a été détecté dans les capacités renseignées. Il ne promet pas que chaque effet narratif sera exécuté automatiquement : la fenêtre signale séparément les interventions du MJ. Un résultat NON n’empêche pas d’enregistrer la fiche ; il explique ce qu’il faut compléter pour la résolution connectée.
 
 L’essai fictif vérifie les champs et calculs simulés, sans toucher à la partie ni communiquer avec les joueurs. Il ne prouve pas les déclencheurs complexes ni la reprise réseau.
 

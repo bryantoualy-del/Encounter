@@ -1,4 +1,4 @@
-const CACHE='encounter-guide-20261010-4';
+const CACHE='encounter-profile-check-20261010-1';
 const ASSETS=[
  './rpg-reaction-authority.js?v=hex-armor-20261009-1',
  './rpg-nans-authority.js?v=nans-20261008-1',
@@ -7,7 +7,7 @@ const ASSETS=[
  './mj-panels.js?v=concentration-turn-20261009-1',
  './rpg-samoth-perception.js?v=perception-20261009-1',
 
- './encounter-guide.js?v=20261010-real-4',
+ './encounter-guide.js?v=20261010-real-5',
  './mj-interactions.js?v=context-journal-20261009',
  './mj-presentation.css?v=select-health-20261009',
  './rpg-rufus-authority.js?v=rufus-20261009-1',
@@ -29,7 +29,8 @@ const ASSETS=[
   './mj-local-concentration.js?v=1',
   './mj-ergonomics.css?v=5',
   './mj-library-model.js?v=1',
-  './mj-library-ui.js?v=select-health-20261009',
+  './mj-library-ui.js?v=profile-check-20261010-1',
+ './mj-compatibility-ui.js?v=profile-check-20261010-1',
   './mj-journal-model.js?v=2',
   './mj-journal.js?v=context-journal-20261009',
   './mj-conditions.js?v=1',
@@ -95,7 +96,7 @@ const ASSETS=[
   './builtins.js?v=4.2',
   './assistant-dice-engine.js?v=1',
   './assistant-dice.css?v=1',
-  './monster-assistant.js?v=1',
+  './monster-assistant.js?v=profile-check-20261010-1',
   './monster-assistant-ui.js?v=1',
   './manifest.webmanifest',
   './icon-192.png',

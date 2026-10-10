@@ -4,7 +4,7 @@ const html=fs.readFileSync(__dirname+'/../index.html','utf8');
 const app=fs.readFileSync(__dirname+'/../rpg-connect-mj.js','utf8');
 const steps=[...source.split('const steps=[')[1].split('];')[0].matchAll(/\['(#[^']+)','[^']+','[^']+'(?:,\{[^}]+\})?\]/g)].map(m=>m[1]);
 assert.equal(steps.length,19);
-for(const s of steps){const id=s.match(/#[\w-]+/)?.[0].slice(1);assert.ok(id&&(html.includes(`id="${id}"`)||app.includes(`id='${id}'`)||app.includes(`id="${id}"`)||id==='mjSidePanel'||id==='mjOpenHealth'||id==='mjCompatibility'),s)}
+for(const s of steps){const id=s.match(/#[\w-]+/)?.[0].slice(1);assert.ok(id&&(html.includes(`id="${id}"`)||app.includes(`id='${id}'`)||app.includes(`id="${id}"`)||id==='mjSidePanel'||id==='mjOpenHealth'||id==='mjProfileVerdict'&&fs.readFileSync(__dirname+'/../mj-compatibility-ui.js','utf8').includes("box.id='mjProfileVerdict'")),s)}
 assert.ok(!source.includes('iframe'));assert.ok(!source.includes('srcdoc'));assert.ok(!source.includes('mock'));
 assert.ok(!/\b(fetch|WebSocket|localStorage|sessionStorage)\s*[.(]/.test(source));
 const elements=new Map();let created=0;
@@ -19,7 +19,7 @@ class Node{
 }
 for(const s of steps)elements.set(s,new Node());
 for(const s of ['#prepView','#combatView','#quickBar','#btnModePrep','#btnModeCombat','#libraryDrawer','#journalDrawer','#drawerScrim','#mjSidePanel','.detail-panel','#monsterEditor','#rpgMjDialog','#mjOpenHealth','#mjSidePanel [data-panel-close]'])if(!elements.has(s))elements.set(s,new Node());
-for(const s of steps.filter(x=>x.includes('monsterForm')||x==='#actionsRows'||x==='#mjCompatibility'))elements.get(s).ownerDialog=elements.get('#monsterEditor');
+for(const s of steps.filter(x=>x.includes('monsterForm')||x==='#actionsRows'||x==='#mjProfileVerdict'))elements.get(s).ownerDialog=elements.get('#monsterEditor');
 for(const s of steps.filter(x=>x.startsWith('#rpgMj')))elements.get(s).ownerDialog=elements.get('#rpgMjDialog');
 elements.get('#mjSidePanel').className='hidden';elements.get('#prepView').className='prep-view';elements.get('#combatView').className='combat-view hidden';
 elements.get('#mjOpenHealth').onclick=()=>elements.get('#mjSidePanel').classList.remove('hidden');elements.get('#mjSidePanel [data-panel-close]').onclick=()=>elements.get('#mjSidePanel').classList.add('hidden');

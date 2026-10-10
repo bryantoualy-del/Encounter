@@ -9,3 +9,5 @@ Les boutons de progression, Précédent, Suivant et Quitter, ainsi que les flèc
 Aucun aperçu fictif dans une iframe n’est utilisé. Les anciennes pages de démo sont retirées de cette version. Le PDF « Fonctionnement général » se trouve dans docs/ de l’archive.
 
 Correctif éditeur de fiche : le panneau de visite est placé dans le vrai dialogue modal pendant son ouverture, puis remis dans la page à la fermeture. Ceci conserve les commandes Précédent / Suivant / Quitter actives lors de la présentation du profil et de RPG Connect.
+
+Verdict de fiche : le nouvel encadré affiche OUI / NON dans le vrai éditeur, avec les raisons. Après l’enregistrement d’un adversaire, une fenêtre récapitule le résultat. Un OUI signifie qu’au moins une action est structurée et que les champs requis sont présents ; les interventions manuelles sont indiquées à part. NON signale les informations à compléter, même si la fiche a été enregistrée.

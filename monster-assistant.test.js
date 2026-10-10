@@ -18,3 +18,15 @@ test('textual saves, unresolved costs and durations cannot be labeled automated'
 test('empty modifiers, malformed dice and contradictory magic remain visible',()=>{
  const a={name:'Morsure',kind:'attack',bonus:null,damage:'2d6+evil',isSpell:true,assistantMeta:{type:'attack',reviewed:true,trigger:'Touche',targets:'1'}};const q=api.assess(a);assert.ok(q.missing.includes('bonus de toucher'));assert.ok(q.missing.includes('formule de dégâts'));assert.ok(q.manual.includes('Classification magique à corriger'));
 });
+test('a whole enemy sheet receives a clear connected verdict and keeps manual caveats',()=>{
+ const m={name:'Gardien',ac:15,hp:42,actions:[{name:'Morsure',kind:'attack',bonus:5,damage:'2d6+3',damageType:'perforants',onHitSave:{ability:'FOR',dc:13}}],reactions:[{name:'Parade',kind:'text',detail:'+2 CA'}]};
+ const report=api.profile(m);assert.equal(report.conformant,true);assert.equal(report.connected,1);assert.equal(report.reasons.length,0);assert.ok(report.manual.some(x=>x.includes('Parade')));
+});
+test('the saved-sheet verdict identifies missing fields, malformed saves and false spells',()=>{
+ const m={name:'Mage',ac:'',hp:28,missingData:{ac:true,hp:false},actions:[{name:'Trait',kind:'attack',bonus:null,damage:'2d6+evil',damageType:''},{name:'Boule de feu',kind:'save',save:'',dc:14,damage:'8d6',damageType:'feu',isSpell:true,spellLevel:''},{name:'Hurlement',kind:'text',detail:'JdS de Sagesse DD 14'}]};
+ const report=api.profile(m);assert.equal(report.conformant,false);for(const phrase of ['CA absente','bonus de toucher','formule de dégâts','type de dégâts','niveau réel du sort','JdS incomplet','JdS présent dans le texte'])assert.ok(report.reasons.some(x=>x.includes(phrase)),phrase);
+});
+test('a sheet with only descriptive powers is not presented as connected',()=>{
+ const report=api.profile({name:'Spectre',ac:13,hp:30,actions:[{name:'Malédiction',kind:'text',detail:'Effet magique'}]});
+ assert.equal(report.conformant,false);assert.ok(report.reasons.some(x=>x.includes('Aucune action structurée')));assert.ok(report.manual.some(x=>x.includes('Malédiction')));
+});

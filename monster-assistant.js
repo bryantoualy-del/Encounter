@@ -37,5 +37,38 @@
   if(type==='spell'&&a.kind==='text')manual.push('Sort descriptif : Contresort possible, résolution manuelle');
   return {type,status:missing.length?'information manquante':manual.length?'décision MJ nécessaire':'automatisée',missing,manual,connectedSave:!!a.onHitSave||(abilities.includes(a.save)&&number(a.dc)>0&&['save','recharge'].includes(a.kind))};
  }
- globalThis.MonsterAssistant={propose,assess,classify,categories};
+ // Verdict for a whole enemy sheet. "Conforme" means that at least one action
+ // can follow the connected resolution path; manual effects are listed separately.
+ function profile(model={}){
+  const reasons=[],manual=[],abilities=['FOR','DEX','CON','INT','SAG','CHA'];let connected=0;
+  const positive=v=>v!==null&&v!==''&&Number.isFinite(Number(v))&&Number(v)>0;
+  const dice=v=>/^(?:[+-]?(?:\d*d\d+|\d+))+$/i.test(String(v||'').replace(/\s/g,''));
+  if(!String(model.name||'').trim())reasons.push('Nom du monstre manquant.');
+  if(model.missingData?.ac||!positive(model.ac))reasons.push('CA absente ou invalide.');
+  if(model.missingData?.hp||!positive(model.hp))reasons.push('PV absents ou invalides.');
+  const actions=Array.isArray(model.actions)?model.actions:[];
+  if(!actions.length)reasons.push('Aucune action renseignée pour le combat connecté.');
+  for(const [key,label] of [['actions','Action'],['reactions','Réaction'],['legendaryActions','Action légendaire'],['lairActions','Action de repaire']]){
+   for(const a of model[key]||[]){const where=label+' « '+(a.name||'sans nom')+' » : ',kind=a.kind||'text';let supported=false;
+    if(a.isSpell&&(!Number.isInteger(Number(a.spellLevel))||a.spellLevel==null||a.spellLevel===''||Number(a.spellLevel)<0||Number(a.spellLevel)>9))reasons.push(where+'niveau réel du sort manquant (0 à 9).');
+    if(a.isSpell&&kind==='text')reasons.push(where+'sort décrit sans résolution attaque ou JdS.');
+    if(a.damage&&!dice(a.damage))reasons.push(where+'formule de dégâts invalide.');
+    if(a.damage&&!String(a.damageType||'').trim()&&kind!=='heal')reasons.push(where+'type de dégâts manquant.');
+    const hit=a.onHitSave||((a.onHitSaveAbility||a.onHitSaveDc||a.onHitSaveCondition)?{ability:a.onHitSaveAbility,dc:a.onHitSaveDc,conditionOnFailure:a.onHitSaveCondition}:null);
+    if(hit&&(!abilities.includes(String(hit.ability||'').toUpperCase())||!positive(hit.dc)))reasons.push(where+'JdS sur touche incomplet : caractéristique et DD requis.');
+    if(kind==='attack'||kind==='recharge'&&a.bonus!=null){supported=true;if(a.bonus==null||a.bonus===''||!Number.isFinite(Number(a.bonus)))reasons.push(where+'bonus de toucher manquant.');if(!a.damage&&!hit)manual.push(where+'effet après touche à résoudre par le MJ.');}
+    else if(kind==='save'||kind==='recharge'&&a.dc!=null){supported=true;if(!abilities.includes(String(a.save||'').toUpperCase())||!positive(a.dc))reasons.push(where+'JdS incomplet : caractéristique et DD requis.');if(!a.damage)manual.push(where+'effet du JdS sans dégâts à résoudre par le MJ.');}
+    else if(kind==='heal'){supported=true;if(!a.damage)reasons.push(where+'montant des soins manquant.');}
+    else if(kind==='multiattack'){supported=true;if(!String(a.sequence||'').trim())reasons.push(where+'séquence des attaques manquante.');else for(const part of String(a.sequence).split(';')){const name=part.trim().replace(/(?:\*|x)\d+$/i,'').trim();if(name&&!actions.some(x=>x.name===name&&x.kind==='attack'))reasons.push(where+'attaque « '+name+' » introuvable dans la séquence.');}}
+    else manual.push(where+'effet descriptif à résoudre par le MJ.');
+    if(/sauvegarde|\bJdS\b|\bJS\b/i.test(a.detail||'')&&!hit&&!(abilities.includes(String(a.save||'').toUpperCase())&&positive(a.dc)))reasons.push(where+'JdS présent dans le texte, mais absent des champs connectés.');
+    if(key!=='actions'&&supported)manual.push(where+'déclencheur et disponibilité à confirmer par le MJ.');
+    if(key==='actions'&&supported)connected++;
+   }
+  }
+  if(actions.length&&!connected)reasons.push('Aucune action structurée pour la résolution connectée.');
+  if(connected)manual.push('Portée, zone, déclencheurs et durées restent à confirmer par le MJ.');
+  return {conformant:reasons.length===0,reasons:[...new Set(reasons)],manual:[...new Set(manual)],connected};
+ }
+ globalThis.MonsterAssistant={propose,assess,profile,classify,categories};
 })();
