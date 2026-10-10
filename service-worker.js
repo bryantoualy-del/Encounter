@@ -1,4 +1,4 @@
-const CACHE='encounter-load-quota-20261010-1';
+const CACHE='encounter-backup-notice-20261010-1';
 const ASSETS=[
  './rpg-reaction-authority.js?v=hex-armor-20261009-1',
  './rpg-nans-authority.js?v=nans-20261008-1',
@@ -21,7 +21,7 @@ const ASSETS=[
   './rpg-samoth-authority.js?v=mj-finishes-1',
   './mj-connected-feedback.js?v=4',
   './mj-spell-slots.js?v=1',
-  './encounter-persistence.js?v=load-quota-20261010-1',
+  './encounter-persistence.js?v=backup-notice-20261010-1',
   './rpg-diversion-authority.js',
   './rpg-reaction-authority.js?v=mj-finishes-1',
   './rpg-participant-profiles.js',
@@ -31,7 +31,7 @@ const ASSETS=[
   './mj-library-model.js?v=1',
   './mj-library-ui.js?v=profile-check-20261010-1',
  './mj-compatibility-ui.js?v=profile-check-20261010-1',
- './mj-import-compatibility.js?v=load-quota-20261010-profile-import-20261010-1',
+ './mj-import-compatibility.js?v=backup-notice-20261010-profile-import-20261010-1',
   './mj-journal-model.js?v=2',
   './mj-journal.js?v=context-journal-20261009',
   './mj-conditions.js?v=1',
@@ -94,7 +94,7 @@ const ASSETS=[
   './rpg-connect-icon-registry.js?v=cloudflare-20261009',
   './rpg-target-names.js?v=1',
   './encounter-typed-damage.js?v=typed-damage-20261010-1',
- './app.js?v=load-quota-20261010-typed-damage-20261010-1',
+ './app.js?v=backup-notice-20261010-typed-damage-20261010-1',
   './builtins.js?v=4.2',
   './assistant-dice-engine.js?v=1',
   './assistant-dice.css?v=1',

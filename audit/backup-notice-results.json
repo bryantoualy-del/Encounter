@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "Partie effectivement enregistrée malgré backup refusé",
+    "Backup refusé affiche avertissement et pas erreur rouge",
+    "Avertissement disparaît automatiquement",
+    "Échec backup temporisé pendant cinq minutes",
+    "Avertissement refermable",
+    "Véritable échec de sauvegarde affiche une erreur",
+    "Ancien minuteur ne supprime pas la vraie erreur",
+    "Avertissement secondaire ne masque pas erreur réelle",
+    "Sauvegarde réussie retire erreur résolue",
+    "Aucune exception JavaScript"
+  ],
+  "errors": []
+}
