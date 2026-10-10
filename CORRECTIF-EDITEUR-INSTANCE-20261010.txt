@@ -1,0 +1,11 @@
+ENCOUNTER — Éditeur d’instance — 10 octobre 2026
+
+Blocage reproduit : le crayon n’ouvre pas l’éditeur quand un ancien formulaire en cache ne contient pas les champs de statut vital et de date de décès attendus par le script actuel. L’erreur JavaScript survenait avant l’ouverture du dialogue.
+
+Correctif : réparation automatique des deux champs optionnels avant lecture ; vérification des champs obligatoires avec message explicite en cas de formulaire incomplet ; délégation de clic protégée ; ouverture répétée sans erreur ; révision du cache.
+
+Validation : 12 contrôles Chromium dans une vue tablette 1024 × 768 avec événements tactiles. Ouverture par Modifier l’instance et par le crayon en combat ; ancien formulaire réparé ; application de PV, PV max, PV temporaires, CA, nom et initiative ; annulation ; conservation de la fiche source et d’une seconde instance du groupe ; conservation du round et du tour actif ; rechargement ; réouverture ; absence d’exception JavaScript.
+
+Les tests couvrent le cas reproduit localement. Le cache et le navigateur exacts du MJ n’ont pas été inspectés.
+
+Déployer le ZIP complet, puis fermer et rouvrir Encounter. Ne pas effacer les données du navigateur.

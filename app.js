@@ -768,22 +768,32 @@ showActionPopup=function(msg,title='Résolution'){
 };
 $('#actionPopup')?.addEventListener('click',()=>{clearTimeout(showActionPopup.t);$('#actionPopup').classList.remove('show');});
 
+function participantInstanceForm(){
+  const form=$('#participantEditorForm');if(!form)throw Error('Formulaire d’instance indisponible. Recharge Encounter.');
+  // Older cached HTML predates these controls. Repair the editor before reading them.
+  const grid=form.querySelector('.participant-edit-grid')||form;
+  if(!form.elements.namedItem('lifeStatus')){const label=document.createElement('label');label.textContent='Statut vital';const select=document.createElement('select');select.name='lifeStatus';for(const [value,text] of [['alive','Vivant'],['unconscious','Inconscient (0 PV)'],['dead','Mort (0 PV)']]){const option=document.createElement('option');option.value=value;option.textContent=text;select.append(option);}label.append(select);grid.append(label);}
+  if(!form.elements.namedItem('deathAge')){const label=document.createElement('label');label.textContent='Mort depuis (secondes, optionnel)';const input=document.createElement('input');input.name='deathAge';input.type='number';input.min='0';input.inputMode='numeric';label.append(input);grid.append(label);}
+  for(const name of ['participantId','name','kind','ac','hp','maxHp','tempHp','initiative','speedOverride','bossOverride'])if(!form.elements.namedItem(name))throw Error('Formulaire d’instance incomplet. Recharge Encounter pour actualiser son affichage.');
+  return form;
+}
+
 function openParticipantEditor(id){
   const p=state.encounter.participants.find(x=>x.id===id);if(!p||isLair(p))return;
-  const f=$('#participantEditorForm'),m=modelFor(p),permanent=!!(m?.isBoss||m?.legendaryActions?.length),enemyInstance=p.kind==='enemy'||m?.category==='enemy';
+  const f=participantInstanceForm(),m=modelFor(p),permanent=!!(m?.isBoss||m?.legendaryActions?.length),enemyInstance=p.kind==='enemy'||m?.category==='enemy';
   f.elements.participantId.value=p.id;f.elements.name.value=p.name;f.elements.kind.value=p.kind==='player'?'player':p.kind==='ally'?'ally':'enemy';f.elements.ac.value=effectiveAc(p);f.dataset.originalAc=String(effectiveAc(p));f.elements.hp.value=p.hp;f.elements.maxHp.value=p.maxHp;f.elements.tempHp.value=p.tempHp||0;f.elements.lifeStatus.value=p.dead||p.lifeStatus==='dead'?'dead':p.hp===0?'unconscious':'alive';f.elements.deathAge.value=Number.isFinite(p.diedAt)?Math.max(0,Math.floor((Date.now()-p.diedAt)/1000)):'';f.dataset.deathAge=f.elements.deathAge.value;f.elements.initiative.value=p.initiative;f.elements.speedOverride.value=p.speedOverride||'';
   f.elements.bossOverride.checked=permanent||!!p.bossOverride;f.elements.bossOverride.disabled=permanent||!enemyInstance;
   const hint=$('#participantEditorHint');
   hint.textContent=permanent?`${m?`Modèle : ${m.name}. `:''}Le statut BOSS est imposé par la fiche et ne peut pas être retiré sur cette instance.`:`${m?`Modèle : ${m.name}. `:''}Les changements ci-dessus ne modifient que cette instance${p.groupId?' du groupe':''}.`;
-  $('#participantEditorDialog').showModal();
+  const dialog=$('#participantEditorDialog');if(!dialog.open)dialog.showModal();
 }
 function saveParticipantInstance(){
-  const f=$('#participantEditorForm'),p=state.encounter.participants.find(x=>x.id===f.elements.participantId.value);if(!p)return;
+  const f=participantInstanceForm(),p=state.encounter.participants.find(x=>x.id===f.elements.participantId.value);if(!p)return;
   const m=modelFor(p),permanent=!!(m?.isBoss||m?.legendaryActions?.length),maxHp=Math.max(1,Number(f.elements.maxHp.value)||1),hp=Math.max(0,Math.min(maxHp,Number(f.elements.hp.value)||0));
   mutate(()=>{p.name=f.elements.name.value.trim()||p.name;p.kind=f.elements.kind.value;const newAc=Math.max(0,Number(f.elements.ac.value)||0),originalAc=Number(f.dataset.originalAc);if(p.acOverride!=null||newAc!==originalAc)p.acOverride=newAc;else p.ac=newAc;p.maxHp=maxHp;p.hp=hp;const wasDead=!!p.dead,status=f.elements.lifeStatus.value;p.dead=status==='dead';p.lifeStatus=p.dead?'dead':status==='unconscious'||p.hp===0?'unconscious':'alive';if(status!=='alive')p.hp=0;if(p.dead){if(!wasDead||f.elements.deathAge.value!==f.dataset.deathAge)p.diedAt=Date.now()-Math.max(0,Number(f.elements.deathAge.value)||0)*1000;p.conditions=p.conditions.filter(c=>!/^Mort$/i.test(c.name));p.conditions.push(normalizeCondition({name:'Mort',source:'Validation MJ',durationType:'indefinite'}))}else{delete p.diedAt;p.conditions=p.conditions.filter(c=>!/^(Mort|Dead)$/i.test(c.name));p.conditions=p.conditions.filter(c=>!/^(Inconscient|Unconscious)$/i.test(c.name));if(p.hp===0)p.conditions.push(normalizeCondition({name:'Inconscient',source:'Validation MJ',durationType:'indefinite'}));if(p.hp>0)p.rpgJudgmentPending=null}p.rpgHealthManaged=true;p.rpgHealthRevision=(p.rpgHealthRevision||0)+1;p.tempHp=Math.max(0,Number(f.elements.tempHp.value)||0);p.initiative=Number(f.elements.initiative.value)||0;p.speedOverride=f.elements.speedOverride.value.trim();if(!permanent)p.bossOverride=p.kind==='enemy'&&!!f.elements.bossOverride.checked;checkPhaseTransition(p);},`${participantLabel(p)} — instance de combat modifiée.`);$('#participantEditorDialog').close();
 }
 $('#participantEditorForm')?.addEventListener('submit',e=>{e.preventDefault();saveParticipantInstance();});
-addEventListener('click',e=>{const b=e.target.closest('[data-edit-participant]');if(!b)return;e.preventDefault();e.stopImmediatePropagation();openParticipantEditor(b.dataset.editParticipant);},true);
+addEventListener('click',e=>{const target=e.target instanceof Element?e.target:e.target?.parentElement;const b=target?.closest('[data-edit-participant]');if(!b)return;e.preventDefault();e.stopImmediatePropagation();try{openParticipantEditor(b.dataset.editParticipant);}catch(error){console.warn('Éditeur d’instance indisponible',error);toast('Modification impossible : '+error.message);}},true);
 
 // Surbrillance aussi pour les ajustements rapides de la barre inférieure.
 applyDamageMany=function(ids,amount,type=''){amount=Math.max(0,Number(amount)||0);if(!amount||!ids.length)return;const details=[];checkpoint();ids.forEach(id=>{const p=state.encounter.participants.find(x=>x.id===id);if(!p||isLair(p))return;const r=resolveDamageAmount(p,amount,type);let left=r.amount;if(p.tempHp>0){const used=Math.min(p.tempHp,left);p.tempHp-=used;left-=used;}p.hp=Math.max(0,p.hp-left);checkPhaseTransition(p);setTargetFlash(p.id,r.amount>0?'damage':'miss');details.push(`${participantLabel(p)}: ${r.amount}${r.reason?` (${r.reason})`:''}`);});if(ids.length===1)state.encounter.selectedId=ids[0];const msg=`${amount} dégâts${type?` ${type}`:''} → ${details.join(' · ')}`;log(msg);saveState();render();showActionPopup(msg,'Dégâts');};

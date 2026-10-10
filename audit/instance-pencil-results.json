@@ -1,0 +1,17 @@
+{
+  "checks": [
+    "Modifier instance ouvre au toucher avec formulaire actuel",
+    "Ancien formulaire réparé et ouvert au toucher",
+    "Champs de statut réparés une seule fois",
+    "Appliquer ferme le formulaire",
+    "Modifications de l’instance appliquées",
+    "Fiche source et autre instance du groupe préservées",
+    "Annuler ne change pas l’instance",
+    "Crayon de la fiche en combat ouvre au toucher",
+    "Édition en combat conserve round et tour actif",
+    "Changements conservés après rechargement",
+    "Crayon fonctionne après rechargement",
+    "Aucune exception JavaScript"
+  ],
+  "errors": []
+}
