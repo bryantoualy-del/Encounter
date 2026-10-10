@@ -14,7 +14,9 @@ Correctifs :
 - Révision du cache de l'application.
 
 Validation exécutée :
-14 tests unitaires de persistance réussis ; 13 contrôles Chromium réussis : sélection réelle d'un JSON ancien, sauvegarde, téléchargement export, restauration dans une session vide, PV/round/bibliothèque/rencontres, quotas simulés, combat actif, rechargement, absence d'exception JavaScript.
+16 tests unitaires de persistance réussis ; 13 contrôles Chromium réussis : sélection réelle d'un JSON ancien, sauvegarde, téléchargement export, restauration dans une session vide, PV/round/bibliothèque/rencontres, quotas simulés, combat actif, rechargement, absence d'exception JavaScript.
 Script : audit/save-import-browser.mjs ; résultats : audit/save-import-results.json.
 
 Validation supplémentaire : le fichier exact fourni par le MJ passe 9 contrôles Chromium (import, normalisation complète, sauvegarde, rechargement, 20 backups successifs, export, réimport, participants/round et absence d’exception JavaScript). Le JSON et son contenu ne sont pas inclus dans ce ZIP ni dans le dépôt. Le navigateur du MJ et son déploiement Cloudflare restent à vérifier.
+
+Complément chargement saturé : blocage reproduit sous le quota réel Chromium, puis corrigé. Le chargement d’une préparation ou d’un combat actif continue si son backup additionnel manque de place. Une écriture principale saturée libère uniquement la copie de récupération redondante, après validation de la sauvegarde principale actuelle. Les rencontres nommées ne sont pas supprimées. Un échec réel d’écriture reste visible. Six contrôles de chargement/reprise et rechargement passent dans Chromium.

@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "Bouton Charger fonctionne malgré quota rempli",
+    "Rencontre chargée enregistrée malgré saturation",
+    "Rencontre chargée conservée après rechargement",
+    "Reprise de combat sauvegardé avec quota rempli",
+    "Combat repris conservé après rechargement",
+    "Aucune exception JavaScript"
+  ],
+  "errors": []
+}
