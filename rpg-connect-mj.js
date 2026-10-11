@@ -250,7 +250,7 @@
   return originalHealthEvent(event);
  };
  const baseOnEvent=onEvent;onEvent=function(event){if(fight.phase==='ended'&&['save:request','attack:rolled','attack:pending-hit','attack:damage','target:condition','turn:end-request'].includes(event?.type)){netlog('Combat terminé · action tardive ignorée','wait');return}return baseOnEvent(event)};
- let protocolError='';const requiredCapabilities=['event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions','player-save-requests-v1'];
+ let protocolError='';const requiredCapabilities=['hybrid-resolution-v4','event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions','player-save-requests-v1'];
  function connect(){protocolError='';let url;try{ensureRoomCode();url=endpoint();if(keyField.value.trim().length<24)throw Error('Clé MJ manquante ou trop courte.')}catch(error){note(error.message);return}
   active=true;localStorage.setItem(savedKey+':autojoin','1');clearTimeout(retryTimer);const old=socket;if(old&&old.readyState<2)old.close();const current=new WebSocket(url);socket=current;status.textContent='Connexion…';
   current.onopen=()=>{if(socket===current){send({type:'hello',protocolVersion:1,requiredCapabilities,clientCapabilities:requiredCapabilities,role:'gm',room:roomField.value.trim(),key:keyField.value.trim()})}};
@@ -630,5 +630,40 @@
  queueMicrotask(restoreHexArmor);setInterval(()=>{if(fight.phase==='fight')restoreHexArmor()},3000);
 
  }
+ // V4 mode is independent of online presence and combat membership.
+ const resolutionLedger=()=>state.encounter.rpgResolution||(state.encounter.rpgResolution={});
+ const resolutionFor=id=>resolutionLedger()[id]||{mode:'encounter',generation:0,detachedIds:[]};
+ const resolutionIds=value=>{const found=[];function walk(v){if(!v||typeof v!=='object')return;for(const [k,x]of Object.entries(v)){if(/^(actionId|parentActionId|attackId|reactionId|requestId|saveId)$/.test(k)&&typeof x==='string')found.push(x);if(x&&typeof x==='object')walk(x)}}walk(value);return found;};
+ function detachResolution(id,mode){
+  for(const [attackId,item]of pending)if(item.characterId===id){pending.delete(attackId);const lock=attackTargets.get(attackId);if(lock)lock.detached=true;for(const [cmd,a]of decisionCommands)if(a===attackId){clearTimeout(decisionTimers.get(cmd));decisionTimers.delete(cmd);decisionCommands.delete(cmd)}}
+  if(pendingTurnEnd?.characterId===id)pendingTurnEnd=null;
+  for(const w of reactions.pending(id))reactions.cancel(w.reactionId,'Compagnon en mode Libre · arbitrage à la table');
+  for(const fn of [concentrationLedger,triggerLedger,playerSaveLedger])for(const x of Object.values(fn()))if(x.characterId===id&&!x.result){x.result={detached:true};x.applied=true;}
+  saveAuthority.detachCharacter?.(id);
+  for(const q of Object.values(state.encounter.mjDecisions||{}))if(q.status==='pending'&&(q.characterId===id||resolutionIds(q).some(x=>mode.detachedIds.includes(x)))){q.status='detached';q.detachedAt=Date.now();}
+  persistRuntime();saveState();renderHitPopup();renderTurnEndPopup();window.EncounterDecisions?.refresh();
+ }
+ function acceptReconciliation(id,q,useLocal){
+  const mode=resolutionFor(id),p=participant(id);if(!p||mode.generation!==q.generation||mode.mode!=='free')return false;
+  const ledger=state.encounter.rpgReconciliations||(state.encounter.rpgReconciliations={});if(ledger[q.id]){command(id,'resolution:accepted',ledger[q.id]);return true;}
+  if(useLocal){const current=RPGHealthAuthority.health(p),expected=q.expectedHealth;if(!expected||expected.epoch!==current.epoch||expected.revision!==current.revision){command(id,'resolution:accepted',{proposalId:q.id,generation:q.generation,ok:false,error:'Santé Encounter modifiée · compare à nouveau'});syncState(id,'reconcile-conflict');return true;}
+   const h=q.health;if(!h||![h.current,h.max,h.temp].every(Number.isSafeInteger)||h.max<1||h.current<0||h.current>h.max||h.temp<0||h.temp>100000)return false;
+   checkpoint();p.hp=h.current;p.maxHp=h.max;p.tempHp=h.temp;p.tempSource=String(h.tempSource||'');p.tempMetadata=h.tempMetadata||{};RPGHealthAuthority.bump(p);saveState();render();
+  }
+  const result={proposalId:q.id,generation:q.generation,ok:true,state:stateSyncPayload(id)};ledger[q.id]=result;saveState();command(id,'resolution:accepted',result);netlog(names[id]+' · réconciliation explicite · santé '+(useLocal?'locale validée par le MJ':'Encounter conservée'),'ok');return true;
+ }
+ window.EncounterDecisions.handler('resolution-reconcile',{render:(q,esc)=>'<p>'+esc(names[q.characterId])+' demande le retour piloté par Encounter.</p><p>Coûts locaux conservés : '+esc(JSON.stringify(q.proposal.resources))+'</p><p>Santé proposée : '+esc(JSON.stringify(q.proposal.health))+'</p><p>Les dégâts libres ne sont pas appliqués automatiquement.</p><div class="mj-decision-actions"><button data-decision-choice="encounter">Conserver la santé Encounter</button><button data-decision-choice="local">Valider la santé locale</button><button data-decision-choice="reject">Rester en Libre</button></div>',resolve:(q,choice)=>{if(choice==='reject'){command(q.characterId,'resolution:accepted',{proposalId:q.proposal.id,generation:q.proposal.generation,ok:false});return true;}return acceptReconciliation(q.characterId,q.proposal,choice==='local');}});
+ const resolutionEvent=onEvent;onEvent=event=>{const id=event?.characterId;if(!ids.includes(id))return resolutionEvent(event);const q=event.payload||{},old=resolutionFor(id);
+  if(event.type==='resolution:mode'){if(!['free','encounter'].includes(q.mode)||!Number.isSafeInteger(q.generation)||q.generation<old.generation)return true;const next={mode:q.mode,generation:q.generation,detachedIds:[...new Set([...(old.detachedIds||[]),...(q.detachedIds||[])])],at:Date.now()};resolutionLedger()[id]=next;if(next.mode==='free')detachResolution(id,next);saveState();renderPanel();renderCockpit();netlog(names[id]+' · '+(next.mode==='free'?'MODE LIBRE · reste dans le combat':'PILOTÉ PAR ENCOUNTER'),'info');syncState(id,'resolution-mode');return true;}
+  if(event.type==='resolution:reconcile'){if(q.generation!==old.generation||old.mode!=='free')return true;if(q.choice==='encounter')return acceptReconciliation(id,q,false);window.EncounterDecisions.request({id:'reconcile:'+q.id,kind:'resolution-reconcile',characterId:id,proposal:q,title:names[id]+' · retour connecté',blocksTurn:false,priority:40});return true;}
+  if(old.mode==='free'||event.resolutionGeneration!=null&&event.resolutionGeneration!==old.generation||resolutionIds(q).some(x=>old.detachedIds.includes(x)))return true;
+  return resolutionEvent(event);
+ };
+ const resolutionBind=bindState;bindState=(id,value)=>{if(resolutionFor(id).mode==='free')return;return resolutionBind(id,value);};
+ const resolutionReact=canReact;canReact=id=>resolutionFor(id).mode!=='free'&&resolutionReact(id);
+ const resolutionRender=renderPanel;renderPanel=()=>{resolutionRender();for(const row of document.querySelectorAll('.rpg-mj-person')){const select=row.querySelector('[data-bind]'),id=select?.dataset.bind;if(!id||resolutionFor(id).mode!=='free')continue;const badge=document.createElement('strong');badge.textContent=' · MODE LIBRE';badge.style.color='#e7be70';row.querySelector('summary small')?.append(badge)}};
+ const resolutionCockpit=renderCockpit;renderCockpit=()=>{resolutionCockpit();const summary=document.querySelector('#rpgCockpitSummary'),freeIds=ids.filter(id=>resolutionFor(id).mode==='free');if(summary&&freeIds.length)summary.textContent+=' · MODE LIBRE : '+freeIds.map(id=>names[id]).join(', ');};
+ window.RPGConnectMJ.resolutionModes=()=>JSON.parse(JSON.stringify(resolutionLedger()));
+
 })();
 

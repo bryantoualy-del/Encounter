@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
-import {JSDOM} from 'jsdom';
+import {JSDOM} from './audit/hybrid-test-dom.js';
 const read=name=>readFileSync(new URL('./'+name,import.meta.url),'utf8');
 const window={};vm.runInNewContext(read('builtins.js'),{window});
 const monsters=window.ENCOUNTER_BUILTINS;

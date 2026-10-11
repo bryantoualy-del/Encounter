@@ -31,7 +31,9 @@
     "test:brack": "node --test rpg-brack-authority.test.js",
     "test:brack:browser": "node audit/brack-browser.mjs",
     "test:rufus": "node --test rpg-rufus-authority.test.js",
-    "test:rufus:browser": "node audit/rufus-browser.mjs"
+    "test:rufus:browser": "node audit/rufus-browser.mjs",
+    "test:hybrid": "node audit/hybrid-e2e.cjs",
+    "test:hybrid:offline": "node audit/hybrid-offline.cjs"
   },
   "dependencies": {
     "ws": "^8.18.3"

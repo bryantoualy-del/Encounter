@@ -1,5 +1,5 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import vm from 'node:vm';import {readFileSync} from 'node:fs';
-const src=readFileSync(new URL('../RPG-Connect/rpg-turn-start.js',import.meta.url),'utf8');
+const src=readFileSync(new URL('../Kentaro/rpg-turn-start.js',import.meta.url),'utf8');
 function fixture(id='rufus'){let count=0;const s={round:1,economy:{action:false,bonus:false,reaction:false,move:false},slots:2};const api={nextTurn:()=>{count++;s.economy={action:true,bonus:true,reaction:true,move:true};s.round++},sync:()=>{}},b={id,used:false,read:()=>s,healthRefresh:()=>{}};const c={window:{CompanionAPI:api,__CompanionBridge:b}};vm.runInNewContext(src,c);return {s,c,count:()=>count,apply:c.window.RPGTurnStart.apply}}
 const own={phase:'fight',combatId:'fight',activeCharacterId:'rufus',activeParticipantId:'cc-rufus',round:1,turnStartRevision:1};
 test('canonical start resets economy once and replay never restores a spent reaction',()=>{const {s,apply,count}=fixture();assert.equal(apply(own),true);s.economy.reaction=false;assert.equal(apply(own),false);assert.equal(s.economy.reaction,false);assert.equal(count(),0);assert.equal(apply({...own,round:2,turnStartRevision:2}),true);assert.equal(s.economy.reaction,true);assert.equal(count(),1);assert.equal(s.slots,2)});

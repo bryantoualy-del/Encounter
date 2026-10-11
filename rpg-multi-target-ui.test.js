@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {JSDOM} from 'jsdom';
+import {JSDOM} from './audit/hybrid-test-dom.js';
 const source=readFileSync(new URL('../Kentaro/rpg-multi-target-ui.js',import.meta.url),'utf8');
 function harness(){
  const dom=new JSDOM('<body><section hidden id="combat"><div id="rpg-target-dock"></div></section><section id="spells"><input id="synTargets" value="4"><input id="synFails" value="2"><p data-help>Manual</p><button id="cast">Lancer + dégâts</button></section>',{url:'https://test.local/',runScripts:'outside-only'}),w=dom.window;

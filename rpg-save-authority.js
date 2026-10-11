@@ -50,7 +50,7 @@ window.createRPGSaveAuthority=deps=>{
  function resolve(kind){const item=[...queue.values()][0];if(!item)return;if(deps.scope)return deps.scope(item,()=>resolveNative(kind));return resolveNative(kind)}
  function error(text){const el=popup.querySelector('[data-save-error]');if(el)el.textContent=text}
  popup.addEventListener('click',e=>{if(e.target.closest('[data-save-auto]'))resolve('auto');if(e.target.closest('[data-save-manual]'))resolve('manual')});
- return{enqueue,render,snapshot:()=>[...queue],restore(items){queue.clear();for(const [key,item] of items||[])if(item?.event&&item?.characterId)queue.set(key,item);render()},cancelAction(actionId){for(const [key,item]of queue)if(item.actionId===actionId){queue.delete(key);respond(item,{targetId:item.targetId,cancelled:true,error:'Action annulée'})}render()},reset(reason='Combat réinitialisé'){for(const item of queue.values())respond(item,{cancelled:true,error:reason});queue.clear();render()},pending:()=>queue.size};
+ return{detachCharacter:id=>{for(const [key,item]of queue)if(item.characterId===id){const result={cancelled:true,detached:true,source:item.event.payload.source};deps.ledger()[key]=result;queue.delete(key);respond(item,result)}render();},enqueue,render,snapshot:()=>[...queue],restore(items){queue.clear();for(const [key,item] of items||[])if(item?.event&&item?.characterId)queue.set(key,item);render()},cancelAction(actionId){for(const [key,item]of queue)if(item.actionId===actionId){queue.delete(key);respond(item,{targetId:item.targetId,cancelled:true,error:'Action annulée'})}render()},reset(reason='Combat réinitialisé'){for(const item of queue.values())respond(item,{cancelled:true,error:reason});queue.clear();render()},pending:()=>queue.size};
 };})();
 
 

@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {JSDOM} from 'jsdom';
+import {JSDOM} from './audit/hybrid-test-dom.js';
 
 function saveHarness(){
  const dom=new JSDOM('<!doctype html><body></body>',{url:'https://encounter.test/',runScripts:'outside-only'});

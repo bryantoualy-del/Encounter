@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {JSDOM,VirtualConsole} from 'jsdom';
+import {JSDOM,VirtualConsole} from './audit/hybrid-test-dom.js';
 import {fileURLToPath} from 'node:url';
 import {join,resolve} from 'node:path';
 

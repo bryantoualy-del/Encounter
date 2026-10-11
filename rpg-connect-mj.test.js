@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {JSDOM} from 'jsdom';
+import {JSDOM} from './audit/hybrid-test-dom.js';
 import WebSocket from 'ws';
 process.env.RPG_CONNECT_GM_KEY='test-key-abcdefghijklmnopqrstuvwxyz';process.env.PORT='0';
 const {server,wss}=await import('./rpg-connect-server.js');await new Promise(r=>server.listening?r():server.once('listening',r));
@@ -11,7 +11,7 @@ const wait=(ws,type)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>re
 const waitCommand=(ws,eventType)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>reject(Error('timeout command '+eventType)),2000);let fn=data=>{let m=JSON.parse(String(data));if(m.type!=='command'||m.event?.type!==eventType)return;clearTimeout(timer);ws.off('message',fn);resolve(m.event)};ws.on('message',fn)});
 const waitUndo=ws=>new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('timeout undo reply')),2000);const fn=data=>{const m=JSON.parse(String(data));if(m.type!=='command'||m.event?.type!=='message:gm'||!m.event.payload?.text?.startsWith('Annulation réseau ignorée'))return;clearTimeout(timer);ws.off('message',fn);resolve(m.event)};ws.on('message',fn)});
 const waitSession=(ws,phase)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>reject(Error('timeout session '+phase)),2000);let fn=data=>{let m=JSON.parse(String(data));if(m.type!=='command'||m.event?.type!=='message:gm'||m.event?.payload?.session?.phase!==phase)return;clearTimeout(timer);ws.off('message',fn);resolve(m.event.payload.session)};ws.on('message',fn)});
-const send=(ws,m)=>ws.send(JSON.stringify({v:1,protocolVersion:1,clientCapabilities:['event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions'],...m}));
+const send=(ws,m)=>ws.send(JSON.stringify({v:1,protocolVersion:1,clientCapabilities:['hybrid-resolution-v4','event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions'],...m}));
 test('ENCOUNTER applique les dégâts autoritaires et synchronise les conséquences sans double mutation',async()=>{
  const dom=new JSDOM('<!doctype html><body><header class="topbar"></header></body>',{url:'https://biggie-mj.github.io/Table-de-jeu/',runScripts:'outside-only'});
  let player=null;

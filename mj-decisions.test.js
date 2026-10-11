@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {JSDOM} from 'jsdom';
+import {JSDOM} from './audit/hybrid-test-dom.js';
 const source=readFileSync(new URL('./mj-decisions.js',import.meta.url),'utf8');
 const tick=()=>new Promise(resolve=>setTimeout(resolve,0));
 function fixture(saved={}){const d=new JSDOM('<body/>',{url:'https://local/',runScripts:'outside-only'}),w=d.window;w.state={encounter:{mjDecisions:saved}};w.saveState=()=>{};w.RPGConnectMJ={getStatus:()=>({fight:{requestId:'fight'}})};w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(){this.open=false};w.eval(source);return {d,w,q:w.EncounterDecisions};}

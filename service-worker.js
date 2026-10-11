@@ -1,9 +1,9 @@
-const CACHE='encounter-instance-editor-20261010-1';
+const CACHE='encounter-hybrid-20261011-lot1';
 const ASSETS=[
  './rpg-reaction-authority.js?v=hex-armor-20261009-1',
  './rpg-nans-authority.js?v=nans-20261008-1',
  './rpg-kentaro-armor-rules.js?v=20261009-1',
- './rpg-connect-mj.js?v=connected-save-types-20261010-3',
+ './rpg-connect-mj.js?v=4-lot1',
  './mj-panels.js?v=concentration-turn-20261009-1',
  './rpg-samoth-perception.js?v=perception-20261009-1',
 
