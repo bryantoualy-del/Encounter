@@ -2,8 +2,8 @@ import {createServer} from 'node:http';
 import {randomBytes, timingSafeEqual} from 'node:crypto';
 import {WebSocketServer, WebSocket} from 'ws';
 
-const protocol={protocolVersion:1,serverVersion:'hybrid-2026-10-11-lot1',capabilities:['hybrid-resolution-v4','scoped-undo-v1','event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions','companion-concentration-v1','reaction-transactions-v1','triggered-effects-v1','player-save-requests-v1']};
-const coreCapabilities=protocol.capabilities.filter(c=>!['scoped-undo-v1','companion-concentration-v1','reaction-transactions-v1','triggered-effects-v1','player-save-requests-v1'].includes(c));
+const protocol={protocolVersion:1,serverVersion:'hybrid-2026-10-11-lot2',capabilities:['manual-corrections-v4','hybrid-resolution-v4','scoped-undo-v1','event-receipts','initiative-ack','attack-id-ledger','authoritative-save-v1','state-revisions','condition-revisions','companion-concentration-v1','reaction-transactions-v1','triggered-effects-v1','player-save-requests-v1']};
+const coreCapabilities=protocol.capabilities.filter(c=>!['manual-corrections-v4','scoped-undo-v1','companion-concentration-v1','reaction-transactions-v1','triggered-effects-v1','player-save-requests-v1'].includes(c));
 const characters=new Set(['kentaro','samoth','brackmard','rufus','nans','zephyr']);
 const key=process.env.RPG_CONNECT_GM_KEY;
 if(!key||key.length<24)throw Error('RPG_CONNECT_GM_KEY doit contenir au moins 24 caractères aléatoires.');
@@ -48,7 +48,7 @@ wss.on('connection',ws=>{
     if(m.type==='state'&&role==='player'){if(room.resolution.get(characterId)?.mode==='free')return;const value=m.state;if(!value||value.characterId!==characterId||!value.hp)throw Error('État invalide');if(acceptState(room,characterId,value))send(room.gm,{type:'state',room:room.id,characterId,state:value});return}
     if(m.type==='command'&&role==='gm'){
       const e=m.event,id=String(m.characterId||'').toLowerCase();if(!characters.has(id)||!e||typeof e.id!=='string'||e.id.length>120||!/^[A-Za-z][A-Za-z-]*:[A-Za-z][A-Za-z-]*$/.test(e.type)||e.characterId!==id)throw Error('Commande invalide');
-      const allowed=new Set(['resolution:accepted','hp:damage','hp:heal','hp:set','tempHp:set','resource:set','inventory:add','inventory:update','inventory:remove','turn:next','turn:close','turn:end-rejected','turn:grant','attack:decision','attack:grant','message:gm','reaction:requested','initiative:request','initiative:retry','targets:set','target:clear','state:sync','conditions:set','defense:turn-ended','enemy:attack-result','save:result','concentration:request','concentration:break','concentration:ack','reaction:request','reaction:grant','reaction:closed','trigger:request','trigger:ack','player-save:request','player-save:ack','undo:prepare','undo:commit','undo:finalize','undo:abort']);if(!allowed.has(e.type))throw Error('Commande non autorisée');
+      const allowed=new Set(['correction:result','resolution:accepted','hp:damage','hp:heal','hp:set','tempHp:set','resource:set','inventory:add','inventory:update','inventory:remove','turn:next','turn:close','turn:end-rejected','turn:grant','attack:decision','attack:grant','message:gm','reaction:requested','initiative:request','initiative:retry','targets:set','target:clear','state:sync','conditions:set','defense:turn-ended','enemy:attack-result','save:result','concentration:request','concentration:break','concentration:ack','reaction:request','reaction:grant','reaction:closed','trigger:request','trigger:ack','player-save:request','player-save:ack','undo:prepare','undo:commit','undo:finalize','undo:abort']);if(!allowed.has(e.type))throw Error('Commande non autorisée');
       if(!room.pending.has(e.id)){if(room.pending.size>=200)throw Error('File commandes pleine : commande non acceptée, aucune commande existante supprimée');room.pending.set(e.id,{type:'command',room:room.id,characterId:id,event:e})}
       send(room.players.get(id),room.pending.get(e.id));send(ws,{type:'queued',id:e.id,characterId:id,online:room.players.get(id)?.readyState===WebSocket.OPEN});return;
     }
@@ -57,6 +57,7 @@ wss.on('connection',ws=>{
   }catch(error){send(ws,{type:'error',message:String(error.message||'Erreur')});if(!role)ws.close(4003,'Accès refusé')}});
   ws.on('close',()=>{if(!room)return;if(role==='gm'&&room.gm===ws)room.gm=null;if(role==='player'&&room.players.get(characterId)===ws)room.players.delete(characterId);notify(room)});
 });
+const delivery=setInterval(()=>{for(const room of rooms.values()){for(const e of room.pendingEvents.values())send(room.gm,{type:'event',room:room.id,characterId:e.characterId,event:e});for(const cmd of room.pending.values())send(room.players.get(cmd.characterId),cmd);}},1500);delivery.unref();
 const pulse=setInterval(()=>{for(const ws of wss.clients){if(ws.readyState!==WebSocket.OPEN)continue;if(ws.isAlive===false){ws.terminate();continue}ws.isAlive=false;ws.ping()}},30000);pulse.unref();
 server.listen(port,()=>console.log(`RPG Connect écoute sur ${server.address().port}`));
 export {server,wss,rooms};

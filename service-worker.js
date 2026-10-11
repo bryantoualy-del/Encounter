@@ -1,9 +1,10 @@
-const CACHE='encounter-hybrid-20261011-lot1';
+const CACHE='encounter-hybrid-20261011-lot2';
 const ASSETS=[
+ './rpg-correction-schema.js?v=4-lot2',
  './rpg-reaction-authority.js?v=hex-armor-20261009-1',
  './rpg-nans-authority.js?v=nans-20261008-1',
  './rpg-kentaro-armor-rules.js?v=20261009-1',
- './rpg-connect-mj.js?v=4-lot1',
+ './rpg-connect-mj.js?v=4-lot2',
  './mj-panels.js?v=concentration-turn-20261009-1',
  './rpg-samoth-perception.js?v=perception-20261009-1',
 

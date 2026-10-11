@@ -34,7 +34,8 @@
     "test:rufus:browser": "node audit/rufus-browser.mjs",
     "test:hybrid": "node audit/hybrid-e2e.cjs",
     "test:hybrid:offline": "node audit/hybrid-offline.cjs",
-    "test:hybrid:dialogs": "node audit/hybrid-dialogs-offline.cjs"
+    "test:hybrid:dialogs": "node audit/hybrid-dialogs-offline.cjs",
+    "test:lot2": "node audit/lot2-e2e.cjs"
   },
   "dependencies": {
     "ws": "^8.18.3"
