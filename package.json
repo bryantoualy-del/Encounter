@@ -39,7 +39,8 @@
     "test:lot3": "node audit/lot3v2-e2e.cjs",
     "test:activity": "node --test rpg-activity.test.js",
     "test:lot3v2": "node audit/lot3v2-e2e.cjs",
-    "test:journal": "node --test rpg-journal-ui.test.js rpg-activity.test.js"
+    "test:journal": "node --test rpg-journal-ui.test.js rpg-activity.test.js",
+    "test:brack:haste": "node audit/brack-haste-e2e.cjs"
   },
   "dependencies": {
     "ws": "^8.18.3"
