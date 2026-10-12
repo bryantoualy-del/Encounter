@@ -1,0 +1,146 @@
+{
+  "results": [
+    {
+      "label": "Six véritables compagnons simultanés via WebSocket / Encounter",
+      "status": "passed"
+    },
+    {
+      "label": "Kentaro · Libre pendant Tombeau de Lazarus",
+      "status": "passed"
+    },
+    {
+      "label": "Rufus · Libre pendant attaque en attente",
+      "status": "passed"
+    },
+    {
+      "label": "Brack · Libre pendant manœuvre",
+      "status": "passed"
+    },
+    {
+      "label": "Samoth · dragon maintenu en Libre",
+      "status": "passed"
+    },
+    {
+      "label": "Zéphyr · Libre pendant réaction en attente",
+      "status": "passed"
+    },
+    {
+      "label": "Nans · Rage et Libre",
+      "status": "passed"
+    },
+    {
+      "label": "Kentaro · Libre, reconnexion et rechargement",
+      "status": "passed"
+    },
+    {
+      "label": "Brackmard · Libre, reconnexion et rechargement",
+      "status": "passed"
+    },
+    {
+      "label": "Samoth · Libre, reconnexion et rechargement",
+      "status": "passed"
+    },
+    {
+      "label": "Nans · Libre, reconnexion et rechargement",
+      "status": "passed"
+    },
+    {
+      "label": "Rufus · Libre, reconnexion et rechargement",
+      "status": "passed"
+    },
+    {
+      "label": "Zephyr · Libre, reconnexion et rechargement",
+      "status": "passed"
+    },
+    {
+      "label": "Kentaro · Libre pendant Tombeau de Lazarus · répété après reconnexion",
+      "status": "passed"
+    },
+    {
+      "label": "Rufus · Libre pendant attaque en attente · répété après reconnexion",
+      "status": "passed"
+    },
+    {
+      "label": "Brack · Libre pendant manœuvre · répété après reconnexion",
+      "status": "passed"
+    },
+    {
+      "label": "Samoth · dragon maintenu en Libre · répété après reconnexion",
+      "status": "passed"
+    },
+    {
+      "label": "Zéphyr · Libre pendant réaction en attente · répété après reconnexion",
+      "status": "passed"
+    },
+    {
+      "label": "Nans · Rage et Libre · répété après reconnexion",
+      "status": "passed"
+    },
+    {
+      "label": "Rufus · attaque locale en Libre, coût normal et dégâts non transmis",
+      "status": "passed"
+    },
+    {
+      "label": "Réconciliation · conflit PV explicite, aucun écrasement avant accord",
+      "status": "passed"
+    },
+    {
+      "label": "Kentaro · reset local sans changement de tour, ruban intégré, résumé lisible, rechargement",
+      "status": "passed"
+    },
+    {
+      "label": "Brackmard · reset local sans changement de tour, ruban intégré, résumé lisible, rechargement",
+      "status": "passed"
+    },
+    {
+      "label": "Samoth · reset local sans changement de tour, ruban intégré, résumé lisible, rechargement",
+      "status": "passed"
+    },
+    {
+      "label": "Nans · reset local sans changement de tour, ruban intégré, résumé lisible, rechargement",
+      "status": "passed"
+    },
+    {
+      "label": "Rufus · reset local sans changement de tour, ruban intégré, résumé lisible, rechargement",
+      "status": "passed"
+    },
+    {
+      "label": "Zephyr · reset local sans changement de tour, ruban intégré, résumé lisible, rechargement",
+      "status": "passed"
+    },
+    {
+      "label": "Reset disponible pendant accord MJ · proposition archivée et réponse tardive ignorée",
+      "status": "passed"
+    },
+    {
+      "label": "Kentaro · saisie, confirmation, alerte et bascule après reconnexion",
+      "status": "passed"
+    },
+    {
+      "label": "Brackmard · saisie, confirmation, alerte et bascule après reconnexion",
+      "status": "passed"
+    },
+    {
+      "label": "Samoth · saisie, confirmation, alerte et bascule après reconnexion",
+      "status": "passed"
+    },
+    {
+      "label": "Nans · saisie, confirmation, alerte et bascule après reconnexion",
+      "status": "passed"
+    },
+    {
+      "label": "Rufus · saisie, confirmation, alerte et bascule après reconnexion",
+      "status": "passed"
+    },
+    {
+      "label": "Zephyr · saisie, confirmation, alerte et bascule après reconnexion",
+      "status": "passed"
+    },
+    {
+      "label": "Aucun dégât libre transmis / aucune erreur JavaScript",
+      "status": "passed"
+    }
+  ],
+  "errors": [],
+  "eventCount": 22015
+}

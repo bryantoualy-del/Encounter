@@ -1,10 +1,13 @@
-const CACHE='encounter-hybrid-20261011-lot2';
+const CACHE='encounter-collective-20261012-lot3';
 const ASSETS=[
+ './rpg-activity.js?v=20261012-lot3',
+ './rpg-activity.css?v=20261012-lot3',
+ './mj-collective.js?v=20261012-lot3',
  './rpg-correction-schema.js?v=4-lot2',
  './rpg-reaction-authority.js?v=hex-armor-20261009-1',
  './rpg-nans-authority.js?v=nans-20261008-1',
  './rpg-kentaro-armor-rules.js?v=20261009-1',
- './rpg-connect-mj.js?v=4-lot2',
+ './rpg-connect-mj.js?v=20261012-lot3',
  './mj-panels.js?v=concentration-turn-20261009-1',
  './rpg-samoth-perception.js?v=perception-20261009-1',
 
@@ -34,7 +37,7 @@ const ASSETS=[
  './mj-compatibility-ui.js?v=profile-check-20261010-1',
  './mj-import-compatibility.js?v=instance-editor-20261010-profile-import-20261010-1',
   './mj-journal-model.js?v=2',
-  './mj-journal.js?v=context-journal-20261009',
+  './mj-journal.js?v=20261012-lot3',
   './mj-conditions.js?v=1',
   './mj-icons.js?v=select-health-20261009',
   './mj-panels.js?v=mj-finishes-1',

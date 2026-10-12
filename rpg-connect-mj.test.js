@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {JSDOM} from './audit/hybrid-test-dom.js';
 import WebSocket from 'ws';
 process.env.RPG_CONNECT_GM_KEY='test-key-abcdefghijklmnopqrstuvwxyz';process.env.PORT='0';
-const {server,wss}=await import('./rpg-connect-server.js');await new Promise(r=>server.listening?r():server.once('listening',r));
+const {server,wss}=await import('./audit/fixtures/lot3-server/rpg-connect-server.js');await new Promise(r=>server.listening?r():server.once('listening',r));
 const url=`ws://127.0.0.1:${server.address().port}`;
 const until=fn=>new Promise((resolve,reject)=>{let origin=new Error('wait at').stack;let start=Date.now();const check=()=>fn()?resolve():Date.now()-start>2000?reject(Error('timeout '+origin)):setTimeout(check,10);check()});
 const wait=(ws,type)=>new Promise((resolve,reject)=>{let timer=setTimeout(()=>reject(Error('timeout '+type)),2000);let fn=data=>{let m=JSON.parse(String(data));if(m.type!==type)return;clearTimeout(timer);ws.off('message',fn);resolve(m)};ws.on('message',fn)});
