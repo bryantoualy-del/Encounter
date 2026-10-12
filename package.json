@@ -36,8 +36,10 @@
     "test:hybrid:offline": "node audit/hybrid-offline.cjs",
     "test:hybrid:dialogs": "node audit/hybrid-dialogs-offline.cjs",
     "test:lot2": "node audit/lot2-e2e.cjs",
-    "test:lot3": "node audit/lot3-e2e.cjs",
-    "test:activity": "node --test rpg-activity.test.js"
+    "test:lot3": "node audit/lot3v2-e2e.cjs",
+    "test:activity": "node --test rpg-activity.test.js",
+    "test:lot3v2": "node audit/lot3v2-e2e.cjs",
+    "test:journal": "node --test rpg-journal-ui.test.js rpg-activity.test.js"
   },
   "dependencies": {
     "ws": "^8.18.3"
