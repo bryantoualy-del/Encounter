@@ -1,0 +1,70 @@
+{
+  "results": [
+    {
+      "label": "Kentaro : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Six compagnons réels simultanés via serveur WebSocket",
+      "status": "PASS"
+    },
+    {
+      "label": "Hexblade : activation native, plus de 60 secondes réelles et reconnexion sans expiration",
+      "status": "PASS"
+    },
+    {
+      "label": "Armure des maléfices : pass 0 avant dégâts, réaction et retransmission",
+      "status": "PASS"
+    },
+    {
+      "label": "Armure des maléfices : manual 2 avant dégâts, réaction et retransmission",
+      "status": "PASS"
+    },
+    {
+      "label": "Armure des maléfices : manual 5 avant dégâts, réaction et retransmission",
+      "status": "PASS"
+    },
+    {
+      "label": "Armure des maléfices : automatic 1 avant dégâts, réaction et retransmission",
+      "status": "PASS"
+    },
+    {
+      "label": "Armure des maléfices : automatic 6 avant dégâts, réaction et retransmission",
+      "status": "PASS"
+    },
+    {
+      "label": "Hexblade : critique naturel 19, maîtrise +4, soin à l’élimination une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Dix rounds : expiration à la limite et Maléfice conservé distinct",
+      "status": "PASS"
+    },
+    {
+      "label": "Aucune erreur JavaScript Hexblade/Armure",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "frames": 15830
+}

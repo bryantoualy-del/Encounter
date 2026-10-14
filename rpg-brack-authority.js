@@ -2,7 +2,7 @@
 (()=>{'use strict';const copy=x=>JSON.parse(JSON.stringify(x)),norm=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
 globalThis.createRPGBrackAuthority=d=>{
  const p=()=>d.participant('brackmard'),find=id=>d.encounter().participants.find(x=>x.id===id),live=x=>x&&x.hp>0&&!EncounterConditionRolls.mechanics(x.conditions).incapacitated;
- const scope=(id,title,fn)=>globalThis.EncounterJournal?EncounterJournal.run({actor:'brackmard',title,kind:'effect:request',remoteOrigin:true},fn,id):fn();
+ const scope=(id,title,fn,remoteOrigin=true)=>globalThis.EncounterJournal?EncounterJournal.run({actor:'brackmard',title,kind:'effect:request',remoteOrigin},fn,id):fn();
  const ledger=()=>d.encounter().rpgBrackLedger??={},stamp=()=>d.combatId()+':'+d.turnStamp(),publish=()=>{d.persist();d.render();d.sync();};
  const send=q=>d.send('brackmard','message:gm',q);
  function dodge(actionId){const b=p();if(!b)return;b.conditions??=[];b.conditions=b.conditions.filter(c=>c.effectKind!=='brackDodge');b.conditions.push({id:actionId+':dodge',name:'Esquive',effectKind:'brackDodge',origin:'rpg-brack',source:'Esquiver',sourceParticipantId:b.id,sourceCharacterId:'brackmard',durationType:'indefinite',endOnSourceStart:(b.turnStartRevision||0)+1});d.log('Brack · Esquiver · avantage DEX, désavantage des assaillants visibles jusqu’au prochain tour');}
@@ -19,15 +19,15 @@ globalThis.createRPGBrackAuthority=d=>{
   if(!d.active()||!live(p())||t?.kind!=='enemy'||t.hp<=0)return;
   if(!t.rpgBrackContact?.active||t.rpgBrackContact.combatId!==d.combatId())return;
   const triggerStamp='brack-aura:'+stamp()+':'+t.id;
-  if(Object.values(ledger()).some(x=>x.triggerStamp===triggerStamp))return;
-  const id=crypto.randomUUID(),rolls=[d.die(6),d.die(6)],amount=rolls[0]+rolls[1],hp=t.hp,temp=t.tempHp||0;
+  if(Object.values(ledger()).some(x=>x.triggerStamp===triggerStamp)||globalThis.EncounterJournal?.entries().some(x=>x.pyroTriggerStamp===triggerStamp))return;
+  const id=crypto.randomUUID();return scope(id,'Aura de flammes de PyroMerlin',()=>{const rolls=[d.die(6),d.die(6)],amount=rolls[0]+rolls[1],hp=t.hp,temp=t.tempHp||0;
   // Persist a turn-scoped receipt before applying damage: reconnection cannot retrigger it.
   ledger()[id]={id,triggerStamp,combatId:d.combatId(),targetId:t.id,turnStamp:stamp(),status:'resolved',rolls,amount};
   const applied=d.damage(t,amount,'feu',{triggered:true,source:'Aura de PyroMerlin',actionId:id});
   const effective=hp-t.hp+temp-(t.tempHp||0);
   ledger()[id].result={actionId:id,combatId:d.combatId(),ok:true,targetId:t.id,targetName:t.name,rolls,effective,dead:t.hp<=0};
   d.log('PyroMerlin · '+t.name+' · 2d6 feu ('+rolls.join(' + ')+') = '+amount+' → '+effective+' dégâts effectifs'+(applied?.reason?' · '+applied.reason:''));
-  publish();
+  const entry=globalThis.EncounterJournal?.entries().find(x=>x.id===id);if(entry)entry.pyroTriggerStamp=triggerStamp;publish();if(typeof document!=='undefined'){const node=document.querySelector('[data-row-id="'+t.id+'"]');if(node){node.classList.add('rpg-pyro-hit');setTimeout(()=>node.classList.remove('rpg-pyro-hit'),700);}}},false);
  }
  function setAuraContact(targetId,active){const t=find(targetId);if(!t||t.kind!=='enemy'||!d.active())return false;const was=!!(t.rpgBrackContact?.active&&t.rpgBrackContact.combatId===d.combatId());if(was===!!active)return true;t.rpgBrackContact={combatId:d.combatId(),active:!!active};d.log('PyroMerlin · '+t.name+' · '+(active?'au contact de Brack':'hors de contact'));publish();return true;}
  function authorizeAura(id,allowed){const x=ledger()[id];if(!x||x.status!=='decision'||x.combatId!==d.combatId())return true;x.status=allowed?'rolling':'skipped';d.persist();if(allowed)send({brackAuraRequest:{requestId:id,actionId:id,combatId:x.combatId,targetId:x.targetId,targetName:find(x.targetId)?.name,source:'Aura de PyroMerlin',undoCertified:true}});return true;}

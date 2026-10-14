@@ -1,0 +1,62 @@
+{
+  "results": [
+    {
+      "label": "Kentaro : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Six compagnons réels simultanés via serveur WebSocket",
+      "status": "PASS"
+    },
+    {
+      "label": "PyroMerlin : contrôle visible, groupe, résistance, immunité, PV temporaires et Brack déconnecté",
+      "status": "PASS"
+    },
+    {
+      "label": "Arme spirituelle : invocation native, première attaque, bonus, critique, reconnexion, expiration",
+      "status": "PASS"
+    },
+    {
+      "label": "Dragon : modes distincts, deux Déchirements et économie indépendante",
+      "status": "PASS"
+    },
+    {
+      "label": "Combat complet 1 : six compagnons, trois rounds, éliminations et reconnexions",
+      "status": "PASS"
+    },
+    {
+      "label": "Combat complet 2 : six compagnons, trois rounds, éliminations et reconnexions",
+      "status": "PASS"
+    },
+    {
+      "label": "Combat complet 3 : six compagnons, trois rounds, éliminations et reconnexions",
+      "status": "PASS"
+    },
+    {
+      "label": "Aucune erreur JavaScript sur les combats",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "frames": 79882
+}

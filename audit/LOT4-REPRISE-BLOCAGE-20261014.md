@@ -1,3 +1,5 @@
+> Rapport historique de l’interruption de Work. La reprise a ensuite abouti ; consulter [LOT4-FINAL-VALIDATION.md](LOT4-FINAL-VALIDATION.md) pour la validation actuelle.
+
 # RPG CONNECT V4 — LOT 4 : reprise, tests exécutés et blocage de livraison
 Date : 14 octobre 2026.
 
@@ -92,3 +94,4 @@ Serveur RPG Connect : aucun changement de protocole ou de source effectué ; auc
 Récupérer l’environnement et vérifier la présence des fichiers locaux ; confronter les sources aux HEAD distants ; terminer la validation visuelle ; relancer les suites sur un état figé ; vérifier les diffs ; alors seulement pousser le code, fusionner les PRs validées et fabriquer les sept ZIP complets depuis les main vérifiés.
 
 Ce document est une trace de développement et de tests effectivement exécutés, **pas une annonce de livraison achevée**.
+

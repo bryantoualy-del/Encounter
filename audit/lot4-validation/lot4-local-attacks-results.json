@@ -1,0 +1,74 @@
+{
+  "results": [
+    {
+      "label": "Kentaro : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Six compagnons réels simultanés via serveur WebSocket",
+      "status": "PASS"
+    },
+    {
+      "label": "Kentaro : attaque libre sous Bénédiction, d4 explicite et absence de trame vers Encounter",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : attaque libre sous Bénédiction, d4 explicite et absence de trame vers Encounter",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : attaque libre sous Bénédiction, d4 explicite et absence de trame vers Encounter",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : attaque libre sous Bénédiction, d4 explicite et absence de trame vers Encounter",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : attaque libre sous Bénédiction, d4 explicite et absence de trame vers Encounter",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : attaque libre sous Bénédiction, d4 explicite et absence de trame vers Encounter",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : modes explicites et annulation de Téméraire avec désavantage",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : modes explicites",
+      "status": "PASS"
+    },
+    {
+      "label": "Arme spirituelle libre : invocation, critique, Frappe guidée consommée, deuxième bonus et expiration sans trame",
+      "status": "PASS"
+    },
+    {
+      "label": "Aucune erreur JavaScript sur les attaques libres",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "frames": 6641
+}

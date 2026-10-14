@@ -1,0 +1,98 @@
+{
+  "results": [
+    {
+      "label": "Kentaro : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Six compagnons réels simultanés via serveur WebSocket",
+      "status": "PASS"
+    },
+    {
+      "label": "Kentaro : quatre JdS libres, d4 réel, Aura remise à zéro, aucune transmission",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : quatre JdS libres, d4 réel, Aura remise à zéro, aucune transmission",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : quatre JdS libres, d4 réel, Aura remise à zéro, aucune transmission",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : quatre JdS libres, d4 réel, Aura remise à zéro, aucune transmission",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : quatre JdS libres, d4 réel, Aura remise à zéro, aucune transmission",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : quatre JdS libres, d4 réel, Aura remise à zéro, aucune transmission",
+      "status": "PASS"
+    },
+    {
+      "label": "Kentaro : JdS connecté Bénédiction/Aura, refus malgré couverture MJ, ACK et rejeu",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : JdS connecté Bénédiction/Aura, refus malgré couverture MJ, ACK et rejeu",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : JdS connecté Bénédiction/Aura, refus malgré couverture MJ, ACK et rejeu",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : JdS connecté Bénédiction/Aura, refus malgré couverture MJ, ACK et rejeu",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : JdS connecté Bénédiction/Aura, refus malgré couverture MJ, ACK et rejeu",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : JdS connecté Bénédiction/Aura, refus malgré couverture MJ, ACK et rejeu",
+      "status": "PASS"
+    },
+    {
+      "label": "JdS libre : boutons natifs et ergonomie iPad Air/iPhone en émulation",
+      "status": "PASS"
+    },
+    {
+      "label": "JdS reconnecté pendant l’animation : même d20/d4 et calcul autoritaire",
+      "status": "PASS"
+    },
+    {
+      "label": "Concentration : Aura à confirmer dans la préparation, d4 distinct et retransmission",
+      "status": "PASS"
+    },
+    {
+      "label": "Aucune erreur JavaScript pendant les JdS",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "frames": 5729
+}
