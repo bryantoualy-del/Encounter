@@ -1,0 +1,54 @@
+{
+  "results": [
+    {
+      "label": "Kentaro : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Six compagnons réels simultanés via serveur WebSocket",
+      "status": "PASS"
+    },
+    {
+      "label": "Dragon : normal, annulation de conditions, dé physique critique et saisie invalide",
+      "status": "PASS"
+    },
+    {
+      "label": "Dragon : souffle DEX DD18, moitié réelle sur réussite et concentration",
+      "status": "PASS"
+    },
+    {
+      "label": "PyroMerlin : annulation MJ restaure PV/temp et empêche un nouveau déclenchement au même tour",
+      "status": "PASS"
+    },
+    {
+      "label": "PyroMerlin : vulnérabilité feu puis PV temporaires, retrait du contact au tour suivant",
+      "status": "PASS"
+    },
+    {
+      "label": "Aucune erreur JavaScript dragon/PyroMerlin",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "frames": 6434
+}

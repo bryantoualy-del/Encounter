@@ -1,0 +1,270 @@
+{
+  "results": [
+    {
+      "label": "Kentaro : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Six compagnons réels simultanés via serveur WebSocket",
+      "status": "PASS"
+    },
+    {
+      "label": "Sans Hâte : aucune commande ni emplacement vide sur les six compagnons",
+      "status": "PASS"
+    },
+    {
+      "label": "Hâte native Samoth → Brack : commande visible avant toute attaque normale",
+      "status": "PASS"
+    },
+    {
+      "label": "Kentaro : Hâte attack indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Kentaro : Hâte dash indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Kentaro : Hâte disengage indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Kentaro : Hâte hide indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Kentaro : Hâte object indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Kentaro : reconnexion conserve Utilisée puis prochain tour Disponible",
+      "status": "PASS"
+    },
+    {
+      "label": "Kentaro : cinq usages seulement, choix d’armes sans sorts et retour sans consommation",
+      "status": "PASS"
+    },
+    {
+      "label": "Kentaro : iPad paysage/portrait et iPhone, barre et choix tactiles",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : Hâte attack indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : Hâte dash indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : Hâte disengage indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : Hâte hide indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : Hâte object indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : reconnexion conserve Utilisée puis prochain tour Disponible",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : cinq usages seulement, choix d’armes sans sorts et retour sans consommation",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : iPad paysage/portrait et iPhone, barre et choix tactiles",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : Hâte attack indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : Hâte dash indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : Hâte disengage indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : Hâte hide indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : Hâte object indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : reconnexion conserve Utilisée puis prochain tour Disponible",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : cinq usages seulement, choix d’armes sans sorts et retour sans consommation",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : iPad paysage/portrait et iPhone, barre et choix tactiles",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : Hâte attack indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : Hâte dash indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : Hâte disengage indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : Hâte hide indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : Hâte object indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : reconnexion conserve Utilisée puis prochain tour Disponible",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : cinq usages seulement, choix d’armes sans sorts et retour sans consommation",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : iPad paysage/portrait et iPhone, barre et choix tactiles",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : Hâte attack indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : Hâte dash indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : Hâte disengage indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : Hâte hide indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : Hâte object indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : reconnexion conserve Utilisée puis prochain tour Disponible",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : cinq usages seulement, choix d’armes sans sorts et retour sans consommation",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : iPad paysage/portrait et iPhone, barre et choix tactiles",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : Hâte attack indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : Hâte dash indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : Hâte disengage indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : Hâte hide indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : Hâte object indépendante et consommée une seule fois",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : reconnexion conserve Utilisée puis prochain tour Disponible",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : cinq usages seulement, choix d’armes sans sorts et retour sans consommation",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : iPad paysage/portrait et iPhone, barre et choix tactiles",
+      "status": "PASS"
+    },
+    {
+      "label": "Kentaro : autre arme moon utilise le flux natif sans action normale",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : autre arme staff-two utilise le flux natif sans action normale",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : autre arme spectral utilise le flux natif sans action normale",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : autre arme hexen utilise le flux natif sans action normale",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : autre arme crossbow utilise le flux natif sans action normale",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : une touche à zéro dégât se résout sans attente bloquée",
+      "status": "PASS"
+    },
+    {
+      "label": "Brack : Hâte en premier puis les deux attaques normales restent disponibles",
+      "status": "PASS"
+    },
+    {
+      "label": "Fin de Hâte : disparition totale et léthargie, pas de commande vide",
+      "status": "PASS"
+    },
+    {
+      "label": "Journal commun et absence d’erreur JavaScript",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "frames": 29948
+}

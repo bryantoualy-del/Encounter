@@ -1,0 +1,54 @@
+{
+  "results": [
+    {
+      "label": "Kentaro : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Six compagnons réels simultanés via serveur WebSocket",
+      "status": "PASS"
+    },
+    {
+      "label": "Soin réel : +4 PV restaurés pour 10 demandés, FX vert bref et sans interception",
+      "status": "PASS"
+    },
+    {
+      "label": "Buff : Bénédiction native, durée restante dans Groupe et FX fini",
+      "status": "PASS"
+    },
+    {
+      "label": "Arme spirituelle : montée N4, critique 4d8+4, deux poings attachés au MJ et sans concentration supplémentaire",
+      "status": "PASS"
+    },
+    {
+      "label": "Ergonomie en émulation : iPad Air 5 paysage et iPhone, nouveaux contrôles et FX",
+      "status": "PASS"
+    },
+    {
+      "label": "Aucune erreur JavaScript sur les FX et formats tactiles",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "frames": 4476
+}

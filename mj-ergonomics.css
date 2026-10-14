@@ -33,3 +33,15 @@
 .library-filters{display:flex}.mj-library-columns .monster-library{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));align-content:start;gap:8px}.library-card{width:100%;min-width:0;box-sizing:border-box}.library-card[hidden]{display:none}.mj-search-tools{min-height:24px}.mj-search-tools output{margin-left:auto}
 
 @media(max-width:720px){.mj-library-columns{grid-template-rows:minmax(0,1fr)}.mj-library-columns .monster-library{grid-row:1}.mj-composition{grid-row:1;align-self:stretch;max-height:none;height:100%}.mj-library-columns:has(.mj-composition:not(.mj-collapsed)) .monster-library{display:none}}
+
+/* Lot 4 · Manual reach confirmation, inline on hostile cards (no floating panel). */
+.pyro-contact{position:relative;z-index:3;display:block;margin:3px 10px 8px auto;padding:5px 9px;min-height:30px;border:1px solid currentColor;border-radius:9px;background:transparent;color:#b8a18c;font-size:11px;font-weight:600;cursor:pointer;touch-action:manipulation}
+.pyro-contact.is-active{color:#f9b26a;background:rgba(191,83,24,.16)}
+.group-members>.pyro-contact{margin:1px 5px 7px auto}
+.pyro-contact:focus-visible{outline:2px solid #edaa66;outline-offset:2px}
+
+.table-row .pyro-contact{position:relative;z-index:3;min-height:44px;font-size:11px;margin-top:5px;padding:5px 8px;max-width:100%;white-space:normal}.table-row:has(.pyro-contact){min-height:100px}
+
+.rpg-pyro-hit{animation:rpg-pyro-hit .65s ease-out}@keyframes rpg-pyro-hit{40%{box-shadow:inset 0 0 18px #e87832,0 0 12px #e8783255}}@media(prefers-reduced-motion:reduce){.rpg-pyro-hit{animation:none}}
+
+.spiritual-pair{color:#ebc773;filter:drop-shadow(0 0 5px #dfb955);pointer-events:none}
