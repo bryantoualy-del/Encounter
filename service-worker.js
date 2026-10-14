@@ -1,4 +1,4 @@
-const CACHE='encounter-20261014-lot4-final';
+const CACHE='encounter-20261014-lot4-final-2';
 const ASSETS=[
  './rpg-journal-ui.js?v=20261014-lot4-final',
  './rpg-activity.js?v=20261013-haste-menu',
@@ -8,7 +8,7 @@ const ASSETS=[
  './rpg-reaction-authority.js?v=hex-armor-20261009-1',
  './rpg-nans-authority.js?v=nans-20261008-1',
  './rpg-kentaro-armor-rules.js?v=20261009-1',
- './rpg-connect-mj.js?v=20261014-lot4-final',
+ './rpg-connect-mj.js?v=20261014-lot4-final-2',
  './mj-panels.js?v=concentration-turn-20261009-1',
  './rpg-samoth-perception.js?v=perception-20261009-1',
 
@@ -89,7 +89,7 @@ const ASSETS=[
   './table.js?v=20261014-lot4-final',
   './rpg-connect-mj.css?v=27',
   './rpg-brack-authority.js?v=20261014-lot4-final',
-  './rpg-connect-mj.js?v=20261014-lot4-final',
+  './rpg-connect-mj.js?v=20261014-lot4-final-2',
   './rpg-condition-rolls.js?v=brack-20261009-1',
   './rpg-health-authority.js?v=kentaro-20261008',
   './rpg-summon-authority.js?v=samoth-effects-1',

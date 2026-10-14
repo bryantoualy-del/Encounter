@@ -1,0 +1,62 @@
+{
+  "results": [
+    {
+      "label": "Kentaro : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : champ CA directement modifiable hors connexion",
+      "status": "PASS"
+    },
+    {
+      "label": "Six compagnons réels simultanés via serveur WebSocket",
+      "status": "PASS"
+    },
+    {
+      "label": "Kentaro : attaque connectée Bénédiction, d4 autoritaire unique et affiché",
+      "status": "PASS"
+    },
+    {
+      "label": "Brackmard : attaque connectée Bénédiction, d4 autoritaire unique et affiché",
+      "status": "PASS"
+    },
+    {
+      "label": "Samoth : attaque connectée Bénédiction, d4 autoritaire unique et affiché",
+      "status": "PASS"
+    },
+    {
+      "label": "Nans : attaque connectée Bénédiction, d4 autoritaire unique et affiché",
+      "status": "PASS"
+    },
+    {
+      "label": "Rufus : attaque connectée Bénédiction, d4 autoritaire unique et affiché",
+      "status": "PASS"
+    },
+    {
+      "label": "Zephyr : attaque connectée Bénédiction, d4 autoritaire unique et affiché",
+      "status": "PASS"
+    },
+    {
+      "label": "Aucune erreur JavaScript attaques connectées",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "frames": 4976
+}
