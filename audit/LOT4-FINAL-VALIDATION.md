@@ -28,6 +28,7 @@ Les tests utilisent Chromium réel, sept pages séparées et un serveur WebSocke
 - `npm run test:journal` : 12 réussites, aucun échec. Le dernier test a détecté puis couvert le statut erroné des événements locaux.
 - `npm run test:icons` : 4 réussites, aucun échec.
 - `audit/lot4-e2e.cjs` : quatre combinaisons locales et cinq combinaisons connectées pour chaque compagnon ; refus d'Aura malgré couverture ; d4 séparé ; préparation tactile ; reconnexion pendant l'animation ; concentration et retransmission.
+- `audit/lot4-connected-attacks-e2e.cjs` : six attaques natives connectées sous Bénédiction ; d4 lancé par Encounter, total augmenté une seule fois, détail visible dans la décision MJ. Le dernier contrôle a révélé puis corrigé un détail masqué dans le diagnostic réseau.
 - `audit/lot4-local-attacks-e2e.cjs` : six attaques natives sous Bénédiction en Libre sans envoi ; modes Nans/Zéphyr et Téméraire Nans ; Arme spirituelle autonome, critique, Frappe guidée, seconde action bonus, absence de nouvel emplacement et expiration.
 - `audit/lot4-hex-armor-e2e.cjs` : attente supérieure à 60 secondes effectivement exécutée ; reconnexion ; refus ; d6 physiques 2/5 et virtuels 1/6 ; réaction ; retransmission ; critique 19 ; maîtrise ; soin unique ; expiration à dix rounds.
 - `audit/lot4-dragon-pyro-e2e.cjs` : annulation avantage/désavantage par les conditions, dé physique et saisie invalide, critique, souffle avec moitié sur réussite, essai libre et concentration ; annulation MJ de PyroMerlin, PV temporaires et idempotence ; vulnérabilité feu et retrait du contact.

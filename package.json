@@ -42,7 +42,7 @@
     "test:journal": "node --test rpg-journal-ui.test.js rpg-activity.test.js",
     "test:brack:haste": "node audit/brack-haste-e2e.cjs",
     "test:haste:menu": "node audit/haste-menu-e2e.cjs",
-    "test:lot4": "node audit/lot4-e2e.cjs && node audit/lot4-local-attacks-e2e.cjs && node audit/lot4-hex-armor-e2e.cjs && node audit/lot4-dragon-pyro-e2e.cjs && node audit/lot4-combat-e2e.cjs && node audit/lot4-ui-fx-e2e.cjs"
+    "test:lot4": "node audit/lot4-e2e.cjs && node audit/lot4-connected-attacks-e2e.cjs && node audit/lot4-local-attacks-e2e.cjs && node audit/lot4-hex-armor-e2e.cjs && node audit/lot4-dragon-pyro-e2e.cjs && node audit/lot4-combat-e2e.cjs && node audit/lot4-ui-fx-e2e.cjs"
   },
   "dependencies": {
     "ws": "^8.18.3"
