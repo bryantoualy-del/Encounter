@@ -68,8 +68,8 @@ await resolveSave(name,name==='Samoth'?20:1);
 if(name==='Nans'){
  await p.waitForFunction(()=>document.querySelector('#rpgPlayerSavePopup').open);
  await p.locator('[data-save-extra]').fill('100');await p.locator('[data-save-roll]').click();
- await p.waitForFunction(()=>document.querySelector('#ccDiceOverlay')?.classList.contains('open'));await dismissDice(p);
- await gm.waitForFunction(()=>Object.values(state.encounter.rpgPlayerSaves||{}).filter(x=>x.request.nativeEffect==='horn-temptation').every(x=>x.applied&&x.result?.success));
+ // The auto-tap may close the real overlay between polls; wait for its durable result, then dismissal.
+ await gm.waitForFunction(()=>Object.values(state.encounter.rpgPlayerSaves||{}).filter(x=>x.request.nativeEffect==='horn-temptation').every(x=>x.applied&&x.result?.success));await dismissDice(p);
  checks.push({name:'Nans native horn temptation resolves before later turns and MJ panels',pass:true});
  await gm.waitForFunction(()=>EncounterDecisions.pending().some(q=>q.kind==='nans-movement'));await gm.locator('#mjContextDecision [data-decision-choice=yes]').click();checks.push({name:'Nans native horn movement explicitly confirmed at the table',pass:true});
 }

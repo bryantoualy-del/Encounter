@@ -36,13 +36,13 @@ Aucun fichier du dépôt Pilot20 n’a été modifié. Les bibliothèques de per
 
 | Dépôt | PR en brouillon | Commit V5 |
 |---|---|---|
-| RPG-Connect | [PR #5](https://github.com/bryantoualy-del/RPG-Connect/pull/5) | [`33d5ab63`](https://github.com/bryantoualy-del/RPG-Connect/commit/73baec9d9011030c02e51d1de0f0c95ab553b024) |
-| Kentaro | [PR #12](https://github.com/bryantoualy-del/Kentaro/pull/12) | [`780b52c8`](https://github.com/bryantoualy-del/Kentaro/commit/d7caf21d55441ab2fdcd40775c2e99e3a3c5db3e) |
-| Brackmard | [PR #9](https://github.com/bryantoualy-del/Brackmard/pull/9) | [`7ed15bab`](https://github.com/bryantoualy-del/Brackmard/commit/16294799e7eaa04ad398d0d3c1ad3b950ba5b809) |
-| Samoth | [PR #12](https://github.com/bryantoualy-del/Samoth/pull/12) | [`50eaa7fe`](https://github.com/bryantoualy-del/Samoth/commit/8ef9ded47577d55e2e76373281c8d897842223a4) |
-| Rufus | [PR #19](https://github.com/bryantoualy-del/Rufus/pull/19) | [`aa3f9906`](https://github.com/bryantoualy-del/Rufus/commit/1bda1da0c7c0346e5115137155498eedbd2f4253) |
-| Nans | [PR #10](https://github.com/bryantoualy-del/Nans/pull/10) | [`e7b7bb68`](https://github.com/bryantoualy-del/Nans/commit/e8e1c579b5939d446437c346d6a8994c601c3290) |
-| Zephyr | [PR #10](https://github.com/bryantoualy-del/Zephyr/pull/10) | [`b5c5a37a`](https://github.com/bryantoualy-del/Zephyr/commit/e2fe8965bef83a7480acf4c980358dfef3f920c1) |
+| RPG-Connect | [PR #5](https://github.com/bryantoualy-del/RPG-Connect/pull/5) | [`73baec9d`](https://github.com/bryantoualy-del/RPG-Connect/commit/73baec9d9011030c02e51d1de0f0c95ab553b024) |
+| Kentaro | [PR #12](https://github.com/bryantoualy-del/Kentaro/pull/12) | [`25b33403`](https://github.com/bryantoualy-del/Kentaro/commit/25b334030ad45b051242bf8fead90a25e43a5e8a) |
+| Brackmard | [PR #9](https://github.com/bryantoualy-del/Brackmard/pull/9) | [`c80cbcc9`](https://github.com/bryantoualy-del/Brackmard/commit/c80cbcc9f91e7325afe074f4eef27d5e12c0f840) |
+| Samoth | [PR #12](https://github.com/bryantoualy-del/Samoth/pull/12) | [`865cb95f`](https://github.com/bryantoualy-del/Samoth/commit/865cb95f167240483100634b1b1d6cf7d84e658e) |
+| Rufus | [PR #19](https://github.com/bryantoualy-del/Rufus/pull/19) | [`0f8f239e`](https://github.com/bryantoualy-del/Rufus/commit/0f8f239e58708f637365682134cc02f4f9742903) |
+| Nans | [PR #10](https://github.com/bryantoualy-del/Nans/pull/10) | [`e9332a27`](https://github.com/bryantoualy-del/Nans/commit/e9332a2713d62fe2e9faa26a2a42fea9fae91b85) |
+| Zephyr | [PR #10](https://github.com/bryantoualy-del/Zephyr/pull/10) | [`4218827d`](https://github.com/bryantoualy-del/Zephyr/commit/4218827d90b65859e1fccd0c6fde0c83f3b66402) |
 
 Encounter porte cette livraison, l’audit, la recette et les preuves. Les versions de ses dépendances sont figées dans le manifeste. Les branches dédiées ne changent pas les versions principales.
 
@@ -55,3 +55,5 @@ Encounter porte cette livraison, l’audit, la recette et les preuves. Les versi
 Les salles du serveur restent en mémoire comme en V4. Après un redémarrage serveur, Encounter restaure son mode mais les invitations doivent être recréées ; les états et journaux personnels demeurent sur les appareils.
 
 La deuxième recette a détecté le panneau Combat historique de Kentaro encore visible sous son sélecteur `data-panel`, ce qui repoussait le Groupe sous le viewport ; ce sélecteur est désormais pris en charge. Les anciens E2E Guidés utilisent maintenant le serveur canonique RPG-Connect au lieu de la copie serveur Lot 2 obsolète.
+
+La troisième recette Chromium et WebKit a réussi : [run 40958800096](https://github.com/bryantoualy-del/Encounter/actions/runs/40958800096). Les captures confirment la grille à deux colonnes, la visibilité de l’initiative et les paramètres MJ. Derniers ajustements soumis à validation : retrait des anciens emplacements de navigation vides, libellé explicite du tour dans le journal global et purge de la file personnelle au passage en Table Libre. La recette Guidée attend désormais le résultat durable des dés plutôt qu’un état transitoire de leur animation.

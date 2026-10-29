@@ -3,3 +3,5 @@
 #log[hidden],#journalList[hidden],#journalBody[hidden]{display:none!important}.journal-workbench{display:none!important}
 
 [data-mj-interactions],.mj-decision-context{display:none!important}
+
+.rpg-journal-action[data-type=temp]{--type:#70a9e5}
