@@ -24,6 +24,9 @@ jobs:
         run: npm ci
       - name: Checkout Companion repos
         run: npm run audit:checkout
+      - name: Install canonical RPG Connect server
+        run: npm ci
+        working-directory: ../RPG-Connect
       - name: Protocol, MJ and multi-target tests
         run: npm test
       - name: Companion bridge tests

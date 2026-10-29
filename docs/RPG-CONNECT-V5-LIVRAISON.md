@@ -37,12 +37,12 @@ Aucun fichier du dépôt Pilot20 n’a été modifié. Les bibliothèques de per
 | Dépôt | PR en brouillon | Commit V5 |
 |---|---|---|
 | RPG-Connect | [PR #5](https://github.com/bryantoualy-del/RPG-Connect/pull/5) | [`33d5ab63`](https://github.com/bryantoualy-del/RPG-Connect/commit/73baec9d9011030c02e51d1de0f0c95ab553b024) |
-| Kentaro | [PR #12](https://github.com/bryantoualy-del/Kentaro/pull/12) | [`780b52c8`](https://github.com/bryantoualy-del/Kentaro/commit/7b7a122f0e1ef08cafb55b5787bbcafd0cc9cdc6) |
-| Brackmard | [PR #9](https://github.com/bryantoualy-del/Brackmard/pull/9) | [`7ed15bab`](https://github.com/bryantoualy-del/Brackmard/commit/b106b64ee89fdd09cc152d8e398317558af18416) |
-| Samoth | [PR #12](https://github.com/bryantoualy-del/Samoth/pull/12) | [`50eaa7fe`](https://github.com/bryantoualy-del/Samoth/commit/40d08f92a54a19a7f7dc3a3c2211305af06648e4) |
-| Rufus | [PR #19](https://github.com/bryantoualy-del/Rufus/pull/19) | [`aa3f9906`](https://github.com/bryantoualy-del/Rufus/commit/ad39b6134002cb4cbfe6c78dfd731e0510236863) |
-| Nans | [PR #10](https://github.com/bryantoualy-del/Nans/pull/10) | [`e7b7bb68`](https://github.com/bryantoualy-del/Nans/commit/a1a56ba8adc88095713a16b56d11d2e55f608791) |
-| Zephyr | [PR #10](https://github.com/bryantoualy-del/Zephyr/pull/10) | [`b5c5a37a`](https://github.com/bryantoualy-del/Zephyr/commit/e33608899e3d8194ddf8c8dd03f00b47dcc9be52) |
+| Kentaro | [PR #12](https://github.com/bryantoualy-del/Kentaro/pull/12) | [`780b52c8`](https://github.com/bryantoualy-del/Kentaro/commit/d7caf21d55441ab2fdcd40775c2e99e3a3c5db3e) |
+| Brackmard | [PR #9](https://github.com/bryantoualy-del/Brackmard/pull/9) | [`7ed15bab`](https://github.com/bryantoualy-del/Brackmard/commit/16294799e7eaa04ad398d0d3c1ad3b950ba5b809) |
+| Samoth | [PR #12](https://github.com/bryantoualy-del/Samoth/pull/12) | [`50eaa7fe`](https://github.com/bryantoualy-del/Samoth/commit/8ef9ded47577d55e2e76373281c8d897842223a4) |
+| Rufus | [PR #19](https://github.com/bryantoualy-del/Rufus/pull/19) | [`aa3f9906`](https://github.com/bryantoualy-del/Rufus/commit/1bda1da0c7c0346e5115137155498eedbd2f4253) |
+| Nans | [PR #10](https://github.com/bryantoualy-del/Nans/pull/10) | [`e7b7bb68`](https://github.com/bryantoualy-del/Nans/commit/e8e1c579b5939d446437c346d6a8994c601c3290) |
+| Zephyr | [PR #10](https://github.com/bryantoualy-del/Zephyr/pull/10) | [`b5c5a37a`](https://github.com/bryantoualy-del/Zephyr/commit/e2fe8965bef83a7480acf4c980358dfef3f920c1) |
 
 Encounter porte cette livraison, l’audit, la recette et les preuves. Les versions de ses dépendances sont figées dans le manifeste. Les branches dédiées ne changent pas les versions principales.
 
@@ -53,3 +53,5 @@ Encounter porte cette livraison, l’audit, la recette et les preuves. Les versi
 3. Fusionner les huit PR et vérifier les déploiements seulement après validation technique et visuelle complète. Aucun lien V5 de déploiement n’est revendiqué.
 
 Les salles du serveur restent en mémoire comme en V4. Après un redémarrage serveur, Encounter restaure son mode mais les invitations doivent être recréées ; les états et journaux personnels demeurent sur les appareils.
+
+La deuxième recette a détecté le panneau Combat historique de Kentaro encore visible sous son sélecteur `data-panel`, ce qui repoussait le Groupe sous le viewport ; ce sélecteur est désormais pris en charge. Les anciens E2E Guidés utilisent maintenant le serveur canonique RPG-Connect au lieu de la copie serveur Lot 2 obsolète.

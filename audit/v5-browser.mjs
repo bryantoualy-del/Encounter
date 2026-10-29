@@ -36,5 +36,5 @@ try{
  await gm.evaluate(()=>{document.querySelector('#rpgMjDialog')?.close();document.querySelector('#mjOpenJournal')?.click();});await shot(gm,'after-encounter-global-journal');
  checks.push('Active ally and hostile rows; confirmed reaction outline; emerald concentration; consumed reaction; GM mode and manual journal');assert.deepEqual(errors,[]);
  await writeFile(resolve(output,'results.json'),JSON.stringify({engine,status:'PASS',checks,errors,visualReview:'PENDING: screenshots must be inspected before merge'},null,2));
-}catch(error){await writeFile(resolve(output,'results.json'),JSON.stringify({engine,status:'FAIL',error:String(error.stack||error),checks,errors},null,2));throw error;}
+}catch(error){for(const [name,p]of Object.entries(pages))await p.screenshot({path:resolve(output,'failure-'+name+'.png')}).catch(()=>{});await writeFile(resolve(output,'results.json'),JSON.stringify({engine,status:'FAIL',error:String(error.stack||error),checks,errors},null,2));throw error;}
 finally{await browser?.close();for(const ws of backend.wss.clients)ws.terminate();await new Promise(r=>backend.server.close(r));await new Promise(r=>http.close(r));}
