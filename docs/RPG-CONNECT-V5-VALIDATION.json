@@ -10,17 +10,51 @@
     "fail": 0
   },
   "server": {
-    "tests": 7,
-    "pass": 7,
+    "tests": 8,
+    "pass": 8,
     "fail": 0
   },
   "environment": {
     "node": "v24.22.1",
     "ui_runtime": "JSDOM 30.1.1, real repository HTML and real canonical WebSocket server",
-    "browser_visual": "First Chromium and WebKit CI execution passed; visual review rejected initial grid layout. Fix prepared; new screenshots required.",
+    "browser_visual": "PASS: real Chromium and WebKit screenshots reviewed. Native themes, two-column Group layout, active ally/enemy, scoped economy outlines and MJ controls/journal preserved.",
     "screenshots": 20,
-    "merge": "BLOCKED until visual review",
-    "deployment": "not performed"
+    "merge": "BLOCKED pending final Guided regression and coordinated deployment",
+    "deployment": "server deployment not verified: no Render workspace selected",
+    "physical_devices": "not tested"
   },
-  "first_browser_run": "https://github.com/bryantoualy-del/Encounter/actions/runs/40956513188"
+  "first_browser_run": "https://github.com/bryantoualy-del/Encounter/actions/runs/40956513188",
+  "companion_bridges": {
+    "tests": 7,
+    "pass": 7,
+    "fail": 0
+  },
+  "icons": {
+    "tests": 4,
+    "pass": 4,
+    "fail": 0
+  },
+  "journal_activity": {
+    "tests": 12,
+    "pass": 12,
+    "fail": 0
+  },
+  "latest_browser_run": "https://github.com/bryantoualy-del/Encounter/actions/runs/40962200591",
+  "runtime_commit": "c066b20b27efd0523154e40cf7e8a1c88acfd071",
+  "artifacts": [
+    {
+      "engine": "chromium",
+      "id": 12936707353
+    },
+    {
+      "engine": "webkit",
+      "id": 12936732310
+    }
+  ],
+  "server_commit": "116429451a52e39d2b82e391eecd5797010e0881",
+  "notes": [
+    "Visual baseline: immutable real source revisions in audit/v5-manifest.json. Referenced Kentaro image and exact emerald reference unavailable.",
+    "Lost-GM pending-command purge passed 8 server tests and 7 seven-app integration tests locally; latest immutable server manifest must be exercised in CI.",
+    "Guided browser fixture explicitly confirms no Zephyr aura and bounds native UI/evaluation waits."
+  ]
 }

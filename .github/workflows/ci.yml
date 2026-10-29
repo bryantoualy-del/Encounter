@@ -33,21 +33,32 @@ jobs:
         run: npm run test:companions
       - name: Creature icon tests
         run: npm run test:icons
-      - name: Install real Chromium
-        run: npx playwright install --with-deps chromium
-      - name: Isolated WebSocket and browser E2E
-        run: npm run test:e2e
-      - name: Brack combat integration E2E
-        run: npm run test:brack:browser
-      - name: Rufus combat integration E2E
-        run: npm run test:rufus:browser
+  guided-browser:
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [test:e2e, test:brack:browser, test:rufus:browser]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run audit:checkout
+      - run: npm ci
+        working-directory: ../RPG-Connect
+      - run: npx playwright install --with-deps chromium
+      - run: npm run ${{ matrix.suite }}
       - name: E2E evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: isolated-rpg-e2e
+          name: guided-${{ strategy.job-index }}
           path: |
             audit/results/
             audit/brack-results/
             audit/rufus-results/
-

@@ -25,7 +25,7 @@ Brack : PyroMerlin, Riposte, Sentinelle, Second souffle et manœuvres. Samoth : 
 
 ## Limites de validation
 
-Les captures fournies comme pièces jointes à cette mission sont des fiches PDF, pas la capture de référence Kentaro. Les captures avant/après des applications réelles sont nécessaires. Le vert de concentration retenu à défaut de référence exploitable sera explicitement indiqué. Une validation navigateur/visuelle manquante interdit la fusion.
+La capture Kentaro et la référence exacte de vert mentionnées dans la demande ne sont pas accessibles dans cet environnement. La comparaison utilise les versions réelles avant modification, figées ci-dessous ; le vert retenu est #10b981. Les captures navigateur avant/après restent requises avant fusion. La validation porte sur des viewports tablette avec WebKit et Chromium, pas sur des appareils physiques.
 
 ## Révisions auditées
 
@@ -40,4 +40,4 @@ Les captures fournies comme pièces jointes à cette mission sont des fiches PDF
 
 ## Livraison et validation
 
-Voir [RPG-CONNECT-V5-LIVRAISON.md](RPG-CONNECT-V5-LIVRAISON.md) et [RPG-CONNECT-V5-VALIDATION.json](RPG-CONNECT-V5-VALIDATION.json). Les versions publiées des dépendances utilisent les mêmes arbres Git que les sources testées. Les captures réelles restent bloquantes.
+Voir [RPG-CONNECT-V5-LIVRAISON.md](RPG-CONNECT-V5-LIVRAISON.md) et [RPG-CONNECT-V5-VALIDATION.json](RPG-CONNECT-V5-VALIDATION.json). Les versions publiées des dépendances utilisent les mêmes arbres Git que les sources testées. Les résultats de la revue des captures réelles sont consignés dans le rapport de livraison.

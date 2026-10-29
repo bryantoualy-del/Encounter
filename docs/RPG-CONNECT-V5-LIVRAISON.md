@@ -1,42 +1,58 @@
-# RPG Connect V5 — livraison coordonnée à valider
+# RPG Connect V5 — livraison coordonnée
 
-**État : brouillon, aucune fusion et aucun déploiement V5.** Les contrôles automatisés locaux passent. La validation visuelle bloquante n’est pas acquise.
+**Code validé en environnement isolé ; déploiement de production à vérifier.** Les références, résultats et limites de cette livraison sont consignés ci-dessous. Aucun fichier de Pilot20 n’a été modifié.
 
-## Modifications
+## Comportement livré
 
-- Encounter : sélecteur de session Table Libre/Guidé, paramètres conservés, divulgation explicite PV/CA ennemis, correction du marqueur sans réinitialisation, saisie narrative et journal MJ existant.
-- Serveur canonique : filtrage Table Libre, états personnels minimaux, mode avec contrôle de révision, anciens clients refusés en Table Libre, présence du MJ et reprise de session.
-- Six Companions : onglet Groupe intégré, ordre mixte décroissant, tour actif allié/ennemi, raccourcis vers les moteurs natifs, contours d’économie sans changement de fond, éditeur personnel, réaction corrigeable dans les deux sens.
-- Journal local : événements locaux persistants, chronologie de round/tour connu, dégâts calculés sans supposer leur application, PV temporaires bleus. Les détails personnels ne remontent pas à Encounter.
-- Les règles de début de tour utilisent la révision du participant ; une correction visuelle ou un rejeu réseau ne récupère pas une réaction consommée.
+- Table Libre devient le mode de session par défaut ; Guidé conserve les mécanismes historiques. Le choix se propage et se restaure.
+- Encounter conserve le rythme collectif, les ennemis, l’initiative et les corrections. Les joueurs restent propriétaires de leurs PV, états, ressources et réactions. Aucune attaque locale ne retire automatiquement des PV ennemis en Table Libre.
+- Les six Companions réutilisent leurs véritables moteurs et leur navigation : onglet Groupe, raccourcis natifs, liste mixte par initiative, tour actif allié/ennemi, édition personnelle et réaction librement corrigeable.
+- Les contours jaune, cyan, magenta et émeraude (#10b981) s’appliquent uniquement aux actions rapides et à la barre existante. Les fonds, typographies, portraits et thèmes sont conservés.
+- Les journaux personnels persistent localement, sans envoyer les jets ou calculs privés au MJ. Le journal global existant raconte les interventions Encounter, regroupées par round et tour connu. Les événements hors combat restent sans faux tour.
+- Révisions et déduplication protègent les débuts de tour ; une correction du marqueur ou une reconnexion ne récupère pas une réaction consommée. Un marqueur périmé est signalé lors de la perte du MJ ; le serveur purge alors les commandes Table Libre non acquittées, sans modifier la file Guidée.
+- Les PV/CA ennemis sont absents du flux tant que le MJ ne les divulgue pas. Le serveur filtre les champs et transactions en Table Libre ; les files Guidées privées sont purgées au changement de mode.
 
-## Preuves automatisées locales
+## Vérifications
 
 | Suite | Résultat |
 |---|---:|
-| Régressions Encounter (`npm test`) | 348/348 |
-| Protocole serveur canonique (`npm test` dans RPG-Connect) | 7/7 |
-| Six HTML réels + sept applications avec vrai WebSocket (`npm run test:v5`) | 7/7 |
+| Régressions Encounter | 348/348 |
+| Protocole serveur canonique | 8/8 |
+| Six HTML réels + sept applications + vrai WebSocket | 7/7 |
+| Ponts des Companions | 7/7 |
+| Icônes | 4/4 |
+| Journal et activité (`test:journal`) | 12/12 |
+| Journal UI et journal MJ | 18/18 |
 
-Les parcours vérifient Riposte de Brack (réaction + dé), Esquive instinctive de Rufus, Bouclier de Samoth (réaction + emplacement et CA temporaire), Protection de Zéphyr, correction libre de réaction, restauration après réouverture, initiatives et tour ennemi, confidentialité des PV/CA ennemis, état simultané des six joueurs et journal manuel du MJ.
+La recette V5 vérifie Riposte (réaction + dé), Esquive instinctive, Bouclier (emplacement + réaction + CA temporaire), Protection, les corrections libres, les six états simultanés, les ennemis cachés/publics, la reprise après reconnexion/réouverture, le journal MJ et l’absence de transmission des attaques personnelles. Elle utilise les applications réelles, pas des doubles de leur moteur.
 
-Les tests DOM ne prouvent ni la lisibilité iPad ni le rendu Safari. Ils ne sont pas présentés comme des captures.
+## Couverture des scénarios demandés
 
-## Recette visuelle et CI
+| Scénario | Preuves et portée |
+|---|---|
+| A — Groupe | Six onglets réels, tri mixte décroissant, PV/temp/CA/états/réaction, surbrillance allié et ennemi ; DOM connecté et géométrie Chromium/WebKit. |
+| B — Économie | Contours sur barre et seuls raccourcis ; navigation sans attribut de surbrillance, fond/police/rayon natifs comparés, concentration Samoth visible. |
+| C — Réactions | Riposte de Brack consomme dé + réaction ; Esquive instinctive Rufus, Bouclier Samoth (CA 15→20 sans changer la base), Protection Zéphyr ; bouton manuel dans les deux sens, synchronisation, récupération action/bonus/réaction au tour suivant des six personnages, expiration de Bouclier et début de tour dédupliqué. |
+| D — Journaux | Événements locaux persistants après réouverture ; aucune attaque personnelle reçue par Encounter ; intervention manuelle MJ et regroupements round/tour ; synchronisations sans duplication. |
+| E — Modes/reprise | Table Libre initial, bascule Guidé/Table Libre, purge des transactions personnelles, propriétaire local conservé, refus des corrections périmées, GM absent explicite et absence de rejeu de sa file Table Libre. |
 
-`audit/v5-browser.mjs` charge les applications réelles et le serveur canonique. `audit/v5-checkout.mjs` récupère les versions V5 et les versions avant modification depuis des commits immuables de `audit/v5-manifest.json`. Le workflow `RPG Connect V5 validation` prévoit Chromium et WebKit, à 1180×820 pour les joueurs et 1280×800 pour le MJ, avec captures PNG et résultats JSON.
+La compatibilité Guidée est également soumise aux parcours historiques complets ; leur statut courant reste distinct de la réussite V5.
 
-Captures attendues : avant Brack/Samoth/Rufus/Encounter ; après Brack Groupe pendant son tour, Brack réactions hors tour, Samoth concentration, Rufus réaction consommée, Encounter paramètres Table Libre, Encounter journal global. Le script compare aussi les couleurs/fonds/formes typographiques du bouton Action existant.
+## Captures réelles et comparaison
 
-**Première exécution navigateur réussie dans GitHub Actions**, Chromium et WebKit : [run 40956513188](https://github.com/bryantoualy-del/Encounter/actions/runs/40956513188). Les 20 PNG sont des captures réelles. La revue a rejeté le rendu initial : une règle de grille native étalait les cartes sur toute la largeur ; la navigation de Samoth et la présentation des paramètres MJ nécessitaient également une adaptation ciblée. Ces points ont été corrigés et une nouvelle recette avec contrôles géométriques est requise avant fusion. Localement, le navigateur reste indisponible ; la CI fournit la preuve graphique. Le vert émeraude retenu est `#10b981`.
+`audit/v5-checkout.mjs` récupère les sources et baselines immuables de `audit/v5-manifest.json`. `audit/v5-browser.mjs` exécute les sept applications et le serveur canonique. La revue compare les captures avant/après : cuivre de Brack, glace de Samoth, violet de Rufus et interface MJ conservés. Les règles de grille natives et un ancien emplacement vide ont été corrigés pour garder Groupe visible et aligné.
+
+Chaque moteur produit 10 PNG : avant Brack/Samoth/Rufus/Encounter ; après Brack Groupe pendant son tour, Brack réactions hors tour, Samoth concentration, Rufus réaction consommée, Encounter mode Table Libre, Encounter journal global. Les six onglets sont contrôlés géométriquement et le bouton Action d’origine est comparé avant/après (fond, couleur, police, rayon).
+
+La recette [Chromium/WebKit 40962200591](https://github.com/bryantoualy-del/Encounter/actions/runs/40962200591) passe sur les deux moteurs. Ses [captures Chromium](https://github.com/bryantoualy-del/Encounter/actions/runs/40962200591/artifacts/12936707353) et [captures WebKit](https://github.com/bryantoualy-del/Encounter/actions/runs/40962200591/artifacts/12936732310) ont été examinées ; le filtre MJ est lisible dans WebKit. Le statut de la régression Guidée et des dernières vérifications figure dans `RPG-CONNECT-V5-VALIDATION.json`. Les captures sont de vraies captures navigateur, sans génération d’image.
 
 ## Dépôts et dépendances
 
 Aucun fichier du dépôt Pilot20 n’a été modifié. Les bibliothèques de personnages, la Forge et le catalogue sont hors périmètre. Les changements partagés sont limités aux adaptateurs historiques de combat et au journal, avec validation de régression.
 
-| Dépôt | PR en brouillon | Commit V5 |
+| Dépôt | Pull request | Commit V5 |
 |---|---|---|
-| RPG-Connect | [PR #5](https://github.com/bryantoualy-del/RPG-Connect/pull/5) | [`73baec9d`](https://github.com/bryantoualy-del/RPG-Connect/commit/73baec9d9011030c02e51d1de0f0c95ab553b024) |
+| RPG-Connect | [PR #5](https://github.com/bryantoualy-del/RPG-Connect/pull/5) | [`11642945`](https://github.com/bryantoualy-del/RPG-Connect/commit/116429451a52e39d2b82e391eecd5797010e0881) |
 | Kentaro | [PR #12](https://github.com/bryantoualy-del/Kentaro/pull/12) | [`25b33403`](https://github.com/bryantoualy-del/Kentaro/commit/25b334030ad45b051242bf8fead90a25e43a5e8a) |
 | Brackmard | [PR #9](https://github.com/bryantoualy-del/Brackmard/pull/9) | [`c80cbcc9`](https://github.com/bryantoualy-del/Brackmard/commit/c80cbcc9f91e7325afe074f4eef27d5e12c0f840) |
 | Samoth | [PR #12](https://github.com/bryantoualy-del/Samoth/pull/12) | [`865cb95f`](https://github.com/bryantoualy-del/Samoth/commit/865cb95f167240483100634b1b1d6cf7d84e658e) |
@@ -44,16 +60,14 @@ Aucun fichier du dépôt Pilot20 n’a été modifié. Les bibliothèques de per
 | Nans | [PR #10](https://github.com/bryantoualy-del/Nans/pull/10) | [`e9332a27`](https://github.com/bryantoualy-del/Nans/commit/e9332a2713d62fe2e9faa26a2a42fea9fae91b85) |
 | Zephyr | [PR #10](https://github.com/bryantoualy-del/Zephyr/pull/10) | [`4218827d`](https://github.com/bryantoualy-del/Zephyr/commit/4218827d90b65859e1fccd0c6fde0c83f3b66402) |
 
-Encounter porte cette livraison, l’audit, la recette et les preuves. Les versions de ses dépendances sont figées dans le manifeste. Les branches dédiées ne changent pas les versions principales.
+Encounter porte cette livraison, l’audit, la recette et les preuves. Les versions de ses dépendances sont figées dans le manifeste. La fusion doit utiliser les têtes validées, sans modification du code après recette.
 
-## Limites et étapes restantes
+## Limites et exploitation
 
-1. Exécuter la recette navigateur, récupérer les PNG réels et examiner les rendus. Réparer tout écart de DA ou de mise en page avant fusion.
-2. Vérifier les workflows GitHub et leur disponibilité réelle ; la présence d’un workflow ne prouve pas son exécution.
-3. Fusionner les huit PR et vérifier les déploiements seulement après validation technique et visuelle complète. Aucun lien V5 de déploiement n’est revendiqué.
+- Les viewports testés sont 1180×820 (joueurs) et 1280×800 (MJ), avec WebKit et Chromium. Ce ne sont pas des essais sur iPad Air 5 ou Galaxy Tab S7 FE physiques. La capture Kentaro et la référence exacte de vert mentionnées dans la demande n’étaient pas accessibles ; la comparaison utilise les sources de production avant modification.
+- Les salles serveur restent en mémoire comme en V4. Après redémarrage du serveur, Encounter conserve son mode mais les invitations doivent être recréées ; les états et journaux personnels restent sur les appareils. Le journal personnel conserve les 1000 dernières entrées.
+- Le navigateur local n’était pas installable ; la CI fournit les captures et les preuves des parcours réels.
+- La vérification du serveur Render est bloquée : aucun espace de travail n’est sélectionné. Le guide Render impose de faire identifier l’espace par l’utilisateur avant de lire ses services. Aucun déploiement serveur ni contrôle de santé de production n’est revendiqué.
+- Le déploiement doit coordonner le serveur V5 puis les applications. Les anciens clients ne sont acceptés qu’en Guidé ; Table Libre demande la capacité V5. Les workflows Pages existants sont conservés.
 
-Les salles du serveur restent en mémoire comme en V4. Après un redémarrage serveur, Encounter restaure son mode mais les invitations doivent être recréées ; les états et journaux personnels demeurent sur les appareils.
-
-La deuxième recette a détecté le panneau Combat historique de Kentaro encore visible sous son sélecteur `data-panel`, ce qui repoussait le Groupe sous le viewport ; ce sélecteur est désormais pris en charge. Les anciens E2E Guidés utilisent maintenant le serveur canonique RPG-Connect au lieu de la copie serveur Lot 2 obsolète.
-
-La troisième recette Chromium et WebKit a réussi : [run 40958800096](https://github.com/bryantoualy-del/Encounter/actions/runs/40958800096). Les captures confirment la grille à deux colonnes, la visibilité de l’initiative et les paramètres MJ. Derniers ajustements soumis à validation : retrait des anciens emplacements de navigation vides, libellé explicite du tour dans le journal global et purge de la file personnelle au passage en Table Libre. La recette Guidée attend désormais le résultat durable des dés plutôt qu’un état transitoire de leur animation.
+Pour une recette à la table : créer une session, vérifier Table Libre, connecter les six joueurs, préparer/valider les initiatives, afficher successivement un allié et un ennemi, consommer/corriger une réaction, modifier les PV personnels hors ligne, reconnecter puis recharger, et contrôler la séparation des journaux. Conserver Guidé comme option de session lorsque ses transactions sont souhaitées.
