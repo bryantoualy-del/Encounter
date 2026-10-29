@@ -17,9 +17,10 @@
   "environment": {
     "node": "v24.22.1",
     "ui_runtime": "JSDOM 30.1.1, real repository HTML and real canonical WebSocket server",
-    "browser_visual": "BLOCKED locally; CI recipe prepared, not yet executed",
-    "screenshots": 0,
+    "browser_visual": "First Chromium and WebKit CI execution passed; visual review rejected initial grid layout. Fix prepared; new screenshots required.",
+    "screenshots": 20,
     "merge": "BLOCKED until visual review",
     "deployment": "not performed"
-  }
+  },
+  "first_browser_run": "https://github.com/bryantoualy-del/Encounter/actions/runs/40956513188"
 }

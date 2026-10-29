@@ -28,7 +28,7 @@ Les tests DOM ne prouvent ni la lisibilité iPad ni le rendu Safari. Ils ne sont
 
 Captures attendues : avant Brack/Samoth/Rufus/Encounter ; après Brack Groupe pendant son tour, Brack réactions hors tour, Samoth concentration, Rufus réaction consommée, Encounter paramètres Table Libre, Encounter journal global. Le script compare aussi les couleurs/fonds/formes typographiques du bouton Action existant.
 
-**Ce script navigateur n’a pas encore été exécuté.** Localement, aucun navigateur n’est installé et les téléchargements Playwright retournent une archive ZIP invalide. Aucun fichier image n’a été généré pour simuler une preuve. Le vert émeraude `#10b981` reste à comparer à la référence du MJ.
+**Première exécution navigateur réussie dans GitHub Actions**, Chromium et WebKit : [run 40956513188](https://github.com/bryantoualy-del/Encounter/actions/runs/40956513188). Les 20 PNG sont des captures réelles. La revue a rejeté le rendu initial : une règle de grille native étalait les cartes sur toute la largeur ; la navigation de Samoth et la présentation des paramètres MJ nécessitaient également une adaptation ciblée. Ces points ont été corrigés et une nouvelle recette avec contrôles géométriques est requise avant fusion. Localement, le navigateur reste indisponible ; la CI fournit la preuve graphique. Le vert émeraude retenu est `#10b981`.
 
 ## Dépôts et dépendances
 
@@ -36,13 +36,13 @@ Aucun fichier du dépôt Pilot20 n’a été modifié. Les bibliothèques de per
 
 | Dépôt | PR en brouillon | Commit V5 |
 |---|---|---|
-| RPG-Connect | [PR #5](https://github.com/bryantoualy-del/RPG-Connect/pull/5) | [`33d5ab63`](https://github.com/bryantoualy-del/RPG-Connect/commit/33d5ab63b38fcad457290d425a14a7be10aba7cf) |
-| Kentaro | [PR #12](https://github.com/bryantoualy-del/Kentaro/pull/12) | [`780b52c8`](https://github.com/bryantoualy-del/Kentaro/commit/780b52c83b9dce0c5aa3f21ede8d84647a3cb2c1) |
-| Brackmard | [PR #9](https://github.com/bryantoualy-del/Brackmard/pull/9) | [`7ed15bab`](https://github.com/bryantoualy-del/Brackmard/commit/7ed15bab98cc00da6c4337517b4c5e11e6bf7f2d) |
-| Samoth | [PR #12](https://github.com/bryantoualy-del/Samoth/pull/12) | [`50eaa7fe`](https://github.com/bryantoualy-del/Samoth/commit/50eaa7fe24ea2ead649578f55bb1e1e280e65b9e) |
-| Rufus | [PR #19](https://github.com/bryantoualy-del/Rufus/pull/19) | [`aa3f9906`](https://github.com/bryantoualy-del/Rufus/commit/aa3f9906b5aa7f588c84bd36d92bc0b7cb1011dd) |
-| Nans | [PR #10](https://github.com/bryantoualy-del/Nans/pull/10) | [`e7b7bb68`](https://github.com/bryantoualy-del/Nans/commit/e7b7bb685fa68dde0b4fe40f50a4ed7d6727ba26) |
-| Zephyr | [PR #10](https://github.com/bryantoualy-del/Zephyr/pull/10) | [`b5c5a37a`](https://github.com/bryantoualy-del/Zephyr/commit/b5c5a37a5b2eff9e0d2adde3171a34daedff6ede) |
+| RPG-Connect | [PR #5](https://github.com/bryantoualy-del/RPG-Connect/pull/5) | [`33d5ab63`](https://github.com/bryantoualy-del/RPG-Connect/commit/73baec9d9011030c02e51d1de0f0c95ab553b024) |
+| Kentaro | [PR #12](https://github.com/bryantoualy-del/Kentaro/pull/12) | [`780b52c8`](https://github.com/bryantoualy-del/Kentaro/commit/7b7a122f0e1ef08cafb55b5787bbcafd0cc9cdc6) |
+| Brackmard | [PR #9](https://github.com/bryantoualy-del/Brackmard/pull/9) | [`7ed15bab`](https://github.com/bryantoualy-del/Brackmard/commit/b106b64ee89fdd09cc152d8e398317558af18416) |
+| Samoth | [PR #12](https://github.com/bryantoualy-del/Samoth/pull/12) | [`50eaa7fe`](https://github.com/bryantoualy-del/Samoth/commit/40d08f92a54a19a7f7dc3a3c2211305af06648e4) |
+| Rufus | [PR #19](https://github.com/bryantoualy-del/Rufus/pull/19) | [`aa3f9906`](https://github.com/bryantoualy-del/Rufus/commit/ad39b6134002cb4cbfe6c78dfd731e0510236863) |
+| Nans | [PR #10](https://github.com/bryantoualy-del/Nans/pull/10) | [`e7b7bb68`](https://github.com/bryantoualy-del/Nans/commit/a1a56ba8adc88095713a16b56d11d2e55f608791) |
+| Zephyr | [PR #10](https://github.com/bryantoualy-del/Zephyr/pull/10) | [`b5c5a37a`](https://github.com/bryantoualy-del/Zephyr/commit/e33608899e3d8194ddf8c8dd03f00b47dcc9be52) |
 
 Encounter porte cette livraison, l’audit, la recette et les preuves. Les versions de ses dépendances sont figées dans le manifeste. Les branches dédiées ne changent pas les versions principales.
 

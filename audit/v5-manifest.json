@@ -2,31 +2,31 @@
   "version": 5,
   "repositories": {
     "RPG-Connect": {
-      "sha": "33d5ab63b38fcad457290d425a14a7be10aba7cf",
+      "sha": "73baec9d9011030c02e51d1de0f0c95ab553b024",
       "baseline": "204f044860ef18ef6268494236a682fa201c5202"
     },
     "Kentaro": {
-      "sha": "780b52c83b9dce0c5aa3f21ede8d84647a3cb2c1",
+      "sha": "7b7a122f0e1ef08cafb55b5787bbcafd0cc9cdc6",
       "baseline": "5f3b3bb502f8a2577e7c044832ad8e9ba999bf00"
     },
     "Brackmard": {
-      "sha": "7ed15bab98cc00da6c4337517b4c5e11e6bf7f2d",
+      "sha": "b106b64ee89fdd09cc152d8e398317558af18416",
       "baseline": "7dc3a089f25341e88c57620d711d7551214e7520"
     },
     "Samoth": {
-      "sha": "50eaa7fe24ea2ead649578f55bb1e1e280e65b9e",
+      "sha": "40d08f92a54a19a7f7dc3a3c2211305af06648e4",
       "baseline": "61bf079cdf70c18e7ffd387a940f4d64ba322574"
     },
     "Rufus": {
-      "sha": "aa3f9906b5aa7f588c84bd36d92bc0b7cb1011dd",
+      "sha": "ad39b6134002cb4cbfe6c78dfd731e0510236863",
       "baseline": "96123e3edb5da36b5a4cafd89b9df124ffff50e7"
     },
     "Nans": {
-      "sha": "e7b7bb685fa68dde0b4fe40f50a4ed7d6727ba26",
+      "sha": "a1a56ba8adc88095713a16b56d11d2e55f608791",
       "baseline": "7cff816a99f531e037a487740305d78c48c6f275"
     },
     "Zephyr": {
-      "sha": "b5c5a37a5b2eff9e0d2adde3171a34daedff6ede",
+      "sha": "e33608899e3d8194ddf8c8dd03f00b47dcc9be52",
       "baseline": "597b81b3be135895f5f82e572459057021959a36"
     }
   },
