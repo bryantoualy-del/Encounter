@@ -193,4 +193,4 @@ body:not(.combat-mode) .rpg-hit-popup {
 #rpgTableSettings [data-enemy-disclosure] p{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}#rpgTableSettings [data-enemy-disclosure] label{display:flex;align-items:center;gap:5px}
 
 /* WebKit paints native selects white unless custom appearance is explicit. */
-#rpgTableSettings select,.rpg-unified-journal .rpg-journal-toolbar select{-webkit-appearance:none;appearance:none;color-scheme:dark;background-color:#101d2c!important;color:#f5fbff!important;padding-right:30px;background-image:linear-gradient(45deg,transparent 50%,#f5fbff 50%),linear-gradient(135deg,#f5fbff 50%,transparent 50%);background-position:calc(100% - 14px) 50%,calc(100% - 9px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+#rpgTableSettings select,#mjJournalFilter{-webkit-appearance:none;appearance:none;color-scheme:dark;background-color:#101d2c!important;color:#f5fbff!important;padding-right:30px;background-image:linear-gradient(45deg,transparent 50%,#f5fbff 50%),linear-gradient(135deg,#f5fbff 50%,transparent 50%);background-position:calc(100% - 14px) 50%,calc(100% - 9px) 50%;background-size:5px 5px;background-repeat:no-repeat}
