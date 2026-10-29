@@ -1,6 +1,6 @@
 # RPG Connect V5 — livraison coordonnée
 
-**Code validé en environnement isolé ; déploiement de production à vérifier.** Les références, résultats et limites de cette livraison sont consignés ci-dessous. Aucun fichier de Pilot20 n’a été modifié.
+**Table Libre validé en environnement isolé ; livraison bloquée par la recette Guidée. Aucune fusion.** Les références, résultats et limites de cette livraison sont consignés ci-dessous. Aucun fichier de Pilot20 n’a été modifié.
 
 ## Comportement livré
 
@@ -71,3 +71,15 @@ Encounter porte cette livraison, l’audit, la recette et les preuves. Les versi
 - Le déploiement doit coordonner le serveur V5 puis les applications. Les anciens clients ne sont acceptés qu’en Guidé ; Table Libre demande la capacité V5. Les workflows Pages existants sont conservés.
 
 Pour une recette à la table : créer une session, vérifier Table Libre, connecter les six joueurs, préparer/valider les initiatives, afficher successivement un allié et un ennemi, consommer/corriger une réaction, modifier les PV personnels hors ligne, reconnecter puis recharger, et contrôler la séparation des journaux. Conserver Guidé comme option de session lorsque ses transactions sont souhaitées.
+
+## Blocages constatés — recette finale
+
+La [recette V5 finale](https://github.com/bryantoualy-del/Encounter/actions/runs/40963669476) passe sur Chromium et WebKit, avec le dernier serveur et les six Companions. Les 348 régressions et les 8 tests serveur passent. Les huit PR restent en brouillon et aucune branche principale n’a été modifiée.
+
+La [recette Guidée](https://github.com/bryantoualy-del/Encounter/actions/runs/40963669704) échoue :
+
+- Rufus : Image miroir consomme correctement 2 charges ; après annulation certifiée, une synchronisation rétablit 3 charges au lieu de conserver les 5 restaurées.
+- Brack : le contrôle combiné de Vigueur naine (soin, dé de vie, action et Esquive) échoue après une première annulation d’Esquiver.
+- Parcours collectif : le JdS de Peur de Zéphyr n’apparaît pas après la simulation de cinq rounds (audit/e2e.mjs:128). La collecte brute des trames dépasse ensuite la limite de sérialisation ; ce défaut du diagnostic ne constitue pas une preuve de réussite.
+
+Une correction exploratoire de l’annulation a été retirée car sa vérification isolée échouait. Elle n’est pas incluse dans les PR. Il reste à résoudre ces trois parcours, borner les trames de diagnostic et relancer la compatibilité Guidée avant fusion. Le statut préexistant ou introduit de ces défauts n’est pas établi ; aucune régression n’est déclarée résolue sans preuve.
