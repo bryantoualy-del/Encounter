@@ -182,3 +182,15 @@ body:not(.combat-mode) .rpg-hit-popup {
 @media(max-width:650px) {
   body:not(.combat-mode) .rpg-hit-popup {inset:auto 8px 8px 8px}
 }
+
+/* V5 session settings are a full-width section, outside the historic connection grid. */
+#rpgTableSettings{display:grid;gap:10px;margin:14px 0;padding:14px;border:1px solid #536b80;border-radius:10px;color:inherit;background:#101d2c}
+#rpgTableSettings label{display:grid;gap:6px;min-width:0}#rpgTableSettings p{margin:0;line-height:1.4}
+#rpgTableSettings input:not([type=checkbox]),#rpgTableSettings select{width:100%;min-height:42px;box-sizing:border-box;padding:8px;background:#101d2c;color:#f5fbff;border:1px solid #536b80;border-radius:7px}
+#rpgTableSettings>div{display:grid;grid-template-columns:1fr 1fr;gap:9px;align-items:end}
+#rpgTableSettings>div>label:first-child,#rpgTableSettings>div>small{grid-column:1/-1}
+#rpgTableSettings button{min-height:42px;padding:8px;border:1px solid #799cb4;border-radius:7px;background:#213b50;color:#fff}
+#rpgTableSettings [data-enemy-disclosure] p{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}#rpgTableSettings [data-enemy-disclosure] label{display:flex;align-items:center;gap:5px}
+
+/* WebKit paints native selects white unless custom appearance is explicit. */
+#rpgTableSettings select,#mjJournalFilter{-webkit-appearance:none;appearance:none;color-scheme:dark;background-color:#101d2c!important;color:#f5fbff!important;padding-right:30px;background-image:linear-gradient(45deg,transparent 50%,#f5fbff 50%),linear-gradient(135deg,#f5fbff 50%,transparent 50%);background-position:calc(100% - 14px) 50%,calc(100% - 9px) 50%;background-size:5px 5px;background-repeat:no-repeat}

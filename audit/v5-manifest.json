@@ -1,0 +1,34 @@
+{
+  "version": 5,
+  "repositories": {
+    "RPG-Connect": {
+      "sha": "116429451a52e39d2b82e391eecd5797010e0881",
+      "baseline": "204f044860ef18ef6268494236a682fa201c5202"
+    },
+    "Kentaro": {
+      "sha": "9daf4000e8cf50f4c0c4e5e04590ea7eeaffbe23",
+      "baseline": "5f3b3bb502f8a2577e7c044832ad8e9ba999bf00"
+    },
+    "Brackmard": {
+      "sha": "49260439f38bcf3d75efbf603c7f4c9a80bf11b3",
+      "baseline": "7dc3a089f25341e88c57620d711d7551214e7520"
+    },
+    "Samoth": {
+      "sha": "6bfa2efa4950ee121330da6157dde024d7f318bb",
+      "baseline": "61bf079cdf70c18e7ffd387a940f4d64ba322574"
+    },
+    "Rufus": {
+      "sha": "4b149428683372866010111e0afa90d97b00d273",
+      "baseline": "96123e3edb5da36b5a4cafd89b9df124ffff50e7"
+    },
+    "Nans": {
+      "sha": "2b21020474eab205b87ce649f18dd5bbcb5b6a0f",
+      "baseline": "7cff816a99f531e037a487740305d78c48c6f275"
+    },
+    "Zephyr": {
+      "sha": "8beb843ec046f38667d6a108b93e695c98820c77",
+      "baseline": "597b81b3be135895f5f82e572459057021959a36"
+    }
+  },
+  "encounterBaseline": "693cb70cb530bfe5c00d954d705ef270592c48b5"
+}

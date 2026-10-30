@@ -1,0 +1,87 @@
+{
+  "regression": {
+    "tests": 348,
+    "pass": 348,
+    "fail": 0
+  },
+  "v5_integration": {
+    "tests": 7,
+    "pass": 7,
+    "fail": 0
+  },
+  "server": {
+    "tests": 8,
+    "pass": 8,
+    "fail": 0
+  },
+  "environment": {
+    "node": "v24.22.1",
+    "ui_runtime": "JSDOM 30.1.1, real repository HTML and real canonical WebSocket server",
+    "browser_visual": "PASS: real Chromium and WebKit screenshots reviewed against immutable native baselines.",
+    "screenshots": 20,
+    "merge": "Requires successful final CI and reviewed visual evidence; PR state is authoritative.",
+    "deployment": "See PR #20 rollout evidence; workspace confirmed, canonical service rpgconnect identified with auto-deploy on main.",
+    "physical_devices": "not tested"
+  },
+  "first_browser_run": "https://github.com/bryantoualy-del/Encounter/actions/runs/40956513188",
+  "companion_bridges": {
+    "tests": 7,
+    "pass": 7,
+    "fail": 0
+  },
+  "icons": {
+    "tests": 4,
+    "pass": 4,
+    "fail": 0
+  },
+  "journal_activity": {
+    "tests": 12,
+    "pass": 12,
+    "fail": 0
+  },
+  "latest_browser_run": "https://github.com/bryantoualy-del/Encounter/actions/runs/41019701541",
+  "runtime_commit": "1715b5f3e3f44135e9507bc5825080ff7ff63b54",
+  "artifacts": [
+    {
+      "engine": "chromium",
+      "id": 12960782648
+    },
+    {
+      "engine": "webkit",
+      "id": 12960844063
+    }
+  ],
+  "server_commit": "116429451a52e39d2b82e391eecd5797010e0881",
+  "notes": [
+    "Certified undo acknowledges correction revision; independent health revisions preserve native resource costs.",
+    "Rufus native Bless attack bonus fixed and real modal inputs exercised.",
+    "Five-round regression waits for bus receipts without increasing server queue limits.",
+    "Physical tablets and production hosting are not claimed as verified."
+  ],
+  "guided": {
+    "collective": {
+      "checks": 116,
+      "pass": 116,
+      "errors": []
+    },
+    "brack": {
+      "checks": 30,
+      "pass": 30,
+      "errors": []
+    },
+    "rufus": {
+      "checks": 38,
+      "pass": 38,
+      "errors": []
+    },
+    "ci_evidence": "Latest Encounter CI checks and artifacts linked from PR #20"
+  },
+  "render": {
+    "serviceId": "srv-db7u0d49v7es73ctgtqg",
+    "url": "https://rpgconnect-mr10.onrender.com",
+    "healthPath": "/health",
+    "repo": "bryantoualy-del/RPG-Connect",
+    "autoDeploy": "main",
+    "baselineCommit": "204f044860ef18ef6268494236a682fa201c5202"
+  }
+}

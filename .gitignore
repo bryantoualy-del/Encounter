@@ -5,3 +5,5 @@ audit/results/
 audit/*/
 audit/architecture-run.log
 audit/architecture-unit.log
+
+/audit/v5-evidence/

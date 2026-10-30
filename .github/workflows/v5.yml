@@ -1,0 +1,45 @@
+name: RPG Connect V5 validation
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tablet-evidence:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: Encounter
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check out immutable V5 and baseline sources
+        run: node audit/v5-checkout.mjs
+        working-directory: Encounter
+      - run: npm ci
+        working-directory: Encounter
+      - run: npm ci
+        working-directory: RPG-Connect
+      - run: npm test
+        working-directory: RPG-Connect
+      - run: npm test
+        working-directory: Encounter
+      - run: npm run test:v5
+        working-directory: Encounter
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+        working-directory: Encounter
+      - run: npm run test:v5:browser
+        working-directory: Encounter
+        env:
+          RPG_BROWSER: ${{ matrix.browser }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rpg-v5-${{ matrix.browser }}
+          path: Encounter/audit/v5-evidence/
+          if-no-files-found: warn
