@@ -43,3 +43,8 @@ jobs:
           name: rpg-v5-${{ matrix.browser }}
           path: Encounter/audit/v5-evidence/
           if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: matrix.browser == 'chromium'
+        with:
+          name: chromium-runtime
+          path: ~/.cache/ms-playwright/chromium_headless_shell-*

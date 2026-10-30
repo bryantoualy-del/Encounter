@@ -52,6 +52,8 @@ jobs:
       - run: npm ci
         working-directory: ../RPG-Connect
       - run: npx playwright install --with-deps chromium
+      - name: Clear previous evidence
+        run: rm -rf audit/results audit/brack-results audit/rufus-results
       - run: npm run ${{ matrix.suite }}
       - name: E2E evidence
         if: always()
