@@ -20,7 +20,7 @@
     "browser_visual": "PASS: real Chromium and WebKit screenshots reviewed against immutable native baselines.",
     "screenshots": 20,
     "merge": "Requires successful final CI and reviewed visual evidence; PR state is authoritative.",
-    "deployment": "Production Render unverified: no workspace selected; no server deployment claimed.",
+    "deployment": "See PR #20 rollout evidence; workspace confirmed, canonical service rpgconnect identified with auto-deploy on main.",
     "physical_devices": "not tested"
   },
   "first_browser_run": "https://github.com/bryantoualy-del/Encounter/actions/runs/40956513188",
@@ -75,5 +75,13 @@
       "errors": []
     },
     "ci_evidence": "Latest Encounter CI checks and artifacts linked from PR #20"
+  },
+  "render": {
+    "serviceId": "srv-db7u0d49v7es73ctgtqg",
+    "url": "https://rpgconnect-mr10.onrender.com",
+    "healthPath": "/health",
+    "repo": "bryantoualy-del/RPG-Connect",
+    "autoDeploy": "main",
+    "baselineCommit": "204f044860ef18ef6268494236a682fa201c5202"
   }
 }
