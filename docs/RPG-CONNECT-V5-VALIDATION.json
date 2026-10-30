@@ -17,10 +17,10 @@
   "environment": {
     "node": "v24.22.1",
     "ui_runtime": "JSDOM 30.1.1, real repository HTML and real canonical WebSocket server",
-    "browser_visual": "PASS: real Chromium and WebKit screenshots reviewed. Native themes, two-column Group layout, active ally/enemy, scoped economy outlines and MJ controls/journal preserved.",
+    "browser_visual": "PASS: real Chromium and WebKit screenshots reviewed against immutable native baselines.",
     "screenshots": 20,
-    "merge": "BLOCKED: Guided browser failures; no main branch merged",
-    "deployment": "server deployment not verified: no Render workspace selected",
+    "merge": "Requires successful final CI and reviewed visual evidence; PR state is authoritative.",
+    "deployment": "Production Render unverified: no workspace selected; no server deployment claimed.",
     "physical_devices": "not tested"
   },
   "first_browser_run": "https://github.com/bryantoualy-del/Encounter/actions/runs/40956513188",
@@ -39,31 +39,41 @@
     "pass": 12,
     "fail": 0
   },
-  "latest_browser_run": "https://github.com/bryantoualy-del/Encounter/actions/runs/40963669476",
-  "runtime_commit": "c066b20b27efd0523154e40cf7e8a1c88acfd071",
+  "latest_browser_run": "https://github.com/bryantoualy-del/Encounter/actions/runs/41019701541",
+  "runtime_commit": "1715b5f3e3f44135e9507bc5825080ff7ff63b54",
   "artifacts": [
     {
       "engine": "chromium",
-      "id": 12936707353
+      "id": 12960782648
     },
     {
       "engine": "webkit",
-      "id": 12936732310
+      "id": 12960844063
     }
   ],
   "server_commit": "116429451a52e39d2b82e391eecd5797010e0881",
   "notes": [
-    "Exploratory undo revision changes were discarded after failing isolated verification.",
-    "No physical tablet test or production deployment verified."
+    "Certified undo acknowledges correction revision; independent health revisions preserve native resource costs.",
+    "Rufus native Bless attack bonus fixed and real modal inputs exercised.",
+    "Five-round regression waits for bus receipts without increasing server queue limits.",
+    "Physical tablets and production hosting are not claimed as verified."
   ],
   "guided": {
-    "run": "https://github.com/bryantoualy-del/Encounter/actions/runs/40963669704",
-    "status": "FAIL",
-    "blockers": [
-      "Rufus mirror undo resources overwritten",
-      "Brack Dwarven Fortitude combined result",
-      "Zephyr fear save absent after five rounds",
-      "Raw frame report exceeds serialization limit"
-    ]
+    "collective": {
+      "checks": 116,
+      "pass": 116,
+      "errors": []
+    },
+    "brack": {
+      "checks": 30,
+      "pass": 30,
+      "errors": []
+    },
+    "rufus": {
+      "checks": 38,
+      "pass": 38,
+      "errors": []
+    },
+    "ci_evidence": "Latest Encounter CI checks and artifacts linked from PR #20"
   }
 }
