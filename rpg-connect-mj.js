@@ -3,9 +3,9 @@
  const sessionMode=()=>state.encounter.rpgSessionMode||'table-free',tableMode=()=>sessionMode()==='table-free';
  const tableTacticalPayload=q=>Object.fromEntries(['version','combatId','syncEpoch','syncRevision','groupRevision','healthActorId','round','activeParticipantId','session','machine','text','requestId','conditionActors','targets'].filter(k=>q[k]!==undefined).map(k=>[k,q[k]]));
  const tableNativeStart=typeof processStartTurn==='function'?processStartTurn:()=>{},tableNativeEnd=typeof processEndTurn==='function'?processEndTurn:()=>{};
- const ids=['kentaro','samoth','brackmard','rufus','nans','zephyr'];
- const names={kentaro:'Kentaro',samoth:'Samoth',brackmard:'Brack Mard',rufus:'Rufus',nans:'Nans',zephyr:'Zéphyr'};
- const marks={kentaro:'K',samoth:'S',brackmard:'B',rufus:'R',nans:'N',zephyr:'Z'};
+ const ids=['kentaro','samoth','brackmard','rufus','nans','zephyr','kobe'];
+ const names={kentaro:'Kentaro',samoth:'Samoth',brackmard:'Brack Mard',rufus:'Rufus',nans:'Nans',zephyr:'Zéphyr',kobe:'Kobe Kozzo'};
+ const marks={kentaro:'K',samoth:'S',brackmard:'B',rufus:'R',nans:'N',zephyr:'Z',kobe:'Ko'};
  const savedKey='rpg-connect:mj:v1',bindingsKey='rpg-connect:bindings:v1',fightKey='rpg-connect:fight:v1';
  let bindings={};try{bindings=JSON.parse(localStorage.getItem(bindingsKey)||'{}')}catch{}
  let serverCapabilities=[],socket=null,active=false,connected=false,retry=0,retryTimer=null,room='',players=[],pending=new Map(),decisionCommands=new Map(),decisionTimers=new Map(),recentAttackRolls=new Map(),attackTargets=new Map(),attackTargetTimers=new Map(),attackWatchTimers=new Map(),seenEventIds=new Set(),pendingTurnEnd=null,invites={},lastStates={},selectedTargets={},selectedTargetSets={},fight={phase:'idle',requestId:null,roster:[],rolls:{},validated:{}},sharedHealthTargets=new Set();try{const stored=JSON.parse(localStorage.getItem('encounter-rpg-shared-health-targets')||'[]');if(Array.isArray(stored))sharedHealthTargets=new Set(stored.filter(id=>typeof id==='string'))}catch{}try{const savedFight=JSON.parse(localStorage.getItem(fightKey)||'null');if(savedFight&&['preparation','fight','ended'].includes(savedFight.phase)&&Array.isArray(savedFight.roster)){fight={phase:savedFight.phase,requestId:savedFight.requestId||null,roster:savedFight.roster.filter(id=>ids.includes(id)),rolls:savedFight.rolls&&typeof savedFight.rolls==='object'?savedFight.rolls:{},validated:savedFight.validated&&typeof savedFight.validated==='object'?savedFight.validated:{}}}}catch{} const networkEvents=[];
@@ -36,8 +36,8 @@
  function ensureRoomCode(){let value=roomField.value.trim().toUpperCase();if(!value){value=makeRoomCode();roomField.value=value}return value}
  const inviteString=id=>'RPGCONNECT|'+endpointField.value.trim()+'|'+room+'|'+id+'|'+(invites[id]||'');
  function send(m){if(tableMode()&&m.type==='activity-publish')return false;if(tableMode()&&m.type==='command'){const e=m.event;if(!['state:sync','targets:set','target:clear','message:gm','initiative:request','initiative:retry','turn:grant','turn:close','defense:turn-ended','hp:set','tempHp:set','conditions:set'].includes(e.type))return false;if(!['hp:set','tempHp:set','conditions:set'].includes(e.type))m={...m,event:{...e,payload:tableTacticalPayload(e.payload||{})}};}if(socket?.readyState!==WebSocket.OPEN)return false;socket.send(JSON.stringify({v:1,...m}));return true}
- const stableIds={kentaro:'cc-kentaro',samoth:'cc-samoth',brackmard:'cc-brackmard',rufus:'cc-rufus',nans:'cc-nans',zephyr:'cc-zephyr'};
- const stableModels={kentaro:'cc-kentaro-model',samoth:'cc-samoth-model',brackmard:'cc-brackmard-model',rufus:'cc-rufus-model',nans:'cc-nans-model',zephyr:'cc-zephyr-model'};
+ const stableIds={kentaro:'cc-kentaro',samoth:'cc-samoth',brackmard:'cc-brackmard',rufus:'cc-rufus',nans:'cc-nans',zephyr:'cc-zephyr',kobe:'cc-kobe'};
+ const stableModels={kentaro:'cc-kentaro-model',samoth:'cc-samoth-model',brackmard:'cc-brackmard-model',rufus:'cc-rufus-model',nans:'cc-nans-model',zephyr:'cc-zephyr-model',kobe:'cc-kobe-model'};
  function ensureOnlineParticipant(id){
   let p=state.encounter.participants.find(x=>x.id===bindings[id]||x.id===stableIds[id]);if(p){if(bindings[id]!==p.id){bindings[id]=p.id;localStorage.setItem(bindingsKey,JSON.stringify(bindings));}return p;}
   const model=state.monsters.find(m=>m.id===stableModels[id]);if(!model||typeof makeParticipant!=='function')return null;
@@ -738,7 +738,16 @@
   const epoch=String(value.stateEpoch||'legacy'),revision=Number(value.stateRevision)||0,prior=stateWatermarks.get(id);
   if(prior&&(prior.retired.has(epoch)||prior.epoch===epoch&&revision<=prior.revision))return;
   const retired=prior?.retired||new Set();if(prior&&prior.epoch!==epoch)retired.add(prior.epoch);stateWatermarks.set(id,{epoch,revision,retired});
-  lastStates[id]=JSON.parse(JSON.stringify(value));const p=participant(id);if(!p)return;
+  lastStates[id]=JSON.parse(JSON.stringify(value));
+  // Kobe has no static library model. Instantiate only after its owner supplies actual HP/AC.
+  if(id==='kobe'&&!participant(id)&&Number.isFinite(value.ac)){
+   const matches=state.encounter.participants.filter(p=>['player','ally'].includes(p.kind)&&['kobe','kobekozzo'].includes(normalizeName(p.name)));
+   if(matches.length>1){note('Plusieurs Kobe possibles : liez explicitement le participant.');return;}
+   let actor=matches[0];
+   if(!actor){actor=ccParticipant({id:stableIds.kobe,name:names.kobe,hp:h.max,ac:value.ac});preserveFightPosition(()=>state.encounter.participants.push(actor));}
+   bindings.kobe=actor.id;localStorage.setItem(bindingsKey,JSON.stringify(bindings));
+  }
+  const p=participant(id);if(!p)return;
   p.hp=Math.min(h.current,h.max);p.maxHp=h.max;p.tempHp=h.temp;p.reactionUsed=value.turn?.reaction===false;
   if(Number.isFinite(value.ac))p.ac=value.ac;
   p.localConcentration=value.concentration?{name:value.concentration}:null;
