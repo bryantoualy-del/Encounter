@@ -106,3 +106,18 @@ body:not(.combat-mode) #btnCombatLock { display: none; }
   .combat-mode .mode-switch { grid-column: 1 / -1; grid-row: 2; width: 100%; }
   .combat-mode .mode-btn { flex: 1; }
 }
+
+/* V1.3 — target-first MJ combat layout, compact initiative and uninterrupted RPG access */
+@media (min-width: 761px) {
+  .combat-mode .combat-view { grid-template-columns: minmax(270px, .86fr) minmax(0, 1.4fr); }
+}
+.combat-mode .table-row .pyro-contact { display:none !important; }
+.combat-mode .table-row.combat-card { min-height: 52px; padding-block: 5px; }
+.combat-mode .combat-list { gap: 5px; }
+.combat-mode .roster-legend { padding-block: 3px; }
+.combat-mode #activeDetail .detail-tabs > button { min-height: 36px; }
+.combat-mode #activeDetail .table-target-actions button { min-height: 42px; }
+.combat-mode #activeDetail .target-portrait-header { gap: 8px; }
+.combat-mode .combat-journal { min-height: 40px; }
+.combat-mode #rpgMjCockpit { display:none !important; }
+body.combat-mode { --rpg-live-height: 0px !important; }
