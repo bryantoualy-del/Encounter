@@ -110,6 +110,12 @@
           <span id="multiCount" class="count-badge hidden">0</span>
         </div>
       </div>
+      <div class="combat-weight-control" aria-label="Répartition de la largeur des panneaux">
+        <label for="combatWeightSlider">Init. <output id="combatInitiativeWeight" for="combatWeightSlider">40 %</output></label>
+        <input id="combatWeightSlider" type="range" min="35" max="60" step="5" value="40" aria-label="Largeur du panneau Initiative" aria-valuetext="Initiative 40 %, cible 60 %">
+        <span>Cible <output id="combatTargetWeight">60 %</output></span>
+        <button id="combatWeightReset" type="button" title="Répartition 40 / 60 par défaut" aria-label="Réinitialiser la répartition à 40 % initiative et 60 % cible">↺</button>
+      </div>
       <div class="roster-legend"><span>INIT.</span><span>COMBATTANT</span><span>PV</span><span>CA</span><span></span></div><div id="tableReminders"></div><div id="combatList" class="combat-list"></div>
     </section>
     <section class="panel detail-panel" aria-label="Fiche du combattant sélectionné"><button id="btnCloseDetail" class="detail-close">← Retour aux combattants</button>
@@ -331,7 +337,8 @@
 <link rel="stylesheet" href="rpg-activity.css?v=5-table-free-4">
 <script src="rpg-activity.js?v=20261013-haste-menu"></script>
 <script src="mj-collective.js?v=20261013-haste-menu"></script>
-<link rel="stylesheet" href="combat-view.css?v=target-first-20261108">
+<link rel="stylesheet" href="combat-view.css?v=column-weight-20261108">
+<script src="combat-width.js?v=column-weight-20261108"></script>
 </body>
 </html>
 
