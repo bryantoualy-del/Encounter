@@ -121,3 +121,45 @@ body:not(.combat-mode) #btnCombatLock { display: none; }
 .combat-mode .combat-journal { min-height: 40px; }
 .combat-mode #rpgMjCockpit { display:none !important; }
 body.combat-mode { --rpg-live-height: 0px !important; }
+
+/* Encounter adjustable width ratio: iPad/desktop, local and reversible. */
+@media (min-width: 761px) {
+  .combat-mode .combat-view {
+    grid-template-columns: minmax(0, var(--initiative-column-fr, 40fr)) minmax(0, var(--target-column-fr, 60fr));
+  }
+}
+.combat-weight-control {
+  display: grid;
+  grid-template-columns: auto minmax(40px, 1fr) auto auto;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px 7px;
+  border-bottom: 1px solid #30485d;
+  color: #bcd0df;
+  font-size: .72rem;
+  white-space: nowrap;
+}
+.combat-weight-control output { color: #efd083; font-variant-numeric: tabular-nums; font-weight: 750; }
+.combat-weight-control input[type="range"] {
+  width: 100%;
+  min-width: 0;
+  height: 28px;
+  margin: 0;
+  accent-color: #e5bd69;
+  cursor: ew-resize;
+  touch-action: pan-y;
+}
+.combat-weight-control button {
+  width: 30px;
+  min-width: 30px;
+  height: 30px;
+  min-height: 30px;
+  padding: 0;
+  border: 1px solid #425d73;
+  border-radius: 7px;
+  background: #162c3f;
+  color: #f3d18a;
+  font-size: 18px;
+}
+body:not(.combat-mode) .combat-weight-control { display: none; }
+@media (max-width: 760px) { .combat-weight-control { display: none; } }
