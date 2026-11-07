@@ -1,8 +1,14 @@
 'use strict';
 /* V4 : présentation de table, moteur et sauvegardes V3 conservés. */
-for(const id of ['btnEncounterManager','btnLibraryDrawer','btnJournalDrawer','btnCombatLock']){
-  const button=document.getElementById(id);document.getElementById('moreMenu').prepend(button);
+for(const id of ['btnEncounterManager','btnLibraryDrawer','btnJournalDrawer']){
+  $('#encounterTools').append(document.getElementById(id));
 }
+document.addEventListener('DOMContentLoaded',()=>{
+ const connect=$('#rpgMjOpen');
+ if(connect)$('#btnMore').before(connect);
+ const guide=$('#btnEncounterGuide');
+ if(guide)$('#btnDensity').after(guide);
+});
 document.getElementById('btnModePrep').textContent='Préparation';
 document.getElementById('btnModeCombat').textContent='Combat';
 document.getElementById('btnMore').setAttribute('aria-label','Rencontres, bibliothèque et outils');
@@ -11,6 +17,7 @@ document.getElementById('btnCombatLock').setAttribute('aria-label','Verrouiller 
 let tableDetailOpen=false;
 let lastTurnId=null;
 let lastSelectedId=null;
+let closedDetailSection=null;
 function tableRow(p,active){
  const lair=isLair(p),selected=p.id===selectedParticipant()?.id,chosen=ui.multiSelection.has(p.id),phase=currentPhase(p);
  const select=ui.multiMode&&!lair?`data-multi="${esc(p.id)}"`:`data-select="${esc(p.id)}"`;
@@ -18,7 +25,7 @@ function tableRow(p,active){
  return `<article class="table-row combat-card ${roleClass(p)} ${targetClassFor(p)} ${flashClassFor(p)} ${p.id===active?.id?'active':''} ${selected?'selected':''} ${chosen?'multi-selected':''} ${p.hp<=0&&!lair?'down':''}" data-row-id="${esc(p.id)}">
  <button class="row-select" ${select} aria-label="${ui.multiMode?'Cibler':'Sélectionner'} ${esc(participantLabel(p))}" aria-pressed="${ui.multiMode?chosen:selected}"></button>
  <span class="table-init">${ui.multiMode&&!lair?(chosen?'☑':'☐'):p.initiative}</span>
- <div class="table-name"><strong>${esc(participantLabel(p))}</strong><div class="table-meta"><span class="table-role ${p.kind}">${lair?'REPAIRE':roleLabel(p)}</span>${p.id===active?.id?'<span class="playing-tag">À JOUER</span>':''}${!lair?economy:''}${(p.rpgEffects||[]).some(e=>e.kind==='spiritualWeapon')?'<span class="spiritual-pair" aria-label="Deux poings spirituels attachés à Zéphyr">✊ ✊</span>':''}</div>${!lair?brackContactControl(p):''}
+ <div class="table-name"><div class="table-name-line"><strong>${esc(participantLabel(p))}</strong>${p.id===active?.id?'<span class="playing-tag">À jouer</span>':''}${selected&&!ui.multiMode?'<span class="target-tag">Cible</span>':''}</div><div class="table-meta"><span class="table-role ${p.kind}">${lair?'REPAIRE':roleLabel(p)}</span>${!lair?economy:''}${(p.rpgEffects||[]).some(e=>e.kind==='spiritualWeapon')?'<span class="spiritual-pair" aria-label="Deux poings spirituels attachés à Zéphyr">✊ ✊</span>':''}</div>${!lair?brackContactControl(p):''}
  ${(p.conditions.length||phase||p.hp<=0&&!lair)?`<div class="table-conditions">${p.hp<=0&&!lair?'<span class="table-condition zero">À 0 PV</span>':''}${phase?`<span class="table-condition">${esc(phase.name)}</span>`:''}${p.conditions.map(c=>`<span class="table-condition" title="${esc(conditionDurationLabel(c))}">${window.RPGConnectIcons?.condition?.(c.name)?`<img class="condition-icon" src="${window.RPGConnectIcons.condition(c.name)}" alt="">`:""}${esc(c.name)}${conditionShort(c)}</span>`).join('')}</div>`:''}</div>
  <div class="table-hp ${hpClass(p)}">${lair?'<small>Action<br>de repaire</small>':`<div><b>${p.hp}</b><small> / ${p.maxHp}</small></div>${p.tempHp?`<em>+${p.tempHp} temp.</em>`:''}<div class="table-health"><i style="width:${hpPct(p)}%"></i></div>`}</div>
  <div class="table-ac">${lair?'—':effectiveAc(p)}</div>
@@ -26,6 +33,7 @@ function tableRow(p,active){
 }
 renderCombat=function(){
  const active=activeParticipant(),list=sortedParticipants();let previous=null;
+ $('#initiativeCount').textContent=`(${list.length})`;
  $('#combatList').innerHTML=list.length?list.map(p=>{
  let heading='';if(p.groupId&&p.groupId!==previous){const members=list.filter(q=>q.groupId===p.groupId);heading=`<div class="table-group"><span>${esc(p.baseName)} · ${members.filter(q=>q.hp>0).length}/${members.length} actifs</span>${ui.multiMode?`<button data-multi-group="${esc(p.groupId)}">Tout cibler</button>`:''}</div>`;}previous=p.groupId;return heading+tableRow(p,active);
  }).join(''):'<div class="table-empty"><span>⚔</span><h2>La table est prête.</h2><p>Ajoute tes personnages et adversaires pour commencer.</p><button id="btnEmptyLibrary" class="primary">+ Ajouter des combattants</button></div>';
@@ -38,6 +46,22 @@ renderDetail=function(){
  const eyebrow=$('#activeDetail .detail-header .eyebrow');if(eyebrow)eyebrow.textContent=p.id===activeParticipant()?.id?'À JOUER · FICHE':'CIBLE SÉLECTIONNÉE · FICHE';
  const head=$('#activeDetail .detail-header');if(head&&!isLair(p)&&!head.querySelector('[data-edit-participant]'))head.insertAdjacentHTML('beforeend',`<button class="ghost small" data-edit-participant="${esc(p.id)}" aria-label="Modifier ${esc(participantLabel(p))}">Modifier</button>`);
  const conditions=$('#activeDetail .detail-tabs');if(conditions&&p.conditions.length)conditions.insertAdjacentHTML('beforebegin',`<button class="detail-condition-summary" data-open-condition="${esc(p.id)}">${p.conditions.map(c=>esc(c.name)+conditionShort(c)).join(' · ')} · gérer</button>`);
+ if(!conditions)return;
+ conditions.prepend(conditions.querySelector('[data-detail-tab="sheet"]'));
+ const body=$('#activeDetail .detail-tab-body');
+ body.id='tableDetailSection';
+ body.hidden=closedDetailSection===ui.detailTab;
+ for(const button of conditions.querySelectorAll('[data-detail-tab]')){
+  const active=button.dataset.detailTab===ui.detailTab;
+  button.setAttribute('aria-controls',body.id);
+  button.setAttribute('aria-expanded',String(active&&!body.hidden));
+  if(active)button.after(body);
+ }
+ conditions.insertAdjacentHTML('beforebegin',`<div class="table-target-actions" role="group" aria-label="Actions sur ${esc(participantLabel(p))}">
+  <button type="button" data-table-target-panel="damage">Dégâts</button>
+  <button type="button" data-table-target-panel="heal">Soins</button>
+  <button type="button" data-table-target-panel="states">États</button>
+ </div>`);
 };
 const tableOriginalQuick=renderQuickbar;
 renderQuickbar=function(){
@@ -63,8 +87,11 @@ render=function(){
  const active=activeParticipant();$('#tableReminders').innerHTML=active?renderTurnReminders(active,modelFor(active)):'';$('#nowPlaying').textContent=active?participantLabel(active):'Aucun combattant';
  $('#btnReturnActive').disabled=!active;$('#btnNextTurn').disabled=!active||!!ui.targeting;
  $('#btnUndo').disabled=!undoStack.length;$('#btnUndo').title=undoStack.length?'Annuler la dernière modification':'Aucune modification à annuler';
- const lock=$('#btnCombatLock');lock.textContent=state.ui.locked?'🔒 Déverrouiller la structure':'🔓 Verrouiller la structure';
- const event=state.encounter.log[0];$('#lastEvent').textContent=event?`${event.time} · ${event.text}`:'Sélectionne une cible, saisis le montant, puis applique.';
+ const lock=$('#btnCombatLock');lock.textContent=state.ui.locked?'🔒':'🔓';
+ lock.title=state.ui.locked?'Déverrouiller la structure':'Verrouiller la structure';
+ lock.setAttribute('aria-label',lock.title);lock.setAttribute('aria-pressed',String(state.ui.locked));
+ $('#combatModeBadge').textContent=state.encounter.rpgSessionMode==='guided'?'Guidé':'Table libre';
+ const event=state.encounter.log[0];$('#lastEvent').textContent=event?`${event.time} · ${event.text}`:'La rencontre est prête.';
  if(ui.targeting)tableDetailOpen=false;
  document.body.classList.toggle('table-detail-open',tableDetailOpen&&state.ui.mode==='combat');
  list.scrollTop=listTop;const body=$('#activeDetail .detail-tab-body');if(body)body.scrollTop=lastSelectedId===selectedParticipant()?.id?detailTop:0;lastSelectedId=selectedParticipant()?.id;
@@ -79,6 +106,17 @@ showActionPopup=function(msg,title='Résolution'){
 };
 function openTableDetail(id){if(id)state.encounter.selectedId=id;tableDetailOpen=true;saveState();render();$('#btnCloseDetail').focus();}
 $('#btnMobileDetail').addEventListener('click',()=>openTableDetail());
+$('#activeDetail').addEventListener('click',e=>{
+ const section=e.target.closest('[data-detail-tab]');
+ if(!section)return;
+ if(section.dataset.detailTab!==ui.detailTab){closedDetailSection=null;return;}
+ const body=$('#tableDetailSection');
+ if(!body)return;
+ e.stopPropagation();
+ body.hidden=!body.hidden;
+ closedDetailSection=body.hidden?ui.detailTab:null;
+ section.setAttribute('aria-expanded',String(!body.hidden));
+});
 $('#btnCloseDetail').addEventListener('click',()=>{tableDetailOpen=false;render();$('#btnMobileDetail').focus();});
 $('#btnReturnActive').addEventListener('click',()=>{const p=activeParticipant();if(!p)return;state.encounter.selectedId=p.id;ui.multiMode=false;ui.multiSelection.clear();saveState();render();const row=[...$('#combatList').querySelectorAll('[data-row-id]')].find(el=>el.dataset.rowId===p.id);row?.scrollIntoView({block:'nearest'});});
 $('#quickAmount').addEventListener('input',renderQuickbar);
@@ -86,10 +124,13 @@ $('#quickAmount').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDe
 $('#importFile').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{$('#importText').value=await file.text();toast('Fichier chargé. Appuie sur Importer.');}catch{toast('Impossible de lire ce fichier.');}e.target.value='';});
 addEventListener('click',e=>{const button=e.target.closest('button');if(!button)return;if(button.dataset.tableSheet){if(ui.targeting){resolveTargetSelection(button.dataset.tableSheet);return;}openTableDetail(button.dataset.tableSheet);}if(button.id==='btnEmptyLibrary')openDrawer('library');});
 addEventListener('keydown',e=>{
- if(e.key==='Escape'){tableDetailOpen=false;closeDrawers();$('#moreMenu').classList.add('hidden');document.body.classList.remove('table-detail-open');}
+ if(e.key==='Escape'){
+  if(!$('#moreMenu').classList.contains('hidden')){setMoreMenu(false);$('#btnMore').focus();return;}
+  tableDetailOpen=false;closeDrawers();document.body.classList.remove('table-detail-open');
+ }
  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'&&!e.target.closest('input,textarea,select,[contenteditable]')&&!document.querySelector('dialog[open]')){e.preventDefault();undo();}
 });
-addEventListener('click',e=>{if(!e.target.closest('#moreMenu,#btnMore'))$('#moreMenu').classList.add('hidden');});
+addEventListener('click',e=>{if(!e.target.closest('#moreMenu,#btnMore'))setMoreMenu(false);});
 // Measure actual occupied space, including safe-area insets and text wrapping.
 if('ResizeObserver' in window){const obs=new ResizeObserver(()=>{for(const [selector,variable] of [['.topbar','--top-height'],['.roundbar','--round-height'],['#quickBar','--dock-height'],['#targetingBanner','--target-height']]){const el=$(selector);document.documentElement.style.setProperty(variable,el.getBoundingClientRect().height+'px');}});['.topbar','.roundbar','#quickBar','#targetingBanner'].forEach(s=>obs.observe($(s)));}
 render();
