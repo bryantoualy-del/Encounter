@@ -1,4 +1,4 @@
-const CACHE='encounter-combat-view-1';
+const CACHE='encounter-target-first-20261108';
 const ASSETS=[
  './rpg-journal-ui.js?v=5-table-free-4',
  './rpg-activity.js?v=20261013-haste-menu',
@@ -8,7 +8,7 @@ const ASSETS=[
  './rpg-reaction-authority.js?v=hex-armor-20261009-1',
  './rpg-nans-authority.js?v=nans-20261008-1',
  './rpg-kentaro-armor-rules.js?v=20261009-1',
- './rpg-connect-mj.js?v=5-table-free-1',
+ './rpg-connect-mj.js?v=target-first-20261108',
  './mj-panels.js?v=combat-view-1',
  './rpg-samoth-perception.js?v=perception-20261009-1',
 
@@ -84,7 +84,7 @@ const ASSETS=[
 
   './',
   './index.html',
-  './combat-view.css?v=1',
+  './combat-view.css?v=target-first-20261108',
   './styles.css?v=typed-damage-20261010-1',
   './table.css?v=7',
   './table.js?v=combat-view-1',
