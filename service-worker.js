@@ -1,4 +1,4 @@
-const CACHE='encounter-v5-table-free-4';
+const CACHE='encounter-combat-view-1';
 const ASSETS=[
  './rpg-journal-ui.js?v=5-table-free-4',
  './rpg-activity.js?v=20261013-haste-menu',
@@ -9,7 +9,7 @@ const ASSETS=[
  './rpg-nans-authority.js?v=nans-20261008-1',
  './rpg-kentaro-armor-rules.js?v=20261009-1',
  './rpg-connect-mj.js?v=5-table-free-1',
- './mj-panels.js?v=concentration-turn-20261009-1',
+ './mj-panels.js?v=combat-view-1',
  './rpg-samoth-perception.js?v=perception-20261009-1',
 
  './encounter-guide.js?v=20261010-typed-1',
@@ -18,7 +18,7 @@ const ASSETS=[
  './rpg-rufus-authority.js?v=rufus-20261009-1',
  './mj-decisions.js?v=select-health-20261009',
  './mj-finishes.css?v=1',
- './mj-portraits.js?v=1',
+ './mj-portraits.js?v=combat-view-1',
  './rpg-kentaro-authority.js?v=20261014-lot4-final',
  './rpg-zephyr-authority.js?v=20261014-lot4-final',
   './rpg-samoth-perception.js?v=1',
@@ -84,9 +84,10 @@ const ASSETS=[
 
   './',
   './index.html',
+  './combat-view.css?v=1',
   './styles.css?v=typed-damage-20261010-1',
   './table.css?v=7',
-  './table.js?v=20261014-lot4-final',
+  './table.js?v=combat-view-1',
   './rpg-connect-mj.css?v=5-table-free-2',
   './rpg-brack-authority.js?v=20261014-lot4-final',
   './rpg-connect-mj.js?v=5-table-free-1',
@@ -99,7 +100,7 @@ const ASSETS=[
   './rpg-connect-icon-registry.js?v=cloudflare-20261009',
   './rpg-target-names.js?v=1',
   './encounter-typed-damage.js?v=typed-damage-20261010-1',
- './app.js?v=20261014-lot4-final',
+ './app.js?v=combat-view-1',
   './builtins.js?v=4.2',
   './assistant-dice-engine.js?v=1',
   './assistant-dice.css?v=1',
