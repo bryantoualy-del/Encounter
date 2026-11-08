@@ -1,4 +1,4 @@
-const CACHE='encounter-columns-20261108';
+const CACHE='encounter-ipad-header-sharp-20261108';
 const ASSETS=[
  './rpg-journal-ui.js?v=5-table-free-4',
  './rpg-activity.js?v=20261013-haste-menu',
@@ -86,7 +86,7 @@ const ASSETS=[
   './index.html',
   './combat-view.css?v=column-weight-20261108',
  './combat-width.js?v=column-weight-20261108',
-  './styles.css?v=typed-damage-20261010-1',
+  './styles.css?v=ipad-header-sharp-20261108',
   './table.css?v=7',
   './table.js?v=combat-view-1',
   './rpg-connect-mj.css?v=5-table-free-2',
