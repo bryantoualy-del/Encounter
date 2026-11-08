@@ -1,4 +1,4 @@
-const CACHE='encounter-ipad-header-sharp-20261108';
+const CACHE='encounter-ux-20261108';
 const ASSETS=[
  './rpg-journal-ui.js?v=5-table-free-4',
  './rpg-activity.js?v=20261013-haste-menu',
@@ -8,7 +8,7 @@ const ASSETS=[
  './rpg-reaction-authority.js?v=hex-armor-20261009-1',
  './rpg-nans-authority.js?v=nans-20261008-1',
  './rpg-kentaro-armor-rules.js?v=20261009-1',
- './rpg-connect-mj.js?v=target-first-20261108',
+ './rpg-connect-mj.js?v=encounter-ux-20261108',
  './mj-panels.js?v=combat-view-1',
  './rpg-samoth-perception.js?v=perception-20261009-1',
 
@@ -84,14 +84,14 @@ const ASSETS=[
 
   './',
   './index.html',
-  './combat-view.css?v=column-weight-20261108',
- './combat-width.js?v=column-weight-20261108',
+  './combat-view.css?v=encounter-ux-20261108',
+ './combat-width.js?v=encounter-ux-20261108',
   './styles.css?v=ipad-header-sharp-20261108',
   './table.css?v=7',
   './table.js?v=combat-view-1',
-  './rpg-connect-mj.css?v=5-table-free-2',
+  './rpg-connect-mj.css?v=encounter-ux-20261108',
   './rpg-brack-authority.js?v=20261014-lot4-final',
-  './rpg-connect-mj.js?v=5-table-free-1',
+  './rpg-connect-mj.js?v=encounter-ux-20261108',
   './rpg-condition-rolls.js?v=brack-20261009-1',
   './rpg-health-authority.js?v=kentaro-20261008',
   './rpg-summon-authority.js?v=samoth-effects-1',
