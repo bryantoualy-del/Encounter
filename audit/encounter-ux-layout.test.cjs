@@ -24,10 +24,22 @@ test('PWA header remains unblurred and assets share version',()=>{
  const html=read('index.html'),sw=read('service-worker.js'),css=read('styles.css');
  assert.match(html,/apple-mobile-web-app-status-bar-style" content="black"/);
  for(const asset of ['rpg-connect-mj.js','rpg-connect-mj.css','combat-width.js','combat-view.css']){
-   const ref=asset+'?v=encounter-ux-20261108';
+   const ref=asset+'?v='+(asset==='combat-view.css'?'header-opaque-final-20261108':'encounter-ux-20261108');
    assert.ok(html.includes(ref),ref+' missing in HTML');
    assert.ok(sw.includes(ref),ref+' missing in cache');
  }
- assert.match(sw,/encounter-ux-20261108/);
+ assert.match(sw,/encounter-header-opaque-final-20261108/);
  assert.ok(!/\.topbar\{[^}]*backdrop-filter\s*:\s*blur\(/.test(css));
+});
+
+test('final iPad header has a fully opaque background and no blur, with PWA cache refresh',()=>{
+ const base=read('styles.css'),last=read('combat-view.css'),html=read('index.html'),sw=read('service-worker.js');
+ assert.match(base,/\.topbar\{[^}]*background:#0d1723/);
+ assert.match(last,/\.topbar,body\.combat-mode \.topbar\{/);
+ assert.match(last,/background:#0d1723 !important/);
+ assert.match(last,/-webkit-backdrop-filter:none !important/);
+ assert.match(last,/height:env\(safe-area-inset-top,0px\)/);
+ assert.match(html,/styles\.css\?v=header-opaque-final-20261108/);
+ assert.match(html,/service-worker\.js\?v=header-opaque-final-20261108/);
+ assert.match(sw,/styles\.css\?v=header-opaque-final-20261108/);
 });
