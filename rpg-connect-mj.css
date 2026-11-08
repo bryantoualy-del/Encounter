@@ -194,3 +194,49 @@ body:not(.combat-mode) .rpg-hit-popup {
 
 /* WebKit paints native selects white unless custom appearance is explicit. */
 #rpgTableSettings select,#mjJournalFilter{-webkit-appearance:none;appearance:none;color-scheme:dark;background-color:#101d2c!important;color:#f5fbff!important;padding-right:30px;background-image:linear-gradient(45deg,transparent 50%,#f5fbff 50%),linear-gradient(135deg,#f5fbff 50%,transparent 50%);background-position:calc(100% - 14px) 50%,calc(100% - 9px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+
+/* Encounter compact RPG Connect V1.3: settings remain accessible, target stays uncovered. */
+#rpgMjDialog.rpg-mj-dialog[open]{box-sizing:border-box;overflow:hidden;max-width:calc(100vw - 16px)}
+#rpgMjDialog .modal-shell{box-sizing:border-box;min-width:0;max-height:inherit;overflow-y:auto;overflow-x:hidden;padding:12px}
+#rpgMjDialog .modal-head{margin-bottom:4px}
+#rpgMjDialog .modal-head h2{font-size:1.13rem}
+#rpgMjDialog #rpgMjStatus{margin:4px 0 9px;color:#b8cbd9;overflow-wrap:anywhere;font-size:.78rem}
+#rpgMjDialog .rpg-mj-connection{margin:0 0 8px}
+#rpgMjDialog .rpg-mj-connection>.rpg-mj-config{margin-top:10px}
+#rpgMjDialog .rpg-mj-connection>p{margin:8px 0 0}
+#rpgMjDialog .rpg-mj-connection>summary,
+#rpgMjDialog #rpgTableSettings details>summary,
+#rpgMjDialog .rpg-mj-share-options>summary{cursor:pointer;color:#bfd3e4;font-size:.78rem;line-height:1.4;overflow-wrap:anywhere}
+#rpgMjDialog .rpg-mj-fight{margin:8px 0;padding:9px;min-width:0}
+#rpgMjDialog .rpg-mj-fight-head{display:grid;grid-template-columns:1fr;gap:7px}
+#rpgMjDialog .rpg-mj-fight-head strong{font-size:.9rem}
+#rpgMjDialog .rpg-mj-fight-head .rpg-mj-row{display:flex;flex-wrap:wrap;gap:6px;margin:0}
+#rpgMjDialog .rpg-mj-fight-head .rpg-mj-row>button{min-width:0;min-height:36px;padding:6px 8px;font-size:.75rem}
+#rpgMjDialog #rpgMjSyncTargets{border-color:#b88d51;background:#354450;color:#fff0cb}
+#rpgMjDialog .rpg-mj-share-options{width:100%;font-size:.77rem}
+#rpgMjDialog .rpg-mj-share-options>button{margin-top:6px;min-height:35px;font-size:.75rem}
+#rpgTableSettings{min-width:0;gap:8px;margin:8px 0;padding:9px}
+#rpgTableSettings>.rpg-table-mode-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px;min-width:0}
+#rpgTableSettings>.rpg-table-mode-row>label{display:flex;align-items:center;gap:7px;font-size:.8rem}
+#rpgTableSettings>.rpg-table-mode-row select{min-height:34px;width:auto;max-width:100%;font-size:.8rem}
+#rpgTableSettings>.rpg-table-mode-row>small{color:#b3c5d4}
+#rpgTableSettings>.rpg-mj-disclosure,#rpgTableSettings>.rpg-table-advanced{border-top:1px solid #344a5e;padding-top:7px;min-width:0}
+#rpgTableSettings .rpg-mj-disclosure summary{display:flex;align-items:center;justify-content:space-between;gap:8px}
+#rpgTableSettings [data-enemy-disclosure]{margin-top:6px;max-width:100%}
+#rpgTableSettings [data-enemy-disclosure] p{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:4px 8px;padding:5px 0;border-bottom:1px solid #284052;overflow-wrap:anywhere;font-size:.76rem}
+#rpgTableSettings [data-enemy-disclosure] label{display:flex;align-items:center;gap:4px;white-space:nowrap;font-size:.7rem}
+#rpgTableSettings .rpg-table-advanced>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7px;margin-top:8px}
+#rpgTableSettings .rpg-table-advanced>div>label:first-child,#rpgTableSettings .rpg-table-advanced>div>small{grid-column:1/-1}
+#activeDetail .rpg-participant-profile{min-width:0;max-width:100%;box-sizing:border-box;margin:0 10px 7px;padding:0;border:0;background:transparent;overflow:hidden}
+#activeDetail .rpg-profile-badges{display:flex;align-items:center;flex-wrap:wrap;gap:5px;min-width:0}
+#activeDetail .rpg-profile-tag{display:inline-flex;align-items:center;min-width:0;max-width:100%;overflow-wrap:anywhere;border:1px solid #38566c;border-radius:999px;padding:3px 9px;color:#b9d0e2;font-size:.69rem;line-height:1.2}
+#activeDetail .rpg-profile-tag.is-life{border-color:#507d67;color:#a5dbc0}
+#activeDetail .rpg-profile-tag.is-concentration{border-color:#497d74;color:#9adfcf}
+@media(max-width:900px){
+ #rpgTableSettings [data-enemy-disclosure] label{font-size:.65rem}
+}
+@media(max-width:760px){
+ #rpgMjDialog.rpg-mj-dialog[open]{max-width:calc(100vw - 16px)}
+ #rpgTableSettings [data-enemy-disclosure] p{grid-template-columns:minmax(0,1fr);gap:5px}
+ #rpgTableSettings [data-enemy-disclosure] label{white-space:normal}
+}
