@@ -13,7 +13,7 @@
   <meta name="apple-mobile-web-app-title" content="ENCOUNTER">
   <link rel="stylesheet" href="styles.css?v=ipad-header-sharp-20261108">
   <link rel="stylesheet" href="table.css?v=7">
-  <link rel="stylesheet" href="rpg-connect-mj.css?v=target-first-20261108">
+  <link rel="stylesheet" href="rpg-connect-mj.css?v=encounter-ux-20261108">
 <link rel="stylesheet" href="mj-ergonomics.css?v=20261014-lot4-final"></head>
 <body>
   <div id="toast" class="toast" aria-live="polite"></div>
@@ -111,10 +111,10 @@
         </div>
       </div>
       <div class="combat-weight-control" aria-label="Répartition de la largeur des panneaux">
-        <label for="combatWeightSlider">Init. <output id="combatInitiativeWeight" for="combatWeightSlider">40 %</output></label>
-        <input id="combatWeightSlider" type="range" min="35" max="60" step="5" value="40" aria-label="Largeur du panneau Initiative" aria-valuetext="Initiative 40 %, cible 60 %">
-        <span>Cible <output id="combatTargetWeight">60 %</output></span>
-        <button id="combatWeightReset" type="button" title="Répartition 40 / 60 par défaut" aria-label="Réinitialiser la répartition à 40 % initiative et 60 % cible">↺</button>
+        <label for="combatWeightSlider">Init. <output id="combatInitiativeWeight" for="combatWeightSlider">55 %</output></label>
+        <input id="combatWeightSlider" type="range" min="35" max="60" step="5" value="55" aria-label="Largeur du panneau Initiative" aria-valuetext="Initiative 55 %, cible 45 %">
+        <span>Cible <output id="combatTargetWeight">45 %</output></span>
+        <button id="combatWeightReset" type="button" title="Répartition 55 / 45 par défaut" aria-label="Réinitialiser la répartition à 55 % initiative et 45 % cible">↺</button>
       </div>
       <div class="roster-legend"><span>INIT.</span><span>COMBATTANT</span><span>PV</span><span>CA</span><span></span></div><div id="tableReminders"></div><div id="combatList" class="combat-list"></div>
     </section>
@@ -318,7 +318,7 @@
 <script src="rpg-diversion-authority.js"></script><script src="rpg-reaction-authority.js?v=hex-armor-20261009-1"></script>
 <script src="rpg-participant-profiles.js"></script>
 <script src="rpg-combat-effects.js?v=rufus-20261009-1"></script><script src="rpg-samoth-authority.js?v=mj-finishes-1"></script><script src="rpg-zephyr-authority.js?v=20261014-lot4-final"></script><script src="rpg-nans-authority.js?v=nans-20261008-1"></script><script src="rpg-kentaro-authority.js?v=20261014-lot4-final"></script>
-<script src="rpg-rufus-authority.js?v=rufus-20261009-1"></script><script src="rpg-brack-authority.js?v=20261014-lot4-final"></script><script src="rpg-kentaro-armor-rules.js?v=20261009-1"></script><script src="rpg-correction-schema.js?v=4-lot2"></script><script src="rpg-connect-mj.js?v=target-first-20261108"></script>
+<script src="rpg-rufus-authority.js?v=rufus-20261009-1"></script><script src="rpg-brack-authority.js?v=20261014-lot4-final"></script><script src="rpg-kentaro-armor-rules.js?v=20261009-1"></script><script src="rpg-correction-schema.js?v=4-lot2"></script><script src="rpg-connect-mj.js?v=encounter-ux-20261108"></script>
   <link rel="stylesheet" href="assistant-dice.css?v=1">
   <script>window.CompanionDiceTheme={id:"encounter-assistant",primary:"#d5aa55",rim:"#eddca9",secondary:"#806128",floor:"#15111b",surface:["#d5aa55","#806128","#4b3924","#20182e"],edge:"#ded0ec"};</script>
   <script type="module" src="assistant-dice-engine.js?v=1"></script>
@@ -330,15 +330,15 @@
   <script src="rpg-samoth-perception.js?v=perception-20261009-1"></script>
   <link rel="stylesheet" href="mj-finishes.css?v=1">
   <script src="mj-portraits.js?v=combat-view-1"></script>
-  <script>if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js?v=ipad-header-sharp-20261108',{updateViaCache:'none'}).catch(console.warn));}</script>
+  <script>if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js?v=encounter-ux-20261108',{updateViaCache:'none'}).catch(console.warn));}</script>
 <script src="mj-interactions.js?v=20261013-haste-menu"></script>
 <link rel="stylesheet" href="mj-presentation.css?v=select-health-20261009">
   <script src="encounter-guide.js?v=20261010-typed-1"></script>
 <link rel="stylesheet" href="rpg-activity.css?v=5-table-free-4">
 <script src="rpg-activity.js?v=20261013-haste-menu"></script>
 <script src="mj-collective.js?v=20261013-haste-menu"></script>
-<link rel="stylesheet" href="combat-view.css?v=column-weight-20261108">
-<script src="combat-width.js?v=column-weight-20261108"></script>
+<link rel="stylesheet" href="combat-view.css?v=encounter-ux-20261108">
+<script src="combat-width.js?v=encounter-ux-20261108"></script>
 </body>
 </html>
 

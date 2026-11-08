@@ -29,6 +29,8 @@ jobs:
         working-directory: ../RPG-Connect
       - name: Protocol, MJ and multi-target tests
         run: npm test
+      - name: Encounter UX layout regression tests
+        run: node --test audit/encounter-ux-layout.test.cjs
       - name: Companion bridge tests
         run: npm run test:companions
       - name: Creature icon tests

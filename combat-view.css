@@ -125,7 +125,7 @@ body.combat-mode { --rpg-live-height: 0px !important; }
 /* Encounter adjustable width ratio: iPad/desktop, local and reversible. */
 @media (min-width: 761px) {
   .combat-mode .combat-view {
-    grid-template-columns: minmax(0, var(--initiative-column-fr, 40fr)) minmax(0, var(--target-column-fr, 60fr));
+    grid-template-columns: minmax(0, var(--initiative-column-fr, 55fr)) minmax(0, var(--target-column-fr, 45fr));
   }
 }
 .combat-weight-control {
@@ -163,3 +163,9 @@ body.combat-mode { --rpg-live-height: 0px !important; }
 }
 body:not(.combat-mode) .combat-weight-control { display: none; }
 @media (max-width: 760px) { .combat-weight-control { display: none; } }
+
+/* Encounter UX: prevent content overflow at custom split ratios. */
+.combat-mode .combat-view>.panel,.combat-mode #activeDetail,.combat-mode #activeDetail .detail-header>div,.combat-mode #activeDetail .detail-section,.combat-mode #activeDetail .ability-card,.combat-mode .combat-list,.combat-mode .table-name{min-width:0;max-width:100%;box-sizing:border-box}
+.combat-mode #activeDetail .detail-header h2,.combat-mode #activeDetail .detail-meta,.combat-mode #activeDetail .ability-card,.combat-mode #activeDetail .detail-tab-body{overflow-wrap:anywhere}
+.combat-mode #activeDetail .table-target-actions{min-width:0;grid-template-columns:repeat(3,minmax(0,1fr))}
+.combat-mode #activeDetail .table-target-actions button{min-width:0;white-space:normal}

@@ -10,7 +10,7 @@
   const key = 'encounter:combat-column-weight:v1';
   const normalize = value => {
     const number = Number(value);
-    return Number.isFinite(number) ? Math.max(35, Math.min(60, Math.round(number / 5) * 5)) : 40;
+    return Number.isFinite(number) ? Math.max(35, Math.min(60, Math.round(number / 5) * 5)) : 55;
   };
   function setWeight(value, persist = true) {
     const n = normalize(value);
@@ -24,12 +24,12 @@
     // Reposition the RPG Connect popup when the target column moves.
     window.dispatchEvent(new Event('resize'));
   }
-  let initial = 40;
+  let initial = 55;
   try {
     const saved = localStorage.getItem(key);
     if (saved !== null) initial = normalize(saved);
   } catch (_) {}
   setWeight(initial, false);
   input.addEventListener('input', () => setWeight(input.value));
-  if (reset) reset.addEventListener('click', () => setWeight(40));
+  if (reset) reset.addEventListener('click', () => setWeight(55));
 })();
