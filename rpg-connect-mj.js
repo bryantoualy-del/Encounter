@@ -289,7 +289,7 @@
   dlg.style.setProperty('bottom','auto');
   dlg.style.setProperty('max-height',Math.max(160,innerHeight-top-12)+'px');
 }
-function openRpgDialog(){renderPanel();positionRpgDialog();if(!dlg.open)dlg.show();}
+function openRpgDialog(){renderPanel();const settings=dlg.querySelector('.rpg-mj-connection');if(settings)settings.open=!connected;positionRpgDialog();if(!dlg.open)dlg.show();}
 button.onclick=openRpgDialog;(cockpit.querySelector('#rpgCockpitOpen')||$r('#rpgCockpitOpen'))?.addEventListener('click',openRpgDialog);
 addEventListener('resize',()=>{if(dlg.open)positionRpgDialog()},{passive:true});
 cockpit.addEventListener('click',e=>{const b=e.target.closest('[data-cockpit-validate]');if(!b)return;const id=b.dataset.cockpitValidate;const roll=fight.rolls[id];if(roll)validateInitiative(id,roll.total)});$r('[data-rpg-close]').onclick=()=>dlg.close();$r('#rpgMjConnect').onclick=connect;$r('#rpgMjDisconnect').onclick=()=>{localStorage.setItem(savedKey+':autojoin','0');active=false;connected=false;clearTimeout(retryTimer);socket?.close();status.textContent='Hors ligne · ENCOUNTER autonome';renderPanel()};
