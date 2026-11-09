@@ -3,7 +3,7 @@
  position:fixed!important;left:50%!important;right:auto!important;top:max(72px,calc(env(safe-area-inset-top,0px) + 64px))!important;bottom:auto!important;
  transform:translateX(-50%)!important;width:min(580px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;
  max-height:min(48vh,360px)!important;overflow-y:auto!important;overflow-x:hidden!important;box-sizing:border-box!important;
- padding:14px 54px 14px 20px!important;z-index:1500!important;pointer-events:auto!important;
+ padding:14px 54px 14px 20px!important;z-index:1500!important;pointer-events:none!important;
  box-shadow:0 12px 34px rgba(0,0,0,.4)!important;word-break:break-word;overflow-wrap:anywhere;
 }
 #actionPopup.v13-result-visible .eyebrow {display:block;font-size:12px;letter-spacing:.12em}
@@ -21,4 +21,4 @@
 
 #actionPopup.v13-result-visible::after{content:none!important}
 #actionPopup.v13-result-visible{cursor:default!important;text-align:left!important}
-#actionPopup.v13-result-visible .v13-result-close{cursor:pointer}
+#actionPopup.v13-result-visible .v13-result-close{cursor:pointer;pointer-events:auto!important}
