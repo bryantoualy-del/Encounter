@@ -54,13 +54,13 @@ try{
  check('Moteur de sauvegarde appelé',/JS FOR/i.test(await logs()),(await logs()).slice(0,1200));
  await dismissResults();
  await page.locator('#activeDetail [data-skill-check]').first().click();
+ const skillDialog=page.locator('dialog[open]').filter({hasText:'Confirmer le test'});
+ check('Moteur de compétence ouvre son choix normal/avantage/désavantage',await skillDialog.count()===1);
+ check('Les trois modes de compétence sont conservés',await skillDialog.getByRole('button',{name:'Normal',exact:true}).count()===1&&await skillDialog.getByRole('button',{name:'Avantage',exact:true}).count()===1&&await skillDialog.getByRole('button',{name:'Désavantage',exact:true}).count()===1);
+ await skillDialog.getByRole('button',{name:'Normal',exact:true}).click();
  check('Moteur de compétence appelé',/Athlétisme/i.test(await logs()),(await logs()).slice(0,1200));
  await dismissResults();
- const openedDialogs=await page.evaluate(()=>[...document.querySelectorAll('dialog[open]')].map(d=>({id:d.id,text:d.textContent.slice(0,160)})));
- console.log('DIALOGS AFTER SKILL',JSON.stringify(openedDialogs));
- check('Aucun dialogue inattendu après compétence',openedDialogs.length===0,JSON.stringify(openedDialogs));
- if(openedDialogs.length)await page.evaluate(()=>document.querySelectorAll('dialog[open]').forEach(d=>d.close()));
- console.log('SKILL DEBUG',JSON.stringify(await page.evaluate(()=>({lastLog:state.encounter.log.slice(0,3),skillMarkup:document.querySelector('#activeDetail [data-skill-check]')?.outerHTML.slice(0,450),journalLocked:state.encounter.mjJournal?.filter(x=>['preparing','committing','syncing'].includes(x.status)).length,errors:window.__lot3Errors||[]}))));
+ check('Dialogue de compétence refermé après décision',await skillDialog.count()===0);
  await page.locator('#activeDetail [data-lot3-back]').click();
  check('Retour à Fiche depuis Tests',await page.locator('#activeDetail [data-skill-check]').count()===0);
  await page.locator('#activeDetail [data-table-target-panel="damage"]').click();
