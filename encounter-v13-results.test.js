@@ -42,3 +42,18 @@ test('advantage, critical, save and mixed damage text is retained',()=>{
   const {box,show}=setup();show(value);assert.equal(box.querySelector('#actionPopupText').textContent,value);
  }
 });
+
+test('structured attack shows roll, target AC, hit and damage separately',()=>{
+ const {box,show}=setup();
+ show('Orc — Hache à deux mains → Kobe Kozzo : d20 17 +5 = 22 vs CA 15 → TOUCHÉ · 13 dégâts (13 tranchants [10 + 3])','Hache à deux mains');
+ assert.equal(box.querySelector('.v131-actors').textContent,'Orc attaque Kobe Kozzo');
+ assert.equal(box.querySelector('.v131-attack strong').textContent,'22');
+ assert.equal(box.querySelector('.v131-outcome').textContent,'TOUCHÉ');
+ assert.equal(box.querySelector('.v13-result-total').textContent,'13');
+ assert.equal(box.querySelector('#actionPopupText').hidden,true);
+});
+test('unrecognized roll retains original wording',()=>{
+ const {box,show}=setup();show('Jet total : 18','Test');
+ assert.equal(box.querySelector('#actionPopupText').hidden,false);
+ assert.equal(box.querySelector('.v131-summary').textContent,'');
+});

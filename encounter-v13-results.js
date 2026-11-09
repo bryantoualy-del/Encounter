@@ -23,6 +23,9 @@
   const numeric = document.createElement('strong');
   numeric.className = 'v13-result-total';
   textNode.before(numeric);
+  const summary = document.createElement('div');
+  summary.className = 'v131-summary';
+  numeric.before(summary);
   const detail = document.createElement('small');
   detail.className = 'v13-result-detail';
   textNode.after(detail);
@@ -37,14 +40,37 @@
        || s.match(/(?:total|résultat|jet)\s*[:=]?\s*(\d{1,4})/i);
     return {kind: damage?'damage':healing?'heal':condition?'condition':'roll',number:match?.[1]||'',message:s,title:t};
   }
+  function parseCombat(item) {
+    const m = item.message.match(/^(.+?)\s*[—-]\s*(.+?)\s*→\s*(.+?)\s*:\s*d20\s*(\d+)\s*([+-]\s*\d+)\s*=\s*(\d+)\s*vs\s*CA\s*(\d+)\s*→\s*(TOUCHÉ|RATÉ)(?:\s*[·•]\s*(\d+)\s*dégâts?\s*\(([^)]*)\))?/i);
+    if (!m) return null;
+    return {actor:m[1].trim(),weapon:m[2].trim(),target:m[3].trim(),die:m[4],modifier:m[5].replace(/\s/g,''),attack:m[6],ac:m[7],outcome:m[8].toUpperCase(),damage:m[9]||'',damageDetail:m[10]||''};
+  }
   function paint() {
     if (!active) { box.classList.remove('show');box.classList.remove('v13-result-visible');return; }
-    titleNode.textContent = active.title;
+    const combat = parseCombat(active);
+    box.classList.toggle('v131-combat',!!combat);
+    summary.replaceChildren();
+    titleNode.textContent = combat ? combat.weapon : active.title;
     textNode.textContent = active.message;
-    numeric.textContent = active.number;
-    numeric.hidden = !active.number;
-    eyebrow.textContent = active.kind==='damage'?'DÉGÂTS':active.kind==='heal'?'SOINS':active.kind==='condition'?'ÉTAT':'RÉSULTAT';
+    textNode.hidden = !!combat;
+    numeric.textContent = combat ? combat.damage : active.number;
+    numeric.hidden = !(combat ? combat.damage : active.number);
+    if (combat) {
+      const line = document.createElement('div');line.className='v131-actors';line.textContent=combat.actor+' attaque '+combat.target;
+      const attack = document.createElement('div');attack.className='v131-attack';
+      const roll = document.createElement('strong');roll.textContent=combat.attack;
+      const ac = document.createElement('span');ac.textContent='contre CA '+combat.ac;
+      const outcome=document.createElement('span');outcome.className='v131-outcome';outcome.dataset.hit=combat.outcome==='TOUCHÉ'?'yes':'no';outcome.textContent=combat.outcome;
+      attack.append(roll,ac,outcome);
+      const bottom=document.createElement('div');bottom.className='v131-bottom';
+      const label=document.createElement('span');label.textContent=combat.damage?'DÉGÂTS':'JET D’ATTAQUE';
+      const dice=document.createElement('small');dice.textContent=combat.damageDetail||('d20 '+combat.die+' '+combat.modifier);
+      bottom.append(label,dice);
+      summary.append(line,attack,bottom);
+      eyebrow.textContent='ATTAQUE · '+combat.weapon.toUpperCase();
+    } else eyebrow.textContent=active.kind==='damage'?'DÉGÂTS':active.kind==='heal'?'SOINS':active.kind==='condition'?'ÉTAT':'RÉSULTAT';
     detail.textContent = active.kind==='damage'?'Valeur annoncée · vérifier son application à la cible':active.kind==='condition'?'État à confirmer selon le jet et la cible':'';
+    if(combat)detail.textContent='Valeur annoncée · dégâts non appliqués automatiquement';
     count.textContent = queue.length ? '+'+queue.length+' résultat(s) suivant(s)' : '';
     box.dataset.resultKind=active.kind;
     box.classList.add('show','v13-result-visible');
