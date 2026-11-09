@@ -116,3 +116,7 @@ Branche : `feat/encounter-v13-lot3-enemy-controls-20261109` ; base `main` `0cb90
 - Sur la branche : `npm test`, `npm run test:v13`, `node --test audit/encounter-ux-layout.test.cjs` et suites de régression via CI ; nouvelle recette Playwright `audit/v13-lot3-browser.mjs` (Chromium + WebKit) : trois commandes, grille exactement 15, 3×5 sans débordement, icônes, sélection et état actif, dégâts/soins, tests de caractéristiques/compétences/JS et Mode Guidé conservé.
 - Les résultats de CI de la branche seront précisés après exécution. Le dépôt ne comporte pas de commande de compilation autonome ; installation npm et chargement navigateur contrôlés.
 - **Aucune fusion, aucun déploiement, aucun Lot 4.**
+
+### Stabilisation tactile
+- Le sous-menu **Tests** est maintenant rendu dans un panneau défilable séparé de l’accordéon « Fiche », avec un bouton explicite de retour, pour conserver la lisibilité et éviter les conflits de défilement sur Samsung S7 FE paysage.
+- Les résultats des tests et les défauts résiduels seront renseignés après la recette Chromium/WebKit complète.
