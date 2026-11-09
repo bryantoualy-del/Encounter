@@ -54,3 +54,11 @@ Branche : `feat/encounter-v13-lot2-free-enemy-actions-20261109` ; départ : `mai
 - Test unitaire de popup pour résultat indicatif et contrôle de cache PWA/ressource hors ligne. `npm run test:v13` inclut les tests du Lot 1 et du Lot 2.
 - Validation locale du module isolé : **8/8 tests passés** (Node). Suite complète, E2E WebSocket, CI et recette tactile Samsung S7 FE paysage restent à confirmer.
 - Aucun changement de protocole, aucune fusion ni aucun déploiement. Lot 3 non commencé.
+
+### Recette approfondie (PR #30, en cours)
+- GitHub Actions du commit initial `c2b9e043` : job `test` vert (tests unitaires, Lot 1+2, contrôle PWA, passerelles Companions et icônes) et workflow RPG Connect V5 Chromium/WebKit vert.
+- Audit du code : correction du nom du dialogue légendaire `legendaryDiallog → legendaryDialog` et précision pour les dégâts à moitié sur réussite de sauvegarde.
+- Ajout de tests de consommation légendaire et de refus si économie déjà dépensée.
+- Ajout d'une véritable recette Playwright `audit/v13-lot2-browser.mjs` avec moteurs Chromium/WebKit, interaction réelle avec les boutons, rendu paysage 1280 × 800, captures d'écran et preuves JSON, rejouée automatiquement sur chaque PR.
+- Les vérifications couvrent jet d'attaque physique/magique, multiattaque, sauvegarde de zone, dégâts mixtes, JdS sur touche, soins, recharge, emplacements, zéro mutation des joueurs, résultat persistant, Mode Guidé, Mode Préparation, gestion manuelle des PV ennemis et absence d'erreur JS.
+- **Statut non déclaré terminé tant que les nouveaux jobs Playwright et les régressions globales ne sont pas tous verts.** Une recette physique sur Samsung S7 FE ne peut pas être réalisée par GitHub Actions et doit être explicitement distinguée de son émulation tactile.

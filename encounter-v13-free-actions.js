@@ -46,6 +46,7 @@
       result.save={ability:a.save||'?',dc:a.dc??'?'};
       lines.push(`JS ${result.save.ability} DD ${result.save.dc} à résoudre par les joueurs`);
       if(hasDamage(a))result.effect={label:'Dégâts potentiels',...rollDamage(a)};
+      if(a.halfOnSuccess===true)notes.push('Sauvegarde réussie : moitié des dégâts potentiels (au jugement du MJ)');
     } else if (a.kind==='heal') {
       if (hasDamage(a))result.effect={label:'Soins potentiels',...rollDamage(a)};
     } else if (hasDamage(a))result.effect={label:'Effet potentiel',...rollDamage(a)};
@@ -94,7 +95,7 @@
       if(document.getElementById('legendaryDialog')?.open){
         const bosses=eligibleLegendaryBosses(activeParticipant());
         if(bosses.length)renderLegendaryDialog(activeParticipant(),bosses);
-        else {document.getElementById('legendaryDiallog').close();actualAdvanceTurn();}}
+        else {document.getElementById('legendaryDialog').close();actualAdvanceTurn();}}
       return report;
     };
     try{return globalThis.EncounterJournal?.run

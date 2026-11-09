@@ -68,3 +68,40 @@ jobs:
             audit/results/
             audit/brack-results/
             audit/rufus-results/
+
+  v13-lot2-browser:
+    needs: test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Checkout Companion repos
+        run: npm run audit:checkout
+      - name: Install canonical RPG Connect server
+        run: npm ci
+        working-directory: ../RPG-Connect
+      - name: Browser installation
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Targeted Lot 2 browser validation
+        run: npm run test:v13:browser
+        env:
+          V13_BROWSER: ${{ matrix.browser }}
+      - name: Browser screenshots and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v13-lot2-${{ matrix.browser }}
+          path: audit/v13-lot2-evidence/
+          if-no-files-found: warn
