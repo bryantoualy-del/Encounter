@@ -49,7 +49,7 @@ try{
  await page.locator('#activeDetail [data-save-check]').first().click();
  await page.locator('#activeDetail [data-skill-check]').first().click();
  const logs=await page.evaluate(()=>state.encounter.log.map(x=>x.text).join('\n'));
- check('Moteurs natifs de caractéristiques, JS et compétences utilisés',/test FOR/i.test(logs)&&/JS FOR/i.test(logs)&&/Athlétisme/i.test(logs));
+ check('Moteurs natifs de caractéristiques, JS et compétences utilisés',/test FOR/i.test(logs)&&/JS FOR/i.test(logs)&&/Athlétisme/i.test(logs),logs.slice(0,1200));
  await page.locator('#activeDetail [data-detail-tab="sheet"]').click();
  check('Retour à Fiche depuis Tests',await page.locator('#activeDetail [data-skill-check]').count()===0);
  await page.locator('#activeDetail [data-table-target-panel="damage"]').click();
