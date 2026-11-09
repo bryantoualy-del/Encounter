@@ -75,3 +75,21 @@ Branche : `feat/encounter-v13-lot2-free-enemy-actions-20261109` ; départ : `mai
 - Première recette navigateur spécifique du Lot 2 : Chromium et WebKit **verts** (tout le parcours Mode Libre/Guidé/Préparation, captures et JSON disponibles via GitHub Actions).
 - Extension de la même recette au vrai serveur WebSocket `RPG-Connect` avec une application Brackmard réellement connectée : comparer les PV/états/ressources avant et après Trait de feu, la projection côté MJ et toutes les commandes WebSocket sortantes. Le test bloque toute émission de commande de mutation consécutive au jet ennemi.
 - La validation complète reste soumise à l'exécution de cette nouvelle extension sur les deux moteurs, et à la conclusion des suites de régression.
+
+## Recette Lot 2/4 — validation automatisée finale (9 novembre 2026)
+
+**Statut : recette automatisée terminée, réussie.** Le Lot 2 ne présente plus de test automatisé bloquant.
+
+### Preuves exécutées sur `f5cdc7d1542b3a25a104cefb59314bb39c89ba4a`
+- [Encounter CI — run #42710355286](https://github.com/bryantoualy-del/Encounter/actions/runs/42710355286) : **success**, y compris la suite E2E guidée générale, Brackmard et Rufus.
+- [RPG Connect V5 — run #42710355280](https://github.com/bryantoualy-del/Encounter/actions/runs/42710355280) : **success** sur Chromium et WebKit.
+- **Node :** 348 tests principaux, 18 tests V1.3, 7 tests de mise en page/PWA, 7 tests des passerelles Companions, 4 tests d'icônes, tous verts.
+- **Navigateur :** 50 contrôles Playwright réussis sur Chromium et 50 sur WebKit, émulation tactile paysage 1280 × 800. Captures et preuves JSON dans les artifacts `v13-lot2-*`.
+- **RPG Connect réel :** Encounter + serveur WebSocket canonique + Brackmard réel. Le jet ennemi ne change ni ses PV, ni ses états, ni ses ressources ; aucun message `command` de modification d'état n'est émis.
+- **Cas vérifiés :** attaque physique et magique, dégâts typés mixtes, multiattaque, JdS direct/de zone et sur touche, effets potentiels, soins, recharge, emplacement épuisé, consommation des actions, popups persistantes, centrage, Mode Guidé, Mode Préparation et gestion manuelle des ennemis.
+- **Défauts corrigés pendant la recette :** action consommée relançable en mode Libre, mauvais identifiant du dialogue légendaire, priorité CSS de centrage, invalidation PWA et tests de version de cache.
+
+### Réserve matérielle et politique de livraison
+Les tests tactiles sont des émulations Chromium et WebKit et **ne remplacent pas une recette sur le Samsung S7 FE physique**. Aucun test manuel de l'appareil physique n'a été revendiqué. La compilation n'a pas de script `build` distinct ; `npm ci`, les tests et le chargement des pages en navigateur ont été validés en CI.
+
+**Aucune fusion, aucun déploiement, aucun démarrage du Lot 3.** La PR #30 reste en brouillon pour décision ultérieure. Le présent ajout à la documentation ne modifie pas le code applicatif ni les scénarios testés.
