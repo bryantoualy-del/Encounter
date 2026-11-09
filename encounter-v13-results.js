@@ -31,6 +31,8 @@
   textNode.after(detail);
 
   function classify(message, heading) {
+    if (message && typeof message === 'object' && message.freeEnemy === true)
+      return {kind:'enemy-roll',number:'',message:message.text||'',title:String(heading||message.ability||'Action ennemie'),free:message};
     const s = String(message || '');
     const t = String(heading || 'Résolution');
     const damage = /dégâts?|dommages?|\bdamage\b/i.test(s+' '+t);
@@ -47,15 +49,42 @@
   }
   function paint() {
     if (!active) { box.classList.remove('show');box.classList.remove('v13-result-visible');return; }
-    const combat = parseCombat(active);
+    const free = active.free;
+    const combat = free ? null : parseCombat(active);
     box.classList.toggle('v131-combat',!!combat);
+    box.classList.toggle('v13-free-enemy',!!free);
     summary.replaceChildren();
     titleNode.textContent = combat ? combat.weapon : active.title;
-    textNode.textContent = active.message;
+    textNode.textContent = free ? (free.note || '') : active.message;
     textNode.hidden = !!combat;
     numeric.textContent = combat ? combat.damage : active.number;
-    numeric.hidden = !(combat ? combat.damage : active.number);
-    if (combat) {
+    numeric.hidden = !!free || !(combat ? combat.damage : active.number);
+    if (free) {
+      const heading = document.createElement('div');
+      heading.className = 'v13-free-head';
+      heading.textContent = free.actor + ' · ' + free.ability;
+      summary.appendChild(heading);
+      for (const item of free.rolls || []) {
+        const line = document.createElement('div');line.className='v13-free-row';
+        const label = document.createElement('span');label.textContent=item.label;
+        const total = document.createElement('strong');total.textContent=String(item.total);
+        const dice = document.createElement('small');dice.textContent=item.detail+(item.critical?' · 20 naturel':'')+(item.damage!=null?' · '+item.damage+' dégâts potentiels ('+item.damageDetail+')':'');
+        line.append(label,total,dice);summary.appendChild(line);
+      }
+      if (free.save) {
+        const line=document.createElement('div');line.className='v13-free-row';
+        line.textContent='JS '+free.save.ability+' · DD '+free.save.dc+' — résolution par les joueurs';
+        summary.appendChild(line);
+      }
+      if (free.effect) {
+        const line=document.createElement('div');line.className='v13-free-row';
+        const label=document.createElement('span');label.textContent=free.effect.label;
+        const total=document.createElement('strong');total.textContent=String(free.effect.total);
+        const dice=document.createElement('small');dice.textContent=free.effect.detail||'';
+        line.append(label,total,dice);summary.appendChild(line);
+      }
+      eyebrow.textContent='ACTION ENNEMIE · MODE LIBRE';
+    } else if (combat) {
       const line = document.createElement('div');line.className='v131-actors';line.textContent=combat.actor+' attaque '+combat.target;
       const attack = document.createElement('div');attack.className='v131-attack';
       const roll = document.createElement('strong');roll.textContent=combat.attack;
@@ -68,8 +97,8 @@
       bottom.append(label,dice);
       summary.append(line,attack,bottom);
       eyebrow.textContent='ATTAQUE · '+combat.weapon.toUpperCase();
-    } else eyebrow.textContent=active.kind==='damage'?'DÉGÂTS':active.kind==='heal'?'SOINS':active.kind==='condition'?'ÉTAT':'RÉSULTAT';
-    detail.textContent = active.kind==='damage'?'Valeur annoncée · vérifier son application à la cible':active.kind==='condition'?'État à confirmer selon le jet et la cible':'';
+    } else if (!free) eyebrow.textContent=active.kind==='damage'?'DÉGÂTS':active.kind==='heal'?'SOINS':active.kind==='condition'?'ÉTAT':'RÉSULTAT';
+    detail.textContent = free ? 'Résultat indicatif · le MJ arbitre · aucun Companion modifié' : active.kind==='damage'?'Valeur annoncée · vérifier son application à la cible':active.kind==='condition'?'État à confirmer selon le jet et la cible':'';
     if(combat)detail.textContent='Valeur annoncée · dégâts non appliqués automatiquement';
     count.textContent = queue.length ? '+'+queue.length+' résultat(s) suivant(s)' : '';
     box.dataset.resultKind=active.kind;

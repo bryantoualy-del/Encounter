@@ -57,3 +57,14 @@ test('unrecognized roll retains original wording',()=>{
  assert.equal(box.querySelector('#actionPopupText').hidden,false);
  assert.equal(box.querySelector('.v131-summary').textContent,'');
 });
+
+test('Table libre enemy rolls are labelled as proposed, never as resolved hits',()=>{
+ const {box,show}=setup();
+ show({freeEnemy:true,actor:'Mage',ability:'Trait de feu',text:'Mage lance Trait de feu',note:'Sur touche : condition à arbitrer',
+   rolls:[{label:'Trait de feu',total:19,detail:'d20 13 +6',damage:12,damageDetail:'2d10 feu'}],save:null,effect:null},'Trait de feu');
+ assert.equal(box.dataset.resultKind,'enemy-roll');
+ assert.equal(box.querySelector('.v13-free-row strong').textContent,'19');
+ assert.match(box.querySelector('.v13-free-row small').textContent,/12 dégâts potentiels/);
+ assert.match(box.querySelector('.v13-result-detail').textContent,/aucun Companion modifié/);
+ assert.doesNotMatch(box.textContent,/TOUCHÉ|RATÉ|contre CA/);
+});

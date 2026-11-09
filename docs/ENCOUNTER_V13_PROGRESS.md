@@ -26,3 +26,31 @@ Branche : `feat/encounter-v13-lot1-results-20261109` (base `main`, commit initia
 - **Tests et compilation non exécutés** : le connecteur GitHub permet la lecture/écriture de fichiers mais pas l'exécution du projet ; le clonage réseau depuis l'environnement d'exécution a échoué (résolution DNS).
 - **Recette navigateur Samsung S7 FE paysage non réalisée**. Vérifier manuellement jets simples, avantage/désavantage, critique, sauvegarde, soins, dégâts mixtes, états, résultats successifs, fermeture, non-débordement, Mode Libre et Préparation avant fusion.
 - Lot 2 non commencé. Aucune fusion ni aucun déploiement.
+
+## Lot 2/4 — Actions ennemies sans ciblage, autorité des Companions
+
+Branche : `feat/encounter-v13-lot2-free-enemy-actions-20261109` ; départ : `main` au commit `062fbb8b`.
+
+### Reprise
+- Le Lot 1 et le correctif V1.3.1 sont fusionnés (PR #28 et #29). Fenêtres persistantes et file FIFO préservées.
+- Le parcours ciblé existant `app.js : useAbility → startTargeting → resolveTargetSelection` pouvait résoudre automatiquement un jet contre CA/JdS, modifier les PV et appliquer des effets. Ce chemin reste réservé au fonctionnement antérieur/Guidé.
+- Les wrappers `mj-journal.js` et `mj-spell-slots.js` assurent les transactions, les corrections et les emplacements de sorts. Le moteur de dés reste inchangé.
+
+### Mode Libre
+- `encounter-v13-free-actions.js` intervient **seulement sur les capacités des adversaires en Table libre**. Aucune sélection de cible n'est demandée pour les attaques physiques, magiques, sauvegardes, zones, multiattaques, soins ou recharges.
+- L'interface affiche D20 brut + bonus/pénalité, total, composantes de dégâts **potentiels**, DD et effets/états proposés. Ni touche/raté contre la CA ni réussite/échec d'un JdS de joueur ne sont déterminés. Le MJ annonce le résultat et les joueurs utilisent eux-mêmes leurs Companions.
+- Dépenses d'économie de tour, réactions, charges légendaires, recharges et emplacements de sorts conservées **côté adversaire**. La multiattaque déroule plusieurs jets pour une seule action.
+- La fenêtre persistante du Lot 1 reçoit une présentation structurée sans étiquette mensongère « TOUCHÉ/RATÉ ». Le journal conserve le détail et les corrections/annulations MJ restent possibles.
+- Mode Guidé, autres personnages et outils de gestion manuelle conservés.
+
+### RPG Connect : audit des frontières d'autorité
+- `rpg-connect-mj.js` : `tableMode()` filtre les messages entrants d'action et seuls l'initiative/fin de tour sont traités ; `send()` limite les commandes sortantes en Table libre et `stateSyncPayload()` transmet la projection tactique.
+- Le parcours ajouté ne crée **aucune** requête de dégâts, soins, état ou sauvegarde de joueur ; il n'appelle pas `applyDamageDirect`, `applyHealDirect`, `resolveTargetSelection` ni `command()`.
+- Les éventuelles commandes de correction explicitement manuelles et leur autorisation préexistante sont distinctes d'un jet ennemi.
+- Contrats WebSocket inchangés ; dépôts RPG Connect / Brackmard / Kobe / autres Companions inchangés.
+
+### Tests, limites et livraison
+- Tests ciblés : attaques simples, JdS direct/zone, multiattaque, soins et états conditionnels, recharges, emplacements épuisés, non-modification des Companions et maintien du mode Guidé.
+- Test unitaire de popup pour résultat indicatif et contrôle de cache PWA/ressource hors ligne. `npm run test:v13` inclut les tests du Lot 1 et du Lot 2.
+- Validation locale du module isolé : **8/8 tests passés** (Node). Suite complète, E2E WebSocket, CI et recette tactile Samsung S7 FE paysage restent à confirmer.
+- Aucun changement de protocole, aucune fusion ni aucun déploiement. Lot 3 non commencé.
