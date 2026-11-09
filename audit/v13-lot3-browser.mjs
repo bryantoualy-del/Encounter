@@ -46,12 +46,16 @@ try{
  check('18 compétences natives',await page.locator('#activeDetail [data-skill-check]').count()===18);
  check('Concentration conservée',await page.locator('#activeDetail [data-concentration-save]').count()===1);
  const logs=()=>page.evaluate(()=>state.encounter.log.map(x=>x.text).join('\n'));
+ const dismissResults=async()=>{for(let i=0;i<5;i++){const popup=page.locator('#actionPopup.show .v13-result-close');if(!await popup.count())break;await popup.click();}};
  await page.locator('#activeDetail [data-ability-check]').first().click();
  check('Moteur de caractéristique appelé',/test FOR/i.test(await logs()),(await logs()).slice(0,1200));
+ await dismissResults();
  await page.locator('#activeDetail [data-save-check]').first().click();
  check('Moteur de sauvegarde appelé',/JS FOR/i.test(await logs()),(await logs()).slice(0,1200));
+ await dismissResults();
  await page.locator('#activeDetail [data-skill-check]').first().click();
  check('Moteur de compétence appelé',/Athlétisme/i.test(await logs()),(await logs()).slice(0,1200));
+ await dismissResults();
  console.log('SKILL DEBUG',JSON.stringify(await page.evaluate(()=>({lastLog:state.encounter.log.slice(0,3),skillMarkup:document.querySelector('#activeDetail [data-skill-check]')?.outerHTML.slice(0,450),journalLocked:state.encounter.mjJournal?.filter(x=>['preparing','committing','syncing'].includes(x.status)).length,errors:window.__lot3Errors||[]}))));
  await page.locator('#activeDetail [data-detail-tab="sheet"]').click();
  check('Retour à Fiche depuis Tests',await page.locator('#activeDetail [data-skill-check]').count()===0);
