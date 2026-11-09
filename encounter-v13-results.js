@@ -50,9 +50,8 @@
     box.classList.add('show','v13-result-visible');
   }
   function advance() {active=queue.shift()||null;paint();}
-  close.addEventListener('click',e=>{e.stopPropagation();advance();});
-  // Earlier scripts attached a click-to-dismiss listener: intercept only our card.
-  box.addEventListener('click',e=>{e.stopImmediatePropagation();if(e.target===box)advance();},true);
+  // Capture before legacy click-to-dismiss listeners without swallowing the close action.
+  box.addEventListener('click',e=>{if(e.target.closest('.v13-result-close') || e.target===box)advance();e.stopImmediatePropagation();},true);
   showActionPopup = function(message,title='Résolution') {
     const item = classify(message,title);
     if (active) queue.push(item); else active=item;
