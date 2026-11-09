@@ -68,3 +68,5 @@ Branche : `feat/encounter-v13-lot2-free-enemy-actions-20261109` ; départ : `mai
 - Première exécution Playwright Chromium/WebKit : lancement de Trait de feu, absence de ciblage et de mutation du joueur, total visible et économie de tour corrects. **Défaut de cadrage identifié** : la popup x=640 sur 1280 px, débordement de 20 px à droite.
 - Cause : `mj-presentation.css` applique `#actionPopup.action-popup.show {transform:translateY(0)!important}`, plus spécifique que l'ancienne règle du Lot 1. Règle prioritaire explicite ajoutée pour garantir le centrage horizontal en affichage persistant ; cache PWA incrémenté.
 - Les scénarios de navigateur seront rejoués après cette correction, le statut n'est pas encore accepté.
+
+- Ajustement de la recette statique après changement de version PWA : le test de cache doit rechercher la nouvelle clé `encounter-v13-lot2-layout-20261109`, pas l'ancienne.
