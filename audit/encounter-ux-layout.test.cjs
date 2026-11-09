@@ -28,9 +28,9 @@ test('PWA header remains unblurred and assets share version',()=>{
    assert.ok(html.includes(ref),ref+' missing in HTML');
    assert.ok(sw.includes(ref),ref+' missing in cache');
  }
- assert.match(sw,/encounter-(?:header-opaque-final-20261108|v13-lot1-results-20261109)/);
+ assert.match(sw,/encounter-(?:header-opaque-final-20261108|v131-results-local-20261109)/);
  for(const asset of ['encounter-v13-results.js','encounter-v13-results.css']){
-   const ref=asset+'?v=lot1-20261109';
+   const ref=asset+'?v=v131-20261109';
    assert.ok(html.includes(ref),ref+' missing in HTML');
    assert.ok(sw.includes(ref),ref+' missing in cache');
  }
@@ -47,4 +47,14 @@ test('final iPad header has a fully opaque background and no blur, with PWA cach
  assert.match(html,/styles\.css\?v=header-opaque-final-20261108/);
  assert.match(html,/service-worker\.js\?v=header-opaque-final-20261108/);
  assert.match(sw,/styles\.css\?v=header-opaque-final-20261108/);
+});
+
+test('local table mode excludes companion waiting notifications without dropping MJ decisions',()=>{
+ const js=read('mj-collective.js'),html=read('index.html'),sw=read('service-worker.js');
+ assert.match(js,/const local=state\.encounter\.rpgSessionMode==='table-free'/);
+ assert.match(js,/if\(!local\)for\(const q of window\.RPGConnectMJ\?\.pendingSummary/);
+ assert.match(js,/for\(const q of EncounterDecisions\.pending\(\)\)/);
+ for(const asset of ['mj-collective.js?v=v131-20261109']){
+   assert.ok(html.includes(asset));assert.ok(sw.includes(asset));
+ }
 });
