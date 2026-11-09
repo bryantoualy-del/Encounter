@@ -58,9 +58,13 @@ renderDetail=function(){
   if(active)button.after(body);
  }
  conditions.insertAdjacentHTML('beforebegin',`<div class="table-target-actions" role="group" aria-label="Actions sur ${esc(participantLabel(p))}">
+  ${p.kind==='enemy'&&(state.encounter.rpgSessionMode||'table-free')==='table-free'?`
+  <button type="button" data-table-target-panel="damage" class="lot3-command">Dégâts &amp; Soins</button>
+  <button type="button" data-table-target-panel="states" class="lot3-command">États</button>
+  <button type="button" data-lot3-tests class="lot3-command" aria-pressed="false">Tests</button>`:`
   <button type="button" data-table-target-panel="damage">Dégâts</button>
   <button type="button" data-table-target-panel="heal">Soins</button>
-  <button type="button" data-table-target-panel="states">États</button>
+  <button type="button" data-table-target-panel="states">États</button>`}
  </div>`);
 };
 const tableOriginalQuick=renderQuickbar;

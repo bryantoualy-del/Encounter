@@ -93,3 +93,26 @@ Branche : `feat/encounter-v13-lot2-free-enemy-actions-20261109` ; départ : `mai
 Les tests tactiles sont des émulations Chromium et WebKit et **ne remplacent pas une recette sur le Samsung S7 FE physique**. Aucun test manuel de l'appareil physique n'a été revendiqué. La compilation n'a pas de script `build` distinct ; `npm ci`, les tests et le chargement des pages en navigateur ont été validés en CI.
 
 **Aucune fusion, aucun déploiement, aucun démarrage du Lot 3.** La PR #30 reste en brouillon pour décision ultérieure. Le présent ajout à la documentation ne modifie pas le code applicatif ni les scénarios testés.
+
+## Lot 3/4 — Simplification des commandes des adversaires (branche dédiée)
+
+Branche : `feat/encounter-v13-lot3-enemy-controls-20261109` ; base `main` `0cb9040c`.
+
+### Reprise et sécurité
+- Lots 1 et 2 fusionnés par PR #28, #29 et #30 ; `main` avant travaux : workflow [Encounter CI #42712862763](https://github.com/bryantoualy-del/Encounter/actions/runs/42712862763) **success**.
+- PR ouvertes préexistantes : #5, #13, #15, aucune modifiée.
+- Les moteurs `rollCharacter`, `rollSkill`, `characterChecks`, `MJPanels.open`, `applyDamageDirect`, `applyHealDirect` et `addConditionMany` sont réutilisés. Aucun doublon de logique métier.
+
+### Réalisation
+- **Table Libre + adversaire sélectionné uniquement** : barre tactile à trois boutons **Dégâts & Soins**, **États**, **Tests**. Les commandes historiques restent disponibles en Mode Guidé et pour les autres participants.
+- **Dégâts & Soins** : un seul accès au panneau Points de vie existant et à ses modes Dégâts, Soins et PV temporaires, sélections multiples, types et corrections.
+- **États** : grille 3×5 fondée sur les **15 entrées inchangées de `CONDITIONS`** et sur `conditionIcon`/icônes déjà disponibles. L'état choisi et les états déjà appliqués sont visuellement signalés ; les réglages de source, durée, DD, JS et application manuelle sont conservés. Le sélecteur historique reste en Mode Guidé.
+- **Tests** : section dédiée réutilisant le HTML de `characterChecks` (six caractéristiques, leurs JS, concentration et jusqu'à dix-huit compétences selon le profil). Aucune nouvelle règle de dés.
+- **Fiche** : les tests sont déplacés en Mode Libre adversaire sans suppression des données ; quatre sections **Défenses structurées & sens**, **Traits**, **Sources**, **Notes MJ** restent visibles et éditables via l'accès historique à la fiche.
+- CSS isolé pour paysage 1280×800, version du cache PWA révisée, aucun fichier des Companions ou de RPG Connect modifié.
+
+### Recette
+- Avant modification : CI `main` réussie, incluant les tests Unitaires, V1.3, la passerelle Companions et les navigateurs.
+- Sur la branche : `npm test`, `npm run test:v13`, `node --test audit/encounter-ux-layout.test.cjs` et suites de régression via CI ; nouvelle recette Playwright `audit/v13-lot3-browser.mjs` (Chromium + WebKit) : trois commandes, grille exactement 15, 3×5 sans débordement, icônes, sélection et état actif, dégâts/soins, tests de caractéristiques/compétences/JS et Mode Guidé conservé.
+- Les résultats de CI de la branche seront précisés après exécution. Le dépôt ne comporte pas de commande de compilation autonome ; installation npm et chargement navigateur contrôlés.
+- **Aucune fusion, aucun déploiement, aucun Lot 4.**

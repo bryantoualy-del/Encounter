@@ -28,7 +28,7 @@ test('PWA header remains unblurred and assets share version',()=>{
    assert.ok(html.includes(ref),ref+' missing in HTML');
    assert.ok(sw.includes(ref),ref+' missing in cache');
  }
- assert.match(sw,/encounter-(?:header-opaque-final-20261108|v13-lot2-layout-20261109)/);
+ assert.match(sw,/encounter-(?:header-opaque-final-20261108|v13-lot2-layout-20261109|v13-lot3-20261109)/);
  for(const asset of ['encounter-v13-results.js','encounter-v13-results.css']){
    const ref=asset+'?v='+(asset.endsWith('.css')?'v13-lot2-layout-20261109':'v13-lot2-20261109');
    assert.ok(html.includes(ref),ref+' missing in HTML');
@@ -70,4 +70,24 @@ test('Lot 2 result popup centers above legacy MJ presentation transform',()=>{
  const css=read('encounter-v13-results.css');
  assert.match(css,/#actionPopup\.action-popup\.v13-result-visible\.show/);
  assert.match(css,/transform:translateX\(-50%\)!important/);
+});
+
+test('Lot 3 enemy commands, state-grid and checks available offline',()=>{
+ const html=read('index.html'),sw=read('service-worker.js'),js=read('encounter-v13-lot3-controls.js'),css=read('encounter-v13-lot3-controls.css');
+ for(const name of ['table.js','table.css','mj-panels.js','encounter-v13-lot3-controls.js','encounter-v13-lot3-controls.css']){
+   const ref=name+'?v=v13-lot3-20261109';
+   assert.ok(html.includes(ref),ref+' absent du document');
+   assert.ok(sw.includes(ref),ref+' absent du cache');
+ }
+ const table=read('table.js'),panels=read('mj-panels.js'),app=read('app.js');
+ assert.match(table,/Dégâts &amp; Soins/);
+ assert.match(table,/data-lot3-tests/);
+ assert.match(table,/data-table-target-panel="states"/);
+ assert.match(panels,/CONDITIONS\.map\(x=>.*lot3-state-choice/);
+ assert.match(panels,/conditionIcon\(x\)/);
+ assert.match(css,/grid-template-columns:repeat\(5,minmax\(0,1fr\)\)/);
+ assert.match(js,/characterChecks\(p,m\)/);
+ assert.match(app,/data-skill-check/);
+ assert.match(app,/data-save-check/);
+ assert.match(app,/data-concentration-save/);
 });

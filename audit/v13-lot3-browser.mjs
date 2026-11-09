@@ -1,0 +1,95 @@
+import {createRequire} from 'node:module';
+import {createServer} from 'node:http';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {resolve,extname} from 'node:path';
+import assert from 'node:assert/strict';
+const require=createRequire(import.meta.url),{chromium,webkit}=require('playwright');
+const browserKind=process.env.V13_BROWSER==='webkit'?'webkit':'chromium';
+const engine=browserKind==='webkit'?webkit:chromium;
+const root=resolve(new URL('../../',import.meta.url).pathname);
+const out=resolve(new URL('./v13-lot3-evidence',import.meta.url).pathname);
+await mkdir(out,{recursive:true});
+const web=createServer(async(req,res)=>{try{let name=decodeURIComponent(new URL(req.url,'http://localhost').pathname);if(name.endsWith('/'))name+='index.html';const full=resolve(root,'.'+name);if(!full.startsWith(root+'/'))throw Error('path');res.setHeader('Content-Type',({'.js':'application/javascript','.html':'text/html','.css':'text/css','.json':'application/json','.png':'image/png','.svg':'image/svg+xml'})[extname(full)]||'application/octet-stream');res.end(await readFile(full));}catch{res.writeHead(404);res.end();}});
+await new Promise(r=>web.listen(0,'127.0.0.1',r));
+const browser=await engine.launch({headless:true,...(browserKind==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{})});
+const checks=[],errors=[];let page;
+const check=(name,condition,detail='')=>{checks.push({name,pass:!!condition,detail});console.log(condition?'PASS':'FAIL',name,detail);assert.ok(condition,name+': '+detail);};
+try{
+ const ctx=await browser.newContext({viewport:{width:1280,height:800},hasTouch:true,serviceWorkers:'block'});
+ await ctx.route('https://cdn.jsdelivr.net/npm/three@0.186.1/build/*',async route=>{const full=resolve(require.resolve('three'),'..',new URL(route.request().url()).pathname.split('/').pop());await route.fulfill({body:await readFile(full),contentType:'application/javascript'});});
+ page=await ctx.newPage();page.setDefaultTimeout(20000);
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:'+web.address().port+'/Encounter/',{waitUntil:'domcontentloaded'});
+ await page.waitForFunction(()=>!!window.EncounterLot3&&!!window.MJPanels&&!!window.EncounterFreeEnemyActions);
+ await page.evaluate(()=>{
+  const m=normalizeMonster({id:'lot3-fixture',name:'Sentinelle de recette',category:'enemy',ac:16,hp:70,size:'M',type:'humanoïde',source:'Archives du MJ',notes:'Notes MJ conservées',senses:'vision dans le noir 18 m',damageResistances:['feu'],
+   abilities:{FOR:16,DEX:14,CON:12,INT:10,SAG:12,CHA:8},
+   saveMods:{FOR:5,DEX:4,CON:3,INT:0,SAG:1,CHA:-1},
+   traits:[{id:'trait-1',name:'Trait de recette',kind:'text',detail:'Réaction narrative'}]});
+  state.monsters.push(m);
+  const e=makeParticipant(m,1,20);e.id='lot3-enemy';
+  state.encounter.participants=[e];state.encounter.currentTurn=0;state.encounter.selectedId=e.id;
+  state.encounter.rpgSessionMode='table-free';ui.detailTab='sheet';setMode('combat');
+ });
+ const commands=page.locator('#activeDetail [data-table-target-panel],#activeDetail [data-lot3-tests]');
+ check('Trois commandes, exactement',await commands.count()===3);
+ check('Dégâts & Soins fusionnés',await commands.nth(0).innerText()==='Dégâts & Soins');
+ check('États et Tests disponibles',await commands.nth(1).innerText()==='États'&&await commands.nth(2).innerText()==='Tests');
+ check('Fiche ne duplique pas les tests',await page.locator('#activeDetail [data-skill-check]').count()===0&&await page.locator('#activeDetail [data-ability-check]').count()===0);
+ const sheet=await page.locator('#activeDetail .detail-tab-body').innerText();
+ for(const name of ['Défenses structurées & sens','Traits','Source','Notes MJ'])check('Fiche conserve '+name,sheet.includes(name));
+ await page.locator('#activeDetail [data-lot3-tests]').click();
+ check('Onglet Tests accessible',await page.locator('#activeDetail [data-lot3-tests]').getAttribute('aria-pressed')==='true');
+ check('Six tests de caractéristiques',await page.locator('#activeDetail [data-ability-check]').count()===6);
+ check('Six sauvegardes natives',await page.locator('#activeDetail [data-save-check]').count()===6);
+ check('18 compétences natives',await page.locator('#activeDetail [data-skill-check]').count()===18);
+ check('Concentration conservée',await page.locator('#activeDetail [data-concentration-save]').count()===1);
+ await page.locator('#activeDetail [data-ability-check]').first().click();
+ await page.locator('#activeDetail [data-save-check]').first().click();
+ await page.locator('#activeDetail [data-skill-check]').first().click();
+ const logs=await page.evaluate(()=>state.encounter.log.map(x=>x.text).join('\n'));
+ check('Moteurs natifs de caractéristiques, JS et compétences utilisés',/test FOR/i.test(logs)&&/JS FOR/i.test(logs)&&/Athlétisme/i.test(logs));
+ await page.locator('#activeDetail [data-detail-tab="sheet"]').click();
+ check('Retour à Fiche depuis Tests',await page.locator('#activeDetail [data-skill-check]').count()===0);
+ await page.locator('#activeDetail [data-table-target-panel="damage"]').click();
+ check('Panneau santé existant ouvert',await page.evaluate(()=>window.MJPanels.isOpen()));
+ check('Modes dégâts, soins et PV temp préservés',await page.locator('#mjSidePanel [data-health-mode]').count()===3);
+ const before=await page.evaluate(()=>state.encounter.participants[0].hp);
+ await page.locator('#mjSidePanel [data-key="5"]').click();
+ await page.locator('#mjSidePanel [data-apply]').click();
+ const damaged=await page.evaluate(()=>state.encounter.participants[0].hp);
+ check('Dégâts manuels appliqués',damaged===before-5,String(damaged));
+ await page.locator('#mjSidePanel [data-health-mode="heal"]').click();
+ await page.locator('#mjSidePanel [data-key="5"]').click();
+ await page.locator('#mjSidePanel [data-apply]').click();
+ check('Soins manuels appliqués',await page.evaluate(()=>state.encounter.participants[0].hp===70));
+ await page.locator('#mjSidePanel [data-panel-close]').click();
+ await page.locator('#activeDetail [data-table-target-panel="states"]').click();
+ const tiles=page.locator('#mjSidePanel .lot3-state-choice');
+ check('15 états exactement',await tiles.count()===15);
+ check('Icônes associées aux 15 états',await page.locator('#mjSidePanel .lot3-state-choice img').count()===15);
+ const geometry=await page.evaluate(()=>{
+  const grid=document.querySelector('.lot3-state-grid'),tiles=[...grid.querySelectorAll('button')],b=grid.getBoundingClientRect();
+  const cols=new Set(tiles.slice(0,5).map(el=>Math.round(el.getBoundingClientRect().x)));
+  const rows=new Set(tiles.map(el=>Math.round(el.getBoundingClientRect().y)));
+  return {columns:cols.size,rows:rows.size,overflow:grid.scrollWidth>grid.clientWidth||tiles.some(t=>t.getBoundingClientRect().right>b.right+2)};
+ });
+ check('Grille tactile 3 lignes × 5 colonnes',geometry.columns===5&&geometry.rows===3,JSON.stringify(geometry));
+ check('Aucun débordement horizontal de la grille',!geometry.overflow);
+ const chosen=tiles.filter({hasText:'Aveuglé'}).first();
+ await chosen.click();
+ check('État sélectionné clairement',await chosen.getAttribute('aria-pressed')==='true');
+ await page.locator('#mjSidePanel [data-state-source]').fill('Lot 3');
+ await page.locator('#mjSidePanel [data-apply]').click();
+ check('État appliqué avec source métier',await page.evaluate(()=>state.encounter.participants[0].conditions.some(x=>x.name==='Aveuglé'&&x.source==='Lot 3')));
+ check('État actif signalé dans la grille',await chosen.evaluate(x=>x.classList.contains('is-applied')));
+ await page.screenshot({path:out+'/'+browserKind+'-states-landscape.png',fullPage:false});
+ await page.locator('#mjSidePanel [data-panel-close]').click();
+ await page.evaluate(()=>{state.encounter.rpgSessionMode='guided';render();});
+ check('Mode Guidé : boutons historiques intacts',await page.locator('#activeDetail [data-table-target-panel]').count()===3&&await page.locator('#activeDetail [data-lot3-tests]').count()===0);
+ check('Mode Guidé : Tests restent dans Fiche',await page.locator('#activeDetail [data-skill-check]').count()===18);
+ await page.evaluate(()=>{state.encounter.rpgSessionMode='table-free';render();});
+ check('Mode Libre restauré',await page.locator('#activeDetail [data-lot3-tests]').count()===1);
+ check('Aucune erreur JS',errors.length===0,JSON.stringify(errors));
+}catch(e){console.error('LOT 3 FAILED',e.stack||e);process.exitCode=1;}
+finally{await writeFile(out+'/'+browserKind+'-results.json',JSON.stringify({checks,errors},null,2));await browser.close();await new Promise(r=>web.close(r));}

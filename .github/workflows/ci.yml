@@ -105,3 +105,31 @@ jobs:
           name: v13-lot2-${{ matrix.browser }}
           path: audit/v13-lot2-evidence/
           if-no-files-found: warn
+
+  v13-lot3-browser:
+    needs: test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Encounter Lot 3 controls, icons, and roll engines
+        run: npm run test:v13:lot3:browser
+        env:
+          V13_BROWSER: ${{ matrix.browser }}
+      - name: Evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v13-lot3-${{ matrix.browser }}
+          path: audit/v13-lot3-evidence/
+          if-no-files-found: warn
