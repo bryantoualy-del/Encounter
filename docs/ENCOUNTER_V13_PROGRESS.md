@@ -70,3 +70,8 @@ Branche : `feat/encounter-v13-lot2-free-enemy-actions-20261109` ; départ : `mai
 - Les scénarios de navigateur seront rejoués après cette correction, le statut n'est pas encore accepté.
 
 - Ajustement de la recette statique après changement de version PWA : le test de cache doit rechercher la nouvelle clé `encounter-v13-lot2-layout-20261109`, pas l'ancienne.
+
+### Contrôle connecté ajouté
+- Première recette navigateur spécifique du Lot 2 : Chromium et WebKit **verts** (tout le parcours Mode Libre/Guidé/Préparation, captures et JSON disponibles via GitHub Actions).
+- Extension de la même recette au vrai serveur WebSocket `RPG-Connect` avec une application Brackmard réellement connectée : comparer les PV/états/ressources avant et après Trait de feu, la projection côté MJ et toutes les commandes WebSocket sortantes. Le test bloque toute émission de commande de mutation consécutive au jet ennemi.
+- La validation complète reste soumise à l'exécution de cette nouvelle extension sur les deux moteurs, et à la conclusion des suites de régression.

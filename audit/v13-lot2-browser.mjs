@@ -23,7 +23,7 @@ const web=createServer(async(req,res)=>{
 await new Promise(ok=>web.listen(0,'127.0.0.1',ok));
 const base='http://127.0.0.1:'+web.address().port;
 const browser=await engine.launch({headless:true,...(browserName==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{})});
-const checks=[],errors=[];let page;
+const checks=[],errors=[];let page,wsServer;
 const check=(name,value,detail='')=>{const ok=!!value;checks.push({name,ok,detail});console.log(ok?'PASS':'FAIL',name,detail);assert.ok(ok,name+': '+detail)};
 try{
  const context=await browser.newContext({viewport:{width:1280,height:800},hasTouch:true,serviceWorkers:'block'});
@@ -131,10 +131,65 @@ try{
  await page.evaluate(()=>{const e=state.encounter.participants.find(p=>p.id==='v13-enemy');e.hp-=7;saveState();render();});
  check('Gestion manuelle PV des adversaires disponible',await page.evaluate(()=>state.encounter.participants.find(p=>p.id==='v13-enemy').hp===73));
  check('Aucune erreur JavaScript majeure',errors.length===0,JSON.stringify(errors));
+
+ // Connected authority regression: the same enemy action must never issue
+ // health/status/save commands to a real Companion through canonical RPG Connect.
+ process.env.RPG_CONNECT_GM_KEY='lot2-full-recipe-secret-key-123456';
+ process.env.PORT='0';
+ process.env.RPG_CONNECT_ORIGINS='';
+ const {server,rooms}=await import('../../RPG-Connect/rpg-connect-server.js');
+ wsServer=server;
+ await new Promise(ok=>server.listening?ok():server.once('listening',ok));
+ const endpoint='ws://127.0.0.1:'+server.address().port,room='V13LOT2';
+ const packets=[];
+ page.on('websocket',socket=>socket.on('framesent',f=>{try{packets.push(JSON.parse(f.payload))}catch{}}));
+ await page.evaluate(()=>{state.encounter.rpgSessionMode='table-free';setMode('combat');});
+ await page.locator('#rpgMjOpen').click();
+ await page.locator('#rpgMjEndpoint').fill(endpoint);
+ await page.locator('#rpgMjRoom').fill(room);
+ await page.locator('#rpgMjKey').fill(process.env.RPG_CONNECT_GM_KEY);
+ await page.locator('#rpgMjConnect').click();
+ await page.waitForFunction(()=>window.RPGConnectMJ?.getStatus()?.connected);
+ check('Serveur RPG Connect réel connecté à Encounter',await page.evaluate(()=>RPGConnectMJ.getStatus().connected));
+ await page.waitForFunction(()=>document.querySelectorAll('#rpgMjPlayers [data-copy]').length>=6);
+ const token=rooms.get(room)?.tokens?.get('brackmard');
+ check('Invitation native Brackmard créée',typeof token==='string' && token.length>8);
+ const companion=await context.newPage();
+ companion.on('pageerror',e=>errors.push('Brackmard: '+e.message));
+ await companion.goto(base+'/Brackmard/',{waitUntil:'domcontentloaded'});
+ await companion.waitForFunction(()=>!!window.RPGConnect && !!window.CompanionAPI);
+ await companion.locator('.rpg-connect > .rpg-connect-launch').click();
+ await companion.locator('[name=invite]').fill('RPGCONNECT|'+endpoint+'|'+room+'|brackmard|'+token);
+ await companion.locator('[data-connect]').click();
+ await companion.waitForFunction(()=>RPGConnect.getStatus().connected);
+ await page.waitForFunction(()=>RPGConnectMJ.getStatus().players.some(p=>p.characterId==='brackmard'&&p.online));
+ check('Companion Brackmard réel connecté',await companion.evaluate(()=>RPGConnect.getStatus().connected));
+ const ownershipBefore=await companion.evaluate(()=>{
+  const s=CompanionAPI.getState();return JSON.stringify({hp:s.hp,statuses:s.statuses,conditions:s.conditions,resources:s.resources});
+ });
+ const gmBefore=await page.evaluate(()=>state.encounter.participants.find(p=>p.id==='cc-brackmard')?.hp);
+ const startPackets=packets.length;
+ await page.evaluate(()=>{
+  const e=state.encounter.participants.find(p=>p.id==='v13-enemy');
+  e.actionUsed=false;e.attackProgress=0;state.encounter.selectedId=e.id;
+  useAbility(e.id,'fire','action','normal');
+ });
+ await page.waitForTimeout(300);
+ const ownershipAfter=await companion.evaluate(()=>{
+  const s=CompanionAPI.getState();return JSON.stringify({hp:s.hp,statuses:s.statuses,conditions:s.conditions,resources:s.resources});
+ });
+ const gmAfter=await page.evaluate(()=>state.encounter.participants.find(p=>p.id==='cc-brackmard')?.hp);
+ check('Companion conserve ses PV, états et ressources après jet ennemi connecté',ownershipAfter===ownershipBefore);
+ check('Projection Encounter des PV de Brackmard inchangée',gmBefore===gmAfter);
+ const forbidden=new Set(['hp:set','tempHp:set','conditions:set','player-save:request','concentration:request','save:result','attack:damage','target:condition','effect:request','damage:resolved']);
+ const modifying=packets.slice(startPackets).filter(p=>p?.type==='command'&&forbidden.has(p.event?.type));
+ check('Aucune commande WebSocket mutante après Trait de feu ennemi',modifying.length===0,JSON.stringify(modifying));
+ check('Aucune erreur navigateur des deux applications',errors.length===0,JSON.stringify(errors));
+
 } catch(e){
  console.error('RECETTE FAILED',e?.stack||e);
  process.exitCode=1;
 } finally{
  await writeFile(out+'/'+browserName+'-results.json',JSON.stringify({checks,errors},null,2));
- await browser.close();await new Promise(r=>web.close(r));
+ await browser.close();await new Promise(r=>web.close(r));if(wsServer)await new Promise(r=>wsServer.close(r));
 }
