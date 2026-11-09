@@ -16,8 +16,13 @@ Branche : `feat/encounter-v13-lot1-results-20261109` (base `main`, commit initia
 - Les dégâts annoncés ne sont pas assimilés à des PV réellement retirés. La carte rappelle la nécessité de vérifier l'application sans modifier l'autorité santé.
 - Style séparé `encounter-v13-results.css`. Aucun changement de règles, dés, Mode Libre, Mode Préparation ou synchronisation.
 
+### Stabilisation complémentaire
+- Cache PWA versionné et nouveaux fichiers JS/CSS ajoutés à la liste des ressources hors ligne.
+- Ancien pseudo-élément « Cliquer pour fermer » neutralisé.
+- Tests unitaires ajoutés dans `encounter-v13-results.test.js`, accessibles par `npm run test:v13` : dégâts annoncés, soins, états, file FIFO, persistance et textes des jets complexes.
+
 ### Vérification et limites
-- Inspection statique de la hiérarchie des scripts et des anciens temporisateurs.
+- Inspection statique de la hiérarchie des scripts, des anciens temporisateurs et des fichiers PWA ; nouveaux tests écrits mais non exécutés.
 - **Tests et compilation non exécutés** : le connecteur GitHub permet la lecture/écriture de fichiers mais pas l'exécution du projet ; le clonage réseau depuis l'environnement d'exécution a échoué (résolution DNS).
 - **Recette navigateur Samsung S7 FE paysage non réalisée**. Vérifier manuellement jets simples, avantage/désavantage, critique, sauvegarde, soins, dégâts mixtes, états, résultats successifs, fermeture, non-débordement, Mode Libre et Préparation avant fusion.
 - Lot 2 non commencé. Aucune fusion ni aucun déploiement.
