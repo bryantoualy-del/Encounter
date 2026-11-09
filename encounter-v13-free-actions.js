@@ -67,7 +67,7 @@
     if(section==='lair' && p.actionUsed)return 'Action de repaire déjà utilisée.';
     const eco=abilityEconomy(a,section), max=attacksPerAction(p), progress=p.attackProgress||0;
     if(section!=='legendary'&&section!=='lair'){
-      if(eco==='action'&&p.actionUsed && !(a.kind==='attack'&&progress<max))return 'Action déjà utilisée.';
+      if(eco==='action'&&p.actionUsed && !(a.kind==='attack'&&progress>0&&progress<max))return 'Action déjà utilisée.';
       if(eco==='bonus'&&p.bonusActionUsed)return 'Action bonus déjà utilisée.';
       if(eco==='reaction'&&p.reactionUsed)return 'Réaction déjà utilisée.';
     }
@@ -107,8 +107,10 @@
   abilityCard = function(p,a,section){
     const html=priorCard(p,a,section);
     if(!freeEnemy(p))return html;
-    return html.replace('>Cibler & soigner</button>','>Lancer les soins</button>')
+    const label=html.replace('>Cibler & soigner</button>','>Lancer les soins</button>')
       .replace('>Cibler</button>','>Lancer le jet</button>');
+    const reason=canUse(p,a,section);
+    return reason ? label.replace(/<button(?=[^>]*data-use-ability)(?![^>]*disabled)/g,'<button disabled') : label;
   };
   globalThis.EncounterFreeEnemyActions={isFreeEnemy:freeEnemy};
 })();
