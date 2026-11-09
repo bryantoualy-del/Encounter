@@ -57,7 +57,7 @@ try{
  check('Moteur de compétence appelé',/Athlétisme/i.test(await logs()),(await logs()).slice(0,1200));
  await dismissResults();
  console.log('SKILL DEBUG',JSON.stringify(await page.evaluate(()=>({lastLog:state.encounter.log.slice(0,3),skillMarkup:document.querySelector('#activeDetail [data-skill-check]')?.outerHTML.slice(0,450),journalLocked:state.encounter.mjJournal?.filter(x=>['preparing','committing','syncing'].includes(x.status)).length,errors:window.__lot3Errors||[]}))));
- await page.locator('#activeDetail [data-detail-tab="sheet"]').click();
+ await page.locator('#activeDetail [data-lot3-back]').click();
  check('Retour à Fiche depuis Tests',await page.locator('#activeDetail [data-skill-check]').count()===0);
  await page.locator('#activeDetail [data-table-target-panel="damage"]').click();
  check('Panneau santé existant ouvert',await page.evaluate(()=>window.MJPanels.isOpen()));

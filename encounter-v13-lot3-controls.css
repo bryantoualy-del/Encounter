@@ -20,3 +20,11 @@
 .lot3-tests-section .check-row button,.lot3-tests-section .skill-check{min-height:44px;touch-action:manipulation}
 #mjSidePanel:has(.lot3-state-grid){min-width:0;max-width:100%;overflow-x:hidden;overflow-y:auto}
 @media(max-width:900px){.lot3-state-grid{gap:4px}.lot3-state-grid .lot3-state-choice{min-height:70px;padding:4px 1px}.lot3-state-choice img{width:30px;height:30px}.lot3-state-choice span{font-size:9px}.table-target-actions:has(.lot3-command){gap:4px}}
+
+/* Tests is a dedicated scrollable surface; never a fourth tile in Fiche's accordion. */
+#activeDetail .lot3-tests-panel{display:block;flex:1 1 auto;min-height:0;min-width:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:10px 12px 22px;border-top:1px solid #40546b;background:#111f2e}
+#activeDetail .lot3-tests-head{position:sticky;top:-10px;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0;margin:-10px -12px 12px;padding:10px 12px;background:#14273a;border-bottom:1px solid #425d73;color:#f0d59e}
+#activeDetail .lot3-tests-head strong{font-size:14px}
+#activeDetail .lot3-tests-head button{min-height:44px;white-space:normal;font-size:12px}
+#activeDetail .lot3-tests-panel .check-row,#activeDetail .lot3-tests-panel .skill-check{min-height:44px;min-width:0}
+#activeDetail .lot3-tests-panel .checks-grid,#activeDetail .lot3-tests-panel .skill-grid{min-width:0}
