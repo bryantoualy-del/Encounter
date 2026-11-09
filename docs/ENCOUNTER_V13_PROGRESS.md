@@ -120,3 +120,19 @@ Branche : `feat/encounter-v13-lot3-enemy-controls-20261109` ; base `main` `0cb90
 ### Stabilisation tactile
 - Le sous-menu **Tests** est maintenant rendu dans un panneau défilable séparé de l’accordéon « Fiche », avec un bouton explicite de retour, pour conserver la lisibilité et éviter les conflits de défilement sur Samsung S7 FE paysage.
 - Les résultats des tests et les défauts résiduels seront renseignés après la recette Chromium/WebKit complète.
+
+### Recette automatisée finale du Lot 3 — validée
+
+**Code applicatif testé : `d26ba080c3feb76dd15acc819f33e8982fccce16`.**
+
+- [Encounter CI #42719540516](https://github.com/bryantoualy-del/Encounter/actions/runs/42719540516) : **SUCCESS**. Tests Node : **348** principaux, **18** V1.3, **8** de mise en page/PWA, **7** passerelles Companions et **4** icônes, soit **385/385 réussis**.
+- Recette Playwright tactile paysage 1280 × 800 : **36/36 vérifications Chromium et 36/36 WebKit**, avec capture et fichier JSON de preuves. Trois commandes, sections Fiche, six tests de caractéristiques, six JS, dix-huit compétences, concentration, menu normal/avantage/désavantage, dommages/soins manuels, 15 icônes, grille 3×5 sans débordement, application d'état avec source, retour au Mode Guidé.
+- Tests navigateur du **Lot 2** sur Chromium/WebKit : **SUCCESS**.
+- Suites navigateur guidées **Brackmard, Rufus et E2E multi-Companions** : **SUCCESS**.
+- [RPG Connect V5 #42719540529](https://github.com/bryantoualy-del/Encounter/actions/runs/42719540529) : **SUCCESS** sur Chromium et WebKit.
+- Un clic sur une compétence affiche **normalement** le dialogue natif de choix Normal / Avantage / Désavantage : la recette le confirme et sélectionne explicitement Normal. Les popups de résultats persistants sont fermés volontairement entre les actions.
+- Les fichiers sont livrés avec version de cache PWA dédiée ; aucune nouvelle mécanique de jet ou état ajoutée.
+
+**Limite** : tests Chromium et WebKit avec émulation tactile, pas de manipulation directe sur le Samsung S7 FE physique. Aucun script de compilation/bundling dédié au dépôt : `npm ci`, contrôles de chargement des pages, tests Node et navigateurs exécutés dans GitHub Actions.
+
+**Statut : Lot 3 prêt à être revu, PR #31 maintenue en brouillon. Aucun merge, aucun déploiement, Lot 4 non commencé.**
