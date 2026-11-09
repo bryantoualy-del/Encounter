@@ -28,9 +28,9 @@ test('PWA header remains unblurred and assets share version',()=>{
    assert.ok(html.includes(ref),ref+' missing in HTML');
    assert.ok(sw.includes(ref),ref+' missing in cache');
  }
- assert.match(sw,/encounter-(?:header-opaque-final-20261108|v131-results-local-20261109)/);
+ assert.match(sw,/encounter-(?:header-opaque-final-20261108|v13-lot2-layout-20261109)/);
  for(const asset of ['encounter-v13-results.js','encounter-v13-results.css']){
-   const ref=asset+'?v=v131-20261109';
+   const ref=asset+'?v='+(asset.endsWith('.css')?'v13-lot2-layout-20261109':'v13-lot2-20261109');
    assert.ok(html.includes(ref),ref+' missing in HTML');
    assert.ok(sw.includes(ref),ref+' missing in cache');
  }
@@ -57,4 +57,17 @@ test('local table mode excludes companion waiting notifications without dropping
  for(const asset of ['mj-collective.js?v=v131-20261109']){
    assert.ok(html.includes(asset));assert.ok(sw.includes(asset));
  }
+});
+
+test('Mode Libre enemy action module is versioned and available offline',()=>{
+ const html=read('index.html'),sw=read('service-worker.js');
+ const asset='encounter-v13-free-actions.js?v=v13-lot2-20261109';
+ assert.ok(html.includes(asset));
+ assert.ok(sw.includes(asset));
+});
+
+test('Lot 2 result popup centers above legacy MJ presentation transform',()=>{
+ const css=read('encounter-v13-results.css');
+ assert.match(css,/#actionPopup\.action-popup\.v13-result-visible\.show/);
+ assert.match(css,/transform:translateX\(-50%\)!important/);
 });

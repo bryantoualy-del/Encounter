@@ -40,3 +40,19 @@
 #actionPopup.v131-combat .v13-result-detail{font-size:12px;margin-top:7px}
 #actionPopup.v131-combat #actionPopupText[hidden]{display:none!important}
 @media(max-width:650px){#actionPopup.v131-combat .v131-outcome{margin-left:0}#actionPopup.v131-combat .v131-attack{gap:8px}}
+
+/* Lot 2 — indicative enemy action without target hit/miss decision. */
+#actionPopup.v13-free-enemy{width:min(660px,calc(100vw - 32px))!important}
+#actionPopup.v13-free-enemy .v13-free-head{font-size:15px;color:#f0e5ce;font-weight:700;margin:7px 0}
+#actionPopup.v13-free-enemy .v13-free-row{display:flex;flex-wrap:wrap;align-items:center;gap:7px 12px;border-bottom:1px solid rgba(198,208,223,.17);padding:8px 0}
+#actionPopup.v13-free-enemy .v13-free-row span{font-size:14px;font-weight:600}
+#actionPopup.v13-free-enemy .v13-free-row strong{font-size:clamp(28px,4vw,48px);line-height:1;color:#e5b963;font-variant-numeric:tabular-nums}
+#actionPopup.v13-free-enemy .v13-free-row small{font-size:13px;color:#d5deea;overflow-wrap:anywhere}
+#actionPopup.v13-free-enemy #actionPopupText{font-size:13px;line-height:1.3;opacity:.9;margin:7px 0}
+
+/* V1.3 Lot 2 — outrank the older #actionPopup.action-popup.show transform from mj-presentation.css. */
+#actionPopup.action-popup.v13-result-visible.show {
+  left:50%!important;
+  right:auto!important;
+  transform:translateX(-50%)!important;
+}
