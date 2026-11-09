@@ -44,7 +44,8 @@
     "test:haste:menu": "node audit/haste-menu-e2e.cjs",
     "test:lot4": "node audit/lot4-e2e.cjs && node audit/lot4-connected-attacks-e2e.cjs && node audit/lot4-local-attacks-e2e.cjs && node audit/lot4-hex-armor-e2e.cjs && node audit/lot4-dragon-pyro-e2e.cjs && node audit/lot4-combat-e2e.cjs && node audit/lot4-ui-fx-e2e.cjs",
     "test:v5": "node --test audit/v5-local.test.cjs",
-    "test:v5:browser": "node audit/v5-browser.mjs"
+    "test:v5:browser": "node audit/v5-browser.mjs",
+    "test:v13": "node --test encounter-v13-results.test.js"
   },
   "dependencies": {
     "ws": "^8.18.3"

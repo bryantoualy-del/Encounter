@@ -1,4 +1,4 @@
-const CACHE='encounter-header-opaque-final-20261108';
+const CACHE='encounter-v13-lot1-results-20261109';
 const ASSETS=[
  './rpg-journal-ui.js?v=5-table-free-4',
  './rpg-activity.js?v=20261013-haste-menu',
@@ -84,6 +84,8 @@ const ASSETS=[
 
   './',
   './index.html',
+ './encounter-v13-results.js?v=lot1-20261109',
+ './encounter-v13-results.css?v=lot1-20261109',
   './combat-view.css?v=header-opaque-final-20261108',
  './combat-width.js?v=encounter-ux-20261108',
   './styles.css?v=header-opaque-final-20261108',

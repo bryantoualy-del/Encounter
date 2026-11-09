@@ -1,0 +1,24 @@
+/* Encounter V1.3 lot 1 — readable, voluntary-dismiss GM roll results. */
+#actionPopup.v13-result-visible {
+ position:fixed!important;left:50%!important;right:auto!important;top:max(72px,calc(env(safe-area-inset-top,0px) + 64px))!important;bottom:auto!important;
+ transform:translateX(-50%)!important;width:min(580px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;
+ max-height:min(48vh,360px)!important;overflow-y:auto!important;overflow-x:hidden!important;box-sizing:border-box!important;
+ padding:14px 54px 14px 20px!important;z-index:1500!important;pointer-events:none!important;
+ box-shadow:0 12px 34px rgba(0,0,0,.4)!important;word-break:break-word;overflow-wrap:anywhere;
+}
+#actionPopup.v13-result-visible .eyebrow {display:block;font-size:12px;letter-spacing:.12em}
+#actionPopup.v13-result-visible #actionPopupTitle{display:block;font-size:clamp(18px,2.2vw,25px);line-height:1.15;margin:3px 0}
+#actionPopup.v13-result-visible .v13-result-total {display:block;font-size:clamp(36px,5.5vw,62px);line-height:1.05;font-variant-numeric:tabular-nums;color:#f4d587}
+#actionPopup.v13-result-visible .v13-result-total[hidden]{display:none}
+#actionPopup.v13-result-visible #actionPopupText{font-size:clamp(16px,1.75vw,21px);line-height:1.35;margin:6px 0;white-space:pre-wrap}
+#actionPopup.v13-result-visible .v13-result-detail{display:block;font-size:13px;opacity:.85}
+#actionPopup.v13-result-visible .v13-result-detail:empty{display:none}
+#actionPopup .v13-result-close{position:absolute;right:9px;top:8px;min-width:44px;min-height:44px;border:1px solid rgba(255,255,255,.4);border-radius:12px;background:#182638;color:#fff;font-size:27px;cursor:pointer}
+#actionPopup .v13-result-count{display:block;font-size:12px;opacity:.8;margin-top:5px}
+#actionPopup[data-result-kind="damage"] .v13-result-total{color:#ffb09b}
+#actionPopup[data-result-kind="heal"] .v13-result-total{color:#9ee3bb}
+@media(max-height:650px){#actionPopup.v13-result-visible{top:60px!important;max-height:42vh!important;padding-top:10px!important;padding-bottom:10px!important}}
+
+#actionPopup.v13-result-visible::after{content:none!important}
+#actionPopup.v13-result-visible{cursor:default!important;text-align:left!important}
+#actionPopup.v13-result-visible .v13-result-close{cursor:pointer;pointer-events:auto!important}
