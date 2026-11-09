@@ -36,6 +36,7 @@ try{
  check('Dégâts & Soins fusionnés',await commands.nth(0).innerText()==='Dégâts & Soins');
  check('États et Tests disponibles',await commands.nth(1).innerText()==='États'&&await commands.nth(2).innerText()==='Tests');
  check('Fiche ne duplique pas les tests',await page.locator('#activeDetail [data-skill-check]').count()===0&&await page.locator('#activeDetail [data-ability-check]').count()===0);
+ const sheetInfo=await page.evaluate(()=>({selected:state.encounter.selectedId,tab:ui.detailTab,model:modelFor(selectedParticipant())?.name,hidden:document.querySelector('#activeDetail .detail-tab-body')?.hidden,html:document.querySelector('#activeDetail .detail-tab-body')?.innerHTML.slice(0,700),text:document.querySelector('#activeDetail .detail-tab-body')?.textContent.slice(0,700)}));console.log('SHEET DEBUG',JSON.stringify(sheetInfo));
  const sheet=await page.locator('#activeDetail .detail-tab-body').innerText();
  for(const name of ['Défenses structurées & sens','Traits','Source','Notes MJ'])check('Fiche conserve '+name,sheet.includes(name));
  await page.locator('#activeDetail [data-lot3-tests]').click();
