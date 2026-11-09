@@ -45,11 +45,13 @@ try{
  check('Six sauvegardes natives',await page.locator('#activeDetail [data-save-check]').count()===6);
  check('18 compétences natives',await page.locator('#activeDetail [data-skill-check]').count()===18);
  check('Concentration conservée',await page.locator('#activeDetail [data-concentration-save]').count()===1);
+ const logs=()=>page.evaluate(()=>state.encounter.log.map(x=>x.text).join('\n'));
  await page.locator('#activeDetail [data-ability-check]').first().click();
+ check('Moteur de caractéristique appelé',/test FOR/i.test(await logs()),(await logs()).slice(0,1200));
  await page.locator('#activeDetail [data-save-check]').first().click();
+ check('Moteur de sauvegarde appelé',/JS FOR/i.test(await logs()),(await logs()).slice(0,1200));
  await page.locator('#activeDetail [data-skill-check]').first().click();
- const logs=await page.evaluate(()=>state.encounter.log.map(x=>x.text).join('\n'));
- check('Moteurs natifs de caractéristiques, JS et compétences utilisés',/test FOR/i.test(logs)&&/JS FOR/i.test(logs)&&/Athlétisme/i.test(logs),logs.slice(0,1200));
+ check('Moteur de compétence appelé',/Athlétisme/i.test(await logs()),(await logs()).slice(0,1200));
  await page.locator('#activeDetail [data-detail-tab="sheet"]').click();
  check('Retour à Fiche depuis Tests',await page.locator('#activeDetail [data-skill-check]').count()===0);
  await page.locator('#activeDetail [data-table-target-panel="damage"]').click();
