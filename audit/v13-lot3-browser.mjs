@@ -13,7 +13,7 @@ const web=createServer(async(req,res)=>{try{let name=decodeURIComponent(new URL(
 await new Promise(r=>web.listen(0,'127.0.0.1',r));
 const browser=await engine.launch({headless:true,...(browserKind==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{})});
 const checks=[],errors=[];let page;
-const check=(name,condition,detail='')=>{checks.push({name,pass:!!condition,detail});console.log(condition?'PASS':'FAIL',name,detail);assert.ok(condition,name+': '+detail);};
+const check=(name,condition,detail='')=>{checks.push({name,pass:!!condition,detail});console.log(condition?'PASS':'FAIL',name,detail);if(!condition)process.exitCode=1;};
 try{
  const ctx=await browser.newContext({viewport:{width:1280,height:800},hasTouch:true,serviceWorkers:'block'});
  await ctx.route('https://cdn.jsdelivr.net/npm/three@0.186.1/build/*',async route=>{const full=resolve(require.resolve('three'),'..',new URL(route.request().url()).pathname.split('/').pop());await route.fulfill({body:await readFile(full),contentType:'application/javascript'});});
@@ -52,6 +52,7 @@ try{
  check('Moteur de sauvegarde appelé',/JS FOR/i.test(await logs()),(await logs()).slice(0,1200));
  await page.locator('#activeDetail [data-skill-check]').first().click();
  check('Moteur de compétence appelé',/Athlétisme/i.test(await logs()),(await logs()).slice(0,1200));
+ console.log('SKILL DEBUG',JSON.stringify(await page.evaluate(()=>({lastLog:state.encounter.log.slice(0,3),skillMarkup:document.querySelector('#activeDetail [data-skill-check]')?.outerHTML.slice(0,450),journalLocked:state.encounter.mjJournal?.filter(x=>['preparing','committing','syncing'].includes(x.status)).length,errors:window.__lot3Errors||[]}))));
  await page.locator('#activeDetail [data-detail-tab="sheet"]').click();
  check('Retour à Fiche depuis Tests',await page.locator('#activeDetail [data-skill-check]').count()===0);
  await page.locator('#activeDetail [data-table-target-panel="damage"]').click();
