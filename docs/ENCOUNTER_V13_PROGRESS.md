@@ -62,3 +62,9 @@ Branche : `feat/encounter-v13-lot2-free-enemy-actions-20261109` ; départ : `mai
 - Ajout d'une véritable recette Playwright `audit/v13-lot2-browser.mjs` avec moteurs Chromium/WebKit, interaction réelle avec les boutons, rendu paysage 1280 × 800, captures d'écran et preuves JSON, rejouée automatiquement sur chaque PR.
 - Les vérifications couvrent jet d'attaque physique/magique, multiattaque, sauvegarde de zone, dégâts mixtes, JdS sur touche, soins, recharge, emplacements, zéro mutation des joueurs, résultat persistant, Mode Guidé, Mode Préparation, gestion manuelle des PV ennemis et absence d'erreur JS.
 - **Statut non déclaré terminé tant que les nouveaux jobs Playwright et les régressions globales ne sont pas tous verts.** Une recette physique sur Samsung S7 FE ne peut pas être réalisée par GitHub Actions et doit être explicitement distinguée de son émulation tactile.
+
+### Corrections constatées en CI de recette
+- Nouvelle épreuve de l'économie de tour : une attaque ne peut pas être relancée après consommation manuelle de l'Action si aucun début d'Attaque supplémentaire n'est enregistré. Corrigé, test unitaire vert.
+- Première exécution Playwright Chromium/WebKit : lancement de Trait de feu, absence de ciblage et de mutation du joueur, total visible et économie de tour corrects. **Défaut de cadrage identifié** : la popup x=640 sur 1280 px, débordement de 20 px à droite.
+- Cause : `mj-presentation.css` applique `#actionPopup.action-popup.show {transform:translateY(0)!important}`, plus spécifique que l'ancienne règle du Lot 1. Règle prioritaire explicite ajoutée pour garantir le centrage horizontal en affichage persistant ; cache PWA incrémenté.
+- Les scénarios de navigateur seront rejoués après cette correction, le statut n'est pas encore accepté.
