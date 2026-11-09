@@ -18,3 +18,7 @@
 #actionPopup[data-result-kind="damage"] .v13-result-total{color:#ffb09b}
 #actionPopup[data-result-kind="heal"] .v13-result-total{color:#9ee3bb}
 @media(max-height:650px){#actionPopup.v13-result-visible{top:60px!important;max-height:42vh!important;padding-top:10px!important;padding-bottom:10px!important}}
+
+#actionPopup.v13-result-visible::after{content:none!important}
+#actionPopup.v13-result-visible{cursor:default!important;text-align:left!important}
+#actionPopup.v13-result-visible .v13-result-close{cursor:pointer}
