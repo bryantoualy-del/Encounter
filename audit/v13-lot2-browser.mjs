@@ -89,7 +89,7 @@ try{
   return data;
  }
  let d=await click('fire','Trait de feu');
- check('D20 + résultat numérique du sort',await page.locator('.v13-free-row strong').count()>0);
+ check('D20 + résultat numérique du sort',await page.locator('.v131-free-attack .v131-free-figure strong').count()===2);
  check('Économie de tour consommée côté ennemi',d.enemy.actionUsed===true);
  await page.screenshot({path:out+'/'+browserName+'-samsung-result.png',fullPage:false});
  const bounds=await page.locator('#actionPopup').boundingBox();
@@ -103,11 +103,11 @@ try{
  check('JS sur touche annoncé, non résolu',/Sur touche|JS FOR/.test(d.body));
  await close();
  d=await click('multi','Multiattaque');
- check('Deux jets de multiattaque',await page.locator('.v13-free-row strong').count()===2);
+ check('Deux jets de multiattaque',await page.locator('.v131-free-attack').count()===2);
  await close();
  d=await click('blast','Sauvegarde de zone');
- check('Sauvegarde à résoudre par les joueurs',/JS DEX|DD 16/.test(d.body));
- check('Dégâts potentiels sans application',/Dégâts potentiels/.test(d.body));
+ check('Sauvegarde à résoudre par les joueurs',/JS DEX|JET DE SAUVEGARDE · DEX|DD 16/.test(d.body));
+ check('Dégâts potentiels sans application',/DÉGÂTS POTENTIELS/i.test(d.body));
  check('Emplacement N3 consommé côté adversaire',d.enemy.resourceState.slot3===1);
  await close();
  d=await click('heal','Soins ennemis');

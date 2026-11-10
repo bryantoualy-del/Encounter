@@ -64,24 +64,35 @@
       heading.className = 'v13-free-head';
       heading.textContent = free.actor + ' · ' + free.ability;
       summary.appendChild(heading);
+      const figure=(kind,label,value,explanation)=>{
+        const group=document.createElement('div');group.className='v131-free-figure v131-free-'+kind;
+        const caption=document.createElement('span');caption.className='v131-free-caption';caption.textContent=label;
+        const number=document.createElement('strong');number.textContent=String(value);
+        group.append(caption,number);
+        if(explanation){const tiny=document.createElement('small');tiny.textContent=explanation;group.appendChild(tiny);}
+        return group;
+      };
       for (const item of free.rolls || []) {
-        const line = document.createElement('div');line.className='v13-free-row';
-        const label = document.createElement('span');label.textContent=item.label;
-        const total = document.createElement('strong');total.textContent=String(item.total);
-        const dice = document.createElement('small');dice.textContent=item.detail+(item.critical?' · 20 naturel':'')+(item.damage!=null?' · '+item.damage+' dégâts potentiels ('+item.damageDetail+')':'');
-        line.append(label,total,dice);summary.appendChild(line);
+        const line=document.createElement('div');line.className='v13-free-row v131-free-attack';
+        const label=document.createElement('span');label.className='v131-free-action-name';label.textContent=item.label;
+        const figures=document.createElement('div');figures.className='v131-free-figures';
+        figures.appendChild(figure('roll','JET D’ATTAQUE',item.total,item.detail+(item.critical?' · 20 naturel':'')));
+        if(item.damage!=null)figures.appendChild(figure('damage','DÉGÂTS POTENTIELS',item.damage,item.damageDetail||''));
+        line.append(label,figures);summary.appendChild(line);
       }
       if (free.save) {
-        const line=document.createElement('div');line.className='v13-free-row';
-        line.textContent='JS '+free.save.ability+' · DD '+free.save.dc+' — résolution par les joueurs';
-        summary.appendChild(line);
+        const line=document.createElement('div');line.className='v13-free-row v131-free-save';
+        const title=document.createElement('span');title.textContent='JET DE SAUVEGARDE · '+free.save.ability;
+        const dd=document.createElement('strong');dd.textContent='DD '+free.save.dc;
+        const help=document.createElement('small');help.textContent='À résoudre par les joueurs';
+        line.append(title,dd,help);summary.appendChild(line);
       }
       if (free.effect) {
-        const line=document.createElement('div');line.className='v13-free-row';
-        const label=document.createElement('span');label.textContent=free.effect.label;
-        const total=document.createElement('strong');total.textContent=String(free.effect.total);
-        const dice=document.createElement('small');dice.textContent=free.effect.detail||'';
-        line.append(label,total,dice);summary.appendChild(line);
+        const label=String(free.effect.label||'Effet potentiel');
+        const kind=/soins?|guéri|récupération/i.test(label)?'heal':/dégâts?|dommages?/i.test(label)?'damage':'effect';
+        const line=document.createElement('div');line.className='v13-free-row v131-free-effect';
+        line.appendChild(figure(kind,label.toUpperCase(),free.effect.total,free.effect.detail||''));
+        summary.appendChild(line);
       }
       eyebrow.textContent='ACTION ENNEMIE · MODE LIBRE';
     } else if (combat) {

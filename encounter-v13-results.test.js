@@ -64,7 +64,42 @@ test('Table libre enemy rolls are labelled as proposed, never as resolved hits',
    rolls:[{label:'Trait de feu',total:19,detail:'d20 13 +6',damage:12,damageDetail:'2d10 feu'}],save:null,effect:null},'Trait de feu');
  assert.equal(box.dataset.resultKind,'enemy-roll');
  assert.equal(box.querySelector('.v13-free-row strong').textContent,'19');
- assert.match(box.querySelector('.v13-free-row small').textContent,/12 dégâts potentiels/);
+ assert.equal(box.querySelector('.v131-free-attack .v131-free-damage strong').textContent,'12');
+ assert.match(box.querySelector('.v131-free-damage .v131-free-caption').textContent,/DÉGÂTS POTENTIELS/);
+ assert.match(box.querySelector('.v131-free-damage small').textContent,/2d10 feu/);
  assert.match(box.querySelector('.v13-result-detail').textContent,/aucun Companion modifié/);
  assert.doesNotMatch(box.textContent,/TOUCHÉ|RATÉ|contre CA/);
+});
+
+test('Mode Libre: attack roll and potential damage are separate high-contrast figures',()=>{
+ const {box,show}=setup();
+ show({freeEnemy:true,actor:'Fausse hydre',ability:'Morsure',rolls:[{label:'Morsure',total:20,detail:'d20 11 +9',damage:9,damageDetail:'9 perforants [2+2+5]'}],note:'Indication uniquement'},'Morsure');
+ const figures=box.querySelectorAll('.v131-free-attack .v131-free-figure');
+ assert.equal(figures.length,2);
+ assert.equal(figures[0].querySelector('strong').textContent,'20');
+ assert.equal(figures[1].querySelector('strong').textContent,'9');
+ assert.match(figures[1].className,/v131-free-damage/);
+ assert.match(box.querySelector('.v13-result-detail').textContent,/aucun Companion modifié/);
+});
+test('Mode Libre: save DC and potential damages are displayed without auto-resolution',()=>{
+ const {box,show}=setup();
+ show({freeEnemy:true,actor:'Dragon',ability:'Souffle',rolls:[],save:{ability:'DEX',dc:17},effect:{label:'Dégâts potentiels',total:37,detail:'10d6 feu'},note:''},'Souffle');
+ assert.equal(box.querySelector('.v131-free-save strong').textContent,'DD 17');
+ assert.equal(box.querySelector('.v131-free-effect .v131-free-damage strong').textContent,'37');
+ assert.doesNotMatch(box.textContent,/TOUCHÉ|RATÉ/);
+});
+test('Mode Libre: potential healing is green-labelled and separate from damage',()=>{
+ const {box,show}=setup();
+ show({freeEnemy:true,actor:'Clerc',ability:'Soin',rolls:[],effect:{label:'Soins potentiels',total:18,detail:'3d8+5'},note:''},'Soin');
+ assert.equal(box.querySelector('.v131-free-heal strong').textContent,'18');
+ assert.equal(box.querySelectorAll('.v131-free-damage').length,0);
+ assert.match(box.querySelector('.v131-free-heal .v131-free-caption').textContent,/SOINS POTENTIELS/);
+});
+test('Mode Libre: multiple attacks keep each damage associated with its own roll',()=>{
+ const {box,show}=setup();
+ show({freeEnemy:true,actor:'Hydre',ability:'Multiattaque',rolls:[{label:'Morsure 1/2',total:17,detail:'d20 10 +7',damage:8,damageDetail:'perforants'},{label:'Morsure 2/2',total:24,detail:'d20 17 +7',damage:13,damageDetail:'perforants'}],note:''},'Multiattaque');
+ const rows=box.querySelectorAll('.v131-free-attack');
+ assert.equal(rows.length,2);
+ assert.equal(rows[0].querySelector('.v131-free-damage strong').textContent,'8');
+ assert.equal(rows[1].querySelector('.v131-free-damage strong').textContent,'13');
 });

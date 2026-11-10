@@ -177,3 +177,11 @@ Branche : `feat/encounter-v13-lot3-enemy-controls-20261109` ; base `main` `0cb90
 - Le dépôt est statique : il n'a toujours **aucune commande `build` distincte** ; tests d'exécution navigateur et chargement des ressources PWA servent de recette de production.
 
 **Livraison : PR #32 vers `main`, laissée volontairement en brouillon. Ne pas fusionner ni déployer avant validation fonctionnelle du MJ.**
+
+## Correctif V1.3.1 — Lisibilité des résultats potentiels (retour MJ 10/11/2026)
+
+- Attaques ennemies Mode Libre : **jet d'attaque et dégâts potentiels de même poids visuel**, valeurs grandes dans deux colonnes indépendantes, détails de dés plus discrets ; multiattaques regroupées par sous-attaque.
+- **Couleurs différenciées** : jet doré (#e5b963), dégâts potentiels corail (#ffab95), soins potentiels vert (#97e5b6). Libellés textuels conservés pour l'accessibilité, pas de dépendance à la couleur seule.
+- Capacités avec JS : DD clairement identifié, dégâts potentiels séparés et mis en évidence ; soins affichés dans un bloc vert, autres effets neutres.
+- Modification **strictement présentation** dans `encounter-v13-results.js/css` ; aucun changement aux jets, ressources, PV, autorités Companions, contrats WebSocket ou Annuler/Rétablir. Popup reste persistante jusqu'à fermeture volontaire ; cache PWA versionné.
+- Validation : tests unitaires de présentation et recettes Chromium/WebKit du Lot 2, plus CI de non-régression. Tests sur appareil physique toujours à compléter.
