@@ -4,7 +4,7 @@
  'use strict';
  const LIMIT=99;
  const integer=(value)=>Math.max(0,Math.min(LIMIT,Math.trunc(Number(value)||0)));
- const freeEnemy=p=>!!p&&p.kind==='enemy'&&state.encounter.rpgSessionMode==='table-free';
+ const freeEnemy=p=>!!p&&p.kind==='enemy'&&(state.encounter.rpgSessionMode||'table-free')==='table-free';
  // Explicit home rule: round the halved resistance UP (25 -> 13).
  const halfUp=n=>Math.ceil(Math.max(0,Number(n)||0)/2);
  const previousDamage=resolveDamageAmount;
