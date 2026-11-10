@@ -49,7 +49,7 @@
   }
   const damageColors = Object.freeze({feu:'#FF6538',froid:'#65D9F5',foudre:'#F6D44B',tonnerre:'#568BEB',acide:'#A4D64F',poison:'#39B87B',necrotique:'#9461BC',radiant:'#FFE19A',psychique:'#E577D6',force:'#B18BFF',contondant:'#B49B7B',perforant:'#A9BAC8',tranchant:'#E17A80'});
   function semanticDamage(text) {
-    const normalized=String(text||'').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'');
+    const normalized=String(text||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
     const match=normalized.match(/(?:^|[^a-z])(feu|froid|foudre|tonnerre|acide|poison|necrotique|radiant|psychique|force|contondant|perforant|tranchant)(?:s|e|es)?(?:$|[^a-z])/);
     return match ? damageColors[match[1]] : '';
   }
@@ -86,7 +86,7 @@
         const label=document.createElement('span');label.className='v131-free-action-name';label.textContent=item.label;
         const figures=document.createElement('div');figures.className='v131-free-figures';
         figures.appendChild(figure('roll','JET D’ATTAQUE',item.total,item.detail+(item.critical?' · 20 naturel':'')));
-        if(item.damage!=null)figures.appendChild(figure('damage','DÉGÂTS POTENTIELS',item.damage,item.damageDetail||''));
+        if(item.damage!=null){const damageFigure=figure('damage','DÉGÂTS POTENTIELS',item.damage,item.damageDetail||'');const color=semanticDamage(item.damageDetail||'');if(color)damageFigure.style.color=color;figures.appendChild(damageFigure);}
         line.append(label,figures);summary.appendChild(line);
       }
       if (free.save) {
@@ -100,7 +100,7 @@
         const label=String(free.effect.label||'Effet potentiel');
         const kind=/soins?|guéri|récupération/i.test(label)?'heal':/dégâts?|dommages?/i.test(label)?'damage':'effect';
         const line=document.createElement('div');line.className='v13-free-row v131-free-effect';
-        line.appendChild(figure(kind,label.toUpperCase(),free.effect.total,free.effect.detail||''));
+        const effectFigure=figure(kind,label.toUpperCase(),free.effect.total,free.effect.detail||'');const effectColor=kind==='damage'?semanticDamage(label+' '+(free.effect.detail||'')):'';if(effectColor)effectFigure.style.color=effectColor;line.appendChild(effectFigure);
         summary.appendChild(line);
       }
       eyebrow.textContent='ACTION ENNEMIE · MODE LIBRE';
