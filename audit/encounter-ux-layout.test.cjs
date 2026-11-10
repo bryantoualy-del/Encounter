@@ -28,7 +28,7 @@ test('PWA header remains unblurred and assets share version',()=>{
    assert.ok(html.includes(ref),ref+' missing in HTML');
    assert.ok(sw.includes(ref),ref+' missing in cache');
  }
- assert.match(sw,/encounter-(?:header-opaque-final-20261108|v13-lot2-layout-20261109|v13-lot3-20261109)/);
+ assert.match(sw,/encounter-(?:header-opaque-final-20261108|v13-lot2-layout-20261109|v13-lot3-20261109|v13-lot4-20261110)/);
  for(const asset of ['encounter-v13-results.js','encounter-v13-results.css']){
    const ref=asset+'?v='+(asset.endsWith('.css')?'v13-lot2-layout-20261109':'v13-lot2-20261109');
    assert.ok(html.includes(ref),ref+' missing in HTML');
@@ -90,4 +90,20 @@ test('Lot 3 enemy commands, state-grid and checks available offline',()=>{
  assert.match(app,/data-skill-check/);
  assert.match(app,/data-save-check/);
  assert.match(app,/data-concentration-save/);
+});
+
+test('Lot 4 isolated house-rule assets, PWA cache and no undo changes',()=>{
+ const html=read('index.html'),sw=read('service-worker.js'),js=read('encounter-v13-lot4.js'),css=read('encounter-v13-lot4.css');
+ for(const name of ['encounter-v13-lot4.js','encounter-v13-lot4.css']){
+  const asset=name+'?v=v13-lot4-20261110';
+  assert.ok(html.includes(asset),asset+' not loaded');
+  assert.ok(sw.includes(asset),asset+' not precached');
+ }
+ assert.match(js,/freeEnemy/);
+ assert.match(js,/Math\.ceil\(/);
+ assert.match(js,/legendaryMaxOverride/);
+ assert.match(js,/previousDamage/);
+ assert.match(js,/previousRenderDetail/);
+ assert.match(css,/v13-legendary-controls/);
+ assert.doesNotMatch(js,/undoStack\s*=|mjJournal\s*=|function undo\(/);
 });

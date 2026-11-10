@@ -136,3 +136,44 @@ Branche : `feat/encounter-v13-lot3-enemy-controls-20261109` ; base `main` `0cb90
 **Limite** : tests Chromium et WebKit avec émulation tactile, pas de manipulation directe sur le Samsung S7 FE physique. Aucun script de compilation/bundling dédié au dépôt : `npm ci`, contrôles de chargement des pages, tests Node et navigateurs exécutés dans GitHub Actions.
 
 **Statut : Lot 3 prêt à être revu, PR #31 maintenue en brouillon. Aucun merge, aucun déploiement, Lot 4 non commencé.**
+
+
+## Lot 4/4 — Actions légendaires, arrondi maison, recette globale (10 novembre 2026)
+
+**Branche de livraison :** `feat/encounter-v13-lot4-legendary-rounding-20261110` depuis `main` `5f0177ae1d32f3cea38de4d816c677a65c39677f`. Les Lots 1, 2 et 3 ont été fusionnés précédemment. Les PR #5, #13, #15, préexistantes, ne sont pas touchées.
+
+### Référentiel des modifications
+
+1. **Actions légendaires** : panneau tactile compact sous les statistiques d'un boss ennemi en Mode Libre, avec deux compteurs distincts : actions restantes (±1) et maximum (±1). Le maximum corrigé est une propriété d'instance `legendaryMaxOverride`, conservée par la normalisation et la persistance existantes. Modification immédiate avec journal et `mutate` natifs ; plafonds 0–99 et restant toujours borné par le maximum. Aucun changement du modèle de la bibliothèque ; aucune remise à zéro sur changement d'onglet ou rechargement. La recharge **normale au début du tour du boss** reste intacte. Les modes et les Companions ne reçoivent aucune nouvelle commande.
+2. **Convention maison** : en Mode Libre **pour les adversaires uniquement**, une résistance seule arrondit **au supérieur** : 25 / 2 = 12,5, donc 13 PV. L'implémentation centrale `EncounterV13Lot4.halfUp` est utilisée par le résolveur existant, composante typée par composante typée. Les immunités restent prioritaires ; résistance + vulnérabilité s'annulent ; la vulnérabilité seule double le montant. Une correction manuelle MJ `resistance` utilise le même arrondi sans appliquer deux fois la résistance. Les autres modes, notamment Guidé, ainsi que les Companions, conservent leur convention préexistante `Math.floor`. La réduction lors d'un JS réussi (moitié des dégâts) reste inchangée, car il s'agit d'une mécanique distincte.
+3. **Pas de refonte** : module et feuille CSS dédiés `encounter-v13-lot4.js/css` chargés après les modules existants, versionnés dans le cache PWA. Aucune modification du moteur d'Annuler/Rétablir.
+
+### Plan de tests et réception
+
+- Régression des Lots 1–3 par l'intégralité de la CI existante (`npm test`, V1.3, contrôles UX/PWA, passerelles Companions, icônes, suites navigateur Guidé/Brack/Rufus et Playwright Lot 2 et Lot 3).
+- Nouvelle recette `audit/v13-lot4-browser.mjs` sous Chromium et WebKit, touch paysage 1280 × 800 : modifications du restant et du maximum, plafonds, isolation entre instances, persistance après onglets/rechargement, disponibilité des actions légendaires, cas 25→13 / 23→12, immunité, vulnérabilité, annulation résistance + vulnérabilité, correction manuelle, dégâts mixtes, non-régression du mode Guidé, non-régression des personnages, débordements et erreurs navigateur.
+- Vérification de la compatibilité WebSocket via la CI et les recettes précédentes ; aucun protocole, contrat ni autorité Companion n'est modifié.
+- Avant travaux : `main` a un CI post-fusion Lot 3 [#42762041182](https://github.com/bryantoualy-del/Encounter/actions/runs/42762041182) **failure** uniquement sur le job navigateur Brackmard, avec timeout `page.screenshot` après des assertions métier réussies ; résultat à surveiller séparément de la nouvelle fonctionnalité.
+- Le dépôt est une application statique : pas de script `build` distinct ; `npm ci`, analyse des scripts, tests et chargement Playwright font office de validation technique. Le Samsung S7 FE physique doit encore être testé par le MJ (tactile et lisibilité réelle en paysage).
+- Aucun changement à Annuler/Rétablir. **Ne pas fusionner ni déployer avant validation fonctionnelle du MJ.**
+
+**Statut des tests du Lot 4 : à compléter après les exécutions GitHub Actions.**
+
+### Résultats automatisés finaux — 10 novembre 2026
+
+**Code applicatif testé : `afa5dd7f76ec92191fbfe9263903741bd95e1539`.**
+
+- [Encounter CI #42775629701](https://github.com/bryantoualy-del/Encounter/actions/runs/42775629701) : **SUCCESS**. **386 tests Node réussis** : 348 principaux, 18 V1.3, 9 vérifications UX/PWA, 7 tests passerelles Companions, 4 tests icônes.
+- **Lot 4 Chromium : 19/19 validations PASS ; Lot 4 WebKit : 19/19 validations PASS.** Captures d'écran 1280×800 et fichiers JSON disponibles dans les artifacts `v13-lot4-chromium` et `v13-lot4-webkit`. Contrôles : restant et maximum du boss, plafonds et isolation d'instance, changement d'onglet, rechargement, disponibilité des capacités, 25 feu résistant→13, 23→12, poison immunisé→0, froid vulnérable→50, neutralisation résistance+vulnérabilité, correction MJ sans double résistance, dégâts mixtes 25 feu + 12 froid→37, Guidé inchangé 25→12, joueur inchangé 25→12, pas de débordement ni erreur JS.
+- **Lots 2 et 3 : SUCCESS Chromium et WebKit**, avec conservation des popups persistantes, actions sans ciblage en Mode Libre, grille 3×5 et tests rapides.
+- **Brackmard, Rufus et E2E guidé général : SUCCESS.** Le timeout de capture Brackmard observé sur le `main` initial n'est pas reproduit sur la branche du Lot 4.
+- [RPG Connect V5 #42775629517](https://github.com/bryantoualy-del/Encounter/actions/runs/42775629517) : **SUCCESS Chromium et WebKit**. Aucune modification du protocole, des contrats WebSocket, du journal Annuler/Rétablir ou des moteurs de Companions par le Lot 4.
+- Les campagnes automatisées du dépôt sont validées, mais la présence de nombreux scripts de recette complémentaires n'implique pas que chaque commande `npm run test:*` disponible ait été exécutée individuellement. Les suites ciblées et les régressions de la CI ont été exécutées.
+
+**Risques et vérifications MJ restantes :**
+- Recette **physique Samsung S7 FE paysage** : taille des touches, zoom en %, lisibilité des popups, palette des 15 états, panneau légendaire et absence de débordement après longues sessions.
+- **Kobe** : vérifier une vraie session connectée Kobe + RPG Connect + Encounter. Le manifeste automatisé actuel `audit/staging-manifest.json` référence RPG Connect, Brackmard et les six Companions historiques mais **pas Kobe** ; aucune recette bout-à-bout Kobe spécifique n'est revendiquée.
+- Sauvegarde/rechargement réel de la session de campagne et fonctionnement hors ligne/service worker sur tablette physique.
+- Le dépôt est statique : il n'a toujours **aucune commande `build` distincte** ; tests d'exécution navigateur et chargement des ressources PWA servent de recette de production.
+
+**Livraison : PR #32 vers `main`, laissée volontairement en brouillon. Ne pas fusionner ni déployer avant validation fonctionnelle du MJ.**
