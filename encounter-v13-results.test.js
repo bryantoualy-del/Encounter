@@ -109,7 +109,8 @@ test('V1.4: all 13 damage types color the actual displayed numeric result',()=>{
  const colors={feu:'#FF6538',froid:'#65D9F5',foudre:'#F6D44B',tonnerre:'#568BEB',acide:'#A4D64F',poison:'#39B87B',nécrotiques:'#9461BC',radiants:'#FFE19A',psychiques:'#E577D6',force:'#B18BFF',contondants:'#B49B7B',perforants:'#A9BAC8',tranchants:'#E17A80'};
  for(const [type,color] of Object.entries(colors)){
   const {box,show}=setup();show('18 dégâts '+type,'Dégâts');
-  assert.equal(box.querySelector('.v13-result-total').style.color,color,type);
+  const rgb=color.match(/[0-9a-f]{2}/gi).map(v=>parseInt(v,16));
+  assert.equal(box.querySelector('.v13-result-total').style.color,'rgb('+rgb.join(', ')+')',type);
  }
 });
 test('V1.4: free enemy potential damage uses the same semantic palette',()=>{
