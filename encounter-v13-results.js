@@ -47,6 +47,12 @@
     if (!m) return null;
     return {actor:m[1].trim(),weapon:m[2].trim(),target:m[3].trim(),die:m[4],modifier:m[5].replace(/\s/g,''),attack:m[6],ac:m[7],outcome:m[8].toUpperCase(),damage:m[9]||'',damageDetail:m[10]||''};
   }
+  const damageColors = Object.freeze({feu:'#FF6538',froid:'#65D9F5',foudre:'#F6D44B',tonnerre:'#568BEB',acide:'#A4D64F',poison:'#39B87B',necrotique:'#9461BC',radiant:'#FFE19A',psychique:'#E577D6',force:'#B18BFF',contondant:'#B49B7B',perforant:'#A9BAC8',tranchant:'#E17A80'});
+  function semanticDamage(text) {
+    const normalized=String(text||'').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'');
+    const match=normalized.match(/(?:^|[^a-z])(feu|froid|foudre|tonnerre|acide|poison|necrotique|radiant|psychique|force|contondant|perforant|tranchant)(?:s|e|es)?(?:$|[^a-z])/);
+    return match ? damageColors[match[1]] : '';
+  }
   function paint() {
     if (!active) { box.classList.remove('show');box.classList.remove('v13-result-visible');return; }
     const free = active.free;
@@ -58,6 +64,9 @@
     textNode.textContent = free ? (free.note || '') : active.message;
     textNode.hidden = !!combat;
     numeric.textContent = combat ? combat.damage : active.number;
+    const semanticColor=semanticDamage(combat ? combat.damageDetail : active.message);
+    numeric.style.color=semanticColor;
+    numeric.style.borderColor=semanticColor;
     numeric.hidden = !!free || !(combat ? combat.damage : active.number);
     if (free) {
       const heading = document.createElement('div');
@@ -105,6 +114,7 @@
       const bottom=document.createElement('div');bottom.className='v131-bottom';
       const label=document.createElement('span');label.textContent=combat.damage?'DÉGÂTS':'JET D’ATTAQUE';
       const dice=document.createElement('small');dice.textContent=combat.damageDetail||('d20 '+combat.die+' '+combat.modifier);
+      if(semanticColor){label.style.color=semanticColor;dice.style.color=semanticColor;}
       bottom.append(label,dice);
       summary.append(line,attack,bottom);
       eyebrow.textContent='ATTAQUE · '+combat.weapon.toUpperCase();
