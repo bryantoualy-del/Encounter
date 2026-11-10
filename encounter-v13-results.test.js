@@ -103,3 +103,17 @@ test('Mode Libre: multiple attacks keep each damage associated with its own roll
  assert.equal(rows[0].querySelector('.v131-free-damage strong').textContent,'8');
  assert.equal(rows[1].querySelector('.v131-free-damage strong').textContent,'13');
 });
+
+
+test('V1.4: all 13 damage types color the actual displayed numeric result',()=>{
+ const colors={feu:'#FF6538',froid:'#65D9F5',foudre:'#F6D44B',tonnerre:'#568BEB',acide:'#A4D64F',poison:'#39B87B',nécrotiques:'#9461BC',radiants:'#FFE19A',psychiques:'#E577D6',force:'#B18BFF',contondants:'#B49B7B',perforants:'#A9BAC8',tranchants:'#E17A80'};
+ for(const [type,color] of Object.entries(colors)){
+  const {box,show}=setup();show('18 dégâts '+type,'Dégâts');
+  const rgb=color.match(/[0-9a-f]{2}/gi).map(v=>parseInt(v,16));
+  assert.equal(box.querySelector('.v13-result-total').style.color,'rgb('+rgb.join(', ')+')',type);
+ }
+});
+test('V1.4: free enemy potential damage uses the same semantic palette',()=>{
+ const {box,show}=setup();show({freeEnemy:true,actor:'Dragon',ability:'Souffle',rolls:[{label:'Souffle',total:20,detail:'d20 15 +5',damage:14,damageDetail:'2d8 feu'}]},'Souffle');
+ assert.equal(box.querySelector('.v131-free-damage').style.color,'rgb(255, 101, 56)');
+});
