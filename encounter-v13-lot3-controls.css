@@ -1,0 +1,30 @@
+/* Encounter V1.3 Lot 3 — Samsung S7 FE landscape, existing dark blue/gold theme. */
+.table-target-actions .lot3-command{min-width:0;min-height:44px;white-space:normal;font-weight:700;font-size:clamp(11px,1.2vw,14px);line-height:1.2;padding:8px 5px;overflow-wrap:break-word}
+.table-target-actions .lot3-command.active,.table-target-actions .lot3-command[aria-pressed="true"]{background:#394b61;border-color:#e6c77f;color:#fff0c9;box-shadow:inset 0 0 0 1px #ab926b}
+.table-target-actions:has(.lot3-command){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;min-width:0;padding-inline:10px}
+.lot3-state-fieldset{min-inline-size:0;min-width:0;max-width:100%;margin:8px 0;padding:9px 6px 6px;border:1px solid #496078;border-radius:12px;background:#101c2a}
+.lot3-state-fieldset legend{padding:0 7px;font-size:13px;font-weight:800;color:#f0d59e}
+.lot3-state-hint{font-size:10px;color:#b8c8d9;font-weight:500}
+.lot3-state-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;width:100%;min-width:0;max-width:100%}
+.lot3-state-grid .lot3-state-choice{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;width:100%;min-height:78px;padding:6px 2px;border:1px solid #40566d;border-radius:9px;background:#192a3b;color:#d7e2ee;touch-action:manipulation;overflow:hidden}
+.lot3-state-choice img{display:block;width:34px;height:34px;max-width:100%;object-fit:contain;flex:none}
+.lot3-state-choice span{display:block;max-width:100%;font-size:clamp(9px,.83vw,11px);font-weight:700;line-height:1.12;text-align:center;overflow-wrap:anywhere;hyphens:auto}
+.lot3-state-choice.is-selected{border-color:#f3ce7d;background:#38465a;box-shadow:inset 0 0 0 2px #cfa75b;color:#fff5da}
+.lot3-state-choice.is-applied{background:#234638;border-color:#71bd92}
+.lot3-state-choice.is-selected.is-applied{background:#3c4a36;border-color:#f3ce7d}
+.lot3-state-choice.is-applied::after{content:"✓ Actif";display:block;font:800 9px/1 system-ui,sans-serif;color:#b8f0c7}
+.lot3-state-choice:focus-visible{outline:3px solid #efcd84;outline-offset:2px}
+.lot3-tests-section{min-width:0;padding:3px 0}
+.lot3-tests-section>h3{font-size:12px;color:#f0d59e;line-height:1.35;overflow-wrap:anywhere}
+.lot3-tests-section .check-row,.lot3-tests-section .skill-check{min-width:0}
+.lot3-tests-section .check-row button,.lot3-tests-section .skill-check{min-height:44px;touch-action:manipulation}
+#mjSidePanel:has(.lot3-state-grid){min-width:0;max-width:100%;overflow-x:hidden;overflow-y:auto}
+@media(max-width:900px){.lot3-state-grid{gap:4px}.lot3-state-grid .lot3-state-choice{min-height:70px;padding:4px 1px}.lot3-state-choice img{width:30px;height:30px}.lot3-state-choice span{font-size:9px}.table-target-actions:has(.lot3-command){gap:4px}}
+
+/* Tests is a dedicated scrollable surface; never a fourth tile in Fiche's accordion. */
+#activeDetail .lot3-tests-panel{display:block;flex:1 1 auto;min-height:0;min-width:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:10px 12px 22px;border-top:1px solid #40546b;background:#111f2e}
+#activeDetail .lot3-tests-head{position:sticky;top:-10px;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0;margin:-10px -12px 12px;padding:10px 12px;background:#14273a;border-bottom:1px solid #425d73;color:#f0d59e}
+#activeDetail .lot3-tests-head strong{font-size:14px}
+#activeDetail .lot3-tests-head button{min-height:44px;white-space:normal;font-size:12px}
+#activeDetail .lot3-tests-panel .check-row,#activeDetail .lot3-tests-panel .skill-check{min-height:44px;min-width:0}
+#activeDetail .lot3-tests-panel .checks-grid,#activeDetail .lot3-tests-panel .skill-grid{min-width:0}

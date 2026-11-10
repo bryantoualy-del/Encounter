@@ -46,7 +46,9 @@
     "test:v5": "node --test audit/v5-local.test.cjs",
     "test:v5:browser": "node audit/v5-browser.mjs",
     "test:v13": "node --test encounter-v13-results.test.js encounter-v13-free-actions.test.cjs",
-    "test:v13:browser": "node audit/v13-lot2-browser.mjs"
+    "test:v13:browser": "node audit/v13-lot2-browser.mjs",
+    "test:v13:lot3": "node --test audit/encounter-ux-layout.test.cjs",
+    "test:v13:lot3:browser": "node audit/v13-lot3-browser.mjs"
   },
   "dependencies": {
     "ws": "^8.18.3"
