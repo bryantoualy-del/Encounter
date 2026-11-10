@@ -76,7 +76,7 @@
         const line=document.createElement('div');line.className='v13-free-row v131-free-attack';
         const label=document.createElement('span');label.className='v131-free-action-name';label.textContent=item.label;
         const figures=document.createElement('div');figures.className='v131-free-figures';
-        figures.appendChild(figure('attack','JET D’ATTAQUE',item.total,item.detail+(item.critical?' · 20 naturel':'')));
+        figures.appendChild(figure('roll','JET D’ATTAQUE',item.total,item.detail+(item.critical?' · 20 naturel':'')));
         if(item.damage!=null)figures.appendChild(figure('damage','DÉGÂTS POTENTIELS',item.damage,item.damageDetail||''));
         line.append(label,figures);summary.appendChild(line);
       }
