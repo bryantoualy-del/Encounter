@@ -74,3 +74,17 @@
 #actionPopup.v13-free-enemy .v131-free-save{gap:8px}
 #actionPopup.v13-free-enemy .v131-free-save strong{font-size:clamp(23px,3vw,33px);color:#e5b963}
 @media(max-width:500px){#actionPopup.v13-free-enemy .v131-free-figures{gap:6px}#actionPopup.v13-free-enemy .v131-free-figure{padding:7px}#actionPopup.v13-free-enemy .v131-free-caption{font-size:10px!important}#actionPopup.v13-free-enemy .v131-free-figure strong{font-size:clamp(29px,7vw,40px)}}
+
+/* Shared semantic tokens. No V1.3 layout or combat authority changes. */
+#actionPopup.v13-result-visible{
+ --dnd-attack:#E5B963;--dnd-fire:#FF6538;--dnd-cold:#65D9F5;
+ --dnd-lightning:#F6D44B;--dnd-thunder:#568BEB;--dnd-acid:#A4D64F;
+ --dnd-poison:#39B87B;--dnd-necrotic:#9461BC;--dnd-radiant:#FFE19A;
+ --dnd-psychic:#E577D6;--dnd-force:#B18BFF;
+ --dnd-bludgeoning:#B49B7B;--dnd-piercing:#A9BAC8;--dnd-slashing:#E17A80;
+ --dnd-healing:#34D399;--dnd-temporary:#38BDF8;
+ --dnd-regeneration:#86EFAC;--dnd-healing-blocked:#94A3B8;
+}
+#actionPopup[data-result-kind="heal"] .v13-result-total{color:var(--dnd-healing)}
+#actionPopup.v13-free-enemy .v131-free-heal strong{color:var(--dnd-healing)!important}
+#actionPopup.v13-free-enemy .v131-free-attack .v131-free-roll strong{color:var(--dnd-attack)}

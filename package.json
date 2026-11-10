@@ -45,7 +45,7 @@
     "test:lot4": "node audit/lot4-e2e.cjs && node audit/lot4-connected-attacks-e2e.cjs && node audit/lot4-local-attacks-e2e.cjs && node audit/lot4-hex-armor-e2e.cjs && node audit/lot4-dragon-pyro-e2e.cjs && node audit/lot4-combat-e2e.cjs && node audit/lot4-ui-fx-e2e.cjs",
     "test:v5": "node --test audit/v5-local.test.cjs",
     "test:v5:browser": "node audit/v5-browser.mjs",
-    "test:v13": "node --test encounter-v13-results.test.js encounter-v13-free-actions.test.cjs",
+    "test:v13": "node --test encounter-v13-results.test.js encounter-v13-free-actions.test.cjs encounter-universal-colors.test.js",
     "test:v13:browser": "node audit/v13-lot2-browser.mjs",
     "test:v13:lot3": "node --test audit/encounter-ux-layout.test.cjs",
     "test:v13:lot3:browser": "node audit/v13-lot3-browser.mjs",
