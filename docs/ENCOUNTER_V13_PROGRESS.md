@@ -136,3 +136,25 @@ Branche : `feat/encounter-v13-lot3-enemy-controls-20261109` ; base `main` `0cb90
 **Limite** : tests Chromium et WebKit avec émulation tactile, pas de manipulation directe sur le Samsung S7 FE physique. Aucun script de compilation/bundling dédié au dépôt : `npm ci`, contrôles de chargement des pages, tests Node et navigateurs exécutés dans GitHub Actions.
 
 **Statut : Lot 3 prêt à être revu, PR #31 maintenue en brouillon. Aucun merge, aucun déploiement, Lot 4 non commencé.**
+
+
+## Lot 4/4 — Actions légendaires, arrondi maison, recette globale (10 novembre 2026)
+
+**Branche de livraison :** `feat/encounter-v13-lot4-legendary-rounding-20261110` depuis `main` `5f0177ae1d32f3cea38de4d816c677a65c39677f`. Les Lots 1, 2 et 3 ont été fusionnés précédemment. Les PR #5, #13, #15, préexistantes, ne sont pas touchées.
+
+### Référentiel des modifications
+
+1. **Actions légendaires** : panneau tactile compact sous les statistiques d'un boss ennemi en Mode Libre, avec deux compteurs distincts : actions restantes (±1) et maximum (±1). Le maximum corrigé est une propriété d'instance `legendaryMaxOverride`, conservée par la normalisation et la persistance existantes. Modification immédiate avec journal et `mutate` natifs ; plafonds 0–99 et restant toujours borné par le maximum. Aucun changement du modèle de la bibliothèque ; aucune remise à zéro sur changement d'onglet ou rechargement. La recharge **normale au début du tour du boss** reste intacte. Les modes et les Companions ne reçoivent aucune nouvelle commande.
+2. **Convention maison** : en Mode Libre **pour les adversaires uniquement**, une résistance seule arrondit **au supérieur** : 25 / 2 = 12,5, donc 13 PV. L'implémentation centrale `EncounterV13Lot4.halfUp` est utilisée par le résolveur existant, composante typée par composante typée. Les immunités restent prioritaires ; résistance + vulnérabilité s'annulent ; la vulnérabilité seule double le montant. Une correction manuelle MJ `resistance` utilise le même arrondi sans appliquer deux fois la résistance. Les autres modes, notamment Guidé, ainsi que les Companions, conservent leur convention préexistante `Math.floor`. La réduction lors d'un JS réussi (moitié des dégâts) reste inchangée, car il s'agit d'une mécanique distincte.
+3. **Pas de refonte** : module et feuille CSS dédiés `encounter-v13-lot4.js/css` chargés après les modules existants, versionnés dans le cache PWA. Aucune modification du moteur d'Annuler/Rétablir.
+
+### Plan de tests et réception
+
+- Régression des Lots 1–3 par l'intégralité de la CI existante (`npm test`, V1.3, contrôles UX/PWA, passerelles Companions, icônes, suites navigateur Guidé/Brack/Rufus et Playwright Lot 2 et Lot 3).
+- Nouvelle recette `audit/v13-lot4-browser.mjs` sous Chromium et WebKit, touch paysage 1280 × 800 : modifications du restant et du maximum, plafonds, isolation entre instances, persistance après onglets/rechargement, disponibilité des actions légendaires, cas 25→13 / 23→12, immunité, vulnérabilité, annulation résistance + vulnérabilité, correction manuelle, dégâts mixtes, non-régression du mode Guidé, non-régression des personnages, débordements et erreurs navigateur.
+- Vérification de la compatibilité WebSocket via la CI et les recettes précédentes ; aucun protocole, contrat ni autorité Companion n'est modifié.
+- Avant travaux : `main` a un CI post-fusion Lot 3 [#42762041182](https://github.com/bryantoualy-del/Encounter/actions/runs/42762041182) **failure** uniquement sur le job navigateur Brackmard, avec timeout `page.screenshot` après des assertions métier réussies ; résultat à surveiller séparément de la nouvelle fonctionnalité.
+- Le dépôt est une application statique : pas de script `build` distinct ; `npm ci`, analyse des scripts, tests et chargement Playwright font office de validation technique. Le Samsung S7 FE physique doit encore être testé par le MJ (tactile et lisibilité réelle en paysage).
+- Aucun changement à Annuler/Rétablir. **Ne pas fusionner ni déployer avant validation fonctionnelle du MJ.**
+
+**Statut des tests du Lot 4 : à compléter après les exécutions GitHub Actions.**

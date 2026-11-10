@@ -133,3 +133,31 @@ jobs:
           name: v13-lot3-${{ matrix.browser }}
           path: audit/v13-lot3-evidence/
           if-no-files-found: warn
+
+  v13-lot4-browser:
+    needs: test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Lot 4 boss steppers, rounding, persistence, regressions
+        run: npm run test:v13:lot4:browser
+        env:
+          V13_BROWSER: ${{ matrix.browser }}
+      - name: Lot 4 browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v13-lot4-${{ matrix.browser }}
+          path: audit/v13-lot4-evidence/
+          if-no-files-found: warn

@@ -1,0 +1,74 @@
+import {createRequire} from 'node:module';
+import {createServer} from 'node:http';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {resolve,extname} from 'node:path';
+import assert from 'node:assert/strict';
+const require=createRequire(import.meta.url),{chromium,webkit}=require('playwright');
+const browserKind=process.env.V13_BROWSER==='webkit'?'webkit':'chromium',engine=browserKind==='webkit'?webkit:chromium;
+const root=resolve(new URL('../../',import.meta.url).pathname),out=resolve(new URL('./v13-lot4-evidence',import.meta.url).pathname);await mkdir(out,{recursive:true});
+const web=createServer(async(req,res)=>{try{let uri=decodeURIComponent(new URL(req.url,'http://localhost').pathname);if(uri.endsWith('/'))uri+='index.html';const file=resolve(root,'.'+uri);if(!file.startsWith(root+'/'))throw Error('path');res.setHeader('Content-Type',({'.js':'application/javascript','.html':'text/html','.css':'text/css','.json':'application/json','.png':'image/png','.svg':'image/svg+xml'})[extname(file)]||'application/octet-stream');res.end(await readFile(file));}catch{res.writeHead(404);res.end('404');}});
+await new Promise(ok=>web.listen(0,'127.0.0.1',ok));
+const browser=await engine.launch({headless:true,...(browserKind==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{})});
+const checks=[],errors=[],check=(name,ok,detail='')=>{checks.push({name,ok:!!ok,detail});console.log(ok?'PASS':'FAIL',name,detail);assert.ok(ok,name+' '+detail)};
+let page;
+try{
+ const ctx=await browser.newContext({viewport:{width:1280,height:800},hasTouch:true,serviceWorkers:'block'});
+ await ctx.route('https://cdn.jsdelivr.net/npm/three@0.186.1/build/*',async route=>{const file=resolve(require.resolve('three'),'..',new URL(route.request().url()).pathname.split('/').pop());await route.fulfill({body:await readFile(file),contentType:'application/javascript'})});
+ page=await ctx.newPage();page.setDefaultTimeout(15000);page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:'+web.address().port+'/Encounter/',{waitUntil:'domcontentloaded'});
+ await page.waitForFunction(()=>!!window.EncounterV13Lot4&&!!window.EncounterLot3&&!!window.EncounterFreeEnemyActions);
+ await page.evaluate(()=>{
+  const m=normalizeMonster({id:'lot4-boss',name:'Boss de recette',category:'enemy',isBoss:true,hp:180,ac:17,legendaryMax:3,damageResistances:['feu'],damageImmunities:['poison'],damageVulnerabilities:['froid'],
+   actions:[{id:'slash',name:'Griffe',kind:'attack',bonus:7,damage:'1d8+3',damageType:'tranchants'}],
+   legendaryActions:[{id:'strike',name:'Frappe légendaire',kind:'attack',cost:1,bonus:7,damage:'1d8+3',damageType:'tranchants'}]});
+  state.monsters.push(m);
+  const p=makeParticipant(m,1,20);p.id='lot4-boss-1';
+  const second=makeParticipant(m,2,15);second.id='lot4-boss-2';
+  const player=normalizeParticipant({id:'lot4-player',kind:'player',name:'Companion',modelId:null,hp:45,maxHp:45,ac:15,damageResistances:[]});
+  state.encounter.participants=[p,second,player];state.encounter.currentTurn=0;state.encounter.selectedId=p.id;
+  state.encounter.rpgSessionMode='table-free';ui.detailTab='actions';setMode('combat');
+ });
+ check('Contrôles tactiles présents',await page.locator('#activeDetail [data-v13-leg-remaining]').count()===2&&await page.locator('#activeDetail [data-v13-leg-max]').count()===2);
+ const read=()=>page.evaluate(()=>{const p=state.encounter.participants.find(p=>p.id==='lot4-boss-1');return {remaining:p.legendaryRemaining,max:effectiveLegendaryMax(p),override:p.legendaryMaxOverride,base:modelFor(p).legendaryMax,second:effectiveLegendaryMax(state.encounter.participants.find(p=>p.id==='lot4-boss-2'))}});
+ await page.locator('#activeDetail [data-v13-leg-remaining="-1"]').click();
+ check('Correction immédiate des charges', (await read()).remaining===2);
+ await page.locator('#activeDetail [data-detail-tab="state"]').click();
+ check('Changement onglet conserve les charges',(await read()).remaining===2&&await page.locator('#activeDetail [data-v13-leg-remaining]').count()===2);
+ await page.locator('#activeDetail [data-v13-leg-max="-1"]').click();
+ await page.locator('#activeDetail [data-v13-leg-max="-1"]').click();
+ const min=await read();
+ check('Maximum individuel séparé et reste borné',min.max===1&&min.remaining===1&&min.base===3&&min.second===3,JSON.stringify(min));
+ await page.locator('#activeDetail [data-v13-leg-remaining="1"]').click({force:true}).catch(()=>{});
+ check('Restant ne dépasse jamais le maximum',(await read()).remaining===1);
+ await page.locator('#activeDetail [data-v13-leg-max="1"]').click();
+ check('Maximum relevé sans recharge intempestive',(await read()).max===2&&(await read()).remaining===1);
+ await page.reload({waitUntil:'domcontentloaded'});
+ await page.waitForFunction(()=>!!window.EncounterV13Lot4&&state.encounter.participants.some(p=>p.id==='lot4-boss-1'));
+ check('Reload : valeurs persistées',(await read()).max===2&&(await read()).remaining===1);
+ await page.evaluate(()=>{ui.detailTab='actions';render();});
+ check('Reload : actions légendaires toujours visibles',await page.locator('#activeDetail [data-use-ability*="legendary"]').count()>0);
+ const damage=await page.evaluate(()=>{
+  const p=state.encounter.participants.find(p=>p.id==='lot4-boss-1');
+  const result={odd:resolveDamageAmount(p,25,'feu'),another:resolveDamageAmount(p,23,'feu'),immune:resolveDamageAmount(p,25,'poison'),vulnerable:resolveDamageAmount(p,25,'froid')};
+  p.dynamicDefenses.vulnerabilities.push('feu');result.cancel=resolveDamageAmount(p,25,'feu');p.dynamicDefenses.vulnerabilities.pop();
+  window.MJDamageOverride={[p.id]:'resistance'};result.override=resolveDamageAmount(p,25,'feu');window.MJDamageOverride=null;
+  result.mixed=applyDamageDirect(p,37,'',{components:[{amount:25,type:'feu'},{amount:12,type:'froid'}]});
+  state.encounter.rpgSessionMode='guided';result.guided=resolveDamageAmount(p,25,'feu');
+  state.encounter.rpgSessionMode='table-free';result.player=resolveDamageAmount({id:'player',kind:'player',conditions:[],dynamicDefenses:{},modelId:p.modelId},25,'feu');
+  return result;
+ });
+ check('Règle maison 25 / 2 = 13',damage.odd.amount===13,JSON.stringify(damage.odd));
+ check('Règle maison 23 / 2 = 12',damage.another.amount===12);
+ check('Immunité prioritaire',damage.immune.amount===0);
+ check('Vulnérabilité inchangée',damage.vulnerable.amount===50);
+ check('Résistance + vulnérabilité neutralisées',damage.cancel.amount===25);
+ check('Correction MJ sans double résistance',damage.override.amount===13);
+ check('Composantes mixtes traitées séparément',damage.mixed.amount===37,JSON.stringify(damage.mixed));
+ check('Mode Guidé conservé (25 => 12)',damage.guided.amount===12);
+ check('Companion conservé (25 => 12)',damage.player.amount===12);
+ await page.evaluate(()=>{render()});
+ const layout=await page.evaluate(()=>{const strip=document.querySelector('.v13-legendary-controls'),b=strip.getBoundingClientRect(),w=document.documentElement.clientWidth;return{visible:b.width>0,inside:b.left>=0&&b.right<=w,overflow:strip.scrollWidth>strip.clientWidth}});
+ check('Paysage 1280×800 sans débordement des commandes',layout.visible&&layout.inside&&!layout.overflow,JSON.stringify(layout));
+ await page.screenshot({path:out+'/'+browserKind+'-legendary-landscape.png',timeout:10000});
+ check('Aucune erreur JavaScript',errors.length===0,JSON.stringify(errors));
+}finally{await writeFile(out+'/'+browserKind+'-results.json',JSON.stringify({checks,errors},null,2));await browser.close();await new Promise(r=>web.close(r))}
