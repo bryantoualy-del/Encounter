@@ -140,7 +140,7 @@ try{
   let count=0;const failures=[];
   try{
    for(const raw of monsters){
-    const model=normalizeMonster(raw);state.monsters.push(model);
+    const model=normalizeMonster(raw);model.id='audit-'+raw.id;state.monsters.push(model);
     const enemy=makeParticipant(model,1,20);
     const player=ccParticipant({id:'audit-pj',name:'PJ témoin',hp:83,ac:16});
     state.encounter.participants=[enemy,player];state.encounter.selectedId=enemy.id;state.encounter.currentTurn=0;state.encounter.rpgSessionMode='table-free';
