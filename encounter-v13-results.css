@@ -88,3 +88,16 @@
 #actionPopup[data-result-kind="heal"] .v13-result-total{color:var(--dnd-healing)}
 #actionPopup.v13-free-enemy .v131-free-heal strong{color:var(--dnd-healing)!important}
 #actionPopup.v13-free-enemy .v131-free-attack .v131-free-roll strong{color:var(--dnd-attack)}
+
+/* V1.3.2: typed damage takes precedence over the old generic red damage figure. */
+#actionPopup.v13-free-enemy .v131-free-figure.v131-free-damage[data-damage-type="typed"] {
+ color:var(--v13-damage-color)!important;
+ border-color:color-mix(in srgb,var(--v13-damage-color) 48%,transparent)!important;
+ background:color-mix(in srgb,var(--v13-damage-color) 11%,transparent)!important;
+}
+#actionPopup.v13-free-enemy .v131-free-figure.v131-free-damage[data-damage-type="typed"] strong {
+ color:var(--v13-damage-color)!important;
+}
+#actionPopup.v13-free-enemy .v131-free-effect .v131-free-figure[data-damage-type="typed"] strong {
+ color:var(--v13-damage-color)!important;
+}
