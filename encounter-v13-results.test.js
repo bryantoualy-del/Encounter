@@ -128,3 +128,24 @@ test('V1.4: all 13 damage types are propagated to the actual enemy result figure
   assert.equal(figure.dataset.damageType,'typed',type);
  }
 });
+
+test('Mode Libre: mixed psychic and necrotic components have independent visual lines',()=>{
+ const {box,show}=setup();
+ show({freeEnemy:true,actor:'Ereilys',actorKind:'enemy',ability:'Trait du secret',
+  rolls:[{label:'Trait du secret',total:28,detail:'d20 18 +10',damage:30,
+    damageDetail:'23 psychiques [7+2+6+8] + 7 nécrotiques [5+2]',
+    damageParts:[{amount:23,type:'psychiques',detail:'7+2+6+8'},{amount:7,type:'nécrotiques',detail:'5+2'}]}]},'Trait du secret');
+ assert.equal(box.querySelector('.v131-free-damage strong').textContent,'30');
+ assert.equal(box.querySelectorAll('.v131-free-types .v131-free-type').length,2);
+ assert.deepEqual([...box.querySelectorAll('.v131-free-types .v131-free-type>strong')].map(n=>n.textContent),['23','7']);
+ assert.match(box.querySelector('.v131-free-types').textContent,/psychiques/);
+ assert.match(box.querySelector('.v131-free-types').textContent,/nécrotiques/);
+ assert.equal(box.querySelector('.v131-free-damage').dataset.damageType,undefined,'a mixed total has no single type');
+});
+test('Mode Libre: an independent PNJ uses the same structured popup',()=>{
+ const {box,show}=setup();
+ show({freeEnemy:true,actor:'Roark',actorKind:'ally',ability:'Soins',rolls:[],
+  effect:{label:'Soins potentiels',total:12,detail:'2d8+3'}},'Soins');
+ assert.match(box.querySelector('.eyebrow').textContent,/ACTION PNJ/);
+ assert.equal(box.querySelector('.v131-free-heal strong').textContent,'12');
+});
