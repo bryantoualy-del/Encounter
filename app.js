@@ -157,7 +157,7 @@ function blankState(){
 }
 function loadState(){
   try{
-    const s=EncounterPersistence.read(localStorage);if(!s)return blankState();if(!s.assistantSchemaVersion){try{const backups=JSON.parse(localStorage.getItem(BACKUP_KEY)||'[]');backups.unshift({id:uid('backup'),createdAt:new Date().toISOString(),reason:'Avant migration assistant / continuité du fight',name:s.encounter?.name||'Rencontre',state:EncounterPersistence.original()||clone(s)});localStorage.setItem(BACKUP_KEY,JSON.stringify(backups.slice(0,12)));}catch(error){console.warn('Backup de migration impossible ; données originales conservées.',error);}s.assistantSchemaVersion=1;} s.version=APP_VERSION;s.ui=Object.assign({mode:'prep',locked:false,density:'comfortable'},s.ui||{});s.savedEncounters=Array.isArray(s.savedEncounters)?s.savedEncounters:[];s.trash=Array.isArray(s.trash)?s.trash:[];
+    const s=globalThis.__encounterInitialState;if(!s)return blankState();if(!s.assistantSchemaVersion){try{const backups=JSON.parse(localStorage.getItem(BACKUP_KEY)||'[]');backups.unshift({id:uid('backup'),createdAt:new Date().toISOString(),reason:'Avant migration assistant / continuité du fight',name:s.encounter?.name||'Rencontre',state:EncounterPersistence.original()||clone(s)});localStorage.setItem(BACKUP_KEY,JSON.stringify(backups.slice(0,12)));}catch(error){console.warn('Backup de migration impossible ; données originales conservées.',error);}s.assistantSchemaVersion=1;} s.version=APP_VERSION;s.ui=Object.assign({mode:'prep',locked:false,density:'comfortable'},s.ui||{});s.savedEncounters=Array.isArray(s.savedEncounters)?s.savedEncounters:[];s.trash=Array.isArray(s.trash)?s.trash:[];
     if(!s.monsters?.length)s.monsters=clone(SAMPLE_MONSTERS);
     const builtinMap=new Map(SAMPLE_MONSTERS.map(x=>[x.id,x]));
     s.monsters=s.monsters.map(m=>mergeBuiltinEnhancements(m,builtinMap.get(m.id)));
@@ -179,22 +179,37 @@ window.addEventListener('beforeunload',event=>{
   event.preventDefault();
   event.returnValue='';
 });
+let indexedSaveRevision=0;
 function saveState(){
+  const revision=++indexedSaveRevision;
+  encounterHasUnsavedChanges=true;
   try{
-    EncounterPersistence.write(localStorage,state);
-    encounterHasUnsavedChanges=false;
+    EncounterIndexedDB.commit(state).then(()=>{
+      if(revision===indexedSaveRevision){
+        encounterHasUnsavedChanges=false;
+        EncounterPersistence.clearNotice?.();
+      }
+    }).catch(error=>{
+      encounterHasUnsavedChanges=true;
+      EncounterPersistence.notify('Sauvegarde IndexedDB non effectuée : '+error.message+'. Exportez le JSON avant de quitter.');
+    });
+    try{maybeAutoBackup();}catch(error){
+      lastBackupAt=Date.now();
+      EncounterPersistence.notify('Backup supplémentaire indisponible : '+error.message,{level:'warning'});
+    }
+    return true;
   }catch(error){
-    // Keep the working state in memory and the previously persisted state intact.
-    // EncounterPersistence already displays a sticky error with JSON export advice.
     encounterHasUnsavedChanges=true;
+    EncounterPersistence.notify('Sauvegarde IndexedDB non effectuée : '+error.message+'. Exportez le JSON avant de quitter.');
     return false;
   }
-  try{maybeAutoBackup();}
-  catch(error){
-    lastBackupAt=Date.now();
-    EncounterPersistence.notify('Partie enregistrée. Backup supplémentaire indisponible ; pensez à exporter un JSON.',{level:'warning'});
-  }
-  return true;
+}
+async function persistStateAndContext(context){
+  const snapshot=EncounterPersistence.migrate(state).data;
+  if(context) snapshot.persistenceRestoreContext=context;
+  await EncounterIndexedDB.commit(snapshot);
+  if(context)EncounterPersistence.restoreContext(localStorage,context);
+  encounterHasUnsavedChanges=false;
 }
 function checkpoint(){undoStack.push(JSON.stringify(state));if(undoStack.length>50)undoStack.shift();}
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2200);}
@@ -576,14 +591,15 @@ $('#importForm').addEventListener('submit',e=>{e.preventDefault();try{importData
    ENCOUNTER V3 — Confort Premium
    ========================================================= */
 let lastBackupAt=0;
-let backupReadBlocked=false;function backupStore(){try{const items=JSON.parse(localStorage.getItem(BACKUP_KEY)||'[]');if(!Array.isArray(items))throw Error('liste de backups attendue');backupReadBlocked=false;return items;}catch(error){backupReadBlocked=true;EncounterPersistence.notify('Backups illisibles : '+error.message+'. Les données existantes sont conservées.',{level:'warning'});return[];}}
-function writeBackupStore(items){if(backupReadBlocked)throw Error('Backups illisibles : exportez la sauvegarde actuelle avant de réparer les backups.');let keep=items.slice(0,12);for(;;){try{localStorage.setItem(BACKUP_KEY,JSON.stringify(keep));return;}catch(err){if(err.name==='QuotaExceededError'&&keep.length>1){keep=keep.slice(0,-1);continue;}EncounterPersistence.notify('Backup non effectué : '+err.message,{level:'warning'});throw err;}}}
+let backupReadBlocked=false;let indexedBackups=Array.isArray(globalThis.__encounterInitialBackups)?globalThis.__encounterInitialBackups:[];
+function backupStore(){return indexedBackups;}
+function writeBackupStore(items){indexedBackups=items.slice(0,12);EncounterIndexedDB.backup('list',indexedBackups).catch(error=>EncounterPersistence.notify('Backup IndexedDB non effectué : '+error.message,{level:'warning'}));}
 function forceBackup(reason='Backup automatique'){
   const snapshot={id:uid('backup'),createdAt:new Date().toISOString(),reason,name:state.encounter?.name||'Rencontre',state:clone(state),combatContext:EncounterPersistence.capture(localStorage)};
   const items=backupStore();items.unshift(snapshot);writeBackupStore(items);lastBackupAt=Date.now();return snapshot;
 }
 function maybeAutoBackup(){const now=Date.now();if(now-lastBackupAt<BACKUP_INTERVAL)return;forceBackup('Sauvegarde automatique');}
-function restoreBackup(id){const b=backupStore().find(x=>x.id===id);if(!b)return;const restored=EncounterPersistence.migrate(b.state).data;forceBackup('Avant restauration');EncounterPersistence.restoreBundle(localStorage,restored,b.combatContext||{});location.reload();}
+async function restoreBackup(id){const b=backupStore().find(x=>x.id===id);if(!b)return;const restored=EncounterPersistence.migrate(b.state).data;forceBackup('Avant restauration');state=restored;try{await persistStateAndContext(b.combatContext||{});location.reload();}catch(error){EncounterPersistence.notify('Restauration impossible : '+error.message);}}
 
 function showActionPopup(msg,title='Résolution'){
   const box=$('#actionPopup');if(!box)return;$('#actionPopupTitle').textContent=title;$('#actionPopupText').textContent=msg;box.classList.add('show');clearTimeout(showActionPopup.t);showActionPopup.t=setTimeout(()=>box.classList.remove('show'),3600);
