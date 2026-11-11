@@ -115,5 +115,16 @@ test('V1.4: all 13 damage types color the actual displayed numeric result',()=>{
 });
 test('V1.4: free enemy potential damage uses the same semantic palette',()=>{
  const {box,show}=setup();show({freeEnemy:true,actor:'Dragon',ability:'Souffle',rolls:[{label:'Souffle',total:20,detail:'d20 15 +5',damage:14,damageDetail:'2d8 feu'}]},'Souffle');
- assert.equal(box.querySelector('.v131-free-damage').style.color,'rgb(255, 101, 56)');
+ assert.equal(box.querySelector('.v131-free-damage').style.getPropertyValue('--v13-damage-color'),'#FF6538');
+ assert.equal(box.querySelector('.v131-free-damage').dataset.damageType,'typed');
+});
+
+test('V1.4: all 13 damage types are propagated to the actual enemy result figure',()=>{
+ const colors={feu:'#FF6538',froid:'#65D9F5',foudre:'#F6D44B',tonnerre:'#568BEB',acide:'#A4D64F',poison:'#39B87B',nécrotiques:'#9461BC',radiants:'#FFE19A',psychiques:'#E577D6',force:'#B18BFF',contondants:'#B49B7B',perforants:'#A9BAC8',tranchants:'#E17A80'};
+ for(const [type,color] of Object.entries(colors)){
+  const {box,show}=setup();show({freeEnemy:true,actor:'Monstre',ability:'Attaque',rolls:[{label:'Attaque',total:19,detail:'d20 15 +4',damage:12,damageDetail:'2d6 '+type}]},'Attaque');
+  const figure=box.querySelector('.v131-free-damage');
+  assert.equal(figure.style.getPropertyValue('--v13-damage-color'),color,type);
+  assert.equal(figure.dataset.damageType,'typed',type);
+ }
 });
