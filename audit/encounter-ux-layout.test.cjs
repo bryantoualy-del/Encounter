@@ -75,7 +75,7 @@ test('Lot 2 result popup centers above legacy MJ presentation transform',()=>{
 test('Lot 3 enemy commands, state-grid and checks available offline',()=>{
  const html=read('index.html'),sw=read('service-worker.js'),js=read('encounter-v13-lot3-controls.js'),css=read('encounter-v13-lot3-controls.css');
  for(const name of ['table.js','table.css','mj-panels.js','encounter-v13-lot3-controls.js','encounter-v13-lot3-controls.css']){
-   const ref=name+'?v=v13-lot3-20261109';
+   const ref=name+'?v='+(name==='table.js'?'v15-indexeddb-20261111':'v13-lot3-20261109');
    assert.ok(html.includes(ref),ref+' absent du document');
    assert.ok(sw.includes(ref),ref+' absent du cache');
  }
