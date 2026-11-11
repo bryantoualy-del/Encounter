@@ -155,6 +155,17 @@ try{
        useAbility(enemy.id,a.id,sec,'normal');
        const visible=!!document.querySelector('#actionPopup.show.v13-free-enemy');
        const journalDelta=state.encounter.log.length-beforeLog;
+       // Check computed CSS for every typed attack/save, not only the Prêtre.
+       const semantic=globalThis.EncounterTypedDamage;
+       const expected=semantic?.semanticColors?.[semantic.semanticType(a.damageType)]||'';
+       if(expected && a.damage && a.kind!=='multiattack'){
+        const strong=document.querySelector('#actionPopup.v13-free-enemy .v131-free-damage strong');
+        const actual=strong?getComputedStyle(strong).color:'';
+        const rgb=expected.match(/[a-f0-9]{2}/gi).map(v=>parseInt(v,16));
+        const wanted='rgb('+rgb.join(', ')+')';
+        if(actual!==wanted)failures.push({monster:raw.name,ability:a.name,section,type:a.damageType,wanted,actual,issue:'semantic damage color'});
+       }
+
        if(!visible||journalDelta!==1||ui.targeting||player.hp!==beforeHP||JSON.stringify(player.conditions||[])!==beforeConditions)
         failures.push({monster:raw.name,ability:a.name,section,visible,journalDelta,targeting:!!ui.targeting,hp:player.hp});
       }catch(error){failures.push({monster:raw.name,ability:a.name,section,error:String(error)})}
