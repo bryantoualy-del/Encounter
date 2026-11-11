@@ -23,6 +23,9 @@
    }
    window.__encounterInitialState=validated;
    window.__encounterInitialBackups=Array.isArray(backups.find(x=>Array.isArray(x)))?backups.find(x=>Array.isArray(x)):[];
+   const runtimeErrors=[];
+   const captureRuntimeError=event=>runtimeErrors.push(event.message||event.error?.message||'Script error');
+   window.addEventListener('error',captureRuntimeError);
    for(const old of document.querySelectorAll('script[data-encounter-deferred]')){
      const next=document.createElement('script');
      for(const attr of old.attributes){
@@ -45,6 +48,8 @@
        old.after(next);
      }
    }
+   window.removeEventListener('error',captureRuntimeError);
+   if(runtimeErrors.length)throw Error('Initialisation Encounter impossible : '+runtimeErrors[0]);
    window.__encounterBootReady=true;
    overlay.remove();
  }catch(error){
