@@ -16,7 +16,12 @@
    await db.open();
    const saved=await db.load();
    const backups=await db.backups();
-   window.__encounterInitialState=saved===undefined?null:EncounterPersistence.migrate(saved).data;
+   const validated=saved===undefined?null:EncounterPersistence.migrate(saved).data;
+   if(validated?.persistenceRestoreContext){
+     EncounterPersistence.restoreContext(localStorage,validated.persistenceRestoreContext);
+     delete validated.persistenceRestoreContext;
+   }
+   window.__encounterInitialState=validated;
    window.__encounterInitialBackups=Array.isArray(backups.find(x=>Array.isArray(x)))?backups.find(x=>Array.isArray(x)):[];
    for(const old of document.querySelectorAll('script[data-encounter-deferred]')){
      const next=document.createElement('script');
