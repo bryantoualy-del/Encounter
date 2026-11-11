@@ -17,7 +17,7 @@ function setup(mode='table-free'){
  useAbility:(...a)=>legacy.push(a),abilityCard:()=>'<button>Cibler</button>',modelFor:()=>model,participantLabel:p=>p.name,
  rollD20:()=>({roll:12,detail:'12'}),rollDie:()=>4,signed:n=>'+'+n,
  rollAbilityDamage:()=>({total:11,detail:'2d10'}),rollDamageCrit:()=>({total:11,detail:'11'}),
- parseMultiSequence:v=>v.split(';').map(k=>{let m=k.trim().match(/(.+) x(\d+)/);return{name:m?m[1]:k,count:m?+m[2]:1}}),
+ parseMultiSequence:v=>v.split(';').map(k=>{let m=k.trim().match(/^(.*?)(?:\*|x)(\d+)$/i);return{name:(m?m[1]:k).trim(),count:m?+m[2]:1}}),
  EncounterConditionRolls:{penalty:()=>({amount:0,detail:''})},EncounterTypedDamage:{forAbility:a=>({errors:[],parts:a.damage?[{formula:a.damage,type:a.damageType}]:[]})},
  abilityEconomy:()=> 'action',attacksPerAction:()=>1,
  consumeEconomyAfterResolution:(p,a,section)=>{if(section==='legendary')p.legendaryRemaining-=a.cost||1;else if(section==='reaction')p.reactionUsed=true;else p.actionUsed=true;if(a.isSpell)p.resourceState.slot--;},
@@ -50,4 +50,42 @@ test('failed economy check preserves enemy state and does not emit a result',()=
  assert.equal(h.enemy.actionUsed,true);
  assert.equal(h.player.hp,83);
  assert.match(h.reports[0].warning,/Action déjà utilisée/);
+});
+
+
+test('FULL MONSTER LIBRARY: every actionable monster ability resolves without requesting a target or changing player state',()=>{
+ const monsters=JSON.parse(fs.readFileSync(__dirname+'/monsters.json','utf8'));
+ let checked=0;
+ assert.equal(monsters.length,19,'fixture corpus should not silently shrink');
+ for(const monster of monsters){
+  const sections=['actions','reactions','legendaryActions','lairActions','traits'];
+  for(const section of sections)for(const sourceAbility of monster[section]||[]){
+   const h=setup();
+   const model=h.model;
+   for(const key of sections)model[key]=(monster[key]||[]).map((a,i)=>({...a,id:a.id||key+'-'+i}));
+   // Use the actual typed-damage parser rather than the lightweight setup stub.
+   vm.runInContext(fs.readFileSync(__dirname+'/encounter-typed-damage.js','utf8'),h.s);
+   const index=(monster[section]||[]).indexOf(sourceAbility);
+   const ability=model[section][index];
+   const before=JSON.stringify(h.player);
+   h.s.useAbility(h.enemy.id,ability.id,section==='actions'?'action':section==='reactions'?'reaction':section==='legendaryActions'?'legendary':section==='lairActions'?'lair':'trait');
+   const report=h.reports[0];
+   assert.ok(report && report.freeEnemy===true,monster.name+' / '+ability.name+' should produce an informative result, not '+JSON.stringify(report));
+   assert.equal(h.s.ui.targeting,null,monster.name+' / '+ability.name+' requested targeting');
+   assert.equal(h.legacy.length,0,monster.name+' / '+ability.name+' invoked legacy targeted flow');
+   assert.equal(JSON.stringify(h.player),before,monster.name+' / '+ability.name+' changed player state');
+   checked++;
+  }
+ }
+ assert.ok(checked>=60,'all abilities in current 19-monster library must be exercised');
+});
+
+test('One enemy action produces one result and one journal entry, without an HP effect',()=>{
+ const h=setup();let logs=0;
+ h.s.log=()=>{logs++};
+ h.s.useAbility('enemy','fire','action');
+ assert.equal(h.reports.length,1);
+ assert.equal(logs,1);
+ assert.equal(h.player.hp,83);
+ assert.equal(h.s.ui.targeting,null);
 });
