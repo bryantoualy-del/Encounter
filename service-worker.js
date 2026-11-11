@@ -1,4 +1,4 @@
-const CACHE='encounter-v15-indexeddb-20261111';
+const CACHE='encounter-v15-indexeddb-recovery-20261111';
 const ASSETS=[
  './rpg-journal-ui.js?v=5-table-free-4',
  './rpg-activity.js?v=20261013-haste-menu',
@@ -110,7 +110,7 @@ const ASSETS=[
   './encounter-typed-damage.js?v=typed-damage-20261010-1',
  './app.js?v=v15-indexeddb-20261111',
   './encounter-indexeddb.js?v=v15-20261111',
-  './encounter-bootstrap.js?v=v15-20261111',
+  './encounter-bootstrap.js?v=v15-recovery-20261111',
   './builtins.js?v=4.2',
   './assistant-dice-engine.js?v=1',
   './assistant-dice.css?v=1',
