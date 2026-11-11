@@ -172,7 +172,30 @@ let state=loadState();
 let undoStack=[];
 const ui={detailTab:'actions',multiMode:false,multiSelection:new Set(),drawer:null,libraryFilter:'all',libraryTag:'',favoritesOnly:false,quickMode:'damage',conditionName:CONDITIONS[0],checkDc:15,pendingAdvance:false,targeting:null};
 
-function saveState(){EncounterPersistence.write(localStorage,state);try{maybeAutoBackup();}catch(error){lastBackupAt=Date.now();EncounterPersistence.notify('Partie enregistrée. Backup supplémentaire indisponible ; pensez à exporter un JSON.',{level:'warning'});}}
+// An exhausted browser quota must never abort an MJ action before render().
+let encounterHasUnsavedChanges=false;
+window.addEventListener('beforeunload',event=>{
+  if(!encounterHasUnsavedChanges)return;
+  event.preventDefault();
+  event.returnValue='';
+});
+function saveState(){
+  try{
+    EncounterPersistence.write(localStorage,state);
+    encounterHasUnsavedChanges=false;
+  }catch(error){
+    // Keep the working state in memory and the previously persisted state intact.
+    // EncounterPersistence already displays a sticky error with JSON export advice.
+    encounterHasUnsavedChanges=true;
+    return false;
+  }
+  try{maybeAutoBackup();}
+  catch(error){
+    lastBackupAt=Date.now();
+    EncounterPersistence.notify('Partie enregistrée. Backup supplémentaire indisponible ; pensez à exporter un JSON.',{level:'warning'});
+  }
+  return true;
+}
 function checkpoint(){undoStack.push(JSON.stringify(state));if(undoStack.length>50)undoStack.shift();}
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2200);}
 function log(msg){state.encounter.log.unshift({id:uid('log'),time:new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),text:msg});state.encounter.log=state.encounter.log.slice(0,220);}
