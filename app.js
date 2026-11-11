@@ -165,7 +165,7 @@ function loadState(){
     SAMPLE_MONSTERS.map(normalizeMonster).forEach(m=>{if(!known.has(m.id))s.monsters.push(m);});
     s.encounter=Object.assign(blankState().encounter,s.encounter||{});s.encounter.participants=(s.encounter.participants||[]).map(normalizeParticipant);let activeRpgFight=false;try{activeRpgFight=['preparation','fight'].includes(JSON.parse(localStorage.getItem('rpg-connect:fight:v1')||'{}').phase)}catch{}if(!activeRpgFight)pruneLegacyAutoCCPlayers(s.encounter);s.encounter.preparedModels=(s.encounter.preparedModels||[]).map(normalizeMonster);s.encounter.log=s.encounter.log||[];s.encounter.turnNotices=s.encounter.turnNotices||[];
     return s;
-  }catch(err){console.warn(err);EncounterPersistence.block();EncounterPersistence.notify("Chargement incomplet : "+err.message+". Les données originales sont conservées.");return blankState();}
+  }catch(err){console.warn(err);EncounterPersistence.block();EncounterPersistence.notify("Chargement incomplet : "+err.message+". Les données originales sont conservées.");throw err;}
 }
 
 let state=loadState();
