@@ -157,7 +157,7 @@ function blankState(){
 }
 function loadState(){
   try{
-    const s=globalThis.__encounterInitialState;if(!s)return blankState();if(s.persistenceRestoreContext){EncounterPersistence.restoreContext(localStorage,s.persistenceRestoreContext);delete s.persistenceRestoreContext;}if(!s.assistantSchemaVersion)s.assistantSchemaVersion=1; s.version=APP_VERSION;s.ui=Object.assign({mode:'prep',locked:false,density:'comfortable'},s.ui||{});s.savedEncounters=Array.isArray(s.savedEncounters)?s.savedEncounters:[];s.trash=Array.isArray(s.trash)?s.trash:[];
+    const s=globalThis.__encounterInitialState;if(!s)return blankState();if(!s.assistantSchemaVersion)s.assistantSchemaVersion=1; s.version=APP_VERSION;s.ui=Object.assign({mode:'prep',locked:false,density:'comfortable'},s.ui||{});s.savedEncounters=Array.isArray(s.savedEncounters)?s.savedEncounters:[];s.trash=Array.isArray(s.trash)?s.trash:[];
     if(!s.monsters?.length)s.monsters=clone(SAMPLE_MONSTERS);
     const builtinMap=new Map(SAMPLE_MONSTERS.map(x=>[x.id,x]));
     s.monsters=s.monsters.map(m=>mergeBuiltinEnhancements(m,builtinMap.get(m.id)));
