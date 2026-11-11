@@ -63,7 +63,10 @@ async function run(engine,label){
    });
    await page.locator('#importFile').setInputFiles({name:'encounter.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(exported))});
    await page.waitForFunction(()=>document.querySelector('#importText').value.length>0);
-   await page.locator('#importForm button[type=submit]').click();
+   await Promise.all([
+     page.waitForNavigation({waitUntil:'domcontentloaded'}),
+     page.locator('#importForm button[type=submit]').click()
+   ]);
    await page.waitForFunction(()=>window.__encounterBootReady===true&&state.encounter.round===26);
    assert.equal(await page.evaluate(async()=> (await EncounterIndexedDB.load()).encounter.round),26,label+' JSON import persisted');
    // A malformed persisted object must never be silently replaced by a blank game.
