@@ -89,8 +89,8 @@
       const report=reportFor(p,m,a,mode);
       checkpoint();
       if(a.kind==='recharge'){p.abilityState??={};p.abilityState[a.id]??={};p.abilityState[a.id].ready=false;}
-      const spellSlot=globalThis.MJSpellSlots?.slot(p,a);
-      const spellLevel=spellSlot?globalThis.MJSpellSlots.level(p,a):null;
+      const spellSlot=globalThis.MJSpellSlots?.slot?.(p,a);
+      const spellLevel=spellSlot?globalThis.MJSpellSlots.level?.(p,a):null;
       consumeEconomyAfterResolution(p,a,section,{forceAction:a.kind==='multiattack'});
       // Slot spending and dice are one action; keep one journal record and
       // include the consumed slot in the same visible result.
