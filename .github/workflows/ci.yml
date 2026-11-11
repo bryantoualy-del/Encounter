@@ -161,3 +161,32 @@ jobs:
           name: v13-lot4-${{ matrix.browser }}
           path: audit/v13-lot4-evidence/
           if-no-files-found: warn
+
+  companion-result-focus-browser:
+    needs: test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run audit:checkout
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Seven Companion result cards, 13 typed damage colors and duplicate-free ribbon
+        run: npm run test:result-focus:browser
+        env:
+          RESULT_BROWSER: ${{ matrix.browser }}
+      - name: Result focus audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: companion-result-focus-${{ matrix.browser }}
+          path: audit/result-focus-evidence/
+          if-no-files-found: warn
