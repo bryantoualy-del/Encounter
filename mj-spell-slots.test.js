@@ -5,3 +5,19 @@ test('source guard prevents cast at zero slots; cancellation and cantrips cost n
 test('undo restores both the resource and its transaction ledger',()=>{const {p,a,c}=setup();const before=JSON.parse(JSON.stringify(p));c.consumeEconomyAfterResolution(p,a,'action');assert.equal(p.resourceState.slot3,1);Object.keys(p).forEach(k=>delete p[k]);Object.assign(p,before);assert.equal(p.resourceState.slot3,2);assert.equal(p.spellSlotLedger,undefined);c.consumeEconomyAfterResolution(p,a,'action');assert.equal(p.resourceState.slot3,1)});
 
 test('the declared cast level selects its slot without modifying the library ability',()=>{const {p,a,m,c}=setup();m.resources.push({id:'slot5',spellLevel:5,start:1});p.resourceState.slot5=1;p.rpgCastLevels={[a.id]:5};c.consumeEconomyAfterResolution(p,a,'action');assert.equal(p.resourceState.slot5,0);assert.equal(p.resourceState.slot3,2);assert.equal(a.spellLevel,3);assert.equal(c.window.MJSpellSlots.availableAt(p,a,3),true);assert.equal(c.window.MJSpellSlots.availableAt(p,a,5),false)});
+
+
+test('one visible journal record for a free-mode enemy spell, but slot is still spent',()=>{
+ const h=setup();h.p.kind='enemy';h.c.state.encounter.rpgSessionMode='table-free';
+ let logs=0;h.c.log=()=>{logs++};
+ h.c.consumeEconomyAfterResolution(h.p,h.a,'action');
+ assert.equal(h.p.resourceState.slot3,1);
+ assert.equal(logs,0,'the caller logs the complete enemy action once');
+ h.c.consumeEconomyAfterResolution(h.p,h.a,'action');
+ assert.equal(h.p.resourceState.slot3,1);
+ assert.equal(logs,0);
+ const guided=setup();guided.p.kind='enemy';guided.c.state.encounter.rpgSessionMode='guided';
+ let guidedLogs=0;guided.c.log=()=>{guidedLogs++};
+ guided.c.consumeEconomyAfterResolution(guided.p,guided.a,'action');
+ assert.equal(guidedLogs,1,'guided combat retains the separate resource log');
+});
