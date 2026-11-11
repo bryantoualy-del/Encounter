@@ -28,9 +28,9 @@ test('PWA header remains unblurred and assets share version',()=>{
    assert.ok(html.includes(ref),ref+' missing in HTML');
    assert.ok(sw.includes(ref),ref+' missing in cache');
  }
- assert.match(sw,/encounter-(?:header-opaque-final-20261108|v13-lot2-layout-20261109|v13-lot3-20261109|v13-lot4-20261110|v131-popup-potential-20261110)/);
+ assert.match(sw,/encounter-(?:header-opaque-final-20261108|v13-lot2-layout-20261109|v13-lot3-20261109|v13-lot4-20261110|v132-semantic-20261111)/);
  for(const asset of ['encounter-v13-results.js','encounter-v13-results.css']){
-   const ref=asset+'?v='+('v131-popup-potential-20261110');
+   const ref=asset+'?v='+('v132-semantic-20261111');
    assert.ok(html.includes(ref),ref+' missing in HTML');
    assert.ok(sw.includes(ref),ref+' missing in cache');
  }
