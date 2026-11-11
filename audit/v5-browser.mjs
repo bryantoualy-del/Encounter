@@ -34,7 +34,38 @@ try{
  const rufus=pages.Rufus;await rufus.evaluate(()=>{document.querySelector('.reaction-action').click();RPGGroupView.open();});await rufus.waitForFunction(()=>CompanionAPI.getState().turn.reaction===false);await shot(rufus,'after-rufus-reaction-used');assert.deepEqual(await theme(rufus),before.Rufus);
  await gm.evaluate(()=>{EncounterJournal.run({actor:'MJ',title:'Dégâts manuels du MJ',kind:'damage'},()=>{state.encounter.participants.find(p=>p.id==='v5-enemy').hp-=18;log('Le Cultiste perd 18 PV, modification manuelle du MJ.');saveState();render();});document.querySelector('#rpgMjOpen').click();});await gm.locator('[data-session-mode]').scrollIntoViewIfNeeded();await shot(gm,'after-encounter-table-mode');
  await gm.evaluate(()=>{document.querySelector('#rpgMjDialog')?.close();document.querySelector('#mjOpenJournal')?.click();});assert.equal(await gm.locator('#mjJournalFilter').evaluate(el=>getComputedStyle(el).appearance),'none','journal filter keeps readable custom appearance in WebKit');await shot(gm,'after-encounter-global-journal');
- checks.push('Active ally and hostile rows; confirmed reaction outline; emerald concentration; consumed reaction; GM mode and manual journal');assert.deepEqual(errors,[]);
+ checks.push('Active ally and hostile rows; confirmed reaction outline; emerald concentration; consumed reaction; GM mode and manual journal');
+ // V1.5 durability check with a genuine GM WebSocket session and six online companions.
+ const previous=await gm.evaluate(async()=>{
+   await EncounterIndexedDB.ready();
+   const enemy=state.encounter.participants.find(p=>p.id==='v5-enemy');
+   return {hp:enemy.hp,round:state.encounter.round,count:state.encounter.participants.length,
+     fightPhase:RPGConnectMJ.getStatus().fight.phase,
+     dbHp:(await EncounterIndexedDB.load()).encounter.participants.find(p=>p.id==='v5-enemy')?.hp};
+ });
+ assert.equal(previous.hp,62,'Damage state stored before reload');
+ assert.equal(previous.dbHp,62,'IndexedDB contains the real GM damage event');
+ await gm.reload({waitUntil:'domcontentloaded'});
+ await gm.waitForFunction(()=>window.__encounterBootReady===true&&window.RPGConnectMJ);
+ const resumed=await gm.evaluate(()=>({
+   hp:state.encounter.participants.find(p=>p.id==='v5-enemy')?.hp,
+   round:state.encounter.round,count:state.encounter.participants.length,
+   fightPhase:RPGConnectMJ.getStatus().fight.phase
+ }));
+ assert.deepEqual(resumed,{hp:previous.hp,round:previous.round,count:previous.count,fightPhase:previous.fightPhase},
+   'Encounter and RPG Connect fight resume after a real GM reload');
+ await gm.evaluate(({endpoint,key})=>{
+   document.querySelector('#rpgMjEndpoint').value=endpoint;
+   document.querySelector('#rpgMjRoom').value='V5VISUAL';
+   document.querySelector('#rpgMjKey').value=key;
+   if(!RPGConnectMJ.getStatus().connected)document.querySelector('#rpgMjConnect').click();
+ },{endpoint,key:process.env.RPG_CONNECT_GM_KEY});
+ await gm.waitForFunction(()=>RPGConnectMJ.getStatus().connected);
+ await gm.waitForFunction(()=>RPGConnectMJ.getStatus().players.filter(p=>p.online).length===6);
+ assert.equal(await gm.evaluate(()=>RPGConnectMJ.getStatus().fight.phase),previous.fightPhase,
+   'Fight phase stable after reconnecting the GM with six clients');
+ checks.push('IndexedDB persists GM damage and RPG Connect combat phase after reload; GM reconnects to all six Companions');
+ assert.deepEqual(errors,[]);
  await writeFile(resolve(output,'results.json'),JSON.stringify({engine,status:'PASS',checks,errors,visualReview:'PENDING: screenshots must be inspected before merge'},null,2));
 }catch(error){for(const [name,p]of Object.entries(pages))await p.screenshot({path:resolve(output,'failure-'+name+'.png')}).catch(()=>{});await writeFile(resolve(output,'results.json'),JSON.stringify({engine,status:'FAIL',error:String(error.stack||error),checks,errors},null,2));throw error;}
 finally{await browser?.close();for(const ws of backend.wss.clients)ws.terminate();await new Promise(r=>backend.server.close(r));await new Promise(r=>http.close(r));}

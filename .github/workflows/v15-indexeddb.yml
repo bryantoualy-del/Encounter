@@ -1,0 +1,28 @@
+name: Encounter V1.5 IndexedDB foundation
+on:
+  pull_request:
+    paths:
+      - 'encounter-indexeddb.js'
+      - 'encounter-bootstrap.js'
+      - 'encounter-persistence.js'
+      - 'app.js'
+      - 'index.html'
+      - 'service-worker.js'
+      - 'audit/v15-indexeddb-browser.mjs'
+      - 'audit/v15-indexeddb-integration-browser.mjs'
+      - '.github/workflows/v15-indexeddb.yml'
+  workflow_dispatch:
+jobs:
+  indexeddb:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium webkit
+      - run: node audit/v15-indexeddb-browser.mjs
+      - run: node audit/v15-indexeddb-integration-browser.mjs

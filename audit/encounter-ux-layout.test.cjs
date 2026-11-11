@@ -28,7 +28,7 @@ test('PWA header remains unblurred and assets share version',()=>{
    assert.ok(html.includes(ref),ref+' missing in HTML');
    assert.ok(sw.includes(ref),ref+' missing in cache');
  }
- assert.match(sw,/encounter-(?:header-opaque-final-20261108|v13-lot2-layout-20261109|v13-lot3-20261109|v13-lot4-20261110|v132-semantic-20261111|p0-quota-20261111)/);
+ assert.match(sw,/encounter-(?:header-opaque-final-20261108|v13-lot2-layout-20261109|v13-lot3-20261109|v13-lot4-20261110|v132-semantic-20261111|p0-quota-20261111|v15-indexeddb-recovery-20261111)/);
  for(const asset of ['encounter-v13-results.js','encounter-v13-results.css']){
    const ref=asset+'?v='+('v132-semantic-20261111');
    assert.ok(html.includes(ref),ref+' missing in HTML');
@@ -75,7 +75,7 @@ test('Lot 2 result popup centers above legacy MJ presentation transform',()=>{
 test('Lot 3 enemy commands, state-grid and checks available offline',()=>{
  const html=read('index.html'),sw=read('service-worker.js'),js=read('encounter-v13-lot3-controls.js'),css=read('encounter-v13-lot3-controls.css');
  for(const name of ['table.js','table.css','mj-panels.js','encounter-v13-lot3-controls.js','encounter-v13-lot3-controls.css']){
-   const ref=name+'?v=v13-lot3-20261109';
+   const ref=name+'?v='+(name==='table.js'?'v15-indexeddb-20261111':'v13-lot3-20261109');
    assert.ok(html.includes(ref),ref+' absent du document');
    assert.ok(sw.includes(ref),ref+' absent du cache');
  }
