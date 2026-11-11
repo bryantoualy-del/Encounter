@@ -3,7 +3,9 @@
   'use strict';
   const priorUse = useAbility;
   const priorCard = abilityCard;
-  const freeEnemy = p => p?.kind === 'enemy' && (state.encounter.rpgSessionMode || 'table-free') === 'table-free';
+  // Un PNJ non connecté utilise la même résolution indicative qu'un adversaire.
+  // Les PJ, les compagnons et leurs invocations conservent leur propre autorité.
+  const freeEnemy = p => (p?.kind === 'enemy' || (p?.kind === 'ally' && !p.companionId && !p.ownerId && !p.rpgHealthManaged)) && (state.encounter.rpgSessionMode || 'table-free') === 'table-free';
   const find = (m, id) => [...m.actions, ...m.reactions, ...m.legendaryActions, ...m.lairActions, ...m.traits].find(a => a.id === id);
   const hasDamage = a => Boolean(a.damage || a.damageParts?.length || a.damagePartsText?.trim());
 
@@ -13,16 +15,16 @@
     if (spec.parts.length) {
       const result = rollAbilityDamage(a, critical);
       if (result.error) throw Error(result.error);
-      return {total:result.total, detail:result.detail};
+      return {total:result.total, detail:result.detail, components:result.components||[]};
     }
     if (!a.damage) return null;
     const result = rollDamageCrit(a.damage, critical);
-    return {total:result.total,detail:result.detail + (a.damageType ? ' ' + a.damageType : '')};
+    return {total:result.total,detail:result.detail + (a.damageType ? ' ' + a.damageType : ''),components:a.damageType?[{amount:result.total,type:a.damageType,detail:result.detail}]:[]};
   }
 
   function reportFor(p, m, a, mode) {
     const rolls = [], notes = [];
-    const result = {freeEnemy:true,actor:participantLabel(p),ability:a.name,kind:a.kind,rolls,save:null,effect:null,note:'Résultat indicatif · le MJ arbitre, les Companions appliquent manuellement.'};
+    const result = {freeEnemy:true,actor:participantLabel(p),actorKind:p.kind,ability:a.name,kind:a.kind,rolls,save:null,effect:null,note:'Résultat indicatif · le MJ arbitre, les Companions appliquent manuellement.'};
     const lines = [];
     const doAttack = (attackAbility, label) => {
       const r=rollD20(mode), bonus=Number(attackAbility.bonus)||0;
@@ -31,7 +33,7 @@
       const critical = r.roll===20;
       const damage=hasDamage(attackAbility)?rollDamage(attackAbility,critical):null;
       const detail=`d20 ${r.detail} ${signed(bonus)}${penalty.detail?' '+penalty.detail:''}`;
-      rolls.push({label,total,detail,critical,damage:damage?.total??null,damageDetail:damage?.detail||''});
+      rolls.push({label,total,detail,critical,damage:damage?.total??null,damageDetail:damage?.detail||'',damageParts:damage?.components||[]});
       lines.push(`${label} : ${detail} = ${total}${critical?' · 20 naturel':''}${damage?' · '+damage.total+' dégâts potentiels ('+damage.detail+')':''}`);
       if(attackAbility.onHitSave)notes.push(`Sur touche : JS ${attackAbility.onHitSave.ability} DD ${attackAbility.onHitSave.dc}${attackAbility.onHitSave.conditionOnFailure?' · '+attackAbility.onHitSave.conditionOnFailure:''}`);
     };

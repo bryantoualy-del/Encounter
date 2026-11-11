@@ -89,3 +89,17 @@ test('One enemy action produces one result and one journal entry, without an HP 
  assert.equal(h.player.hp,83);
  assert.equal(h.s.ui.targeting,null);
 });
+
+test('an independent allied NPC uses indicative rolls, while a companion-owned ally remains autonomous',()=>{
+ const h=setup();
+ const npc={...h.enemy,id:'npc',name:'Roark',kind:'ally',actionUsed:false,abilityState:{},ownerId:null,companionId:null};
+ h.s.state.encounter.participants.push(npc);
+ h.s.useAbility('npc','fire','action');
+ assert.equal(h.legacy.length,0);
+ assert.equal(h.reports[0].actorKind,'ally');
+ assert.equal(h.player.hp,83);
+ const ally={...npc,id:'owned',ownerId:'samoth',actionUsed:false};
+ h.s.state.encounter.participants.push(ally);
+ h.s.useAbility('owned','fire','action');
+ assert.equal(h.legacy.length,1);
+});
