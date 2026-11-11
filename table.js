@@ -3,12 +3,14 @@
 for(const id of ['btnEncounterManager','btnLibraryDrawer','btnJournalDrawer']){
   $('#encounterTools').append(document.getElementById(id));
 }
-document.addEventListener('DOMContentLoaded',()=>{
+function finishTableBoot(){
  const connect=$('#rpgMjOpen');
  if(connect)$('#btnMore').before(connect);
  const guide=$('#btnEncounterGuide');
  if(guide)$('#btnDensity').after(guide);
-});
+}
+document.addEventListener('DOMContentLoaded',finishTableBoot,{once:true});
+window.addEventListener('encounter:boot-complete',finishTableBoot,{once:true});
 document.getElementById('btnModePrep').textContent='Préparation';
 document.getElementById('btnModeCombat').textContent='Combat';
 document.getElementById('btnMore').setAttribute('aria-label','Rencontres, bibliothèque et outils');
