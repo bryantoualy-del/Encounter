@@ -54,7 +54,17 @@ try{
  }));
  assert.deepEqual(resumed,{hp:previous.hp,round:previous.round,count:previous.count,fightPhase:previous.fightPhase},
    'Encounter and RPG Connect fight resume after a real GM reload');
- checks.push('IndexedDB persists GM damage and RPG Connect combat phase after reloading with six companions');
+ await gm.evaluate(({endpoint,key})=>{
+   document.querySelector('#rpgMjEndpoint').value=endpoint;
+   document.querySelector('#rpgMjRoom').value='V5VISUAL';
+   document.querySelector('#rpgMjKey').value=key;
+   if(!RPGConnectMJ.getStatus().connected)document.querySelector('#rpgMjConnect').click();
+ },{endpoint,key:process.env.RPG_CONNECT_GM_KEY});
+ await gm.waitForFunction(()=>RPGConnectMJ.getStatus().connected);
+ await gm.waitForFunction(()=>RPGConnectMJ.getStatus().players.filter(p=>p.online).length===6);
+ assert.equal(await gm.evaluate(()=>RPGConnectMJ.getStatus().fight.phase),previous.fightPhase,
+   'Fight phase stable after reconnecting the GM with six clients');
+ checks.push('IndexedDB persists GM damage and RPG Connect combat phase after reload; GM reconnects to all six Companions');
  assert.deepEqual(errors,[]);
  await writeFile(resolve(output,'results.json'),JSON.stringify({engine,status:'PASS',checks,errors,visualReview:'PENDING: screenshots must be inspected before merge'},null,2));
 }catch(error){for(const [name,p]of Object.entries(pages))await p.screenshot({path:resolve(output,'failure-'+name+'.png')}).catch(()=>{});await writeFile(resolve(output,'results.json'),JSON.stringify({engine,status:'FAIL',error:String(error.stack||error),checks,errors},null,2));throw error;}
