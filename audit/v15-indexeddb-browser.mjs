@@ -18,7 +18,7 @@ async function run(engine,label){
    const ctx=await browser.newContext({serviceWorkers:'block'});
    const page=await ctx.newPage();
    await page.goto(base+'/index.html');
-   await page.addScriptTag({url:base+'/encounter-indexeddb.js'});
+   await page.waitForFunction(()=>window.__encounterBootReady===true);
    const result=await page.evaluate(async()=>{
      const db=EncounterIndexedDB;
      await db.clearForTests();
@@ -45,7 +45,7 @@ async function run(engine,label){
    });
    assert.deepEqual(result,{empty:true,largeRound:7,largeLen:1500000,round:50,backups:true,rejected:true,unchanged:true},label);
    await page.reload();
-   await page.addScriptTag({url:base+'/encounter-indexeddb.js'});
+   await page.waitForFunction(()=>window.__encounterBootReady===true);
    assert.equal(await page.evaluate(async()=> (await EncounterIndexedDB.load()).encounter.round),50);
    console.log('PASS '+label+' IndexedDB: 1.5MB, ordered 50 commits, backups, invalid import, reload');
    await ctx.close();
