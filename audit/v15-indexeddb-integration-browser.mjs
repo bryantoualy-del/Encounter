@@ -79,9 +79,16 @@ async function run(engine,label){
    }));
    assert.equal(rejected.ready,false,label+' malformed state blocks initialization');
    assert.equal(rejected.original.encounter,undefined,label+' malformed state was not overwritten');
-   // Restore the portable JSON using the storage engine without starting the game.
-   await page.evaluate(async data=>{await EncounterIndexedDB.restore(data,EncounterPersistence.migrate);},exported);
-   await page.reload();
+   // Restore the portable JSON through the user-facing recovery file picker,
+   // even though the Encounter application cannot start on the invalid database.
+   await Promise.all([
+     page.waitForNavigation({waitUntil:'domcontentloaded'}),
+     page.locator('#encounterStorageBoot input[type=file]').setInputFiles({
+       name:'encounter-recovery.json',
+       mimeType:'application/json',
+       buffer:Buffer.from(JSON.stringify(exported))
+     })
+   ]);
    await page.waitForFunction(()=>window.__encounterBootReady===true);
    assert.equal(await page.evaluate(()=>state.encounter.round),26,label+' JSON repair after corrupt IndexedDB');
    assert.deepEqual(errors,[],label+' page errors');
