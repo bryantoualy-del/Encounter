@@ -2,7 +2,26 @@ const {test}=require('node:test'),assert=require('node:assert/strict'),fs=requir
 const {JSDOM,requestInterceptor,VirtualConsole}=require('jsdom');
 const root=path.resolve(__dirname,'../..');
 const resources={interceptors:[requestInterceptor(request=>{const u=new URL(request.url),p=path.join(root,decodeURIComponent(u.pathname));if(u.hostname==='localhost'&&fs.existsSync(p)&&fs.statSync(p).isFile())return new Response(fs.readFileSync(p),{headers:{'content-type':p.endsWith('.js')?'application/javascript':'text/css'}});return new Response('');})]};
-async function app(name,storage={}){const errors=[],dom=new JSDOM(fs.readFileSync(path.join(root,name,'index.html'),'utf8'),{url:'http://localhost/'+name+'/index.html',resources,runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:new VirtualConsole().on('jsdomError',e=>{if(e.type==='unhandled-exception')errors.push(e.message)}),beforeParse(w){for(const [k,v]of Object.entries(storage))w.localStorage.setItem(k,v);w.WebSocket=require('ws');w.visualViewport={height:820,width:1180,offsetTop:0,addEventListener(){}};w.URL.createObjectURL=()=>'';w.URL.revokeObjectURL=()=>{};w.structuredClone=structuredClone;w.matchMedia=()=>({matches:false,addListener(){},addEventListener(){}});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.show=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(value){this.returnValue=value;this.open=false;this.dispatchEvent(new w.Event('close'));};w.ResizeObserver=class{observe(){}disconnect(){}};w.fetch=async()=>({ok:false,json:async()=>({})});}});await new Promise(r=>dom.window.addEventListener('load',()=>setTimeout(r,70)));return {dom,w:dom.window,errors};}
+async function app(name,storage={}){const errors=[],dom=new JSDOM(fs.readFileSync(path.join(root,name,'index.html'),'utf8'),{url:'http://localhost/'+name+'/index.html',resources,runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:new VirtualConsole().on('jsdomError',e=>{if(e.type==='unhandled-exception')errors.push(e.message)}),beforeParse(w){for(const [k,v]of Object.entries(storage))w.localStorage.setItem(k,v);w.WebSocket=require('ws');w.visualViewport={height:820,width:1180,offsetTop:0,addEventListener(){}};w.URL.createObjectURL=()=>'';w.URL.revokeObjectURL=()=>{};w.structuredClone=structuredClone;w.matchMedia=()=>({matches:false,addListener(){},addEventListener(){}});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.show=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(value){this.returnValue=value;this.open=false;this.dispatchEvent(new w.Event('close'));};w.ResizeObserver=class{observe(){}disconnect(){}};w.fetch=async()=>({ok:false,json:async()=>({})});}});await new Promise(r=>dom.window.addEventListener('load',()=>setTimeout(r,70)));
+ // jsdom does not implement IndexedDB. For protocol unit tests, hydrate Encounter's
+ // deferred scripts with a non-persistent adapter; real IndexedDB and reloads are
+ // covered by Chromium/WebKit integration tests, not by this jsdom fixture.
+ if(name==='Encounter'){
+   const w=dom.window;
+   w.__encounterInitialState=null;
+   w.__encounterInitialBackups=[];
+   w.EncounterIndexedDB.commit=async()=>true;
+   w.EncounterIndexedDB.backup=async()=>true;
+   w.EncounterIndexedDB.ready=async()=>true;
+   for(const node of w.document.querySelectorAll('script[data-encounter-deferred]')){
+     if(node.dataset.encounterOriginalType==='module')continue;
+     const src=node.getAttribute('src');
+     const code=src?fs.readFileSync(path.join(root,'Encounter',src.split('?')[0]),'utf8'):node.textContent;
+     w.eval(code);
+   }
+   w.dispatchEvent(new w.Event('encounter:boot-complete'));
+ }
+ return {dom,w:dom.window,errors};}
 for(const name of ['Kentaro','Brackmard','Samoth','Rufus','Nans','Zephyr'])test(name+' real HTML: group tab, initiative, scoped glow, reaction correction and journal',async()=>{
  const {dom,w,errors}=await app(name);try{
  assert.deepEqual(errors,[]);assert.ok(w.RPGGroupView,'group view mounted');assert.ok(w.RPGTable,'table adapter mounted');const id=w.__CompanionBridge.id;
