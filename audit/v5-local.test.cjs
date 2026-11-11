@@ -17,7 +17,9 @@ async function app(name,storage={}){const errors=[],dom=new JSDOM(fs.readFileSyn
      if(node.dataset.encounterOriginalType==='module')continue;
      const src=node.getAttribute('src');
      const code=src?fs.readFileSync(path.join(root,'Encounter',src.split('?')[0]),'utf8'):node.textContent;
-     w.eval(code);
+     const script=w.document.createElement('script');
+     script.textContent=code;
+     node.after(script);
    }
    w.dispatchEvent(new w.Event('encounter:boot-complete'));
  }
