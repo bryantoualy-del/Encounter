@@ -136,7 +136,7 @@ try{
  // Audit navigateur complet du bestiaire SRD : chaque capacité testée sur le vrai DOM.
  const catalog=await page.evaluate(async()=>{
   const monsters=await (await fetch('monsters.json')).json();
-  const original={participants:state.encounter.participants,selectedId:state.encounter.selectedId,currentTurn:state.encounter.currentTurn,mode:state.encounter.rpgSessionMode};
+  const original={participants:state.encounter.participants,selectedId:state.encounter.selectedId,currentTurn:state.encounter.currentTurn,mode:state.encounter.rpgSessionMode,monsterLength:state.monsters.length};
   let count=0;const failures=[];
   try{
    for(const raw of monsters){
@@ -164,7 +164,7 @@ try{
    }
   }finally{
    state.encounter.participants=original.participants;state.encounter.selectedId=original.selectedId;
-   state.encounter.currentTurn=original.currentTurn;state.encounter.rpgSessionMode=original.mode;
+   state.encounter.currentTurn=original.currentTurn;state.encounter.rpgSessionMode=original.mode;state.monsters.length=original.monsterLength;
    const close=document.querySelector('#actionPopup.show .v13-result-close');if(close)close.click();
    render();
   }
