@@ -50,6 +50,7 @@
    }
    window.removeEventListener('error',captureRuntimeError);
    if(runtimeErrors.length)throw Error('Initialisation Encounter impossible : '+runtimeErrors[0]);
+   window.dispatchEvent(new Event('encounter:boot-complete'));
    window.__encounterBootReady=true;
    overlay.remove();
  }catch(error){
