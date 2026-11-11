@@ -1,4 +1,4 @@
-const CACHE='encounter-v131-popup-potential-20261110';
+const CACHE='encounter-v132-semantic-20261111';
 const ASSETS=[
  './rpg-journal-ui.js?v=5-table-free-4',
  './rpg-activity.js?v=20261013-haste-menu',
@@ -84,9 +84,9 @@ const ASSETS=[
 
   './',
   './index.html',
- './encounter-v13-results.js?v=v131-popup-potential-20261110',
+ './encounter-v13-results.js?v=v132-semantic-20261111',
  './encounter-v13-free-actions.js?v=v13-lot2-20261109',
- './encounter-v13-results.css?v=v131-popup-potential-20261110',
+ './encounter-v13-results.css?v=v132-semantic-20261111',
  './encounter-v13-lot4.js?v=v13-lot4-20261110',
  './encounter-v13-lot4.css?v=v13-lot4-20261110',
  './encounter-v13-lot3-controls.css?v=v13-lot3-20261109',
