@@ -17,6 +17,8 @@
    const saved=await db.load();
    const backups=await db.backups();
    const validated=saved===undefined?null:EncounterPersistence.migrate(saved).data;
+   if(validated&&(!validated.encounter||!Array.isArray(validated.encounter.participants)||!Array.isArray(validated.monsters)))
+     throw Error('État IndexedDB incomplet : impossible de démarrer sans restauration JSON');
    if(validated?.persistenceRestoreContext){
      EncounterPersistence.restoreContext(localStorage,validated.persistenceRestoreContext);
      delete validated.persistenceRestoreContext;
