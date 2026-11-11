@@ -86,7 +86,7 @@
         const label=document.createElement('span');label.className='v131-free-action-name';label.textContent=item.label;
         const figures=document.createElement('div');figures.className='v131-free-figures';
         figures.appendChild(figure('roll','JET D’ATTAQUE',item.total,item.detail+(item.critical?' · 20 naturel':'')));
-        if(item.damage!=null){const damageFigure=figure('damage','DÉGÂTS POTENTIELS',item.damage,item.damageDetail||'');const color=semanticDamage(item.damageDetail||'');if(color)damageFigure.style.color=color;figures.appendChild(damageFigure);}
+        if(item.damage!=null){const damageFigure=figure('damage','DÉGÂTS POTENTIELS',item.damage,item.damageDetail||'');const color=semanticDamage(item.damageDetail||'');if(color){damageFigure.style.setProperty('--v13-damage-color',color);damageFigure.dataset.damageType='typed';}figures.appendChild(damageFigure);}
         line.append(label,figures);summary.appendChild(line);
       }
       if (free.save) {
@@ -100,7 +100,7 @@
         const label=String(free.effect.label||'Effet potentiel');
         const kind=/soins?|guéri|récupération/i.test(label)?'heal':/dégâts?|dommages?/i.test(label)?'damage':'effect';
         const line=document.createElement('div');line.className='v13-free-row v131-free-effect';
-        const effectFigure=figure(kind,label.toUpperCase(),free.effect.total,free.effect.detail||'');const effectColor=kind==='damage'?semanticDamage(label+' '+(free.effect.detail||'')):'';if(effectColor)effectFigure.style.color=effectColor;line.appendChild(effectFigure);
+        const effectFigure=figure(kind,label.toUpperCase(),free.effect.total,free.effect.detail||'');const effectColor=kind==='damage'?semanticDamage(label+' '+(free.effect.detail||'')):'';if(effectColor){effectFigure.style.setProperty('--v13-damage-color',effectColor);effectFigure.dataset.damageType='typed';}line.appendChild(effectFigure);
         summary.appendChild(line);
       }
       eyebrow.textContent='ACTION ENNEMIE · MODE LIBRE';

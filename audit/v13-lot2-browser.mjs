@@ -155,6 +155,17 @@ try{
        useAbility(enemy.id,a.id,sec,'normal');
        const visible=!!document.querySelector('#actionPopup.show.v13-free-enemy');
        const journalDelta=state.encounter.log.length-beforeLog;
+       // Check computed CSS for every typed attack/save, not only the Prêtre.
+       const semantic=globalThis.EncounterTypedDamage;
+       const expected=semantic?.semanticColors?.[semantic.semanticType(a.damageType)]||'';
+       if(expected && a.damage && a.kind!=='multiattack'){
+        const strong=document.querySelector('#actionPopup.v13-free-enemy .v131-free-damage strong');
+        const actual=strong?getComputedStyle(strong).color:'';
+        const rgb=expected.match(/[a-f0-9]{2}/gi).map(v=>parseInt(v,16));
+        const wanted='rgb('+rgb.join(', ')+')';
+        if(actual!==wanted)failures.push({monster:raw.name,ability:a.name,section,type:a.damageType,wanted,actual,issue:'semantic damage color'});
+       }
+
        if(!visible||journalDelta!==1||ui.targeting||player.hp!==beforeHP||JSON.stringify(player.conditions||[])!==beforeConditions)
         failures.push({monster:raw.name,ability:a.name,section,visible,journalDelta,targeting:!!ui.targeting,hp:player.hp});
       }catch(error){failures.push({monster:raw.name,ability:a.name,section,error:String(error)})}
@@ -173,6 +184,32 @@ try{
  check('Bestiaire complet en navigateur: 19 monstres et 69 capacités',catalog.monsters===19&&catalog.count===69,JSON.stringify(catalog));
  check('Bestiaire complet: zéro cible, zéro effet PJ, exactement un popup et une entrée de log par capacité',catalog.failures.length===0,JSON.stringify(catalog.failures));
 
+ // Regression: Priest radiant attacks and save spells must render GOLD, not generic red.
+ const priestColor=await page.evaluate(()=>{
+  const priest=state.monsters.find(m=>m.name==='Prêtre');
+  if(!priest)return {error:'Prêtre absent du bestiaire'};
+  const p=makeParticipant(priest,1,20);
+  const original={participants:state.encounter.participants,selectedId:state.encounter.selectedId,mode:state.encounter.rpgSessionMode};
+  const results=[];
+  try{
+   state.encounter.participants=[p];state.encounter.selectedId=p.id;state.encounter.rpgSessionMode='table-free';
+   for(const name of ['Éclair traçant','Flamme sacrée','Masse d’armes']){
+    const close=document.querySelector('#actionPopup.show .v13-result-close');if(close)close.click();
+    p.actionUsed=false;p.attackProgress=0;
+    const a=priest.actions.find(x=>x.name===name);
+    if(!a){results.push({name,error:'missing ability'});continue;}
+    useAbility(p.id,a.id,'action');
+    const strong=document.querySelector('#actionPopup.v13-free-enemy .v131-free-damage strong');
+    const figure=strong?.closest('.v131-free-figure');
+    results.push({name,color:strong?getComputedStyle(strong).color:null,token:figure?.style.getPropertyValue('--v13-damage-color'),detail:figure?.textContent?.slice(0,90)});
+   }
+  }finally{
+   state.encounter.participants=original.participants;state.encounter.selectedId=original.selectedId;state.encounter.rpgSessionMode=original.mode;
+   const close=document.querySelector('#actionPopup.show .v13-result-close');if(close)close.click();render();
+  }
+  return {results};
+ });
+ check('Prêtre: Éclair traçant et Flamme sacrée en or radiant, Masse contondante',priestColor.results.length===3&&priestColor.results[0].color==='rgb(255, 225, 154)'&&priestColor.results[1].color==='rgb(255, 225, 154)'&&priestColor.results[2].color==='rgb(180, 155, 123)',JSON.stringify(priestColor));
  // Connected authority regression: the same enemy action must never issue
  // health/status/save commands to a real Companion through canonical RPG Connect.
  process.env.RPG_CONNECT_GM_KEY='lot2-full-recipe-secret-key-123456';
