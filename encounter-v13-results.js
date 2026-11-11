@@ -81,13 +81,38 @@
         if(explanation){const tiny=document.createElement('small');tiny.textContent=explanation;group.appendChild(tiny);}
         return group;
       };
+      // Une deuxième ligne affiche chaque composante avec son propre type
+      // et ses propres dés : un total multitype ne doit jamais hériter
+      // arbitrairement de la couleur de sa première composante.
+      const appendDamageParts=(line,parts)=>{
+        if(!Array.isArray(parts)||!parts.length)return;
+        const breakdown=document.createElement('div');
+        breakdown.className='v131-free-types';
+        breakdown.setAttribute('aria-label','Dégâts détaillés par type');
+        for(const part of parts){
+          const chip=document.createElement('div');
+          chip.className='v131-free-type';
+          const color=semanticDamage(part.type)||'#d5deea';
+          chip.style.setProperty('--v13-component-color',color);
+          const amount=document.createElement('strong');
+          amount.textContent=String(part.amount);
+          const description=document.createElement('div');
+          description.className='v131-free-type-description';
+          const type=document.createElement('span');
+          type.textContent=String(part.type);
+          description.append(type);
+          if(part.detail){const dice=document.createElement('small');dice.textContent=String(part.detail);description.append(dice);}
+          chip.append(amount,description);breakdown.append(chip);
+        }
+        line.append(breakdown);
+      };
       for (const item of free.rolls || []) {
         const line=document.createElement('div');line.className='v13-free-row v131-free-attack';
         const label=document.createElement('span');label.className='v131-free-action-name';label.textContent=item.label;
         const figures=document.createElement('div');figures.className='v131-free-figures';
         figures.appendChild(figure('roll','JET D’ATTAQUE',item.total,item.detail+(item.critical?' · 20 naturel':'')));
-        if(item.damage!=null){const damageFigure=figure('damage','DÉGÂTS POTENTIELS',item.damage,item.damageDetail||'');const color=semanticDamage(item.damageDetail||'');if(color){damageFigure.style.setProperty('--v13-damage-color',color);damageFigure.dataset.damageType='typed';}figures.appendChild(damageFigure);}
-        line.append(label,figures);summary.appendChild(line);
+        if(item.damage!=null){const detail=item.damageParts?.length?'Total brut · avant défenses':(item.damageDetail||'');const damageFigure=figure('damage','DÉGÂTS POTENTIELS',item.damage,detail);const color=item.damageParts?.length===1?semanticDamage(item.damageParts[0].type):semanticDamage(item.damageDetail||'');if(color&&(!item.damageParts||item.damageParts.length===1)){damageFigure.style.setProperty('--v13-damage-color',color);damageFigure.dataset.damageType='typed';}figures.appendChild(damageFigure);}
+        line.append(label,figures);appendDamageParts(line,item.damageParts);summary.appendChild(line);
       }
       if (free.save) {
         const line=document.createElement('div');line.className='v13-free-row v131-free-save';
@@ -100,10 +125,10 @@
         const label=String(free.effect.label||'Effet potentiel');
         const kind=/soins?|guéri|récupération/i.test(label)?'heal':/dégâts?|dommages?/i.test(label)?'damage':'effect';
         const line=document.createElement('div');line.className='v13-free-row v131-free-effect';
-        const effectFigure=figure(kind,label.toUpperCase(),free.effect.total,free.effect.detail||'');const effectColor=kind==='damage'?semanticDamage(label+' '+(free.effect.detail||'')):'';if(effectColor){effectFigure.style.setProperty('--v13-damage-color',effectColor);effectFigure.dataset.damageType='typed';}line.appendChild(effectFigure);
+        const detail=free.effect.components?.length?'Total brut · avant défenses':(free.effect.detail||'');const effectFigure=figure(kind,label.toUpperCase(),free.effect.total,detail);const effectColor=kind==='damage'&&free.effect.components?.length===1?semanticDamage(free.effect.components[0].type):'';if(effectColor){effectFigure.style.setProperty('--v13-damage-color',effectColor);effectFigure.dataset.damageType='typed';}line.appendChild(effectFigure);if(kind==='damage')appendDamageParts(line,free.effect.components);
         summary.appendChild(line);
       }
-      eyebrow.textContent='ACTION ENNEMIE · MODE LIBRE';
+      eyebrow.textContent=free.actorKind==='enemy'?'ACTION ENNEMIE · MODE LIBRE':'ACTION PNJ · MODE LIBRE';
     } else if (combat) {
       const line = document.createElement('div');line.className='v131-actors';line.textContent=combat.actor+' attaque '+combat.target;
       const attack = document.createElement('div');attack.className='v131-attack';
