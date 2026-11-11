@@ -58,6 +58,35 @@
  }catch(error){
    console.error('Encounter IndexedDB startup failure',error);
    overlay.setAttribute('role','alert');
-   overlay.textContent='Démarrage interrompu : '+error.message+'. Aucune donnée n’a été effacée. Vous pouvez restaurer votre export JSON après résolution.';
+   overlay.replaceChildren();
+   const panel=document.createElement('div');
+   panel.style.cssText='max-width:650px;display:grid;justify-items:center;gap:16px';
+   const title=document.createElement('strong');
+   title.textContent='Rencontre indisponible — sauvegarde locale non chargée';
+   const detail=document.createElement('p');
+   detail.textContent=error.message+'. Aucune donnée n’a été effacée. Restaurez un export complet JSON pour reprendre.';
+   const input=document.createElement('input');
+   input.type='file';
+   input.accept='.json,application/json';
+   input.setAttribute('aria-label','Restaurer un export Encounter JSON');
+   const message=document.createElement('p');
+   message.setAttribute('role','status');
+   input.addEventListener('change',async()=>{
+     const file=input.files?.[0];if(!file)return;
+     input.disabled=true;message.textContent='Vérification et restauration du JSON…';
+     try{
+       const raw=JSON.parse((await file.text()).replace(/^\\uFEFF/,''));
+       const data=EncounterPersistence.migrate(raw).data;
+       if(!data.encounter||!Array.isArray(data.encounter.participants)||!Array.isArray(data.monsters))
+         throw Error('Export Encounter complet requis (rencontre et bestiaire)');
+       await globalThis.EncounterIndexedDB.commit(data);
+       message.textContent='Restauration confirmée. Rechargement…';
+       location.reload();
+     }catch(restoreError){
+       message.textContent='Restauration impossible : '+restoreError.message+'. Les données précédentes sont conservées.';
+       input.disabled=false;
+     }
+   });
+   panel.append(title,detail,input,message);overlay.append(panel);
  }
 })();
