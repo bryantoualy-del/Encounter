@@ -24,13 +24,13 @@ async function run(engine,label){
      await db.clearForTests();
      const empty=await db.load();
      const large='x'.repeat(1_500_000);
-     const initial={encounter:{round:7,log:[{text:large}]},monsters:[{name:'Mage'}],savedEncounters:[]};
+     const initial={schemaVersion:1,encounter:{round:7,participants:[],log:[{text:large}]},monsters:[{id:'mage',name:'Mage'}],savedEncounters:[]};
      await db.commit(initial);
      // Mutating caller-owned input after commit must never alter committed snapshot.
      initial.encounter.round=100;
      const stored=await db.load();
      const jobs=[];
-     for(let i=0;i<50;i++)jobs.push(db.commit({encounter:{round:i+1,log:[]},monsters:[],savedEncounters:[]}));
+     for(let i=0;i<50;i++)jobs.push(db.commit({schemaVersion:1,encounter:{round:i+1,participants:[],log:[]},monsters:[],savedEncounters:[]}));
      await Promise.all(jobs);
      const latest=await db.load();
      await db.backup('test-backup',{round:7});
