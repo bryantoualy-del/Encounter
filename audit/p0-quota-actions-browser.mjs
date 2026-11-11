@@ -22,6 +22,8 @@ const base='http://127.0.0.1:'+http.address().port+'/index.html';
 const errors=[];
 
 async function exercise(browserType,label){
+  function windowHasIndexedDB(){ return useIndexedDB; }
+  let useIndexedDB=false;
   const browser=await browserType.launch({
     headless:true,
     ...(label==='chromium'?{executablePath:process.env.CHROMIUM_PATH||undefined,args:['--no-sandbox','--disable-dev-shm-usage']}:
@@ -34,6 +36,44 @@ async function exercise(browserType,label){
     page.on('dialog',d=>d.dismiss());
     await page.goto(base);
     await page.waitForFunction(()=>typeof state!=='undefined'&&typeof addMonsterToCombat==='function');
+    useIndexedDB=await page.evaluate(()=>!!window.EncounterIndexedDB);
+    if(windowHasIndexedDB()) {
+      const result=await page.evaluate(async()=>{
+        state.encounter.round=2;
+        await EncounterIndexedDB.commit(state);
+        const persistedBefore=await EncounterIndexedDB.load();
+        const original=EncounterIndexedDB.commit;
+        EncounterIndexedDB.commit=()=>Promise.reject(new DOMException('V1.5 IndexedDB quota simulation','QuotaExceededError'));
+        let renders=0;
+        const formerRender=render;
+        render=function(...args){renders++;return formerRender(...args);};
+        const model=state.monsters.find(m=>m.category==='enemy');
+        for(let i=0;i<40;i++)mutate(()=>{state.encounter.round++;},'V1.5 action '+i);
+        for(let i=0;i<5;i++)addMonsterToCombat(model.id,1,10,true);
+        await new Promise(resolve=>setTimeout(resolve,0));
+        const blocked={round:state.encounter.round,participants:state.encounter.participants.length,
+          renders,dirty:encounterHasUnsavedChanges,
+          preserved:(await EncounterIndexedDB.load()).encounter.round,
+          banner:document.querySelector('#encounterStorageStatus')?.textContent||''};
+        EncounterIndexedDB.commit=original;
+        await EncounterIndexedDB.commit(state);
+        encounterHasUnsavedChanges=false;
+        return {blocked,baseline:persistedBefore.encounter.round};
+      });
+      assert.equal(result.blocked.round,42,label+': actions survive IndexedDB quota');
+      assert.ok(result.blocked.participants>=5,label+': monsters still added');
+      assert.ok(result.blocked.renders>=45,label+': UI rerenders');
+      assert.equal(result.blocked.dirty,true,label+': failed writes marked dirty');
+      assert.equal(result.blocked.preserved,result.baseline,label+': previous state not overwritten');
+      assert.match(result.blocked.banner,/Sauvegarde IndexedDB non effectuée/i,label+': persistent export warning');
+      await page.reload();
+      await page.waitForFunction(()=>window.__encounterBootReady===true);
+      assert.equal(await page.evaluate(()=>state.encounter.round),42,label+': quota recovery survives reload');
+      assert.deepEqual(errors,[],label+': no browser exceptions');
+      await context.close();
+      console.log('PASS '+label+': IndexedDB quota, 40 actions, five monsters, durable recovery');
+      return;
+    }
     const baseline=await page.evaluate(()=>{
       state.encounter.round=2;
       saveState();
