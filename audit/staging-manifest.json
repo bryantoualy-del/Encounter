@@ -9,22 +9,25 @@
       "sha": "116429451a52e39d2b82e391eecd5797010e0881"
     },
     "Kentaro": {
-      "sha": "9daf4000e8cf50f4c0c4e5e04590ea7eeaffbe23"
+      "sha": "68bd9fbdafff85719b9a7e79169243b6f889ae65"
     },
     "Samoth": {
-      "sha": "6bfa2efa4950ee121330da6157dde024d7f318bb"
+      "sha": "61903b2ae8afa7c24b7d17c502adf456e8e33c16"
     },
     "Brackmard": {
-      "sha": "49260439f38bcf3d75efbf603c7f4c9a80bf11b3"
+      "sha": "122f2792625fabe06491c20d6ff81efe395dd268"
     },
     "Zephyr": {
-      "sha": "8beb843ec046f38667d6a108b93e695c98820c77"
+      "sha": "9445b4cfe4ceb01e06af763a016e9872d00dcbdb"
     },
     "Rufus": {
-      "sha": "4b149428683372866010111e0afa90d97b00d273"
+      "sha": "43e9971cea2808285568b1373655a6cc35e8964e"
     },
     "Nans": {
-      "sha": "2b21020474eab205b87ce649f18dd5bbcb5b6a0f"
+      "sha": "789392b0b10ac951c2cccc3ece75eb31eb0f7e86"
+    },
+    "Kobe": {
+      "sha": "eccbcc375dbc4db458c35a74d1ee1ce415485b22"
     }
   },
   "encounterCheckout": "current-workflow-commit"

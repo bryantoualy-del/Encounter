@@ -89,7 +89,17 @@
       const report=reportFor(p,m,a,mode);
       checkpoint();
       if(a.kind==='recharge'){p.abilityState??={};p.abilityState[a.id]??={};p.abilityState[a.id].ready=false;}
+      const spellSlot=globalThis.MJSpellSlots?.slot?.(p,a);
+      const spellLevel=spellSlot?globalThis.MJSpellSlots.level?.(p,a):null;
       consumeEconomyAfterResolution(p,a,section,{forceAction:a.kind==='multiattack'});
+      // Slot spending and dice are one action; keep one journal record and
+      // include the consumed slot in the same visible result.
+      if(spellSlot){
+        const remaining=Number(p.resourceState?.[spellSlot.id]??spellSlot.start);
+        const slotLabel='Emplacement N'+spellLevel+' consommé · '+remaining+' restant(s)';
+        report.note=[report.note,slotLabel].filter(Boolean).join(' · ');
+        report.text+=' · '+slotLabel;
+      }
       state.encounter.selectedId=p.id;
       log(report.text);saveState();render();showActionPopup(report,a.name);
       if(document.getElementById('legendaryDialog')?.open){

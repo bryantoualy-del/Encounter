@@ -132,6 +132,47 @@ try{
  check('Gestion manuelle PV des adversaires disponible',await page.evaluate(()=>state.encounter.participants.find(p=>p.id==='v13-enemy').hp===73));
  check('Aucune erreur JavaScript majeure',errors.length===0,JSON.stringify(errors));
 
+
+ // Audit navigateur complet du bestiaire SRD : chaque capacité testée sur le vrai DOM.
+ const catalog=await page.evaluate(async()=>{
+  const monsters=await (await fetch('monsters.json')).json();
+  const original={participants:state.encounter.participants,selectedId:state.encounter.selectedId,currentTurn:state.encounter.currentTurn,mode:state.encounter.rpgSessionMode,monsterLength:state.monsters.length};
+  let count=0;const failures=[];
+  try{
+   for(const raw of monsters){
+    const model=normalizeMonster(raw);model.id='audit-'+raw.id;state.monsters.push(model);
+    const enemy=makeParticipant(model,1,20);
+    const player=ccParticipant({id:'audit-pj',name:'PJ témoin',hp:83,ac:16});
+    state.encounter.participants=[enemy,player];state.encounter.selectedId=enemy.id;state.encounter.currentTurn=0;state.encounter.rpgSessionMode='table-free';
+    for(const section of ['actions','reactions','legendaryActions','lairActions','traits']){
+     for(const a of model[section]||[]){
+      const close=document.querySelector('#actionPopup.show .v13-result-close');if(close)close.click();
+      ui.targeting=null;enemy.actionUsed=false;enemy.bonusActionUsed=false;enemy.reactionUsed=false;enemy.attackProgress=0;enemy.legendaryRemaining=10;
+      if(enemy.abilityState[a.id])enemy.abilityState[a.id].ready=true;
+      const beforeLog=state.encounter.log.length,beforeHP=player.hp,beforeConditions=JSON.stringify(player.conditions||[]);
+      const sec={actions:'action',reactions:'reaction',legendaryActions:'legendary',lairActions:'lair',traits:'trait'}[section];
+      try{
+       useAbility(enemy.id,a.id,sec,'normal');
+       const visible=!!document.querySelector('#actionPopup.show.v13-free-enemy');
+       const journalDelta=state.encounter.log.length-beforeLog;
+       if(!visible||journalDelta!==1||ui.targeting||player.hp!==beforeHP||JSON.stringify(player.conditions||[])!==beforeConditions)
+        failures.push({monster:raw.name,ability:a.name,section,visible,journalDelta,targeting:!!ui.targeting,hp:player.hp});
+      }catch(error){failures.push({monster:raw.name,ability:a.name,section,error:String(error)})}
+      count++;
+     }
+    }
+   }
+  }finally{
+   state.encounter.participants=original.participants;state.encounter.selectedId=original.selectedId;
+   state.encounter.currentTurn=original.currentTurn;state.encounter.rpgSessionMode=original.mode;state.monsters.length=original.monsterLength;
+   const close=document.querySelector('#actionPopup.show .v13-result-close');if(close)close.click();
+   render();
+  }
+  return {monsters:monsters.length,count,failures};
+ });
+ check('Bestiaire complet en navigateur: 19 monstres et 69 capacités',catalog.monsters===19&&catalog.count===69,JSON.stringify(catalog));
+ check('Bestiaire complet: zéro cible, zéro effet PJ, exactement un popup et une entrée de log par capacité',catalog.failures.length===0,JSON.stringify(catalog.failures));
+
  // Connected authority regression: the same enemy action must never issue
  // health/status/save commands to a real Companion through canonical RPG Connect.
  process.env.RPG_CONNECT_GM_KEY='lot2-full-recipe-secret-key-123456';

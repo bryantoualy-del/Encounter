@@ -49,7 +49,8 @@
     "test:v13:browser": "node audit/v13-lot2-browser.mjs",
     "test:v13:lot3": "node --test audit/encounter-ux-layout.test.cjs",
     "test:v13:lot3:browser": "node audit/v13-lot3-browser.mjs",
-    "test:v13:lot4:browser": "node audit/v13-lot4-browser.mjs"
+    "test:v13:lot4:browser": "node audit/v13-lot4-browser.mjs",
+    "test:result-focus:browser": "node audit/result-focus-browser.mjs"
   },
   "dependencies": {
     "ws": "^8.18.3"
