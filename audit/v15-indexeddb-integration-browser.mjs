@@ -66,6 +66,21 @@ async function run(engine,label){
    await page.locator('#importForm button[type=submit]').click();
    await page.waitForFunction(()=>window.__encounterBootReady===true&&state.encounter.round===26);
    assert.equal(await page.evaluate(async()=> (await EncounterIndexedDB.load()).encounter.round),26,label+' JSON import persisted');
+   // A malformed persisted object must never be silently replaced by a blank game.
+   await page.evaluate(async()=>{await EncounterIndexedDB.commit({schemaVersion:1,monsters:[]});});
+   await page.reload();
+   await page.locator('#encounterStorageBoot[role="alert"]').waitFor({state:'visible'});
+   const rejected=await page.evaluate(async()=>({
+     ready:window.__encounterBootReady,
+     original:await EncounterIndexedDB.load()
+   }));
+   assert.equal(rejected.ready,false,label+' malformed state blocks initialization');
+   assert.equal(rejected.original.encounter,undefined,label+' malformed state was not overwritten');
+   // Restore the portable JSON using the storage engine without starting the game.
+   await page.evaluate(async data=>{await EncounterIndexedDB.restore(data,EncounterPersistence.migrate);},exported);
+   await page.reload();
+   await page.waitForFunction(()=>window.__encounterBootReady===true);
+   assert.equal(await page.evaluate(()=>state.encounter.round),26,label+' JSON repair after corrupt IndexedDB');
    assert.deepEqual(errors,[],label+' page errors');
    console.log('PASS '+label+': Encounter startup, 25 actions, four monsters, IndexedDB reload and JSON export/import');
    await context.close();
