@@ -100,6 +100,9 @@ async function exercise(browserType,label){
         try{localStorage.setItem('quota-test-ballast',ballast+chunk);ballast+=chunk;}
         catch(error){if(error.name==='QuotaExceededError')break;throw error;}
       }
+      // Make the new state substantially larger than the recovery copy freed
+      // by EncounterPersistence.write() when quota is exhausted.
+      state.encounter.log.push({id:'quota-large-log',text:'x'.repeat(1200000)});
       const model=state.monsters.find(m=>m.category==='enemy');
       const previous=state.encounter.participants.length;
       addMonsterToCombat(model.id,1,10,true);
