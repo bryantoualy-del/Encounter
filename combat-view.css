@@ -233,3 +233,13 @@ html,body{background-color:#0b121c}
 .combat-mode .table-row .table-hp.low .table-health i, .combat-mode .table-row .table-hp.critical .table-health i { background:#e66c68; }
 .combat-mode .table-row .table-hp.mid .table-health i { background:#e3ba57; }
 .combat-mode .table-row .table-hp.high .table-health i { background:#67c98b; }
+
+/* Icônes sur la ligne d'identité, sans hauteur supplémentaire. */
+@media(min-width:761px){
+  .combat-mode .table-row .table-name:has(.table-conditions){padding-right:106px!important;}
+  .combat-mode .table-row .table-conditions{position:absolute;right:2px;top:50%;transform:translateY(-50%);width:100px;max-width:100px;height:25px;z-index:1;}
+  .combat-mode .table-conditions .table-condition:not(.zero){font-size:0;gap:0;padding:2px;}
+  .combat-mode .table-conditions .table-condition:not(.zero) .condition-icon{width:19px;height:19px;}
+  .combat-mode .table-conditions .table-condition.zero{font-size:9px;}
+}
+.combat-mode .table-row .table-hp.healthy .table-health i{background:#67c98b;}
