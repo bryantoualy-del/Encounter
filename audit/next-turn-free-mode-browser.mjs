@@ -19,7 +19,7 @@ try {
    await page.goto(url);await page.waitForFunction(()=>window.__encounterBootReady===true);
    await page.evaluate(async()=>{
     state.encounter.rpgSessionMode='table-free';
-    state.encounter.participants=[{id:'audit-a',name:'Audit A',kind:'player',initiative:20,hp:20,maxHp:20,conditions:[]},{id:'audit-b',name:'Audit B',kind:'player',initiative:10,hp:20,maxHp:20,conditions:[]}];
+    state.encounter.participants=[{id:'audit-a',name:'Audit A',kind:'player',initiative:20,hp:20,maxHp:20,conditions:[],abilityState:{},resources:{},effects:[]},{id:'audit-b',name:'Audit B',kind:'player',initiative:10,hp:20,maxHp:20,conditions:[],abilityState:{},resources:{},effects:[]}];
     state.encounter.round=1;state.encounter.currentTurn=0;state.encounter.selectedId='audit-a';
     localStorage.setItem('rpg-connect:fight:v1',JSON.stringify({phase:'ended',requestId:'audit-ended',roster:[],rolls:{},validated:{}}));
     saveState();await EncounterIndexedDB.ready();
