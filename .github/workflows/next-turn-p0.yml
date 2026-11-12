@@ -1,0 +1,22 @@
+name: Encounter Next Turn P0
+on:
+  pull_request:
+    paths:
+      - 'rpg-connect-mj.js'
+      - 'audit/next-turn-free-mode-*'
+      - '.github/workflows/next-turn-p0.yml'
+  workflow_dispatch:
+jobs:
+  next-turn:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: node audit/next-turn-free-mode-regression.cjs
+      - run: npx playwright install --with-deps chromium webkit
+      - run: node audit/next-turn-free-mode-browser.mjs
