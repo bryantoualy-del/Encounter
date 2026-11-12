@@ -160,3 +160,9 @@
     max-height:calc(100dvh - 100px)!important;
   }
 }
+
+/* MJ 12/11 — save-based spells/abilities: total and every typed damage part on one horizontal row. */
+#actionPopup.v13-free-enemy .v131-free-effect:has(.v131-free-types){display:flex;align-items:stretch;gap:8px;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
+#actionPopup.v13-free-enemy .v131-free-effect:has(.v131-free-types)>.v131-free-figure{flex:0 0 auto;width:auto;min-width:105px;max-width:170px}
+#actionPopup.v13-free-enemy .v131-free-effect:has(.v131-free-types)>.v131-free-types{display:flex;flex:1 0 auto;width:auto;min-width:0;gap:7px;margin-top:0;align-items:stretch;flex-wrap:nowrap}
+#actionPopup.v13-free-enemy .v131-free-effect:has(.v131-free-types) .v131-free-type{flex:0 0 auto;min-width:110px}
