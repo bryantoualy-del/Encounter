@@ -206,3 +206,18 @@ html,body{background-color:#0b121c}
     -webkit-backdrop-filter:none;
   }
 }
+
+/* Tablette : garder la liste des combattants dans son panneau et la faire défiler. */
+@media (min-width:761px) {
+  .combat-mode .combat-view { min-height:0; }
+  .combat-mode .participant-panel, .combat-mode .detail-panel { min-height:0; overflow:hidden; }
+  .combat-mode .combat-list {
+    flex:1 1 auto;
+    min-height:0;
+    max-height:100%;
+    overflow-y:auto;
+    overflow-x:hidden;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+  }
+}
