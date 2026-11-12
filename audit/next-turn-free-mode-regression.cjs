@@ -8,7 +8,7 @@ const anchor = "const oldAdvance=actualAdvanceTurn;actualAdvanceTurn=function(){
 const start = source.indexOf(anchor);
 assert.ok(start >= 0, 'RPG turn adapter exists');
 const body = source.slice(start + anchor.length, start + anchor.length + 240);
-const guard = body.match(/^if\(([^)]*fight\.phase==='ended'[^)]*)\)\{note\('([^']+)'\);return false\}/);
+const guard = body.match(/^if\((!tableMode\(\)\&\&fight\.phase==='ended')\)\{note\('([^']+)'\);return false\}/);
 assert.ok(guard, 'ended fight guard returns false explicitly');
 assert.match(guard[1], /!tableMode\(\)/, 'guard must exclude free-table mode');
 for (const [free, ended, blocked] of [[true,true,false],[true,false,false],[false,true,true],[false,false,false]]) {
