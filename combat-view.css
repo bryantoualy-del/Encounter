@@ -221,3 +221,41 @@ html,body{background-color:#0b121c}
     -webkit-overflow-scrolling:touch;
   }
 }
+
+
+
+/* Finitions tablette 2026-11-12 : ne touche ni au moteur ni au ratio 55/45. */
+@media (min-width:761px) {
+  .combat-mode .combat-view { min-height:0; }
+  .combat-mode .participant-panel, .combat-mode .detail-panel { min-height:0; overflow:hidden; }
+  .combat-mode .combat-list { flex:1 1 auto; min-height:0; max-height:100%; overflow-y:auto; overflow-x:hidden; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; }
+  .combat-mode .detail-panel { overflow-y:auto; }
+}
+.combat-mode .table-row.combat-card { min-width:0; }
+.combat-mode .table-row .table-name { position:relative; min-width:0; padding-right:0; }
+.combat-mode .table-name-line { flex-wrap:nowrap; max-width:100%; }
+.combat-mode .table-name-line strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.combat-mode .table-conditions {
+  display:flex; flex-wrap:nowrap; align-items:center; gap:3px;
+  max-width:100%; min-width:0; overflow-x:auto; overflow-y:hidden;
+  scrollbar-width:none; -webkit-overflow-scrolling:touch;
+  padding:1px 0; margin:0; height:25px;
+}
+.combat-mode .table-conditions::-webkit-scrollbar { display:none; }
+.combat-mode .table-condition { display:inline-flex; flex:0 0 auto; align-items:center; gap:3px; max-width:100%; padding:2px 4px; line-height:1; white-space:nowrap; font-size:10px; }
+.combat-mode .table-condition .condition-icon { display:block; width:18px; height:18px; object-fit:contain; flex:none; }
+.combat-mode .table-row .table-hp { min-width:0; }
+.combat-mode .table-row .table-health i, #activeDetail .table-health i { transition:width .25s ease, background-color .25s ease; }
+.combat-mode .table-row .table-hp.low .table-health i, .combat-mode .table-row .table-hp.critical .table-health i { background:#e66c68; }
+.combat-mode .table-row .table-hp.mid .table-health i { background:#e3ba57; }
+.combat-mode .table-row .table-hp.high .table-health i { background:#67c98b; }
+
+/* Icônes sur la ligne d'identité, sans hauteur supplémentaire. */
+@media(min-width:761px){
+  .combat-mode .table-row .table-name:has(.table-conditions){padding-right:106px!important;}
+  .combat-mode .table-row .table-conditions{position:absolute;right:2px;top:50%;transform:translateY(-50%);width:100px;max-width:100px;height:25px;z-index:1;}
+  .combat-mode .table-conditions .table-condition:not(.zero){font-size:0;gap:0;padding:2px;}
+  .combat-mode .table-conditions .table-condition:not(.zero) .condition-icon{width:19px;height:19px;}
+  .combat-mode .table-conditions .table-condition.zero{font-size:9px;}
+}
+.combat-mode .table-row .table-hp.healthy .table-health i{background:#67c98b;}
