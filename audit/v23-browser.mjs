@@ -23,8 +23,8 @@ try{
   // Exercise the actual result renderer without changing character values.
   await page.evaluate(app=>{
    const parts=[{type:'slashing',amount:12},{type:'fire',amount:8},{type:'cold',amount:7},{type:'force',amount:6},{type:'psychic',amount:5}];
-   if(app==='Encounter')showActionPopup({freeEnemy:true,actorKind:'enemy',ability:'Attaque mixte',rolls:[{label:'Lame élémentaire',total:23,detail:'d20 16 + 7',damage:38,damageParts:parts}]},'Attaque mixte');
-   else CompanionResultFocus.showStructured({id:'v23-mixed',title:'Attaque mixte',damages:parts});
+   if(app==='Encounter')showActionPopup({freeEnemy:true,actorKind:'enemy',actor:'Mage',ability:'Attaque mixte',rolls:[{label:'Lame élémentaire',total:23,detail:'d20 16 + 7',damage:38,damageParts:parts}]},'Attaque mixte');
+   else CompanionResultFocus.showStructured({eventId:'v23-mixed',title:'Attaque mixte',damages:parts});
   },app);
   const result=page.locator(app==='Encounter'?'#actionPopup':'#companion-result-focus');await result.waitFor({state:'visible'});
   await page.waitForFunction(()=>[...document.querySelectorAll('.rpg-damage-icon')].length>=5&&[...document.querySelectorAll('.rpg-damage-icon')].every(i=>i.complete&&i.naturalWidth===256));
@@ -32,7 +32,7 @@ try{
   assert.equal(rendered.length,5);for(let i=0;i<5;i++){assert.equal(rendered[i].width,28);assert.match(rendered[i].text,new RegExp(String([12,8,7,6,5][i])));}
   await page.screenshot({path:out+'/'+app+'-mixed.png'});
   if(app!=='Encounter'){
-   const unchanged=await page.evaluate(()=>{const before=document.querySelector('#companion-result-focus').textContent;const accepted=CompanionResultFocus.showStructured({id:'v23-mixed',damages:[{type:'fire',amount:999}]});return !accepted&&before===document.querySelector('#companion-result-focus').textContent;});assert.ok(unchanged,'duplicate result ignored');
+   const unchanged=await page.evaluate(()=>{const before=document.querySelector('#companion-result-focus').textContent;const accepted=CompanionResultFocus.showStructured({eventId:'v23-mixed',damages:[{type:'fire',amount:999}]});return !accepted&&before===document.querySelector('#companion-result-focus').textContent;});assert.ok(unchanged,'duplicate result ignored');
   }
   // Real image loads at both required sizes, on both backgrounds, all 13 types.
   await page.evaluate(types=>{const grid=document.createElement('section');grid.id='v23-proof';grid.style='position:fixed;inset:0;z-index:999999;background:#151419;padding:24px;display:grid;grid-template-columns:repeat(13,1fr);gap:6px;align-content:start';for(const bg of ['#151419','#f3eee4'])for(const t of types){const cell=document.createElement('div');cell.style='background:'+bg+';padding:8px;color:#888';for(const size of [24,32])cell.append(RPGVisualTypes.damageIcon(t.id,size));cell.append(document.createTextNode(t.name_fr));grid.append(cell)}document.body.append(grid)},types);
