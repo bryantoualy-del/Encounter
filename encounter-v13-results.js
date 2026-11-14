@@ -99,9 +99,11 @@
           const description=document.createElement('div');
           description.className='v131-free-type-description';
           const type=document.createElement('span');
-          type.textContent=String(part.type);
+          type.textContent=window.RPGVisualTypes?.damage(part.type)?.name_fr||String(part.type);
           description.append(type);
           if(part.detail){const dice=document.createElement('small');dice.textContent=String(part.detail);description.append(dice);}
+          const icon=window.RPGVisualTypes?.damageIcon(part.type);
+          if(icon){icon.alt="";chip.append(icon);}
           chip.append(amount,description);breakdown.append(chip);
         }
         line.append(breakdown);
