@@ -254,7 +254,8 @@ html,body{background-color:#0b121c}
 @media(min-width:761px){
   .combat-mode .table-row .table-name:has(.table-conditions){padding-right:106px!important;}
   .combat-mode .table-row .table-conditions{position:absolute;right:2px;top:50%;transform:translateY(-50%);width:100px;max-width:100px;height:25px;z-index:1;}
-  .combat-mode .table-conditions .table-condition:not(.zero){font-size:0;gap:0;padding:2px;}
+  /* Always keep a readable label when the remote icon registry has no asset. */
+  .combat-mode .table-conditions .table-condition:not(.zero){font-size:10px;gap:3px;padding:2px 4px;}
   .combat-mode .table-conditions .table-condition:not(.zero) .condition-icon{width:19px;height:19px;}
   .combat-mode .table-conditions .table-condition.zero{font-size:9px;}
 }
