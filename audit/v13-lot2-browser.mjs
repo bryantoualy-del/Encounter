@@ -97,7 +97,8 @@ try{
  await close();
  d=await click('claw','Attaque physique');await close();
  d=await click('mixed','Dégâts mixtes');
- check('Dégâts multi-types visibles',/feu|froid/.test(d.body));
+ check('Dégâts multi-types visibles',/feu|froid/i.test(d.body));
+ check('Dégâts mixtes avec deux icônes PNG distinctes',await page.locator('#actionPopup .v131-free-types .rpg-damage-icon').count()===2 && await page.locator('#actionPopup .v131-free-types .rpg-damage-icon').evaluateAll(imgs=>imgs.every(img=>img.complete&&img.naturalWidth>0)&&new Set(imgs.map(img=>img.getAttribute('src'))).size===2));
  await close();
  d=await click('bite','État conditionnel');
  check('JS sur touche annoncé, non résolu',/Sur touche|JS FOR/.test(d.body));
