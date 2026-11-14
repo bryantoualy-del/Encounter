@@ -31,6 +31,8 @@ jobs:
         run: npm test
       - name: Encounter V1.3 result presentation tests
         run: npm run test:v13
+      - name: Next turn free-mode P0 regression
+        run: node audit/next-turn-free-mode-regression.cjs
       - name: Encounter UX layout regression tests
         run: node --test audit/encounter-ux-layout.test.cjs
       - name: Companion bridge tests
