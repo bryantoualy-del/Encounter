@@ -53,7 +53,8 @@ for(const name of ['Kentaro','Nans','Samoth','Brackmard','Zephyr','Rufus'])test(
     assert.deepEqual(api.getState().turn,before.turn,'choosing a spell must not spend action economy');
     for(const [spell,field] of [['dragon','dragon'],['animateobjects','animatedObjects']]){
       api.resetCombat();selector.value=spell;selector.dispatchEvent(new w.Event('change',{bubbles:true}));w.document.querySelector('#combatCast').click();
-      assert.ok(w.__CompanionBridge.read()[field],spell+' must create its native dependent entity');
+      await new Promise(resolve=>setTimeout(resolve,0));
+      assert.ok(w.__CompanionBridge.read()[field],spell+' must create its native dependent entity: '+w.document.querySelector('#resultText')?.textContent);
       api.clearConcentration();
       assert.equal(w.__CompanionBridge.read()[field],null,spell+' must be removed by native concentration cleanup');
       assert.equal(api.getState().concentration,null);

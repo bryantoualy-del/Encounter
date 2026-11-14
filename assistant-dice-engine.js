@@ -1,4 +1,4 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js';
+import * as THREE from './vendor/three/three.module.js';
 
 const theme=window.CompanionDiceTheme||{id:'companion',primary:'#6f588e',rim:'#b8a0de',secondary:'#a67b50',floor:'#15111b',surface:['#8267ab','#5b447e','#36284e','#20182e'],edge:'#ded0ec'};
 const SETTINGS_KEY='ccDiceSettingsV1:'+theme.id;
