@@ -14,8 +14,9 @@ try{
   const context=await browser.newContext({viewport:app==='Encounter'?{width:1280,height:800}:{width:1180,height:820},hasTouch:true,serviceWorkers:'block',reducedMotion:'reduce'});
   const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.route('https://cdn.jsdelivr.net/npm/three@0.186.1/build/*',async route=>{const f=route.request().url().split('/').at(-1);await route.fulfill({body:await readFile(resolve('node_modules/three/build',f)),contentType:'text/javascript'});});
+  console.log('Checking '+app);
   await page.goto(origin+'/'+app+'/index.html');
-  if(app==='Encounter')await page.waitForFunction(()=>window.__encounterBootReady);else await page.waitForFunction(()=>window.CompanionResultFocus&&window.RPGVisualTypes);
+  if(app==='Encounter')await page.waitForFunction(()=>window.__encounterBootReady && window.RPGVisualTypes);else await page.waitForFunction(()=>window.CompanionResultFocus&&window.RPGVisualTypes);
   await page.screenshot({path:out+'/'+app+'-combat.png'});
   const types=JSON.parse(await readFile(resolve(root,app,'assets/icons/damage/manifest.json'),'utf8')).types;
   for(const t of types){assert.equal(await page.evaluate(id=>RPGVisualTypes.damage(id).name_fr,t.id),t.name_fr);}
