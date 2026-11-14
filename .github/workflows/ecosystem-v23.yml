@@ -1,0 +1,63 @@
+name: Ecosystem V2.3 validation
+on:
+  push:
+    branches: [feature/v23-damage-icons]
+  pull_request:
+    branches: [main]
+jobs:
+  ecosystem:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: Encounter
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Checkout candidates and references
+        run: |
+          for repo in Kobe Brackmard Samoth Nans Rufus Zephyr; do
+            git clone --depth 1 --branch feature/ecosystem-v23 https://github.com/bryantoualy-del/$repo.git "$repo"
+          done
+          for repo in RPG-Connect Kentaro; do
+            git clone --depth 1 https://github.com/bryantoualy-del/$repo.git "$repo"
+          done
+          for repo in Encounter Kobe Brackmard Samoth Nans Rufus Zephyr RPG-Connect Kentaro; do
+            echo "$repo $(git -C "$repo" rev-parse HEAD)"
+          done > Encounter/docs/v23/revisions-tested.txt
+      - run: npm ci
+        working-directory: Encounter
+      - run: npm install --no-save ws
+        working-directory: RPG-Connect
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+        working-directory: Encounter
+      - name: Engine and build
+        run: |
+          npm test --prefix RPG-Connect
+          npm test --prefix Kobe
+          npm run build --prefix Kobe
+          npm run test:e2e --prefix Kobe
+          for repo in Brackmard Samoth Nans Rufus Zephyr; do
+            (cd "$repo" && node --test tests/result-focus.test.cjs)
+          done
+      - name: Seven real application pages
+        working-directory: Encounter
+        env:
+          E2E_BROWSER: ${{ matrix.browser }}
+        run: node audit/v23-browser.mjs
+      - name: Connected Table Libre
+        working-directory: Encounter
+        env:
+          E2E_BROWSER: ${{ matrix.browser }}
+        run: node audit/v23-connected.mjs
+      - name: Evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecosystem-v23-${{ matrix.browser }}
+          path: Encounter/docs/v23

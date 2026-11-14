@@ -1,5 +1,6 @@
-const CACHE='encounter-v15-indexeddb-recovery-20261111';
+const CACHE='encounter-v23-icons-20261114';
 const ASSETS=[
+'./rpg-visual-types.js','./assets/icons/conditions/Inconscient.png','./assets/icons/conditions/Aveugle.png','./assets/icons/conditions/Effraye.png','./assets/icons/conditions/Petrifie.png','./assets/icons/conditions/Invisible.png','./assets/icons/conditions/Incapacite.png','./assets/icons/conditions/Charme.png','./assets/icons/conditions/Etourdi.png','./assets/icons/conditions/Empoisonne.png','./assets/icons/conditions/Paralyse.png','./assets/icons/conditions/Assourdi.png','./assets/icons/conditions/Epuise.png','./assets/icons/conditions/Agrippe.png','./assets/icons/conditions/Entrave.png','./assets/icons/conditions/A_terre.png','./assets/icons/damage/degats_perforant.png','./assets/icons/damage/degats_tonnerre_64.png','./assets/icons/damage/degats_acide.png','./assets/icons/damage/degats_feu_64.png','./assets/icons/damage/degats_psychique.png','./assets/icons/damage/degats_poison_64.png','./assets/icons/damage/degats_contondant.png','./assets/icons/damage/degats_contondant_64.png','./assets/icons/damage/degats_psychique_64.png','./assets/icons/damage/degats_froid.png','./assets/icons/damage/degats_perforant_64.png','./assets/icons/damage/degats_tonnerre.png','./assets/icons/damage/degats_poison.png','./assets/icons/damage/degats_necrotique.png','./assets/icons/damage/degats_froid_64.png','./assets/icons/damage/degats_necrotique_64.png','./assets/icons/damage/degats_feu.png','./assets/icons/damage/degats_tranchant_64.png','./assets/icons/damage/degats_acide_64.png','./assets/icons/damage/degats_foudre.png','./assets/icons/damage/degats_radiant.png','./assets/icons/damage/degats_force.png','./assets/icons/damage/degats_tranchant.png','./assets/icons/damage/degats_force_64.png','./assets/icons/damage/degats_radiant_64.png','./assets/icons/damage/degats_foudre_64.png',
  './rpg-journal-ui.js?v=5-table-free-4',
  './rpg-activity.js?v=20261013-haste-menu',
  './rpg-activity.css?v=5-table-free-4',
@@ -84,9 +85,9 @@ const ASSETS=[
 
   './',
   './index.html',
- './encounter-v13-results.js?v=v132-semantic-20261111',
+ './encounter-v13-results.js?v=v23-damage-20261114',
  './encounter-v13-free-actions.js?v=v13-lot2-20261109',
- './encounter-v13-results.css?v=v132-semantic-20261111',
+ './encounter-v13-results.css?v=v23-damage-20261114',
  './encounter-v13-lot4.js?v=v13-lot4-20261110',
  './encounter-v13-lot4.css?v=v13-lot4-20261110',
  './encounter-v13-lot3-controls.css?v=v13-lot3-20261109',
