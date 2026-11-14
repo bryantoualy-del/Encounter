@@ -14,7 +14,7 @@ try {
   try{
    const context=await browser.newContext({viewport:{width:1180,height:820},serviceWorkers:'block'});
    const page=await context.newPage(),errors=[];
-   page.on('pageerror',e=>errors.push(e.message));
+   page.on('pageerror',e=>{errors.push(e.message);console.error(e.message)});
    page.on('dialog',d=>d.dismiss());
    await page.goto(url);await page.waitForFunction(()=>window.__encounterBootReady===true);
    await page.evaluate(async()=>{

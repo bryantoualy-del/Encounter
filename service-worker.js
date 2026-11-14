@@ -1,5 +1,7 @@
-const CACHE='encounter-v15-indexeddb-recovery-20261111';
+const CACHE='encounter-v23-lot1-local-dice';
 const ASSETS=[
+ './vendor/three/three.module.js',
+ './vendor/three/three.core.js',
  './rpg-journal-ui.js?v=5-table-free-4',
  './rpg-activity.js?v=20261013-haste-menu',
  './rpg-activity.css?v=5-table-free-4',

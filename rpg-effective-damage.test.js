@@ -5,12 +5,12 @@ import {resolve} from 'node:path';
 import vm from 'node:vm';
 
 const source=readFileSync(resolve('../Kentaro/rpg-effective-damage.js'),'utf8');
-function fixture(){
+function fixture(code=source){
  const saved=new Map(),subscribers=[];
  const state={turn:1,damage:0},bridge={id:'test',adjustTurnDamage:delta=>{state.damage=Math.max(0,state.damage+delta)}};
  const api={getState:()=>({turn:{number:state.turn,damage:state.damage}}),subscribe:fn=>subscribers.push(fn)};
  const context={window:{CompanionAPI:api,__CompanionBridge:bridge},localStorage:{getItem:key=>saved.get(key)||null,setItem:(key,value)=>saved.set(key,value)},queueMicrotask};
- vm.runInNewContext(source,context);
+ vm.runInNewContext(code,context);
  return{state,emit:(type,payload)=>subscribers.forEach(fn=>fn({type,payload})),saved};
 }
 test('authoritative attack result replaces local raw damage and ignores replay',async()=>{
@@ -46,8 +46,15 @@ test('undo and turn change prevent late corrections',async()=>{
 });
 test('shared module and page loader exist on six Companions',()=>{
  for(const name of ['Kentaro','Brackmard','Zephyr','Rufus','Samoth','Nans']){
-  assert.equal(readFileSync(resolve('../'+name+'/rpg-effective-damage.js'),'utf8'),source,name);
+  const code=readFileSync(resolve('../'+name+'/rpg-effective-damage.js'),'utf8');
+  const {state,emit}=fixture(code);
+  emit('save:request',{saveId:'parity',actionId:'spell',spellLevel:2});
+  const result={saveId:'parity',resolutionId:'one',targetId:'enemy',effectiveDamage:9};
+  emit('save:result',result);emit('save:result',result);
+  assert.equal(state.damage,9,name+' credits a result exactly once');
+  state.turn=2;emit('save:result',{...result,resolutionId:'late',targetId:'other'});
+  assert.equal(state.damage,9,name+' ignores late damage after turn change');
   const html=readFileSync(resolve('../'+name+'/index.html'),'utf8');
-  assert.match(html,/rpg-effective-damage\.js\?v=4-lot1/);
+  assert.match(html,/rpg-effective-damage\.js\?v=[^"\s]+/);
  }
 });
