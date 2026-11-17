@@ -23,18 +23,28 @@ test('RPG Connect does not cover target details and keeps advanced commands',()=
 test('PWA header remains unblurred and assets share version',()=>{
  const html=read('index.html'),sw=read('service-worker.js'),css=read('styles.css');
  assert.match(html,/apple-mobile-web-app-status-bar-style" content="black"/);
- for(const asset of ['rpg-connect-mj.js','rpg-connect-mj.css','combat-width.js','combat-view.css']){
+ for(const asset of ['rpg-connect-mj.css','combat-width.js','combat-view.css']){
    const ref=asset+'?v='+(asset==='combat-view.css'?'header-opaque-final-20261108':'encounter-ux-20261108');
    assert.ok(html.includes(ref),ref+' missing in HTML');
    assert.ok(sw.includes(ref),ref+' missing in cache');
  }
- assert.match(sw,/encounter-(?:header-opaque-final-20261108|v13-lot2-layout-20261109|v13-lot3-20261109|v13-lot4-20261110|v132-semantic-20261111|p0-quota-20261111|v15-indexeddb-recovery-20261111|v23-icons-20261114)/);
+ assert.match(sw,/encounter-(?:header-opaque-final-20261108|v13-lot2-layout-20261109|v13-lot3-20261109|v13-lot4-20261110|v132-semantic-20261111|p0-quota-20261111|v15-indexeddb-recovery-20261111|v23-icons-20261114|v24-turns-20261117)/);
  for(const asset of ['encounter-v13-results.js','encounter-v13-results.css']){
    const ref=asset+'?v='+('v23-damage-20261114');
    assert.ok(html.includes(ref),ref+' missing in HTML');
    assert.ok(sw.includes(ref),ref+' missing in cache');
  }
  assert.ok(!/\.topbar\{[^}]*backdrop-filter\s*:\s*blur\(/.test(css));
+});
+
+test('turn and initiative scripts use the same revision online and offline',()=>{
+ const html=read('index.html'),sw=read('service-worker.js');
+ assert.match(sw,/encounter-v24-turns-20261117/);
+ for(const asset of ['app.js','rpg-connect-mj.js','mj-decisions.js']){
+   const ref=asset+'?v=24-turns';
+   assert.ok(html.includes(ref),ref+' missing in HTML');
+   assert.ok(sw.includes(ref),ref+' missing in cache');
+ }
 });
 
 test('final iPad header has a fully opaque background and no blur, with PWA cache refresh',()=>{

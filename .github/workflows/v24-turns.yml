@@ -1,0 +1,46 @@
+name: Table Libre V2.4 — Tours synchronisés
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  session:
+    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'fix/v24-lot1-tours'
+    runs-on: ubuntu-24.04
+    container: mcr.microsoft.com/playwright:v1.58.2-noble
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Checkout validated RPG Connect and Companion revisions
+        run: |
+          for revision in \
+            RPG-Connect:2db53165f524ba1bc4fb16000c2dbb301bc4b668 \
+            Kobe:82a3a365b0403838599e7ed28685c4b0144295bc \
+            Brackmard:e602f79f8fcec73d25882116bb8dde4f76327148 \
+            Samoth:a14bde78eb6dde1f7f9ee9d5c449092a5436c755 \
+            Nans:a829cd5f7c3b84afcd47e81934944a5a2cabe75b \
+            Rufus:25265f93f9cb78fe89230889884e3138836c608e \
+            Zephyr:575cfb0a92c0876126253cbb479bdbf2eb2db341 \
+            Kentaro:3669d940d4b458ca9cb79f97ac7cf8b57cd6caf2; do
+            repo="${revision%:*}"
+            sha="${revision#*:}"
+            git init "../$repo"
+            git -C "../$repo" fetch --depth=1 "https://github.com/bryantoualy-del/$repo.git" "$sha"
+            git -C "../$repo" checkout --detach FETCH_HEAD
+          done
+      - run: npm ci
+        working-directory: ../RPG-Connect
+      - run: node audit/v24-turns-browser.mjs
+        env:
+          RPG_BROWSER: ${{ matrix.browser }}

@@ -3,10 +3,23 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 const source=readFileSync(new URL('./app.js',import.meta.url),'utf8');
-function fixture(){const c={state:{encounter:{round:3,currentTurn:1,selectedId:'b',combatStarted:true,participants:[{id:'a',name:'A',initiative:20,hp:10},{id:'b',name:'B',initiative:10,hp:10},{id:'c',name:'C',initiative:5,hp:10}],turnOrder:['a','b','c']}},ui:{},window:{},participantLabel:p=>p.name,checkpoint:()=>{},processEndTurn:()=>{},processStartTurn:()=>{},saveState:()=>{},render:()=>{},toast:()=>{}};vm.createContext(c);vm.runInContext(source.slice(source.indexOf('function fightInProgress()'),source.indexOf('function selectedParticipant()')),c);vm.runInContext(source.slice(source.indexOf('function actualAdvanceTurn(){'),source.indexOf('function markEconomy')),c);return c;}
-test('high-initiative reinforcement and correction preserve the running identity until next round',()=>{const c=fixture();c.preserveFightPosition(()=>{c.state.encounter.participants.push({id:'new',name:'New',initiative:30,hp:10});c.state.encounter.participants[1].initiative=40;c.state.encounter.currentTurn=0;});assert.equal(c.activeParticipant().id,'b');assert.equal(c.state.encounter.participants[3].joinRound,4);c.actualAdvanceTurn();assert.equal(c.activeParticipant().id,'c');c.actualAdvanceTurn();assert.equal(c.state.encounter.round,4);assert.equal(c.activeParticipant().id,'b');assert.deepEqual(Array.from(c.sortedParticipants(),p=>p.id),['b','new','a','c']);});
+function fixture(){const c={state:{encounter:{round:3,currentTurn:1,selectedId:'b',combatStarted:true,participants:[{id:'a',name:'A',initiative:20,hp:10},{id:'b',name:'B',initiative:10,hp:10},{id:'c',name:'C',initiative:5,hp:10}],turnOrder:['a','b','c']}},ui:{},window:{},participantLabel:p=>p.name,checkpoint:()=>{},processEndTurn:()=>{},processStartTurn:()=>{},saveState:()=>{},render:()=>{},toast:()=>{}};vm.createContext(c);vm.runInContext(source.slice(source.indexOf('function fightInProgress()'),source.indexOf('function selectedParticipant()')),c);vm.runInContext(source.slice(source.indexOf('function chooseNextTurn('),source.indexOf('function markEconomy')),c);return c;}
+test('high-initiative reinforcement and correction preserve the running identity until next round',()=>{const c=fixture();c.preserveFightPosition(()=>{c.state.encounter.participants.push({id:'new',name:'New',initiative:30,hp:10});c.state.encounter.participants[1].initiative=40;c.state.encounter.currentTurn=0;});assert.equal(c.activeParticipant().id,'b');assert.equal(c.state.encounter.participants[3].joinRound,3);assert.deepEqual(Array.from(c.sortedParticipants(),p=>p.id),['b','new','a','c']);c.actualAdvanceTurn();assert.equal(c.activeParticipant().id,'new');c.actualAdvanceTurn();assert.equal(c.activeParticipant().id,'c');c.actualAdvanceTurn();assert.equal(c.state.encounter.round,4);assert.equal(c.activeParticipant().id,'b');assert.deepEqual(Array.from(c.sortedParticipants(),p=>p.id),['b','new','a','c']);});
 test('removing a participant before the active turn preserves the active participant',()=>{const c=fixture();c.preserveFightPosition(()=>c.state.encounter.participants.shift());assert.equal(c.activeParticipant().id,'b');assert.equal(c.state.encounter.round,3);});
 test('turn identity and deferred arrivals survive persisted state reload',()=>{const c=fixture();c.preserveFightPosition(()=>c.state.encounter.participants.push({id:'new',name:'New',initiative:30,hp:10}));c.state=JSON.parse(JSON.stringify(c.state));assert.equal(c.activeParticipant().id,'b');c.actualAdvanceTurn();c.actualAdvanceTurn();assert.equal(c.state.encounter.round,4);assert.equal(c.activeParticipant().id,'new');});
+
+test('removing the active participant starts the next unplayed turn once', () => {
+  const c=fixture(), starts=[];
+  c.processStartTurn=p=>starts.push(p.id);
+  c.preserveFightPosition(()=>c.state.encounter.participants.splice(1,1));
+  assert.equal(c.activeParticipant().id,'c');
+  assert.equal(c.state.encounter.round,3);
+  assert.deepEqual(starts,['c']);
+  c.actualAdvanceTurn();
+  assert.equal(c.activeParticipant().id,'a');
+  assert.equal(c.state.encounter.round,4);
+  assert.deepEqual(starts,['c','a']);
+});
 
 test('legacy custom sheets and pending combat survive IndexedDB bootstrap without altering legacy JSON',()=>{
  const raw={version:'4.1',ui:{mode:'prep'},monsters:[{id:'custom',name:'Créature maison',actions:[{name:'Effet maison',detail:'Ne pas convertir'}]}],encounter:{round:4,currentTurn:1,participants:[{id:'custom-p',initiative:17,hp:11,conditions:[{name:'À terre'}]}],rpgPlayerSaves:{save1:{applied:false,request:{dc:14}}}},savedEncounters:[],trash:[]};
