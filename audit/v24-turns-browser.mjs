@@ -76,10 +76,21 @@ try {
  for(const [id,page] of Object.entries(pages)){
    if(id==='kobe'){
      await page.waitForFunction(()=>document.querySelector('.turn-finish')?.dataset.action==='signal-turn-end');
+     const before=await page.evaluate(()=>{
+       const {turn,slots,resources}=JSON.parse(localStorage.getItem('kobe-companion:v1')).state;
+       return {revision:turn.startRevision,slots,resources};
+     });
      await page.evaluate(()=>document.querySelector('.turn-finish').click());
      await page.waitForFunction(()=>document.querySelector('.turn-finish')?.disabled);
+     await page.context().setOffline(true);
      await page.evaluate(()=>document.querySelector('.turn-local').click());
      await page.waitForFunction(()=>!document.querySelector('.turn-finish')?.disabled);
+     const after=await page.evaluate(()=>{
+       const {turn,slots,resources}=JSON.parse(localStorage.getItem('kobe-companion:v1')).state;
+       return {revision:turn.startRevision,slots,resources};
+     });
+     assert.deepEqual(after,{...before,revision:before.revision+1});
+     await page.context().setOffline(false);
    }else{
      await page.waitForFunction(id=>RPGTable.getContext()?.session?.activeCharacterId===id,id);
      assert.equal(await page.evaluate(()=>CompanionAPI.getState().turn.reaction),true,id+' reaction');

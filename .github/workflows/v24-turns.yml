@@ -9,6 +9,7 @@ jobs:
   session:
     if: github.event_name == 'workflow_dispatch' || github.head_ref == 'fix/v24-lot1-tours'
     runs-on: ubuntu-24.04
+    container: mcr.microsoft.com/playwright:v1.58.2-noble
     timeout-minutes: 12
     strategy:
       fail-fast: false
@@ -28,7 +29,6 @@ jobs:
           done
       - run: npm ci
         working-directory: ../RPG-Connect
-      - run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: node audit/v24-turns-browser.mjs
         env:
           RPG_BROWSER: ${{ matrix.browser }}
