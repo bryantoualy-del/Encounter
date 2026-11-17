@@ -106,8 +106,8 @@ try {
      }
      if(id==='zephyr'){
        const reaction=await page.evaluate(async()=>{
-         useReaction('Protection');
-         await attack(true);
+         document.querySelector('#protectBtn').click();
+         await __CompanionBridge.nativeReactionAttack();
          return {available:CompanionAPI.getState().turn.reaction,pending:__CompanionBridge.read().rpgZephyrAttack??null};
        });
        assert.deepEqual(reaction,{available:false,pending:null});
