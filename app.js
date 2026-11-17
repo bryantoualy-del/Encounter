@@ -225,15 +225,34 @@ function makeParticipant(monster,n=1,initiative=10,groupId=null,companionOf=null
 }
 function makeLairParticipant(owner,m){return {id:uid('lair'),modelId:m.id,groupId:null,name:`Repaire — ${owner.baseName}`,baseName:`Repaire — ${owner.baseName}`,kind:'lair',ac:0,maxHp:1,hp:1,tempHp:0,initiative:m.lairInitiative??20,conditions:[],actionUsed:false,bonusActionUsed:false,reactionUsed:false,legendaryRemaining:0,currentPhaseId:null,abilityState:{},resourceState:{},companionOf:null,lairOwnerId:owner.id};}
 function fightInProgress(){return window.RPGConnectMJ?.getStatus?.().fight.phase==='fight'||!!state.encounter.combatStarted;}
+function passedTurnIds(list=sortedParticipants()){
+  const e=state.encounter;
+  return new Set(e.passedTurns?.round===e.round?e.passedTurns.ids:list.slice(0,e.currentTurn).map(p=>p.id));
+}
+function nextEligibleTurn(list,passed){
+  return list.find(p=>!passed.has(p.id)&&(p.joinRound||1)<=state.encounter.round&&canTakeTurn(p));
+}
 function preserveFightPosition(fn){
   if(!fightInProgress())return fn();
-  const active=activeParticipant()?.id,selected=state.encounter.selectedId,before=new Set(state.encounter.participants.map(p=>p.id));
-  state.encounter.turnOrder=sortedParticipants().map(p=>p.id);
+  const e=state.encounter,oldList=sortedParticipants(),active=activeParticipant(),selected=e.selectedId;
+  const passed=passedTurnIds(oldList),existing=new Set(oldList.map(p=>p.id));
   const result=fn();
-  for(const p of state.encounter.participants)if(!before.has(p.id)){p.joinRound=state.encounter.round+1;state.encounter.turnOrder.push(p.id);}
-  const list=sortedParticipants(),index=list.findIndex(p=>p.id===active);
-  state.encounter.currentTurn=index>=0?index:Math.min(state.encounter.currentTurn,Math.max(0,list.length-1));
-  if(state.encounter.participants.some(p=>p.id===selected))state.encounter.selectedId=selected;
+  const list=sortedParticipants(false),index=list.findIndex(p=>p.id===active?.id);
+  const anchor=index>=0?index:list.findIndex(p=>p.initiative<(active?.initiative??Infinity));
+  for(let i=0;i<list.length;i++){
+    const p=list[i];
+    if(existing.has(p.id))continue;
+    p.joinRound=e.round+(anchor===-1||i<anchor?1:0);
+  }
+  e.turnOrder=list.map(p=>p.id);
+  e.passedTurns={round:e.round,ids:[...passed]};
+  if(index>=0){
+    e.currentTurn=index;
+    if(list.some(p=>p.id===selected))e.selectedId=selected;
+  }else{
+    if(active)passed.add(active.id);
+    chooseNextTurn(list,passed);
+  }
   return result;
 }
 function sortedParticipants(preserveRoundOrder=true){
@@ -291,7 +310,7 @@ function render(){
 function renderInitiative(){
   const list=sortedParticipants(),active=activeParticipant();
   $('#initiativeRibbon').innerHTML=list.length?list.map(p=>`<button class="init-chip ${p.id===active?.id?'active':''} ${p.hp<=0&&!isLair(p)?'dead':''} ${isLair(p)?'lair-chip':''}" data-select="${p.id}"><span>${isLair(p)?'🏰 ':''}${esc(participantLabel(p))}</span><b>${p.initiative}</b></button>`).join(''):'<span class="muted">Aucune initiative</span>';
-  const next=list.slice(state.encounter.currentTurn+1).find(p=>(p.joinRound||1)<=state.encounter.round&&canTakeTurn(p))
+  const next=nextEligibleTurn(list,new Set([...passedTurnIds(list),active?.id]))
     ||sortedParticipants(false).find(canTakeTurn);
   $('#nextTurnHint').textContent=next?`Suivant : ${participantLabel(next)}`:'Aucun tour suivant';
 }
@@ -458,8 +477,35 @@ function requestNextTurn(){const current=activeParticipant();if(!current)return 
 function renderLegendaryDialog(ending,bosses){
   $('#legendaryContext').textContent=`Fin du tour de ${ending.name}. Avant de passer au suivant, ces boss peuvent dépenser des actions légendaires.`;$('#legendaryOptions').innerHTML=bosses.map(p=>{const m=modelFor(p),cap=effectiveLegendaryMax(p,m);return `<section class="legendary-context-block"><div class="section-title-row"><h3>${esc(participantLabel(p))}</h3><span class="legendary-meter">${Array.from({length:cap},(_,i)=>`<b class="${i<p.legendaryRemaining?'':'off'}">★</b>`).join('')}</span></div>${m.legendaryActions.map(a=>abilityCard(p,a,'legendary')).join('')}</section>`;}).join('');
 }
+function chooseNextTurn(list,passed){
+  const e=state.encounter;
+  let next=nextEligibleTurn(list,passed);
+  if(!next){
+    list=sortedParticipants(false);
+    next=list.find(canTakeTurn);
+    if(!next)return false;
+    e.round++;
+    e.turnOrder=list.map(p=>p.id);
+    passed.clear();
+  }
+  e.passedTurns={round:e.round,ids:[...passed]};
+  e.currentTurn=list.indexOf(next);
+  e.selectedId=next.id;
+  processStartTurn(next);
+  return true;
+}
 function actualAdvanceTurn(){
-  const list=sortedParticipants();if(!list.length)return toast('Aucun participant.');checkpoint();const ending=activeParticipant();processEndTurn(ending);let idx=state.encounter.currentTurn+1;while(idx<list.length&&((list[idx].joinRound||1)>state.encounter.round||!canTakeTurn(list[idx])))idx++;if(idx>=list.length){idx=0;state.encounter.round++;state.encounter.turnOrder=null;state.encounter.turnOrder=sortedParticipants().map(p=>p.id);const next=sortedParticipants();while(idx<next.length&&!canTakeTurn(next[idx]))idx++;if(idx>=next.length){log('Aucun participant vivant ne peut prendre le tour.');saveState();render();return false;}}state.encounter.currentTurn=idx;const p=sortedParticipants()[idx];state.encounter.selectedId=p.id;processStartTurn(p);ui.detailTab='actions';ui.pendingAdvance=false;saveState();render();
+  const list=sortedParticipants();
+  if(!list.length)return toast('Aucun participant.');
+  checkpoint();
+  const ending=activeParticipant(),passed=passedTurnIds(list);
+  passed.add(ending.id);
+  processEndTurn(ending);
+  if(!chooseNextTurn(list,passed)){
+    log('Aucun participant vivant ne peut prendre le tour.');
+    saveState();render();return false;
+  }
+  ui.detailTab='actions';ui.pendingAdvance=false;saveState();render();return true;
 }
 function markEconomy(p,eco,value=true){if(eco==='action')p.actionUsed=value;if(eco==='bonus')p.bonusActionUsed=value;if(eco==='reaction')p.reactionUsed=value;}
 function toggleEconomy(pid,eco){const p=state.encounter.participants.find(x=>x.id===pid);if(!p)return;mutate(()=>{if(eco==='action')p.actionUsed=!p.actionUsed;else if(eco==='bonus')p.bonusActionUsed=!p.bonusActionUsed;else if(eco==='reaction')p.reactionUsed=!p.reactionUsed;},`${participantLabel(p)} — ${eco==='bonus'?'action bonus':eco==='reaction'?'réaction':'action'} ${eco==='action'?(p.actionUsed?'rendue disponible':'marquée utilisée'):eco==='bonus'?(p.bonusActionUsed?'rendue disponible':'marquée utilisée'):(p.reactionUsed?'rendue disponible':'marquée utilisée')}.`);}
@@ -500,7 +546,7 @@ function openConditionDialog(){if(!currentTargetIds().length)return toast('Séle
 
 function rollCharacter(pid,ability,isSave,concentration=false){const p=state.encounter.participants.find(x=>x.id===pid),m=modelFor(p);if(!p||m?.abilities?.[ability]==null)return;const dc=Math.max(1,Number($('#checkDc')?.value)||ui.checkDc);ui.checkDc=dc;const mod=isSave?(m.saveMods?.[ability]??abilityMod(m.abilities[ability])):abilityMod(m.abilities[ability]),rules=isSave?globalThis.EncounterConditionRolls.saveRules(p.conditions,ability):{autoFail:false,...globalThis.EncounterConditionRolls.abilityRules(p.conditions,'normal',{ability})},r=rules.autoFail?null:rollD20(rules.mode),penalty=rules.autoFail?{amount:0,detail:''}:globalThis.EncounterConditionRolls.penalty(p.conditions,concentration?'concentration':isSave?'save':'ability',rollDie),total=rules.autoFail?0:r.roll+mod-penalty.amount,ok=!rules.autoFail&&total>=dc,msg=`${participantLabel(p)} — ${concentration?'JS concentration':isSave?'JS':'test'} ${ability} DD ${dc} : ${rules.autoFail?'échec automatique':`${r.detail} ${signed(mod)}${penalty.detail?' '+penalty.detail:''} = ${total}`} → ${ok?'RÉUSSITE':'ÉCHEC'}.`;actionLog(msg,isSave?'Jet de sauvegarde':'Test de caractéristique');saveState();renderLog();}
 
-function openAddMonster(id){if(structuralGuard())return;const m=state.monsters.find(x=>x.id===id);if(!m)return;$('#addMonsterName').textContent=m.name;const f=$('#addMonsterForm');f.reset();f.elements.monsterId.value=id;f.elements.initiative.value=m.initiative||10;f.elements.count.value=1;const single=m.category!=='enemy';f.elements.count.max=single?1:50;f.elements.count.disabled=single;f.elements.sharedInitiative.checked=true;f.elements.sharedInitiative.closest('label').classList.toggle('hidden',single);const comp=$('#companionOption');if(comp){const show=id==='pj-silas-veyr';comp.classList.toggle('hidden',!show);f.elements.includeCompanion.checked=show;}const lair=$('#lairOption');if(lair){const show=!!m.lairActions.length;lair.classList.toggle('hidden',!show);f.elements.includeLair.checked=show;}let hint=$('#addMonsterForm [data-reinforcement-hint]');if(!hint){hint=document.createElement('p');hint.dataset.reinforcementHint='1';$('#addMonsterForm .editor-grid').before(hint);}hint.textContent=fightInProgress()?`Renfort : premier tour au round ${state.encounter.round+1}. L’ordre et le participant actifs restent conservés.`:'Placement suivant l’initiative avant le lancement.';$('#addMonsterDialog').showModal();}
+function openAddMonster(id){if(structuralGuard())return;const m=state.monsters.find(x=>x.id===id);if(!m)return;$('#addMonsterName').textContent=m.name;const f=$('#addMonsterForm');f.reset();f.elements.monsterId.value=id;f.elements.initiative.value=m.initiative||10;f.elements.count.value=1;const single=m.category!=='enemy';f.elements.count.max=single?1:50;f.elements.count.disabled=single;f.elements.sharedInitiative.checked=true;f.elements.sharedInitiative.closest('label').classList.toggle('hidden',single);const comp=$('#companionOption');if(comp){const show=id==='pj-silas-veyr';comp.classList.toggle('hidden',!show);f.elements.includeCompanion.checked=show;}const lair=$('#lairOption');if(lair){const show=!!m.lairActions.length;lair.classList.toggle('hidden',!show);f.elements.includeLair.checked=show;}let hint=$('#addMonsterForm [data-reinforcement-hint]');if(!hint){hint=document.createElement('p');hint.dataset.reinforcementHint='1';$('#addMonsterForm .editor-grid').before(hint);}hint.textContent=fightInProgress()?`Renfort : placement immédiat par initiative. Le combattant actif conserve son tour.`:'Placement suivant l’initiative avant le lancement.';$('#addMonsterDialog').showModal();}
 function addMonsterToCombat(id,count,initiative,shared,includeCompanion=false,includeLair=false){
   if(structuralGuard())return;const m=state.monsters.find(x=>x.id===id);if(!m)return;count=m.category==='enemy'?Math.max(1,Math.min(50,Number(count)||1)):1;const groupId=count>1?uid('group'):null,wantsCompanion=id==='pj-silas-veyr'&&includeCompanion&&state.monsters.some(x=>x.id==='comp-crasseuse');mutate(()=>{let main=null;for(let i=1;i<=count;i++){const ini=shared?Number(initiative)||0:(Number(initiative)||0)+rollDie(6)-3,p=makeParticipant(m,count>1?i:1,ini,groupId);state.encounter.participants.push(p);if(i===1)main=p;}if(wantsCompanion&&main){const cm=state.monsters.find(x=>x.id==='comp-crasseuse');state.encounter.participants.push(makeParticipant(cm,1,main.initiative,null,main.id));}if(includeLair&&m.lairActions.length&&main)state.encounter.participants.push(makeLairParticipant(main,m));if(!fightInProgress()){state.encounter.currentTurn=0;state.encounter.selectedId=sortedParticipants()[0]?.id||null;}},`${count} × ${m.name} ajouté${count>1?'s':''}${wantsCompanion?' avec C.R.A.S.S.E.U.S.E.':''}${includeLair&&m.lairActions.length?' + repaire':''}.`);closeDrawers();}
 function addPlayer(data){if(structuralGuard())return;const p={id:uid('p'),modelId:null,groupId:null,name:data.name,baseName:data.name,kind:data.role==='pj'?'player':'ally',ac:Number(data.ac)||10,maxHp:Math.max(1,Number(data.hp)||1),hp:Math.max(1,Number(data.hp)||1),tempHp:0,initiative:Number(data.initiative)||0,conditions:[],actionUsed:false,bonusActionUsed:false,reactionUsed:false,legendaryRemaining:0,currentPhaseId:null,abilityState:{},resourceState:{},companionOf:null,lairOwnerId:null,bossOverride:false,attackProgress:0};mutate(()=>{state.encounter.participants.push(p);state.encounter.selectedId=p.id;},`${participantLabel(p)} rejoint le combat.`);}
@@ -724,7 +770,7 @@ characterChecks=function(p,m){
 }
 
 function saveEncounterSnapshot(asNew=false,chosenName=null){let id=!asNew?state.encounter.savedId:null;let name=state.encounter.name;if((asNew||!id)&&chosenName===null){let dialog=$('#saveEncounterNameDialog');if(!dialog){dialog=document.createElement('dialog');dialog.id='saveEncounterNameDialog';dialog.className='modal';dialog.innerHTML='<form class="modal-shell"><div class="modal-head"><h2>Sauvegarder la partie</h2><button type="button" class="icon-btn" data-cancel>×</button></div><label>Nom de la rencontre<input name="encounterName" required maxlength="160"></label><p data-error role="alert"></p><div class="modal-actions"><button type="button" data-cancel>Annuler</button><button type="submit" class="primary">Sauvegarder</button></div></form>';document.body.append(dialog);dialog.querySelectorAll('[data-cancel]').forEach(b=>b.onclick=()=>dialog.close());}dialog.querySelector('input').value=name;dialog.querySelector('[data-error]').textContent='';dialog.querySelector('form').onsubmit=e=>{e.preventDefault();try{saveEncounterSnapshot(asNew,dialog.querySelector('input').value);dialog.close();}catch(error){dialog.querySelector('[data-error]').textContent='Sauvegarde impossible : '+error.message;}};dialog.showModal();dialog.querySelector('input').focus();return;}if(asNew||!id){name=chosenName.trim()||state.encounter.name;id=uid('enc');}const snap=clone(state.encounter);snap.name=name;snap.savedId=id;const record={id,name,schemaVersion:1,kind:fightInProgress()?'active':'prepared',models:clone([...new Map(snap.participants.map(p=>[p.modelId,modelFor(p)]).filter(([,m])=>m)).values()]),ui:clone(state.ui),combatContext:EncounterPersistence.capture(localStorage),updatedAt:new Date().toISOString(),encounter:snap};const idx=state.savedEncounters.findIndex(x=>x.id===id);mutate(()=>{if(idx>=0)state.savedEncounters[idx]=record;else state.savedEncounters.unshift(record);state.encounter.savedId=id;state.encounter.name=name;},`Rencontre « ${name} » sauvegardée.`);renderEncounterManager();}
-async function loadSavedEncounter(id,launch=false){if(fightInProgress())return toast('Termine le fight en cours avant de charger une autre rencontre. Pour une nouvelle phase, ajoute des renforts.');const rec=state.savedEncounters.find(x=>x.id===id);if(!rec)return;let backupCreated=true;try{forceBackup('Avant chargement de rencontre');}catch(error){backupCreated=false;lastBackupAt=Date.now();EncounterPersistence.notify('Backup supplémentaire indisponible. Chargement de la rencontre en cours.',{level:'warning'});}checkpoint();const previousState=clone(state);state.encounter=clone(rec.encounter);state.encounter.participants=(state.encounter.participants||[]).map(normalizeParticipant);state.encounter.preparedModels=(rec.models||[]).map(normalizeMonster);if(rec.kind==='active'){state.ui=clone(rec.ui||state.ui);try{await persistStateAndContext(rec.combatContext||{});}catch(error){state=previousState;render();EncounterPersistence.notify('Reprise de rencontre impossible : '+error.message+'. Exportez le JSON avant de quitter.');return;}location.reload();return;}state.encounter.combatStarted=!!launch;state.encounter.turnOrder=null;state.encounter.savedId=id;state.ui.mode=launch?'combat':'prep';state.ui.locked=false;state.encounter.currentTurn=0;state.encounter.selectedId=sortedParticipants()[0]?.id||null;try{await persistStateAndContext();}catch(error){state=previousState;render();EncounterPersistence.notify('Chargement non enregistré : '+error.message+'. La rencontre précédente est conservée. Exportez le JSON.');return;}if(launch&&activeParticipant())processStartTurn(activeParticipant(),true);render();$('#encounterManagerDialog')?.close();toast(`Rencontre « ${rec.name} » ${launch?'lancée':'chargée'}.`+(backupCreated?'':' Backup supplémentaire indisponible : exportez un JSON.'));}
+async function loadSavedEncounter(id,launch=false){if(fightInProgress())return toast('Termine le fight en cours avant de charger une autre rencontre. Pour une nouvelle phase, ajoute des renforts.');const rec=state.savedEncounters.find(x=>x.id===id);if(!rec)return;let backupCreated=true;try{forceBackup('Avant chargement de rencontre');}catch(error){backupCreated=false;lastBackupAt=Date.now();EncounterPersistence.notify('Backup supplémentaire indisponible. Chargement de la rencontre en cours.',{level:'warning'});}checkpoint();const previousState=clone(state);state.encounter=clone(rec.encounter);state.encounter.participants=(state.encounter.participants||[]).map(normalizeParticipant);state.encounter.preparedModels=(rec.models||[]).map(normalizeMonster);if(rec.kind==='active'){state.ui=clone(rec.ui||state.ui);try{await persistStateAndContext(rec.combatContext||{});}catch(error){state=previousState;render();EncounterPersistence.notify('Reprise de rencontre impossible : '+error.message+'. Exportez le JSON avant de quitter.');return;}location.reload();return;}state.encounter.combatStarted=!!launch;state.encounter.turnOrder=null;state.encounter.passedTurns=null;state.encounter.savedId=id;state.ui.mode=launch?'combat':'prep';state.ui.locked=false;state.encounter.currentTurn=0;state.encounter.selectedId=sortedParticipants()[0]?.id||null;try{await persistStateAndContext();}catch(error){state=previousState;render();EncounterPersistence.notify('Chargement non enregistré : '+error.message+'. La rencontre précédente est conservée. Exportez le JSON.');return;}if(launch&&activeParticipant())processStartTurn(activeParticipant(),true);render();$('#encounterManagerDialog')?.close();toast(`Rencontre « ${rec.name} » ${launch?'lancée':'chargée'}.`+(backupCreated?'':' Backup supplémentaire indisponible : exportez un JSON.'));}
 function deleteSavedEncounter(id){const idx=state.savedEncounters.findIndex(x=>x.id===id);if(idx<0)return;const rec=state.savedEncounters[idx];mutate(()=>{state.trash.unshift({id:uid('trash'),kind:'encounter',label:rec.name,deletedAt:new Date().toISOString(),data:rec});state.savedEncounters.splice(idx,1);if(state.encounter.savedId===id)state.encounter.savedId=null;},`Rencontre « ${rec.name} » placée dans la corbeille.`);renderEncounterManager();}
 function renderEncounterManager(){const el=$('#savedEncounterList');if(!el)return;el.innerHTML=state.savedEncounters.length?state.savedEncounters.map(r=>`<article class="saved-encounter-card"><div><strong>${esc(r.name)}</strong><small>${r.encounter.participants?.length||0} participant(s) · modifiée ${new Date(r.updatedAt).toLocaleString('fr-FR')}</small></div><div><button data-load-encounter="${r.id}">Charger</button><button class="primary" data-launch-encounter="${r.id}">⚔ Lancer</button><button class="danger ghost" data-delete-saved="${r.id}">Corbeille</button></div></article>`).join(''):'<p class="muted">Aucune rencontre sauvegardée.</p>';}
 function openEncounterManager(){renderEncounterManager();$('#encounterManagerDialog').showModal();}
