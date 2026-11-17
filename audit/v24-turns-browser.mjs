@@ -94,6 +94,24 @@ try {
    }else{
      await page.waitForFunction(id=>RPGTable.getContext()?.session?.activeCharacterId===id,id);
      assert.equal(await page.evaluate(()=>CompanionAPI.getState().turn.reaction),true,id+' reaction');
+     if(id==='brackmard'){
+       const attacks=await page.evaluate(()=>{
+         const state=__CompanionBridge.read(),left=[];
+         const manual=document.querySelector('#manualRoll');
+         for(let i=0;i<3;i++){manual.value=1;startAttack();left.push(state.attacksLeft);}
+         actionSurge();manual.value=1;startAttack();
+         return {left,fougue:state.surge,remaining:state.attacksLeft};
+       });
+       assert.deepEqual(attacks,{left:[2,1,0],fougue:0,remaining:2});
+     }
+     if(id==='zephyr'){
+       const reaction=await page.evaluate(async()=>{
+         useReaction('Protection');
+         await attack(true);
+         return {available:CompanionAPI.getState().turn.reaction,pending:__CompanionBridge.read().rpgZephyrAttack??null};
+       });
+       assert.deepEqual(reaction,{available:false,pending:null});
+     }
      await page.evaluate(()=>RPGReactions.setAvailable(false));
      await page.evaluate(()=>document.querySelector('.cc-turn-next').click());
      await page.waitForFunction(()=>RPGTable.localEnded());
@@ -105,6 +123,12 @@ try {
      }
      await page.evaluate(()=>document.querySelector('.cc-turn-local').click());
      assert.equal(await page.evaluate(()=>CompanionAPI.getState().turn.reaction),true,id+' restoration locale');
+     if(id==='brackmard'){
+       assert.deepEqual(await page.evaluate(()=>{
+         const state=__CompanionBridge.read();
+         return {fougue:state.surge,remaining:state.attacksLeft};
+       }),{fougue:0,remaining:3});
+     }
    }
    assert.equal(await gm.evaluate(()=>activeParticipant().id),'cc-'+id,id+' retains GM initiative');
    if(id==='brackmard'){
@@ -133,6 +157,39 @@ try {
    }
    console.log('PASS',id);
  }
+ await gm.evaluate(()=>{
+   mutate(()=>state.encounter.participants.push(normalizeParticipant({
+     id:'opponent',name:'Adversaire',kind:'enemy',initiative:1,hp:20,maxHp:20,
+   })));
+   actualAdvanceTurn();
+ });
+ const rufus=pages.rufus;
+ await rufus.waitForFunction(()=>RPGTable.getContext()?.session?.activeParticipantId==='opponent');
+ const reaction=await rufus.evaluate(()=>{
+   RPGReactions.setAvailable(true);
+   document.querySelector('[data-cond=allyAdjacent]').click();
+   document.querySelector('#manualRoll').value=12;
+   document.querySelector('[data-reaction-attack=veille]').click();
+   const first=!!document.querySelector('[data-hit-sneak]');
+   document.querySelector('[data-hit-sneak]')?.click();
+   const state=__CompanionBridge.read();
+   const spent=!state.economy.reaction&&state.sneakReaction&&!state.sneakOwn;
+   RPGReactions.setAvailable(true);
+   document.querySelector('#manualRoll').value=12;
+   document.querySelector('[data-reaction-attack=veille]').click();
+   const duplicate=!!document.querySelector('[data-hit-sneak]');
+   return {first,spent,duplicate};
+ });
+ assert.deepEqual(reaction,{first:true,spent:true,duplicate:false});
+ assert.equal(await gm.evaluate(()=>activeParticipant().id),'opponent');
+ const next=await gm.evaluate(()=>{
+   const brack=state.encounter.participants.find(p=>p.id==='cc-brackmard');
+   const start=brack.turnStartRevision;
+   removeParticipant('opponent');
+   return {active:activeParticipant().id,round:state.encounter.round,starts:brack.turnStartRevision-start};
+ });
+ assert.deepEqual(next,{active:'cc-brackmard',round:2,starts:1});
+ console.log('PASS reaction economy, off-turn Sneak Attack and active enemy removal');
  assert.deepEqual(errors,[]);
 }finally{
  await browser?.close();
