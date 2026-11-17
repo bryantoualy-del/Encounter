@@ -105,6 +105,15 @@ try {
      });
      assert.deepEqual(result,['cc-brackmard','cc-samoth','reinforcement']);
      await page.waitForFunction(()=>RPGGroup.getActors().some(a=>a.id==='reinforcement'));
+     await gm.evaluate(()=>{
+       mutate(()=>state.encounter.participants.find(p=>p.id==='reinforcement').initiative=26);
+     });
+     assert.deepEqual(await gm.evaluate(()=>sortedParticipants().slice(0,3).map(p=>p.id)),
+       ['cc-brackmard','reinforcement','cc-samoth']);
+     await gm.evaluate(()=>removeParticipant('reinforcement'));
+     assert.equal(await gm.evaluate(()=>activeParticipant().id),'cc-brackmard');
+     assert.equal(await gm.evaluate(()=>state.encounter.round),1);
+     await page.waitForFunction(()=>!RPGGroup.getActors().some(a=>a.id==='reinforcement'));
    }
    if(id!=='kobe'){
      await gm.evaluate(()=>actualAdvanceTurn());

@@ -8,6 +8,19 @@ test('high-initiative reinforcement and correction preserve the running identity
 test('removing a participant before the active turn preserves the active participant',()=>{const c=fixture();c.preserveFightPosition(()=>c.state.encounter.participants.shift());assert.equal(c.activeParticipant().id,'b');assert.equal(c.state.encounter.round,3);});
 test('turn identity and deferred arrivals survive persisted state reload',()=>{const c=fixture();c.preserveFightPosition(()=>c.state.encounter.participants.push({id:'new',name:'New',initiative:30,hp:10}));c.state=JSON.parse(JSON.stringify(c.state));assert.equal(c.activeParticipant().id,'b');c.actualAdvanceTurn();c.actualAdvanceTurn();assert.equal(c.state.encounter.round,4);assert.equal(c.activeParticipant().id,'new');});
 
+test('removing the active participant starts the next unplayed turn once', () => {
+  const c=fixture(), starts=[];
+  c.processStartTurn=p=>starts.push(p.id);
+  c.preserveFightPosition(()=>c.state.encounter.participants.splice(1,1));
+  assert.equal(c.activeParticipant().id,'c');
+  assert.equal(c.state.encounter.round,3);
+  assert.deepEqual(starts,['c']);
+  c.actualAdvanceTurn();
+  assert.equal(c.activeParticipant().id,'a');
+  assert.equal(c.state.encounter.round,4);
+  assert.deepEqual(starts,['c','a']);
+});
+
 test('legacy custom sheets and pending combat survive IndexedDB bootstrap without altering legacy JSON',()=>{
  const raw={version:'4.1',ui:{mode:'prep'},monsters:[{id:'custom',name:'Créature maison',actions:[{name:'Effet maison',detail:'Ne pas convertir'}]}],encounter:{round:4,currentTurn:1,participants:[{id:'custom-p',initiative:17,hp:11,conditions:[{name:'À terre'}]}],rpgPlayerSaves:{save1:{applied:false,request:{dc:14}}}},savedEncounters:[],trash:[]};
  const saved=new Map([['encounter-console-v1',JSON.stringify(raw)]]);let serial=0;const c={APP_VERSION:'4.1',STORAGE_KEY:'encounter-console-v1',BACKUP_KEY:'encounter-console-backups-v3',SAMPLE_MONSTERS:[],clone:x=>JSON.parse(JSON.stringify(x)),normalizeMonster:x=>x,normalizeParticipant:x=>x,mergeBuiltinEnhancements:x=>x,pruneLegacyAutoCCPlayers:x=>x,uid:()=>String(++serial),localStorage:{getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v)},console};vm.createContext(c);vm.runInContext(readFileSync(new URL('./encounter-persistence.js',import.meta.url),'utf8'),c);vm.runInContext(source.slice(source.indexOf('function blankState()'),source.indexOf('let state=',source.indexOf('function blankState()'))),c);

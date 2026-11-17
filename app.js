@@ -608,7 +608,7 @@ addEventListener('click',e=>{
 });
 
 addEventListener('change',e=>{
-  if(e.target.matches('[data-init]')){if(structuralGuard()){render();return;}const p=state.encounter.participants.find(x=>x.id===e.target.dataset.init);if(p){checkpoint();if(fightInProgress()){window.EncounterDecisions.request({id:crypto.randomUUID(),kind:'initiative-correction',title:'Corriger l’initiative',priority:70,participantId:p.id,name:p.name,value:Number(e.target.value)||0});e.target.value=p.initiative;return;}preserveFightPosition(()=>{p.initiative=Number(e.target.value)||0;if(!fightInProgress()){state.encounter.currentTurn=0;state.encounter.selectedId=sortedParticipants()[0]?.id||null;}});saveState();
+  if(e.target.matches('[data-init]')){if(structuralGuard()){render();return;}const p=state.encounter.participants.find(x=>x.id===e.target.dataset.init);if(p){checkpoint();if(fightInProgress()&&p.kind!=='enemy'){window.EncounterDecisions.request({id:crypto.randomUUID(),kind:'initiative-correction',title:'Corriger l’initiative',priority:70,participantId:p.id,name:p.name,value:Number(e.target.value)||0});e.target.value=p.initiative;return;}preserveFightPosition(()=>{p.initiative=Number(e.target.value)||0;if(!fightInProgress()){state.encounter.currentTurn=0;state.encounter.selectedId=sortedParticipants()[0]?.id||null;}});saveState();
       if(state.ui.mode==='prep'){
         // A blur/change occurs before the pressed button receives its click.
         // Refresh the preview without replacing that button or its row.
