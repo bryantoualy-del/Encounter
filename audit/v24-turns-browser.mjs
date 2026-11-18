@@ -69,6 +69,16 @@ try {
  }
  await gm.waitForFunction(()=>RPGConnectMJ.getStatus().players.filter(p=>p.online).length===7);
  await gm.evaluate(()=>RPGConnectMJ.prepareFight());
+ if(process.env.RPG_TEST_SUPPORT==='1'){
+   for(const target of [pages.rufus,pages.kentaro]){
+     const initiative=target.locator('dialog.rpg-initiative-request');
+     await initiative.waitFor({state:'visible'});
+     await initiative.locator('[data-init-manual]').fill('10');
+     await initiative.locator('[data-init-roll]').evaluate(button=>button.click());
+     await initiative.waitFor({state:'hidden'});
+   }
+ }
+
  await gm.evaluate(ids=>{
    ids.forEach((id,i)=>RPGConnectMJ.validateInitiative(id,28-i*3));
    if(!RPGConnectMJ.startFight())throw Error('Le combat ne démarre pas');
@@ -76,6 +86,24 @@ try {
  for(const [id,page] of Object.entries(pages)){
    if(id==='kobe'){
      await page.waitForFunction(()=>document.querySelector('.turn-finish')?.dataset.action==='signal-turn-end');
+     if(process.env.RPG_TEST_SUPPORT==='1'){
+       async function grant(name,recipient){
+         await page.locator('[data-combat=inspiration]').filter({visible:true}).first().click();
+         await page.getByRole('button',{name,exact:true}).last().click();
+         const form=recipient.locator('details').filter({has:recipient.locator('input[name=die]')}).last();
+         await form.waitFor({state:'visible'});
+         await form.locator('summary').click();
+         await form.locator('[name=total]').fill('12');
+         await form.locator('[name=die]').fill('7');
+         await form.getByRole('button',{name:'Confirmer l’utilisation'}).click();
+         await form.locator('output').filter({hasText:'12 + 7 = 19'}).waitFor();
+         assert.equal(await form.getByRole('button',{name:'Confirmer l’utilisation'}).isDisabled(),true);
+       }
+       await grant('Rufus',pages.rufus);
+       await page.locator('.turn-local').click();
+       await grant('Kentaro',pages.kentaro);
+     }
+
      const before=await page.evaluate(()=>{
        const {turn,slots,resources}=JSON.parse(localStorage.getItem('kobe-companion:v1')).state;
        return {revision:turn.startRevision,slots,resources};
@@ -111,6 +139,27 @@ try {
          return {available:CompanionAPI.getState().turn.reaction,pending:__CompanionBridge.read().rpgZephyrAttack??null};
        });
        assert.deepEqual(reaction,{available:false,pending:null});
+       if(process.env.RPG_TEST_SUPPORT==='1'){
+         await page.locator('[data-select=blessLevel]').first().evaluate(button=>button.click());
+         await page.locator('#rpgGroup [data-group-actor="cc-rufus"]').click();
+         await page.locator('#rpgGroup [data-group-actor="cc-kentaro"]').click();
+         await page.locator('#rpgGroup [data-group-confirm]').click();
+         await page.waitForFunction(()=>CompanionAPI.getState().blessing?.targets?.length===2);
+         await gm.waitForFunction(()=>RPGConnectMJ.groupProfiles().filter(row=>row.conditions.some(c=>c.origin==='rpg-table-blessing')).length===2);
+         for(const target of [pages.rufus,pages.kentaro]){
+           try {
+             await target.waitForFunction(()=>document.querySelector('[data-combat-saves] summary')?.textContent.includes('Bénédiction'),null,{timeout:7000});
+           } catch (error) {
+             console.log('Recipient projection:',await target.evaluate(()=>({state:RPGConnect.getStatus(),context:RPGTable.getContext()?.conditionActors?.map(a=>({companionId:a.companionId,conditions:a.conditions}))})));
+             throw error;
+           }
+         }
+         await page.evaluate(()=>CompanionAPI.clearConcentration());
+         for(const target of [pages.rufus,pages.kentaro]){
+           await target.waitForFunction(()=>!document.querySelector('[data-combat-saves] summary')?.textContent.includes('Bénédiction'));
+         }
+       }
+
      }
      await page.evaluate(()=>RPGReactions.setAvailable(false));
      await page.evaluate(()=>document.querySelector('.cc-turn-next').click());

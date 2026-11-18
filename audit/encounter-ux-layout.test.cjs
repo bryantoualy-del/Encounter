@@ -28,7 +28,7 @@ test('PWA header remains unblurred and assets share version',()=>{
    assert.ok(html.includes(ref),ref+' missing in HTML');
    assert.ok(sw.includes(ref),ref+' missing in cache');
  }
- assert.match(sw,/encounter-(?:header-opaque-final-20261108|v13-lot2-layout-20261109|v13-lot3-20261109|v13-lot4-20261110|v132-semantic-20261111|p0-quota-20261111|v15-indexeddb-recovery-20261111|v23-icons-20261114|v24-turns-20261117)/);
+ assert.match(sw,/encounter-(?:header-opaque-final-20261108|v13-lot2-layout-20261109|v13-lot3-20261109|v13-lot4-20261110|v132-semantic-20261111|p0-quota-20261111|v15-indexeddb-recovery-20261111|v23-icons-20261114|v24-turns-20261117|v24-lot2-inspiration)/);
  for(const asset of ['encounter-v13-results.js','encounter-v13-results.css']){
    const ref=asset+'?v='+('v23-damage-20261114');
    assert.ok(html.includes(ref),ref+' missing in HTML');
@@ -39,9 +39,9 @@ test('PWA header remains unblurred and assets share version',()=>{
 
 test('turn and initiative scripts use the same revision online and offline',()=>{
  const html=read('index.html'),sw=read('service-worker.js');
- assert.match(sw,/encounter-v24-turns-20261117/);
+ assert.match(sw,/encounter-v24-lot2-inspiration/);
  for(const asset of ['app.js','rpg-connect-mj.js','mj-decisions.js']){
-   const ref=asset+'?v=24-turns';
+   const ref=asset+'?v='+(asset==='rpg-connect-mj.js'?'24-lot2-inspiration':'24-turns');
    assert.ok(html.includes(ref),ref+' missing in HTML');
    assert.ok(sw.includes(ref),ref+' missing in cache');
  }

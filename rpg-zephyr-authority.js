@@ -47,7 +47,19 @@
  function startSpells(p){for(const c of [...(p?.conditions||[])]){if(c.origin==='rpg-zephyr-spell'&&c.expiresRound<=d.round()){removeCondition(p,c);continue}if(c.spellKind!=='searing')continue;const stamp=d.combatId()+':'+p.turnStartRevision;if(c.tickStamp===stamp)continue;c.tickStamp=stamp;const ok=repeatSave(p,c);if(ok===false){const damage=d.die(6);d.damage(p,damage,'feu',{triggered:true,source:c.source});d.log(c.source+' → '+p.name+' · '+damage+' feu (R/I/V)');}}}
  function endSpells(p){for(const c of [...(p?.conditions||[])])if(c.spellKind==='blinding'||c.sourceCharacterId==='zephyr'&&c.source==='Présence conquérante'){const stamp=d.combatId()+':'+p.turnStartRevision+':end';if(c.saveStamp===stamp)continue;c.saveStamp=stamp;repeatSave(p,{...c,saveAbility:c.saveAbility||'SAG',dc:c.dc||16});}d.persist();}
  function endSpellByAction(p,c){if(p.actionUsed)return false;return scope(crypto.randomUUID(),c.source+' · action pour mettre fin',()=>{p.actionUsed=true;if(c.spellKind==='searing')removeCondition(p,c);else if(c.spellKind==='wrathful')repeatSave(p,c,true);publish();return true})}
- return {attack,startSpells,endSpells,endSpellByAction,recover,hasPending,refresh,publish,coverage,payload,immune,reconcile,handle,start,absorb,names};
+ function tableBlessing(caster,room){
+  const z=source(), declaration=caster?.blessing;
+  const effect=alive(z)&&caster?.concentration&&declaration?.room===room?declaration:null;
+  for(const target of all()){
+   target.conditions=(target.conditions||[]).filter(condition=>condition.origin!=='rpg-table-blessing');
+   if(effect?.targets.includes(target.id)&&['player','ally'].includes(target.kind)){
+    target.conditions.push({id:effect.id+':'+target.id,name:'Bénédiction',effectKind:'bless',
+      origin:'rpg-table-blessing',source:'Zéphyr',sourceCharacterId:'zephyr',sourceParticipantId:z.id,
+      durationType:'rounds',remaining:effect.remaining});
+   }
+  }
+ }
+ return {tableBlessing,attack,startSpells,endSpells,endSpellByAction,recover,hasPending,refresh,publish,coverage,payload,immune,reconcile,handle,start,absorb,names};
  };
 })();
 

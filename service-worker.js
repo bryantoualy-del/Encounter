@@ -1,4 +1,4 @@
-const CACHE='encounter-v24-turns-20261117';
+const CACHE='encounter-v24-lot2-inspiration';
 const ASSETS=[
 './rpg-visual-types.js','./assets/icons/conditions/Inconscient.png','./assets/icons/conditions/Aveugle.png','./assets/icons/conditions/Effraye.png','./assets/icons/conditions/Petrifie.png','./assets/icons/conditions/Invisible.png','./assets/icons/conditions/Incapacite.png','./assets/icons/conditions/Charme.png','./assets/icons/conditions/Etourdi.png','./assets/icons/conditions/Empoisonne.png','./assets/icons/conditions/Paralyse.png','./assets/icons/conditions/Assourdi.png','./assets/icons/conditions/Epuise.png','./assets/icons/conditions/Agrippe.png','./assets/icons/conditions/Entrave.png','./assets/icons/conditions/A_terre.png','./assets/icons/damage/degats_perforant.png','./assets/icons/damage/degats_tonnerre_64.png','./assets/icons/damage/degats_acide.png','./assets/icons/damage/degats_feu_64.png','./assets/icons/damage/degats_psychique.png','./assets/icons/damage/degats_poison_64.png','./assets/icons/damage/degats_contondant.png','./assets/icons/damage/degats_contondant_64.png','./assets/icons/damage/degats_psychique_64.png','./assets/icons/damage/degats_froid.png','./assets/icons/damage/degats_perforant_64.png','./assets/icons/damage/degats_tonnerre.png','./assets/icons/damage/degats_poison.png','./assets/icons/damage/degats_necrotique.png','./assets/icons/damage/degats_froid_64.png','./assets/icons/damage/degats_necrotique_64.png','./assets/icons/damage/degats_feu.png','./assets/icons/damage/degats_tranchant_64.png','./assets/icons/damage/degats_acide_64.png','./assets/icons/damage/degats_foudre.png','./assets/icons/damage/degats_radiant.png','./assets/icons/damage/degats_force.png','./assets/icons/damage/degats_tranchant.png','./assets/icons/damage/degats_force_64.png','./assets/icons/damage/degats_radiant_64.png','./assets/icons/damage/degats_foudre_64.png',
  './rpg-journal-ui.js?v=5-table-free-4',
@@ -9,7 +9,7 @@ const ASSETS=[
  './rpg-reaction-authority.js?v=hex-armor-20261009-1',
  './rpg-nans-authority.js?v=nans-20261008-1',
  './rpg-kentaro-armor-rules.js?v=20261009-1',
- './rpg-connect-mj.js?v=24-turns',
+ './rpg-connect-mj.js?v=24-lot2-inspiration',
  './mj-panels.js?v=v13-lot3-20261109',
  './rpg-samoth-perception.js?v=perception-20261009-1',
 
@@ -21,7 +21,7 @@ const ASSETS=[
  './mj-finishes.css?v=1',
  './mj-portraits.js?v=combat-view-1',
  './rpg-kentaro-authority.js?v=20261014-lot4-final',
- './rpg-zephyr-authority.js?v=20261014-lot4-final',
+ './rpg-zephyr-authority.js?v=24-lot2-inspiration',
   './rpg-samoth-perception.js?v=1',
   './rpg-combat-effects.js?v=rufus-20261009-1',
   './rpg-samoth-authority.js?v=mj-finishes-1',
@@ -41,7 +41,7 @@ const ASSETS=[
   './mj-journal-model.js?v=2',
   './mj-journal.js?v=5-table-free-4',
   './mj-conditions.js?v=1',
-  './mj-icons.js?v=select-health-20261009',
+  './mj-icons.js?v=24-lot2-support-sync',
   './mj-panels.js?v=mj-finishes-1',
   './assistant-method.js?v=1',
   './assistant-method.html',
@@ -99,7 +99,7 @@ const ASSETS=[
   './table.js?v=v15-indexeddb-20261111',
   './rpg-connect-mj.css?v=encounter-ux-20261108',
   './rpg-brack-authority.js?v=20261014-lot4-final',
-  './rpg-connect-mj.js?v=24-turns',
+  './rpg-connect-mj.js?v=24-lot2-inspiration',
   './rpg-condition-rolls.js?v=brack-20261009-1',
   './rpg-health-authority.js?v=kentaro-20261008',
   './rpg-summon-authority.js?v=samoth-effects-1',

@@ -17,3 +17,26 @@ test('Searing smite ticks once, succeeds and expires without duplicate damage',(
 test('Secondary smite saves carry the same attack action and are idempotent',()=>{for(const key of ['thunderous','wrathful','blinding']){const f=fixture(),event={characterId:'zephyr',payload:{attackId:'a',actionId:'parent',targetId:'e',spellEffect:{key,name:key,concentrationInstance:'i'}}};f.a.attack(event);f.a.attack(event);assert.equal(f.saves.length,1);assert.equal(f.saves[0].payload.actionId,'parent');assert.equal(f.saves[0].payload.dc,16)}});
 test('Blinding smite repeats at end; wrathful needs an action and disadvantage',()=>{const f=fixture();f.e.conditions=[{id:'blind',spellKind:'blinding',name:'Aveuglé',saveAbility:'CON',dc:16,sourceCharacterId:'zephyr'}];f.dice.push(20);f.a.endSpells(f.e);assert.equal(f.e.conditions.length,0);const fear={id:'fear',name:'Effrayé',spellKind:'wrathful',source:'Courroucé',dc:16};f.e.conditions=[fear];f.dice.push(20,1);assert.equal(f.a.endSpellByAction(f.e,fear),true);assert.equal(f.e.actionUsed,true);assert.equal(f.e.conditions.some(c=>c.id==='fear'),true);assert.equal(f.a.endSpellByAction(f.e,fear),false)});
 test('Concentration break clears persistent burning and revealing smites',()=>{const f=fixture();f.e.conditions=[{id:'burn',origin:'rpg-zephyr-spell',spellKind:'searing',concentrationInstance:'i'}];f.a.reconcile('zephyr',{concentration:null});assert.equal(f.e.conditions.length,0)});
+
+test('Table Libre projects one active blessing per friendly recipient and removes it at concentration end',()=>{
+ const f=fixture();
+ f.b.conditions.push({name:'À terre'});
+ const declaration={id:'cast-table',room:'table-01',remaining:6,targets:['b','r','e','b']};
+ const caster={concentration:true,blessing:declaration};
+ f.a.tableBlessing(caster,'table-01');
+ f.a.tableBlessing(caster,'table-01');
+ for(const target of [f.b,f.r]){
+  const effects=target.conditions.filter(effect=>effect.effectKind==='bless');
+  assert.equal(effects.length,1);
+  assert.equal(effects[0].remaining,6);
+  assert.equal(effects[0].sourceCharacterId,'zephyr');
+  assert.equal(f.c.EncounterConditionRolls.penalty(target.conditions,'save',()=>3).amount,-3);
+  assert.equal(f.c.EncounterConditionRolls.penalty(target.conditions,'ability',()=>3).amount,0);
+ }
+ assert.equal(f.e.conditions.length,0);
+ f.a.tableBlessing({...caster,concentration:false},'table-01');
+ assert.deepEqual(f.b.conditions.map(effect=>effect.name),['À terre']);
+ assert.equal(f.r.conditions.length,0);
+ f.a.tableBlessing(caster,'table-02');
+ assert.equal(f.r.conditions.length,0);
+});
