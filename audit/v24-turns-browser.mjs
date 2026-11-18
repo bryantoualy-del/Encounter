@@ -69,6 +69,16 @@ try {
  }
  await gm.waitForFunction(()=>RPGConnectMJ.getStatus().players.filter(p=>p.online).length===7);
  await gm.evaluate(()=>RPGConnectMJ.prepareFight());
+ if(process.env.RPG_TEST_SUPPORT==='1'){
+   for(const target of [pages.rufus,pages.kentaro]){
+     const initiative=target.locator('dialog.rpg-initiative-request');
+     await initiative.waitFor({state:'visible'});
+     await initiative.locator('[data-init-manual]').fill('10');
+     await initiative.locator('[data-init-roll]').evaluate(button=>button.click());
+     await initiative.waitFor({state:'hidden'});
+   }
+ }
+
  await gm.evaluate(ids=>{
    ids.forEach((id,i)=>RPGConnectMJ.validateInitiative(id,28-i*3));
    if(!RPGConnectMJ.startFight())throw Error('Le combat ne démarre pas');
