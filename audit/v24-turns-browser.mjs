@@ -244,6 +244,81 @@ try {
  });
  assert.deepEqual(next,{active:'cc-brackmard',round:2,starts:1});
  console.log('PASS reaction economy, off-turn Sneak Attack and active enemy removal');
+ if(process.env.RPG_TEST_LOT3==='1'){
+   const samoth=await open('Samoth');
+   const snapshotStaff=()=>samoth.evaluate(()=>{
+     const {staff,concentration,eco,history}=window.__CompanionBridge.read();
+     return {staff,concentration,action:eco.action,last:history[0]?.detail};
+   });
+   const staffBeforeCast=await snapshotStaff();
+   await samoth.locator('#combatSpell').selectOption('wall');
+   await samoth.locator('#combatCast').evaluate(button=>button.click());
+   await samoth.locator('[data-wall-roll=appearance]').waitFor({state:'attached'});
+   const staffAfterCast=await snapshotStaff();
+   const wall=await samoth.evaluate(()=>{
+     const before=window.__CompanionBridge.read();
+     const staff=before.staff,damage=before.turnDamage;
+     document.querySelector('[data-wall-roll=appearance]').click();
+     const appearance=document.querySelector('#resultText').textContent;
+     const rolled=document.querySelector('[data-wall-roll=appearance]').disabled;
+     document.querySelector('[data-wall-roll=breach]').click();
+     return {appearance,rolled,breach:document.querySelector('#resultText').textContent,
+       charges:staff-__CompanionBridge.read().staff,damageChanged:damage!==__CompanionBridge.read().turnDamage};
+   });
+   assert.match(wall.appearance,/10d6.*DEX DD18/);
+   assert.match(wall.breach,/5d6.*CON DD18/);
+   assert.deepEqual([wall.rolled,wall.charges,wall.damageChanged],[true,0,false]);
+
+   const rogue=await open('Rufus');
+   const daggers=await rogue.evaluate(()=>{
+     const attack=id=>{
+       document.querySelector('#manualRoll').value=12;
+       document.querySelector('[data-attack='+id+']').click();
+     };
+     const before=document.querySelector('[data-attack=kori]').disabled;
+     attack('veille');
+     document.querySelector('[data-miss]').click();
+     const armed=!document.querySelector('[data-attack=kori]').disabled;
+     attack('kori');
+     document.querySelector('[data-hit]').click();
+     return {before,armed,blocked:document.querySelector('[data-attack=kori]').disabled,
+       action:__CompanionBridge.read().economy.action,bonus:__CompanionBridge.read().economy.bonus,
+       damage:window.__lastDamageComponents};
+   });
+   assert.deepEqual([daggers.before,daggers.armed,daggers.blocked,daggers.action,daggers.bonus],[true,true,true,false,false]);
+   assert.ok(daggers.damage?.length===1&&daggers.damage[0].amount>=1&&daggers.damage[0].amount<=4);
+
+   const zephyr=await open('Zephyr');
+   assert.deepEqual(await zephyr.evaluate(async()=>{
+     const before=JSON.stringify(__CompanionBridge.read());
+     const confirm=RPGDialogs.confirm('Validation');
+     const prompt=RPGDialogs.prompt('Saisie','2');
+     document.querySelector('.rpg-native-dialog-close').click();
+     const cancelledConfirm=await confirm;
+     document.querySelector('.rpg-native-dialog-close').click();
+     const cancelledPrompt=await prompt;
+     document.querySelector('#longRest').click();
+     document.querySelector('.companion-rest-close').click();
+     return [cancelledConfirm,cancelledPrompt,before===JSON.stringify(__CompanionBridge.read())];
+   }),[false,null,true]);
+   const kentaro=await open('Kentaro');
+   const valid=await kentaro.evaluate(()=>{
+     const storage=Object.fromEntries(['kentaro-eclipse-v4','kentaro-social-v2','kentaro-session-v1','kentaro-session-v2','kentaro-session-v3'].map(key=>[key,localStorage.getItem(key)]));
+     storage['kentaro-eclipse-v4']=JSON.stringify({...__CompanionBridge.read(),hp:80});
+     return {kind:'kentaro-complete-backup',version:1,storage};
+   });
+   const backupFile=kentaro.locator('#backupFile');
+   const importJson=data=>backupFile.setInputFiles({name:'backup.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(data))});
+   await importJson({...valid,storage:{'kentaro-eclipse-v4':valid.storage['kentaro-eclipse-v4']}});
+   await kentaro.locator('dialog[open] [data-dialog-accept]').click();
+   assert.notEqual(await kentaro.evaluate(()=>__CompanionBridge.read().hp),80);
+   await importJson(valid);
+   await kentaro.locator('dialog[open] [data-dialog-accept]').click();
+   await kentaro.waitForFunction(()=>window.__CompanionBridge?.read().hp===80);
+   assert.ok(await kentaro.evaluate(()=>localStorage.getItem('kentaro-backup-recovery-v1')));
+   assert.equal(staffBeforeCast.staff-staffAfterCast.staff,4,JSON.stringify({staffBeforeCast,staffAfterCast}));
+   console.log('PASS Ice Wall, physical off-hand attack, dialog cancellation and Kentaro backup');
+ }
  assert.deepEqual(errors,[]);
 }finally{
  await browser?.close();
