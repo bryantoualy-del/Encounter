@@ -130,7 +130,7 @@ try {
        });
        assert.deepEqual(reaction,{available:false,pending:null});
        if(process.env.RPG_TEST_SUPPORT==='1'){
-         await page.evaluate(()=>{void cast('Bénédiction',1,'a',true);});
+         await page.locator('[data-select=blessLevel]').first().evaluate(button=>button.click());
          await page.locator('#rpgGroup [data-group-actor="cc-rufus"]').click();
          await page.locator('#rpgGroup [data-group-actor="cc-kentaro"]').click();
          await page.locator('#rpgGroup [data-group-confirm]').click();
