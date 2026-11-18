@@ -76,6 +76,24 @@ try {
  for(const [id,page] of Object.entries(pages)){
    if(id==='kobe'){
      await page.waitForFunction(()=>document.querySelector('.turn-finish')?.dataset.action==='signal-turn-end');
+     if(process.env.RPG_TEST_SUPPORT==='1'){
+       async function grant(name,recipient){
+         await page.locator('[data-combat=inspiration]').filter({visible:true}).first().click();
+         await page.getByRole('button',{name,exact:true}).last().click();
+         const form=recipient.locator('details').filter({has:recipient.locator('input[name=die]')}).last();
+         await form.waitFor({state:'visible'});
+         await form.locator('summary').click();
+         await form.locator('[name=total]').fill('12');
+         await form.locator('[name=die]').fill('7');
+         await form.getByRole('button',{name:'Confirmer l’utilisation'}).click();
+         await form.locator('output').filter({hasText:'12 + 7 = 19'}).waitFor();
+         assert.equal(await form.getByRole('button',{name:'Confirmer l’utilisation'}).isDisabled(),true);
+       }
+       await grant('Rufus',pages.rufus);
+       await page.locator('.turn-local').click();
+       await grant('Kentaro',pages.kentaro);
+     }
+
      const before=await page.evaluate(()=>{
        const {turn,slots,resources}=JSON.parse(localStorage.getItem('kobe-companion:v1')).state;
        return {revision:turn.startRevision,slots,resources};
@@ -111,6 +129,20 @@ try {
          return {available:CompanionAPI.getState().turn.reaction,pending:__CompanionBridge.read().rpgZephyrAttack??null};
        });
        assert.deepEqual(reaction,{available:false,pending:null});
+       if(process.env.RPG_TEST_SUPPORT==='1'){
+         await page.evaluate(()=>{void cast('Bénédiction',1,'a',true);});
+         await page.locator('#rpgGroup [data-group-actor="cc-rufus"]').click();
+         await page.locator('#rpgGroup [data-group-actor="cc-kentaro"]').click();
+         await page.locator('#rpgGroup [data-group-confirm]').click();
+         for(const target of [pages.rufus,pages.kentaro]){
+           await target.waitForFunction(()=>document.querySelector('[data-combat-saves] summary')?.textContent.includes('Bénédiction'));
+         }
+         await page.evaluate(()=>CompanionAPI.clearConcentration());
+         for(const target of [pages.rufus,pages.kentaro]){
+           await target.waitForFunction(()=>!document.querySelector('[data-combat-saves] summary')?.textContent.includes('Bénédiction'));
+         }
+       }
+
      }
      await page.evaluate(()=>RPGReactions.setAvailable(false));
      await page.evaluate(()=>document.querySelector('.cc-turn-next').click());
