@@ -246,11 +246,14 @@ try {
  console.log('PASS reaction economy, off-turn Sneak Attack and active enemy removal');
  if(process.env.RPG_TEST_LOT3==='1'){
    const samoth=await open('Samoth');
+   const staffBeforeCast=await samoth.evaluate(()=>window.__CompanionBridge.read().staff);
    await samoth.locator('#combatSpell').selectOption('wall');
+   await samoth.locator('#combatCast').evaluate(button=>button.click());
+   await samoth.locator('[data-wall-roll=appearance]').waitFor({state:'attached'});
+   const staffAfterCast=await samoth.evaluate(()=>window.__CompanionBridge.read().staff);
    const wall=await samoth.evaluate(()=>{
-     const before=__CompanionBridge.read();
+     const before=window.__CompanionBridge.read();
      const staff=before.staff,damage=before.turnDamage;
-     document.querySelector('#combatCast').click();
      document.querySelector('[data-wall-roll=appearance]').click();
      const appearance=document.querySelector('#resultText').textContent;
      const rolled=document.querySelector('[data-wall-roll=appearance]').disabled;
@@ -260,7 +263,8 @@ try {
    });
    assert.match(wall.appearance,/10d6.*DEX DD18/);
    assert.match(wall.breach,/5d6.*CON DD18/);
-   assert.deepEqual([wall.rolled,wall.charges,wall.damageChanged],[true,4,false]);
+   assert.equal(staffBeforeCast-staffAfterCast,4);
+   assert.deepEqual([wall.rolled,wall.charges,wall.damageChanged],[true,0,false]);
 
    const rogue=await open('Rufus');
    const daggers=await rogue.evaluate(()=>{
