@@ -41,7 +41,7 @@ jobs:
             if [ "$RPG_TEST_SUPPORT" = 1 ]; then
               case "$repo" in
                 RPG-Connect) sha=fec9614a9ee592c1c8edcc148f50775991458e1c ;;
-                Kobe) sha=0de332ce9d03beb73f5fa97b457c11827fe3e209 ;;
+                Kobe) sha=4c94f9f56e3ad168565b152e0f85d1a17e96b26c ;;
                 Brackmard) sha=a845eaf7ad1f864a51f4189652979a4df3b97205 ;;
                 Samoth) sha=7cfba167360ffaec11a4653c892a07a3f21bc93a ;;
                 Nans) sha=0d207f0b1519532a0ef5f59d05c586cf7043a713 ;;
