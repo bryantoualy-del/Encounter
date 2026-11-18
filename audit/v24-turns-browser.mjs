@@ -134,8 +134,15 @@ try {
          await page.locator('#rpgGroup [data-group-actor="cc-rufus"]').click();
          await page.locator('#rpgGroup [data-group-actor="cc-kentaro"]').click();
          await page.locator('#rpgGroup [data-group-confirm]').click();
+         await page.waitForFunction(()=>CompanionAPI.getState().blessing?.targets?.length===2);
+         await gm.waitForFunction(()=>RPGConnectMJ.groupProfiles().filter(row=>row.conditions.some(c=>c.origin==='rpg-table-blessing')).length===2);
          for(const target of [pages.rufus,pages.kentaro]){
-           await target.waitForFunction(()=>document.querySelector('[data-combat-saves] summary')?.textContent.includes('Bénédiction'));
+           try {
+             await target.waitForFunction(()=>document.querySelector('[data-combat-saves] summary')?.textContent.includes('Bénédiction'),null,{timeout:7000});
+           } catch (error) {
+             console.log('Recipient projection:',await target.evaluate(()=>({state:RPGConnect.getStatus(),context:RPGTable.getContext()?.conditionActors?.map(a=>({companionId:a.companionId,conditions:a.conditions}))})));
+             throw error;
+           }
          }
          await page.evaluate(()=>CompanionAPI.clearConcentration());
          for(const target of [pages.rufus,pages.kentaro]){
