@@ -772,10 +772,10 @@ cockpit.addEventListener('click',e=>{const b=e.target.closest('[data-cockpit-val
   const p=participant(id);if(!p)return;
   p.hp=Math.min(h.current,h.max);p.maxHp=h.max;p.tempHp=h.temp;p.reactionUsed=value.turn?.reaction===false;
   if(Number.isFinite(value.ac))p.ac=value.ac;
-  p.localConcentration=value.concentration?{name:value.concentration}:null;
+  p.localConcentration=value.concentration?{name:value.blessing?.room===room?'Bénédiction':'Concentration'}:null;
   p.conditions=(value.statuses||[]).map(name=>({id:'rpg-local-'+id+'-'+normalizeName(name),name,origin:'rpg-local',durationType:'indefinite'}));
   syncTableBlessing();
-  saveState();render();broadcastTargets();
+  broadcastTargets();saveState();render();
  };
  const tableGroup=buildConditionActors;
  buildConditionActors=(...args)=>{

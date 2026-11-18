@@ -41,13 +41,13 @@ jobs:
             if [ "$RPG_TEST_SUPPORT" = 1 ]; then
               case "$repo" in
                 RPG-Connect) sha=fec9614a9ee592c1c8edcc148f50775991458e1c ;;
-                Kobe) sha=baa47dfba8064e9472ef96cf1294f64a6a0c78a6 ;;
+                Kobe) sha=0de332ce9d03beb73f5fa97b457c11827fe3e209 ;;
                 Brackmard) sha=a845eaf7ad1f864a51f4189652979a4df3b97205 ;;
                 Samoth) sha=7cfba167360ffaec11a4653c892a07a3f21bc93a ;;
                 Nans) sha=0d207f0b1519532a0ef5f59d05c586cf7043a713 ;;
-                Rufus) sha=305e52fbb9e71fc25825b83061a83ac4b855507c ;;
-                Zephyr) sha=343ea49e3bbbabd7aab99c74aad62c7000753fe8 ;;
-                Kentaro) sha=8e528c5509e081fcb1304ade114c700a6c18eeed ;;
+                Rufus) sha=7e50e53b693bc271d8d013eb17679c0f044a8b2c ;;
+                Zephyr) sha=a5b7a4a058f98063cfeebe73f7b0fa18c698632a ;;
+                Kentaro) sha=6e93d38784b831fdd7be2eb29bb7b1a6cfcd2588 ;;
               esac
             fi
             git -C "../$repo" fetch --depth=1 "https://github.com/bryantoualy-del/$repo.git" "$sha"

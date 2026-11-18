@@ -41,7 +41,7 @@ const ASSETS=[
   './mj-journal-model.js?v=2',
   './mj-journal.js?v=5-table-free-4',
   './mj-conditions.js?v=1',
-  './mj-icons.js?v=select-health-20261009',
+  './mj-icons.js?v=24-lot2-support-sync',
   './mj-panels.js?v=mj-finishes-1',
   './assistant-method.js?v=1',
   './assistant-method.html',
