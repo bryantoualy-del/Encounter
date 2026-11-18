@@ -23,6 +23,8 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Checkout validated RPG Connect and Companion revisions
+        env:
+          RPG_TEST_SUPPORT: ${{ github.head_ref == 'feature/v24-lot2-shared-blessing' && '1' || '0' }}
         run: |
           for revision in \
             RPG-Connect:2db53165f524ba1bc4fb16000c2dbb301bc4b668 \
@@ -36,9 +38,17 @@ jobs:
             repo="${revision%:*}"
             sha="${revision#*:}"
             git init "../$repo"
-            if [ "${{ github.head_ref }}" = feature/v24-lot2-shared-blessing ]; then
-              sha=feature/v24-lot2-jds
-              [ "$repo" != RPG-Connect ] || sha=feature/v24-lot2-shared-blessing
+            if [ "$RPG_TEST_SUPPORT" = 1 ]; then
+              case "$repo" in
+                RPG-Connect) sha=fec9614a9ee592c1c8edcc148f50775991458e1c ;;
+                Kobe) sha=c397dc317582c93c3a3033556f6ecd6f778e8680 ;;
+                Brackmard) sha=a845eaf7ad1f864a51f4189652979a4df3b97205 ;;
+                Samoth) sha=3f62e13dc84ca46b66775bb4fb8c19d4a3e19e73 ;;
+                Nans) sha=0d207f0b1519532a0ef5f59d05c586cf7043a713 ;;
+                Rufus) sha=0251308e83f982a883ffd6bffba2def24cb706cf ;;
+                Zephyr) sha=343ea49e3bbbabd7aab99c74aad62c7000753fe8 ;;
+                Kentaro) sha=8e528c5509e081fcb1304ade114c700a6c18eeed ;;
+              esac
             fi
             git -C "../$repo" fetch --depth=1 "https://github.com/bryantoualy-del/$repo.git" "$sha"
             git -C "../$repo" checkout --detach FETCH_HEAD
