@@ -7,7 +7,7 @@ on:
 
 jobs:
   session:
-    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'fix/v24-lot1-tours' || (github.head_ref == 'feature/v24-lot2-shared-blessing' || github.head_ref == 'fix/v24-lot2-browser-final')
+    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'fix/v24-lot1-tours' || github.head_ref == 'fix/v24-lot3-session' || (github.head_ref == 'feature/v24-lot2-shared-blessing' || github.head_ref == 'fix/v24-lot2-browser-final')
     runs-on: ubuntu-24.04
     container: mcr.microsoft.com/playwright:v1.58.2-noble
     timeout-minutes: 12
@@ -24,7 +24,8 @@ jobs:
       - run: npm ci
       - name: Checkout validated RPG Connect and Companion revisions
         env:
-          RPG_TEST_SUPPORT: ${{ (github.head_ref == 'feature/v24-lot2-shared-blessing' || github.head_ref == 'fix/v24-lot2-browser-final') && '1' || '0' }}
+          RPG_TEST_LOT3: ${{ github.head_ref == 'fix/v24-lot3-session' && '1' || '0' }}
+          RPG_TEST_SUPPORT: ${{ (github.head_ref == 'feature/v24-lot2-shared-blessing' || github.head_ref == 'fix/v24-lot2-browser-final' || github.head_ref == 'fix/v24-lot3-session') && '1' || '0' }}
         run: |
           for revision in \
             RPG-Connect:2db53165f524ba1bc4fb16000c2dbb301bc4b668 \
@@ -50,6 +51,18 @@ jobs:
                 Kentaro) sha=6e93d38784b831fdd7be2eb29bb7b1a6cfcd2588 ;;
               esac
             fi
+            if [ "$RPG_TEST_LOT3" = 1 ]; then
+              case "$repo" in
+                RPG-Connect) sha=9308e0918ff1136c64be2f9dbd9c1c6af568888d ;;
+                Kobe) sha=8558cc20601eaf8a4d1bcf5a6f14d1cc45595eea ;;
+                Brackmard) sha=d0d6ebbc06e91e71f04d94afdb6916721743c3c6 ;;
+                Nans) sha=968dc616660e2383e4257c1c471acb968c7a1f35 ;;
+                Samoth) sha=243a20f7086f39e19c83d677ebc9410731667113 ;;
+                Rufus) sha=820f10b28438b82d7cf7d460ae18a556278fcbc0 ;;
+                Zephyr) sha=26d28eabb5587b97291ca0291bb97db0d3894eae ;;
+                Kentaro) sha=8e027392dbe0521ff529b93c0cbad2a15d260ca5 ;;
+              esac
+            fi
             git -C "../$repo" fetch --depth=1 "https://github.com/bryantoualy-del/$repo.git" "$sha"
             git -C "../$repo" checkout --detach FETCH_HEAD
           done
@@ -57,5 +70,6 @@ jobs:
         working-directory: ../RPG-Connect
       - run: node audit/v24-turns-browser.mjs
         env:
-          RPG_TEST_SUPPORT: ${{ (github.head_ref == 'feature/v24-lot2-shared-blessing' || github.head_ref == 'fix/v24-lot2-browser-final') && '1' || '0' }}
+          RPG_TEST_SUPPORT: ${{ (github.head_ref == 'feature/v24-lot2-shared-blessing' || github.head_ref == 'fix/v24-lot2-browser-final' || github.head_ref == 'fix/v24-lot3-session') && '1' || '0' }}
+          RPG_TEST_LOT3: ${{ github.head_ref == 'fix/v24-lot3-session' && '1' || '0' }}
           RPG_BROWSER: ${{ matrix.browser }}

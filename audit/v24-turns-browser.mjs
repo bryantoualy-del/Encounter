@@ -244,6 +244,57 @@ try {
  });
  assert.deepEqual(next,{active:'cc-brackmard',round:2,starts:1});
  console.log('PASS reaction economy, off-turn Sneak Attack and active enemy removal');
+ if(process.env.RPG_TEST_LOT3==='1'){
+   const samoth=await open('Samoth');
+   const wall=await samoth.evaluate(()=>{
+     const before=__CompanionBridge.read();
+     const staff=before.staff,damage=before.turnDamage;
+     document.querySelector('[data-staff-spell=wall]').click();
+     document.querySelector('[data-wall-roll=appearance]').click();
+     const appearance=document.querySelector('#resultText').textContent;
+     const rolled=document.querySelector('[data-wall-roll=appearance]').disabled;
+     document.querySelector('[data-wall-roll=breach]').click();
+     return {appearance,rolled,breach:document.querySelector('#resultText').textContent,
+       charges:staff-__CompanionBridge.read().staff,damageChanged:damage!==__CompanionBridge.read().turnDamage};
+   });
+   assert.match(wall.appearance,/10d6.*DEX DD18/);
+   assert.match(wall.breach,/5d6.*CON DD18/);
+   assert.deepEqual([wall.rolled,wall.charges,wall.damageChanged],[true,4,false]);
+
+   const rogue=await open('Rufus');
+   const daggers=await rogue.evaluate(()=>{
+     const attack=id=>{
+       document.querySelector('#manualRoll').value=12;
+       document.querySelector('[data-attack='+id+']').click();
+     };
+     const before=document.querySelector('[data-attack=kori]').disabled;
+     attack('veille');
+     document.querySelector('[data-miss]').click();
+     const armed=!document.querySelector('[data-attack=kori]').disabled;
+     attack('kori');
+     document.querySelector('[data-hit]').click();
+     return {before,armed,blocked:document.querySelector('[data-attack=kori]').disabled,
+       action:__CompanionBridge.read().economy.action,bonus:__CompanionBridge.read().economy.bonus,
+       damage:window.__lastDamageComponents};
+   });
+   assert.deepEqual([daggers.before,daggers.armed,daggers.blocked,daggers.action,daggers.bonus],[true,true,true,false,false]);
+   assert.ok(daggers.damage?.length===1&&daggers.damage[0].amount>=1&&daggers.damage[0].amount<=4);
+
+   const zephyr=await open('Zephyr');
+   assert.deepEqual(await zephyr.evaluate(async()=>{
+     const before=JSON.stringify(__CompanionBridge.read());
+     const confirm=RPGDialogs.confirm('Validation');
+     const prompt=RPGDialogs.prompt('Saisie','2');
+     document.querySelector('.rpg-native-dialog-close').click();
+     const cancelledConfirm=await confirm;
+     document.querySelector('.rpg-native-dialog-close').click();
+     const cancelledPrompt=await prompt;
+     document.querySelector('#longRest').click();
+     document.querySelector('.companion-rest-close').click();
+     return [cancelledConfirm,cancelledPrompt,before===JSON.stringify(__CompanionBridge.read())];
+   }),[false,null,true]);
+   console.log('PASS Ice Wall, physical off-hand attack and dialog cancellation');
+ }
  assert.deepEqual(errors,[]);
 }finally{
  await browser?.close();
