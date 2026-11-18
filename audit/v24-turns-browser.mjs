@@ -255,7 +255,6 @@ try {
    await samoth.locator('#combatCast').evaluate(button=>button.click());
    await samoth.locator('[data-wall-roll=appearance]').waitFor({state:'attached'});
    const staffAfterCast=await snapshotStaff();
-   console.log('Wall cast',JSON.stringify({staffBeforeCast,staffAfterCast}));
    const wall=await samoth.evaluate(()=>{
      const before=window.__CompanionBridge.read();
      const staff=before.staff,damage=before.turnDamage;
@@ -317,7 +316,7 @@ try {
    await kentaro.locator('dialog[open] [data-dialog-accept]').click();
    await kentaro.waitForFunction(()=>window.__CompanionBridge?.read().hp===80);
    assert.ok(await kentaro.evaluate(()=>localStorage.getItem('kentaro-backup-recovery-v1')));
-   assert.equal(staffBeforeCast.staff-staffAfterCast.staff,4);
+   assert.equal(staffBeforeCast.staff-staffAfterCast.staff,4,JSON.stringify({staffBeforeCast,staffAfterCast}));
    console.log('PASS Ice Wall, physical off-hand attack, dialog cancellation and Kentaro backup');
  }
  assert.deepEqual(errors,[]);
