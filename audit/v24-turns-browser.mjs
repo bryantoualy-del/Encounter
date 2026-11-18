@@ -246,11 +246,16 @@ try {
  console.log('PASS reaction economy, off-turn Sneak Attack and active enemy removal');
  if(process.env.RPG_TEST_LOT3==='1'){
    const samoth=await open('Samoth');
-   const staffBeforeCast=await samoth.evaluate(()=>window.__CompanionBridge.read().staff);
+   const snapshotStaff=()=>samoth.evaluate(()=>{
+     const {staff,concentration,eco,history}=window.__CompanionBridge.read();
+     return {staff,concentration,action:eco.action,last:history[0]?.detail};
+   });
+   const staffBeforeCast=await snapshotStaff();
    await samoth.locator('#combatSpell').selectOption('wall');
    await samoth.locator('#combatCast').evaluate(button=>button.click());
    await samoth.locator('[data-wall-roll=appearance]').waitFor({state:'attached'});
-   const staffAfterCast=await samoth.evaluate(()=>window.__CompanionBridge.read().staff);
+   const staffAfterCast=await snapshotStaff();
+   console.log('Wall cast',JSON.stringify({staffBeforeCast,staffAfterCast}));
    const wall=await samoth.evaluate(()=>{
      const before=window.__CompanionBridge.read();
      const staff=before.staff,damage=before.turnDamage;
@@ -263,7 +268,6 @@ try {
    });
    assert.match(wall.appearance,/10d6.*DEX DD18/);
    assert.match(wall.breach,/5d6.*CON DD18/);
-   assert.equal(staffBeforeCast-staffAfterCast,4);
    assert.deepEqual([wall.rolled,wall.charges,wall.damageChanged],[true,0,false]);
 
    const rogue=await open('Rufus');
@@ -313,7 +317,8 @@ try {
    await kentaro.locator('dialog[open] [data-dialog-accept]').click();
    await kentaro.waitForFunction(()=>window.__CompanionBridge?.read().hp===80);
    assert.ok(await kentaro.evaluate(()=>localStorage.getItem('kentaro-backup-recovery-v1')));
-   console.log('PASS Ice Wall, physical off-hand attack and dialog cancellation');
+   assert.equal(staffBeforeCast.staff-staffAfterCast.staff,4);
+   console.log('PASS Ice Wall, physical off-hand attack, dialog cancellation and Kentaro backup');
  }
  assert.deepEqual(errors,[]);
 }finally{
