@@ -246,10 +246,11 @@ try {
  console.log('PASS reaction economy, off-turn Sneak Attack and active enemy removal');
  if(process.env.RPG_TEST_LOT3==='1'){
    const samoth=await open('Samoth');
+   await samoth.locator('#combatSpell').selectOption('wall');
    const wall=await samoth.evaluate(()=>{
      const before=__CompanionBridge.read();
      const staff=before.staff,damage=before.turnDamage;
-     document.querySelector('[data-staff-spell=wall]').click();
+     document.querySelector('#combatCast').click();
      document.querySelector('[data-wall-roll=appearance]').click();
      const appearance=document.querySelector('#resultText').textContent;
      const rolled=document.querySelector('[data-wall-roll=appearance]').disabled;
@@ -293,6 +294,21 @@ try {
      document.querySelector('.companion-rest-close').click();
      return [cancelledConfirm,cancelledPrompt,before===JSON.stringify(__CompanionBridge.read())];
    }),[false,null,true]);
+   const kentaro=await open('Kentaro');
+   const valid=await kentaro.evaluate(()=>{
+     const storage=Object.fromEntries(['kentaro-eclipse-v4','kentaro-social-v2','kentaro-session-v1','kentaro-session-v2','kentaro-session-v3'].map(key=>[key,localStorage.getItem(key)]));
+     storage['kentaro-eclipse-v4']=JSON.stringify({...__CompanionBridge.read(),hp:80});
+     return {kind:'kentaro-complete-backup',version:1,storage};
+   });
+   const backupFile=kentaro.locator('#backupFile');
+   const importJson=data=>backupFile.setInputFiles({name:'backup.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(data))});
+   await importJson({...valid,storage:{'kentaro-eclipse-v4':valid.storage['kentaro-eclipse-v4']}});
+   await kentaro.locator('dialog[open] [data-dialog-accept]').click();
+   assert.notEqual(await kentaro.evaluate(()=>__CompanionBridge.read().hp),80);
+   await importJson(valid);
+   await kentaro.locator('dialog[open] [data-dialog-accept]').click();
+   await kentaro.waitForFunction(()=>window.__CompanionBridge?.read().hp===80);
+   assert.ok(await kentaro.evaluate(()=>localStorage.getItem('kentaro-backup-recovery-v1')));
    console.log('PASS Ice Wall, physical off-hand attack and dialog cancellation');
  }
  assert.deepEqual(errors,[]);
