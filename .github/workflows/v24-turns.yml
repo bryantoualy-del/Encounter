@@ -7,7 +7,7 @@ on:
 
 jobs:
   session:
-    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'fix/v24-lot1-tours' || github.head_ref == 'feature/v24-lot2-shared-blessing'
+    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'fix/v24-lot1-tours' || (github.head_ref == 'feature/v24-lot2-shared-blessing' || github.head_ref == 'fix/v24-lot2-browser-final')
     runs-on: ubuntu-24.04
     container: mcr.microsoft.com/playwright:v1.58.2-noble
     timeout-minutes: 12
@@ -24,7 +24,7 @@ jobs:
       - run: npm ci
       - name: Checkout validated RPG Connect and Companion revisions
         env:
-          RPG_TEST_SUPPORT: ${{ github.head_ref == 'feature/v24-lot2-shared-blessing' && '1' || '0' }}
+          RPG_TEST_SUPPORT: ${{ (github.head_ref == 'feature/v24-lot2-shared-blessing' || github.head_ref == 'fix/v24-lot2-browser-final') && '1' || '0' }}
         run: |
           for revision in \
             RPG-Connect:2db53165f524ba1bc4fb16000c2dbb301bc4b668 \
@@ -57,5 +57,5 @@ jobs:
         working-directory: ../RPG-Connect
       - run: node audit/v24-turns-browser.mjs
         env:
-          RPG_TEST_SUPPORT: ${{ github.head_ref == 'feature/v24-lot2-shared-blessing' && '1' || '0' }}
+          RPG_TEST_SUPPORT: ${{ (github.head_ref == 'feature/v24-lot2-shared-blessing' || github.head_ref == 'fix/v24-lot2-browser-final') && '1' || '0' }}
           RPG_BROWSER: ${{ matrix.browser }}
