@@ -76,6 +76,11 @@ try {
      await initiative.locator('[data-init-manual]').fill('10');
      await initiative.locator('[data-init-roll]').evaluate(button=>button.click());
      await initiative.waitFor({state:'hidden'});
+     const result=target.locator('#ccDiceOverlay[data-dismissable="1"]');
+     await result.waitFor({state:'visible'});
+     await result.click();
+     await result.waitFor({state:'hidden'});
+
    }
  }
 
